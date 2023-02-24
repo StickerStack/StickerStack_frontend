@@ -1,26 +1,17 @@
-import logo from '../../logo.svg';
+import { useState } from 'react';
+
+import { Header } from '../Header';
 
 import styles from './App.module.scss';
 
 const App: React.FC = () => {
+  const [isLogged, setIsLogged] = useState<boolean>(false);
+
   return (
-    <div className={styles.App}>
-      <header className={styles.App_header}>
-        <img src={logo} className={styles.App_logo} alt="logo" />
-        <p>
-          Здесь будет Sticker Stack
-        </p>
-        <a
-          className={styles.App_link}
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={styles.app}>
+      <Header onClickSignin={() => setIsLogged(true)} isLogged={isLogged} />
     </div>
   );
-}
+};
 
 export { App };
