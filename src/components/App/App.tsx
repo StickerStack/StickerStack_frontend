@@ -8,10 +8,10 @@ const App: React.FC = () => {
   const [isLogged, setIsLogged] = useState<boolean>(false);
 
   return (
-    <div className={styles.App}>
+    <div className={styles.app}>
       <Header onClickSignin={() => setIsLogged(true)} isLogged={isLogged} />
     </div>
   );
-}
+};
 
 export { App };
