@@ -1,6 +1,6 @@
 import { NavLink, Link } from 'react-router-dom';
 
-import { ButtonTranspanent } from '../UI/ButtonTranspanent';
+import { Button } from '../UI/Button';
 
 import styles from './Header.module.scss';
 
@@ -42,7 +42,7 @@ const Header: React.FC<IProps> = ({ isLogged, onClickSignin }: IProps) => {
       {isLogged ? (
         <Link to="/" className={styles.profile} />
       ) : (
-        <ButtonTranspanent onClick={onClickSignin}>Войти</ButtonTranspanent>
+        <Button onClick={onClickSignin}>Войти</Button>
       )}
     </header>
   );
