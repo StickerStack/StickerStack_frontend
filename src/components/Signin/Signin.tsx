@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ButtonFill } from '../UI/ButtonSubmit';
+import { ButtonSubmit } from '../UI/ButtonSubmit';
 import { CheckBoxForm } from '../UI/CheckBoxForm';
 import { InputForm } from '../UI/InputForm';
 import { TitleForm } from '../UI/TitleForm';
@@ -20,7 +20,7 @@ const Signin: React.FC = () => {
         />
         <CheckBoxForm label='Запомнить меня' />
       </div>
-      <ButtonFill type='submit'>Войти</ButtonFill>
+      <ButtonSubmit>Войти</ButtonSubmit>
       <Link className={styles.link} to='/signup'>Нет аккаунта? Зарегистрироваться</Link>
     </form>
   );
