@@ -7,9 +7,10 @@ import styles from './Header.module.scss';
 interface IProps {
   isLogged: boolean;
   onClickSignin: () => void;
+  onClickLogout: () => void;
 }
 
-const Header: React.FC<IProps> = ({ isLogged, onClickSignin }: IProps) => {
+const Header: React.FC<IProps> = ({ isLogged, onClickSignin, onClickLogout }: IProps) => {
   return (
     <header className={styles.header}>
       <Link to="/" className={styles.logo}>
@@ -40,7 +41,7 @@ const Header: React.FC<IProps> = ({ isLogged, onClickSignin }: IProps) => {
         </ul>
       </nav>
       {isLogged ? (
-        <Link to="/" className={styles.profile} />
+        <Link onClick={onClickLogout} to="/" className={styles.profile} />
       ) : (
         <Button onClick={onClickSignin}>Войти</Button>
       )}
