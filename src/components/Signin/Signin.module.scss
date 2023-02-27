@@ -1,10 +1,7 @@
 .signin {
-  /*  #TODO: width и margin нужен для демо! При помещении в popup убрать. */
-  width: 310px;
   display: flex;
   flex-direction: column;
   gap: 50px;
-  margin: 100px auto 0;
 }
 
 .inputs {
@@ -17,12 +14,19 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 19px;
-  color: #000;
+  color: #414141;
   text-align: center;
   text-decoration: none;
   margin-top: -30px;
 }
 
-.link:hover {
+.button {
+  background-color: transparent;
+  border: none;
+  color: #000;
+  cursor: pointer;
+}
+
+.button:hover {
   opacity: .8;
 }

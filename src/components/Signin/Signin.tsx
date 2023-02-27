@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { ButtonSubmit } from '../UI/ButtonSubmit';
 import { CheckBoxForm } from '../UI/CheckBoxForm';
 import { InputForm } from '../UI/InputForm';
@@ -7,6 +6,7 @@ import { TitleForm } from '../UI/TitleForm';
 import styles from './Signin.module.scss';
 
 const Signin: React.FC = () => {
+
   return (
     <form className={styles.signin}>
       <TitleForm>Войти в личный кабинет</TitleForm>
@@ -22,7 +22,7 @@ const Signin: React.FC = () => {
         <CheckBoxForm label='Запомнить меня' />
       </div>
       <ButtonSubmit>Войти</ButtonSubmit>
-      <Link className={styles.link} to=''>Нет аккаунта? Зарегистрироваться</Link>
+      <span className={styles.link}>Нет аккаунта? <button type='button' className={styles.button}>Зарегистрироваться</button></span>
     </form>
   );
 };
