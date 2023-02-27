@@ -1,5 +1,7 @@
 import { createPortal } from 'react-dom';
+
 import { PopupForm } from '../PopupForm';
+
 import styles from './Popup.module.scss';
 
 interface IProps {
