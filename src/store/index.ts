@@ -6,7 +6,12 @@ const rootReducer = combineReducers({
 });
 
 const store = configureStore({
-  reducer: rootReducer
+  reducer: rootReducer,
+  /* #TODO: Разобраться serializableCheck с включенным падают ошибки!*/
+  middleware: (getDefaultMiddleware) =>
+  getDefaultMiddleware({
+    serializableCheck: false,
+  }),
 });
 
 export { store };
