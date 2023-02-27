@@ -1,8 +1,9 @@
-.signin {
+.signup {
   display: flex;
   flex-direction: column;
   gap: 50px;
   width: 310px;
+  box-sizing: border-box;
 }
 
 .inputs {
