@@ -22,7 +22,7 @@ const Signin: React.FC = () => {
         <CheckBoxForm label='Запомнить меня' />
       </div>
       <ButtonSubmit>Войти</ButtonSubmit>
-      <button type='button' className={styles.link}>Нет аккаунта? Зарегистрироваться</button>
+      <span className={styles.link}>Нет аккаунта? <button type='button' className={styles.button}>Зарегистрироваться</button></span>
     </form>
   );
 };
