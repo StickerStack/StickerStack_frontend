@@ -1,1 +1,0 @@
-export { ButtonTranspanent }  from './ButtonTranspanent'
