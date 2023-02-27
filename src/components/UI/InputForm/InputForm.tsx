@@ -5,7 +5,9 @@ interface IProps {
   name: string;
   label: string;
   type?: string;
+  placeholder: string;
   optionalLink?: { to: string; text: string };
+  error?: string;
 }
 
 const InputForm: React.FC<IProps> = ({
@@ -13,6 +15,8 @@ const InputForm: React.FC<IProps> = ({
   label,
   type='text',
   optionalLink,
+  placeholder,
+  error
 }: IProps) => {
   return (
     <div className={styles.input}>
@@ -25,8 +29,9 @@ const InputForm: React.FC<IProps> = ({
         )}
       </label>
       <div className={styles.border}>
-        <input type={type} id={name} className={styles.field} />
+        <input placeholder={placeholder} type={type} id={name} className={styles.field} />
       </div>
+      <span className={styles.error}>{error}</span>
     </div>
   );
 };

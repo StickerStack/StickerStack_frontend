@@ -3,16 +3,18 @@
   flex-direction: column;
   gap: 10px;
   width: 310px;
+  position: relative;
 }
 
-.label { 
+.label {
+  user-select: none;
   font-weight: 400;
   font-size: 20px;
   line-height: 24px;
-  color: #000;
+  color: rgba(0, 0, 0, .7);
   display: flex;
   align-items: center;
-  gap: 12px;
+  justify-content: space-between;
 }
 
 .link {
@@ -20,25 +22,42 @@
   font-size: 16px;
   line-height: 19px;
   text-decoration: none;
-  color: #000;
+  color: rgba(0, 0, 0, 1);
 }
 
 .link:hover {
-  opacity: .8;
+  color: rgba(0, 0, 0, .7);
 }
 
 .border {
   border: 1px solid #000;
   border-radius: 5px;
-  padding: 0 0 0 10px;
+  padding: 0 0 0 20px;
   height: 30px;
   display: flex;
   align-items: center;
 }
 
 .field {
-  font-size: 18px;
   border: none;
   outline: none;
   width: 100%;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: #000;
+}
+
+.field::placeholder {
+  opacity: .4;
+}
+
+.error {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #D34D46;
+  padding: 0 0 0 20px;
+  position: absolute;
+  bottom: -22px;
 }

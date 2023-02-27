@@ -11,17 +11,18 @@ const Signin: React.FC = () => {
     <form className={styles.signin}>
       <TitleForm>Войти в личный кабинет</TitleForm>
       <div className={styles.inputs}>
-        <InputForm name='email' label='Email' type='email' />
+        <InputForm placeholder='vashapochta@gmail.com' name='email' label='Email' type='email' />
         <InputForm
+          placeholder='впишите пароль'
           name='password'
           label='Пароль'
           type='password'
-          optionalLink={{ text: 'Забыли пароль?', to: '/signup' }}
+          optionalLink={{ text: 'Забыли пароль?', to: '/' }}
         />
         <CheckBoxForm label='Запомнить меня' />
       </div>
       <ButtonSubmit>Войти</ButtonSubmit>
-      <Link className={styles.link} to='/signup'>Нет аккаунта? Зарегистрироваться</Link>
+      <Link className={styles.link} to=''>Нет аккаунта? Зарегистрироваться</Link>
     </form>
   );
 };

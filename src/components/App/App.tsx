@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
 
 import { Header } from '../Header';
 import { Signin } from '../Signin';
@@ -11,7 +12,9 @@ const App: React.FC = () => {
   return (
     <div className={styles.app}>
       <Header onClickSignin={() => setIsLogged(true)} isLogged={isLogged} />
-      <Signin />
+      <Routes>
+        <Route path='form-test' element={<Signin />}  />
+      </Routes>
     </div>
   );
 };
