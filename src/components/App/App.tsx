@@ -17,7 +17,6 @@ const App: React.FC = () => {
       <div id='app-popup' />
       <Header
         onClickSignin={() => {
-          setIsLogged(true);
           setIsOpen(true);
         }}
         onClickLogout={() => {

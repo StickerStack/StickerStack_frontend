@@ -2,7 +2,7 @@ import styles from './Button.module.scss';
 
 interface IProps {
   children: React.ReactNode;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const Button: React.FC<IProps> = ({ children, onClick }: IProps) => {
