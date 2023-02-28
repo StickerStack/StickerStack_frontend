@@ -16,7 +16,7 @@ const ResetPassword: React.FC = () => {
   return(
     <form className={styles.resetpassword}>
       <TitleForm>Восстановление пароля</TitleForm>
-      <InputForm label='E-mail Вашего аккаунта' name='email' placeholder='Почта' />
+      <InputForm label='E-mail Вашего аккаунта' name='email' placeholder='vashapochta@gmail.com' />
       <TextForm>Мы направим ссылку на Вашу почту для восстановления пароля</TextForm>
       <ButtonSubmit>Восстановить пароль</ButtonSubmit>
       <Button onClick={() => dispath(switchForm(Signin))}>Назад</Button>
