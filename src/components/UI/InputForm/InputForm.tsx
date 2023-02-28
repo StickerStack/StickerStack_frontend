@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import styles from './InputForm.module.scss';
 
 interface IProps {
@@ -6,7 +5,7 @@ interface IProps {
   label: string;
   type?: string;
   placeholder: string;
-  optionalLink?: { to: string; text: string };
+  optionalButton?: { onClick: () => void; text: string };
   error?: string;
 }
 
@@ -14,7 +13,7 @@ const InputForm: React.FC<IProps> = ({
   name,
   label,
   type='text',
-  optionalLink,
+  optionalButton,
   placeholder,
   error
 }: IProps) => {
@@ -22,10 +21,10 @@ const InputForm: React.FC<IProps> = ({
     <div className={styles.input}>
       <label htmlFor={name} className={styles.label}>
         {label}
-        {optionalLink && (
-          <Link className={styles.link} to={optionalLink.to}>
-            {optionalLink.text}
-          </Link>
+        {optionalButton && (
+          <button className={styles.link} onClick={optionalButton.onClick}>
+            {optionalButton.text}
+          </button>
         )}
       </label>
       <div className={styles.border}>

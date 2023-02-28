@@ -8,6 +8,7 @@ import { Signup } from '../Signup';
 
 import styles from './Signin.module.scss';
 import { switchForm } from '../../store/formSlice';
+import { ResetPassword } from '../ResetPassword';
 
 const Signin: React.FC = () => {
   const dispath = useDispatch();
@@ -22,7 +23,7 @@ const Signin: React.FC = () => {
           name='password'
           label='Пароль'
           type='password'
-          optionalLink={{ text: 'Забыли пароль?', to: '/' }}
+          optionalButton={{ text: 'Забыли пароль?', onClick: () => {dispath(switchForm(ResetPassword))} }}
         />
         <CheckBoxForm label='Запомнить меня' />
       </div>
