@@ -1,7 +1,9 @@
+@import '../../utils/_scss-variables.scss';
+
 .container {
   padding: 90px 150px 80px;
   box-sizing: border-box;
-  background-color: var(--secondary-bg-color);
+  background-color: $secondary-bg-color;
   border-radius: 20px;
 }
 .button {
