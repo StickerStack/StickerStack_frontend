@@ -1,3 +1,5 @@
+import { EyeButton } from '../EyeButton';
+
 import styles from './InputForm.module.scss';
 
 interface IProps {
@@ -6,16 +8,18 @@ interface IProps {
   type?: string;
   placeholder: string;
   optionalButton?: { onClick: () => void; text: string };
+  optionalEyeButton?: { onClick: () => void; shown: boolean };
   error?: string;
 }
 
 const InputForm: React.FC<IProps> = ({
   name,
   label,
-  type='text',
+  type = 'text',
   optionalButton,
+  optionalEyeButton,
   placeholder,
-  error
+  error,
 }: IProps) => {
   return (
     <div className={styles.input}>
@@ -30,6 +34,9 @@ const InputForm: React.FC<IProps> = ({
       <div className={styles.border}>
         <input placeholder={placeholder} type={type} id={name} className={styles.field} />
       </div>
+      {optionalEyeButton && (
+        <EyeButton onClick={optionalEyeButton.onClick} shown={optionalEyeButton.shown} />
+      )}
       <span className={styles.error}>{error}</span>
     </div>
   );
