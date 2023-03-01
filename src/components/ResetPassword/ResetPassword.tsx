@@ -11,7 +11,7 @@ import { Button } from '../UI/Button';
 import { TextForm } from '../UI/TextForm';
 
 const ResetPassword: React.FC = () => {
-  const dispatсh = useDispatch();
+  const dispatch = useDispatch();
         // FIXME: Кнопка НАЗАД является кастомной! Убрать когда дизайнер сделает ее!
   return(
     <form className={styles.resetpassword}>
@@ -19,7 +19,7 @@ const ResetPassword: React.FC = () => {
       <InputForm label='E-mail Вашего аккаунта' name='email' placeholder='vashapochta@gmail.com' />
       <TextForm>Мы направим ссылку на Вашу почту для восстановления пароля</TextForm>
       <ButtonSubmit>Восстановить пароль</ButtonSubmit>
-      <Button onClick={() => dispatсh(switchForm(Signin))}>Назад</Button>
+      <Button onClick={() => dispatch(switchForm(Signin))}>Назад</Button>
     </form>
   );
 };
