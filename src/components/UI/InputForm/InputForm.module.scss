@@ -1,3 +1,5 @@
+@import '../../../utils/_scss-variables.scss';
+
 .input {
   display: flex;
   flex-direction: column;
@@ -60,7 +62,7 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
-  color: #D34D46;
+  color: $error-text-color;
   padding: 0 0 0 20px;
   position: absolute;
   bottom: -22px;
