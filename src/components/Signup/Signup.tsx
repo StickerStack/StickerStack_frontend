@@ -10,7 +10,7 @@ import styles from './Signup.module.scss';
 import { switchForm } from '../../store/formSlice';
 
 const Signup: React.FC = () => {
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
 
   const [passwordShown, setPasswordShown] = useState<boolean>(false);
   const togglePassword = () => {
@@ -46,7 +46,7 @@ const Signup: React.FC = () => {
       <ButtonSubmit>Зарегистрироваться</ButtonSubmit>
       <span className={styles.link}>
         Уже есть аккаунт?{' '}
-        <button type='button' onClick={() => dispath(switchForm(Signin))} className={styles.button}>
+        <button type='button' onClick={() => dispatch(switchForm(Signin))} className={styles.button}>
           Войти
         </button>
       </span>

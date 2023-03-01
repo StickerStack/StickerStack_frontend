@@ -12,7 +12,7 @@ import { switchForm } from '../../store/formSlice';
 import { ResetPassword } from '../ResetPassword';
 
 const Signin: React.FC = () => {
-  const dispath = useDispatch();
+  const dispatch = useDispatch();
 
   const [passwordShown, setPasswordShown] = useState<boolean>(false);
   const togglePassword = () => {
@@ -28,13 +28,8 @@ const Signin: React.FC = () => {
           placeholder='впишите пароль'
           name='password'
           label='Пароль'
-          type={passwordShown ? 'text' : 'password'}
-          optionalButton={{
-            text: 'Забыли пароль?',
-            onClick: () => {
-              dispath(switchForm(ResetPassword));
-            },
-          }}
+          type='password'
+          optionalButton={{ text: 'Забыли пароль?', onClick: () => {dispatch(switchForm(ResetPassword))} }}
           optionalEyeButton={{
             shown: passwordShown,
             onClick: () => togglePassword(),
@@ -45,7 +40,7 @@ const Signin: React.FC = () => {
       <ButtonSubmit>Войти</ButtonSubmit>
       <span className={styles.link}>
         Нет аккаунта?{' '}
-        <button onClick={() => dispath(switchForm(Signup))} type='button' className={styles.button}>
+        <button onClick={() => dispatch(switchForm(Signup))} type='button' className={styles.button}>
           Зарегистрироваться
         </button>
       </span>
