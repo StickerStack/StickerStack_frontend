@@ -9,7 +9,7 @@ import styles from './Signup.module.scss';
 import { switchForm } from '../../store/formSlice';
 
 const Signup: React.FC = () => {
-  const dispath = useDispatch();
+  const dispatсh = useDispatch();
 
   return(
     <form className={styles.signup}>
@@ -30,7 +30,7 @@ const Signup: React.FC = () => {
         />
       </div>
       <ButtonSubmit>Зарегистрироваться</ButtonSubmit>
-      <span className={styles.link}>Уже есть аккаунт? <button type='button' onClick={() => dispath(switchForm(Signin))} className={styles.button}>Войти</button></span>
+      <span className={styles.link}>Уже есть аккаунт? <button type='button' onClick={() => dispatсh(switchForm(Signin))} className={styles.button}>Войти</button></span>
     </form>
   );
 };

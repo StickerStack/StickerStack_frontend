@@ -11,7 +11,7 @@ import { switchForm } from '../../store/formSlice';
 import { ResetPassword } from '../ResetPassword';
 
 const Signin: React.FC = () => {
-  const dispath = useDispatch();
+  const dispatсh = useDispatch();
 
   return (
     <form className={styles.signin}>
@@ -23,12 +23,12 @@ const Signin: React.FC = () => {
           name='password'
           label='Пароль'
           type='password'
-          optionalButton={{ text: 'Забыли пароль?', onClick: () => {dispath(switchForm(ResetPassword))} }}
+          optionalButton={{ text: 'Забыли пароль?', onClick: () => {dispatсh(switchForm(ResetPassword))} }}
         />
         <CheckBoxForm label='Запомнить меня' />
       </div>
       <ButtonSubmit>Войти</ButtonSubmit>
-      <span className={styles.link}>Нет аккаунта? <button onClick={() => dispath(switchForm(Signup))} type='button' className={styles.button}>Зарегистрироваться</button></span>
+      <span className={styles.link}>Нет аккаунта? <button onClick={() => dispatсh(switchForm(Signup))} type='button' className={styles.button}>Зарегистрироваться</button></span>
     </form>
   );
 };
