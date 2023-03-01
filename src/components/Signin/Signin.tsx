@@ -12,7 +12,7 @@ import { switchForm } from '../../store/formSlice';
 import { ResetPassword } from '../ResetPassword';
 
 const Signin: React.FC = () => {
-  const dispatсh = useDispatch();
+  const dispatch = useDispatch();
 
   const [passwordShown, setPasswordShown] = useState<boolean>(false);
   const togglePassword = () => {
@@ -28,13 +28,8 @@ const Signin: React.FC = () => {
           placeholder='впишите пароль'
           name='password'
           label='Пароль'
-          type={passwordShown ? 'text' : 'password'}
-          optionalButton={{
-            text: 'Забыли пароль?',
-            onClick: () => {
-              dispatch(switchForm(ResetPassword));
-            },
-          }}
+          type='password'
+          optionalButton={{ text: 'Забыли пароль?', onClick: () => {dispatch(switchForm(ResetPassword))} }}
           optionalEyeButton={{
             shown: passwordShown,
             onClick: () => togglePassword(),
@@ -43,7 +38,12 @@ const Signin: React.FC = () => {
         <CheckBoxForm label='Запомнить меня' />
       </div>
       <ButtonSubmit>Войти</ButtonSubmit>
-      <span className={styles.link}>Нет аккаунта? <button onClick={() => dispatсh(switchForm(Signup))} type='button' className={styles.button}>Зарегистрироваться</button></span>
+      <span className={styles.link}>
+        Нет аккаунта?{' '}
+        <button onClick={() => dispatch(switchForm(Signup))} type='button' className={styles.button}>
+          Зарегистрироваться
+        </button>
+      </span>
     </form>
   );
 };
