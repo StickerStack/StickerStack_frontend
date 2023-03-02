@@ -27,7 +27,7 @@ const InputForm: React.FC<IProps> = ({
         {label}
         {optionalButton && (
           <button className={styles.link} onClick={optionalButton.onClick}>
-            {optionalButton.text}
+            <span className={styles.link_text}>{optionalButton.text}</span>
           </button>
         )}
       </label>

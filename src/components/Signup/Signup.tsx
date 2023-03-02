@@ -46,8 +46,12 @@ const Signup: React.FC = () => {
       <ButtonSubmit>Зарегистрироваться</ButtonSubmit>
       <span className={styles.link}>
         Уже есть аккаунт?{' '}
-        <button type='button' onClick={() => dispatch(switchForm(Signin))} className={styles.button}>
-          Войти
+        <button
+          type='button'
+          onClick={() => dispatch(switchForm(Signin))}
+          className={styles.button}
+        >
+          <span className={styles.text}>Войти</span>
         </button>
       </span>
     </form>
