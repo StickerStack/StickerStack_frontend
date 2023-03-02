@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 
 import { ButtonSubmit } from "../UI/ButtonSubmit";
 import { InputForm } from "../UI/InputForm";
@@ -9,6 +9,7 @@ import { Signin } from "../Signin";
 
 import styles from "./Signup.module.scss";
 import { switchForm } from "../../store/formSlice";
+import { REG_EMAIL } from "../../utils/constants";
 
 const Signup: React.FC = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,10 @@ const Signup: React.FC = () => {
     mode: "onBlur",
   });
 
+  const onSubmit = (data: FieldValues) => {
+    console.log(data);
+  };
+
 
   const [passwordShown, setPasswordShown] = useState<boolean>(false);
   const togglePassword = () => {
@@ -28,7 +33,7 @@ const Signup: React.FC = () => {
   };
 
   return (
-    <form className={styles.signup}>
+    <form onSubmit={handleSubmit(onSubmit)} className={styles.signup}>
       <TitleForm>Регистрация</TitleForm>
       <div className={styles.inputs}>
         <InputForm
@@ -39,8 +44,12 @@ const Signup: React.FC = () => {
           register={register}
           required={true}
           requiredError="Введите E-mail"
-          maxLenght={50}
-          maxLenghtError="Длина поля не менее 5 и не более 50 символов"
+          patternReg={REG_EMAIL}
+          patternError="E-mail введен некорректно, Пример: example@domain.ru"
+          minLength={5}
+          minLengthError="Длина поля не менее 5 символов"
+          maxLength={50}
+          maxLengthError="Длина поля не более 50 символов"
           error={errors?.email?.message ? `${errors?.email?.message}` : ''}
         />
         <InputForm
@@ -51,8 +60,10 @@ const Signup: React.FC = () => {
           register={register}
           required={true}
           requiredError="Введите пароль"
-          maxLenght={50}
-          maxLenghtError="Длина поля не менее 7 и не более 32 символов"
+          minLength={7}
+          minLengthError="Длина поля не менее 7 символов"
+          maxLength={32}
+          maxLengthError="Длина поля не более 32 символов"
           error={errors?.password?.message ? `${errors?.password?.message}` : ''}
           optionalEyeButton={{
             shown: passwordShown,
@@ -67,8 +78,16 @@ const Signup: React.FC = () => {
           register={register}
           required={true}
           requiredError="Введите подтверждение пароля"
-          maxLenght={50}
-          maxLenghtError="Длина поля не менее 7 и не более 32 символов"
+          minLength={7}
+          minLengthError="Длина поля не менее 7 символов"
+          maxLength={32}
+          maxLengthError="Длина поля не более 32 символов"
+          validateFunc={(val: string) => {
+            if (watch("password") !== val) {
+              return "Пароли не совпадают";
+            }
+            return '';
+          }}
           error={errors?.passwordCheck?.message ? `${errors?.passwordCheck?.message}` : ''}
           optionalEyeButton={{
             shown: passwordShown,

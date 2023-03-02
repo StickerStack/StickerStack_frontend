@@ -11,10 +11,13 @@ interface IProps {
   placeholder: string;
   required?: boolean;
   requiredError?: string;
-  maxLenght: number;
-  maxLenghtError: string;
+  minLength?: number;
+  minLengthError?: string;
+  maxLength?: number;
+  maxLengthError?: string;
   patternReg?: RegExp;
   patternError?: string;
+  validateFunc?: (val: string) => string;
   optionalButton?: { onClick: () => void; text: string };
   optionalEyeButton?: { onClick: () => void; shown: boolean };
   register: UseFormRegister<FieldValues>;
@@ -32,8 +35,11 @@ const InputForm: React.FC<IProps> = ({
   requiredError,
   patternReg,
   patternError,
-  maxLenght,
-  maxLenghtError,
+  minLength,
+  minLengthError,
+  maxLength,
+  maxLengthError,
+  validateFunc,
   register,
   error,
 }: IProps) => {
@@ -47,13 +53,23 @@ const InputForm: React.FC<IProps> = ({
           </button>
         )}
       </label>
-      <div className={styles.border}>
+      <div className={error ? styles.border_error : styles.border}>
         <input
           {...register(name, {
             required: required && requiredError,
-            maxLength: {
-              value: maxLenght,
-              message: maxLenghtError
+            validate: (val: string) => {
+              if(validateFunc) {
+                return validateFunc(val);
+              }
+              return '';
+            },
+            maxLength: maxLength && {
+              value: maxLength,
+              message: maxLengthError || ''
+            },
+            minLength: minLength && {
+              value: minLength,
+              message: minLengthError || ''
             },
             pattern: patternReg && {
               value: patternReg,
@@ -63,7 +79,7 @@ const InputForm: React.FC<IProps> = ({
           placeholder={placeholder}
           type={type}
           id={name}
-          className={styles.field}
+          className={error ? styles.field_error : styles.field}
         />
       </div>
       {optionalEyeButton && (

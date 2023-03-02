@@ -27,7 +27,6 @@ const Signin: React.FC = () => {
 
   const onSubmit = (data: FieldValues) => {
     console.log(data);
-    
   };
 
   const [passwordShown, setPasswordShown] = useState<boolean>(false);
@@ -49,8 +48,10 @@ const Signin: React.FC = () => {
           requiredError="Введите E-mail"
           patternReg={REG_EMAIL}
           patternError="E-mail введен некорректно, Пример: example@domain.ru"
-          maxLenght={50}
-          maxLenghtError="Длина поля не менее 5 и не более 50 символов"
+          minLength={5}
+          minLengthError="Длина поля не менее 5 символов"
+          maxLength={50}
+          maxLengthError="Длина поля не более 50 символов"
           error={errors?.email?.message ? `${errors?.email?.message}` : ''}
         />
         <InputForm
@@ -61,8 +62,10 @@ const Signin: React.FC = () => {
           register={register}
           required={true}
           requiredError="Введите пароль"
-          maxLenght={50}
-          maxLenghtError="Длина поля не менее 7 и не более 32 символов"
+          minLength={7}
+          minLengthError="Длина поля не менее 7 символов"
+          maxLength={32}
+          maxLengthError="Длина поля не более 32 символов"
           error={errors?.password?.message ? `${errors?.password?.message}` : ''}
           optionalButton={{
             text: "Забыли пароль?",
