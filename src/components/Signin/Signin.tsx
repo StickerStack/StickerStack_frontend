@@ -29,18 +29,27 @@ const Signin: React.FC = () => {
           name='password'
           label='Пароль'
           type='password'
-          optionalButton={{ text: 'Забыли пароль?', onClick: () => {dispatch(switchForm(ResetPassword))} }}
+          optionalButton={{
+            text: 'Забыли пароль?',
+            onClick: () => {
+              dispatch(switchForm(ResetPassword));
+            },
+          }}
           optionalEyeButton={{
             shown: passwordShown,
             onClick: () => togglePassword(),
           }}
         />
-        <CheckBoxForm label='Запомнить меня' />
+        <CheckBoxForm>Запомнить меня</CheckBoxForm>
       </div>
       <ButtonSubmit>Войти</ButtonSubmit>
       <span className={styles.link}>
         Нет аккаунта?{' '}
-        <button onClick={() => dispatch(switchForm(Signup))} type='button' className={styles.button}>
+        <button
+          onClick={() => dispatch(switchForm(Signup))}
+          type='button'
+          className={styles.button}
+        >
           Зарегистрироваться
         </button>
       </span>

@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { ButtonSubmit } from '../UI/ButtonSubmit';
 import { InputForm } from '../UI/InputForm';
+import { CheckBoxForm } from '../UI/CheckBoxForm';
 import { TitleForm } from '../UI/TitleForm';
 import { Signin } from '../Signin';
 
@@ -43,10 +44,26 @@ const Signup: React.FC = () => {
           }}
         />
       </div>
+      <CheckBoxForm>
+        <p className={styles.checktext}>
+          Я согласен с{' '}
+          <a href='#id' target='_blank' className={styles.documentLink}>
+            Политикой конфиденциальности
+          </a>{' '}
+          и{' '}
+          <a href='#id' target='_blank' className={styles.documentLink}>
+            Условиями использования сервиса
+          </a>
+        </p>
+      </CheckBoxForm>
       <ButtonSubmit>Зарегистрироваться</ButtonSubmit>
       <span className={styles.link}>
         Уже есть аккаунт?{' '}
-        <button type='button' onClick={() => dispatch(switchForm(Signin))} className={styles.button}>
+        <button
+          type='button'
+          onClick={() => dispatch(switchForm(Signin))}
+          className={styles.button}
+        >
           Войти
         </button>
       </span>
