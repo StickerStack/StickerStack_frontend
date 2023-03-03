@@ -73,7 +73,7 @@ const Signin: React.FC = () => {
           type='button'
           className={styles.button}
         >
-          Зарегистрироваться
+          <span className={styles.text}>Зарегистрироваться</span>
         </button>
       </span>
     </form>

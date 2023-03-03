@@ -99,7 +99,7 @@ const Signup: React.FC = () => {
           onClick={() => dispatch(switchForm(Signin))}
           className={styles.button}
         >
-          Войти
+          <span className={styles.text}>Войти</span>
         </button>
       </span>
     </form>

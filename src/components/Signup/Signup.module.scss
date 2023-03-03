@@ -42,6 +42,16 @@
   cursor: pointer;
 }
 
-.button:hover {
-  opacity: 0.8;
+.text::after {
+  content: '';
+  display: block;
+  margin-top: 5px;
+  width: 0;
+  height: 2px;
+  background: #000;
+  transition: width 0.3s;
+}
+.text:hover::after {
+  width: 100%;
+  transition: width 0.3s;
 }

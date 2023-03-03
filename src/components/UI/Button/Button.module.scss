@@ -11,8 +11,9 @@
   font-size: 20px;
   line-height: 24px;
   color: $other-button-text-color;
+  transition: opacity 0.3s ease-in-out;
 }
 
 .button:hover {
-  opacity: .8;
+  opacity: 0.6;
 }
