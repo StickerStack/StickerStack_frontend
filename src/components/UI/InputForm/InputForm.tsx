@@ -1,3 +1,4 @@
+import { FieldValues, RegisterOptions, UseFormRegisterReturn } from "react-hook-form";
 import { EyeButton } from "../EyeButton";
 
 import styles from "./InputForm.module.scss";
@@ -19,7 +20,7 @@ interface IProps {
   validateFunc?: (val: string) => string;
   optionalButton?: { onClick: () => void; text: string };
   optionalEyeButton?: { onClick: () => void; shown: boolean };
-  register: any;
+  register: ((name: string, options?: RegisterOptions<FieldValues, string> | undefined) => UseFormRegisterReturn <string>) | any;
   error?: string;
 }
 
