@@ -1,9 +1,8 @@
-import { UseFormRegister, FieldValues } from 'react-hook-form';
-
 import { EyeButton } from "../EyeButton";
 
 import styles from "./InputForm.module.scss";
 
+// FIXME: register type any -> нужен осмысленный тип!!!
 interface IProps {
   name: string;
   label: string;
@@ -20,7 +19,7 @@ interface IProps {
   validateFunc?: (val: string) => string;
   optionalButton?: { onClick: () => void; text: string };
   optionalEyeButton?: { onClick: () => void; shown: boolean };
-  register: UseFormRegister<FieldValues>;
+  register: any;
   error?: string;
 }
 
@@ -31,15 +30,6 @@ const InputForm: React.FC<IProps> = ({
   optionalButton,
   optionalEyeButton,
   placeholder,
-  required,
-  requiredError,
-  patternReg,
-  patternError,
-  minLength,
-  minLengthError,
-  maxLength,
-  maxLengthError,
-  validateFunc,
   register,
   error,
 }: IProps) => {
@@ -55,27 +45,7 @@ const InputForm: React.FC<IProps> = ({
       </label>
       <div className={error ? styles.border_error : styles.border}>
         <input
-          {...register(name, {
-            required: required && requiredError,
-            validate: (val: string) => {
-              if(validateFunc) {
-                return validateFunc(val);
-              }
-              return '';
-            },
-            maxLength: maxLength && {
-              value: maxLength,
-              message: maxLengthError || ''
-            },
-            minLength: minLength && {
-              value: minLength,
-              message: minLengthError || ''
-            },
-            pattern: patternReg && {
-              value: patternReg,
-              message: patternError || '' 
-            }
-          })}
+          {...register}
           placeholder={placeholder}
           type={type}
           id={name}

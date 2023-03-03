@@ -10,14 +10,13 @@ import styles from './ResetPassword.module.scss';
 import { switchForm } from '../../store/formSlice';
 import { Button } from '../UI/Button';
 import { TextForm } from '../UI/TextForm';
-import { REG_EMAIL } from '../../utils/constants';
+import { registerEmail } from '../../utils/registersRHF';
 
 const ResetPassword: React.FC = () => {
   const dispatch = useDispatch();
   const {
     register,
     formState: { errors },
-    watch,
     handleSubmit,
   } = useForm({
     mode: 'onBlur',
@@ -36,15 +35,7 @@ const ResetPassword: React.FC = () => {
         label="E-mail Вашего аккаунта"
         name="email"
         placeholder="vashapochta@gmail.com"
-        register={register}
-        required={true}
-        requiredError="Введите E-mail"
-        patternReg={REG_EMAIL}
-        patternError="E-mail введен некорректно, Пример: example@domain.ru"
-        minLength={5}
-        minLengthError="Длина поля не менее 5 символов"
-        maxLength={50}
-        maxLengthError="Длина поля не более 50 символов"
+        register={{...register('email', registerEmail)}}
         error={errors?.email?.message ? `${errors?.email?.message}` : ''}
       />
       <TextForm>

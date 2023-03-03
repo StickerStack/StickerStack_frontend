@@ -11,7 +11,7 @@ import { Signup } from "../Signup";
 import styles from "./Signin.module.scss";
 import { switchForm } from "../../store/formSlice";
 import { ResetPassword } from "../ResetPassword";
-import { REG_EMAIL } from "../../utils/constants";
+import { registerEmail, registerPassword } from "../../utils/registersRHF";
 
 const Signin: React.FC = () => {
   const dispatch = useDispatch();
@@ -19,7 +19,6 @@ const Signin: React.FC = () => {
   const {
     register,
     formState: { errors },
-    watch,
     handleSubmit,
   } = useForm({
     mode: "onBlur",
@@ -32,7 +31,7 @@ const Signin: React.FC = () => {
   const [passwordShown, setPasswordShown] = useState<boolean>(false);
   const togglePassword = () => {
     setPasswordShown(passwordShown ? false : true);
-  };
+  }
 
   return (
     <form className={styles.signin} onSubmit={handleSubmit(onSubmit)}>
@@ -43,15 +42,7 @@ const Signin: React.FC = () => {
           name="email"
           label="Email"
           type="text"
-          register={register}
-          required={true}
-          requiredError="Введите E-mail"
-          patternReg={REG_EMAIL}
-          patternError="E-mail введен некорректно, Пример: example@domain.ru"
-          minLength={5}
-          minLengthError="Длина поля не менее 5 символов"
-          maxLength={50}
-          maxLengthError="Длина поля не более 50 символов"
+          register={{...register("email", registerEmail)}}
           error={errors?.email?.message ? `${errors?.email?.message}` : ''}
         />
         <InputForm
@@ -59,13 +50,7 @@ const Signin: React.FC = () => {
           name="password"
           label="Пароль"
           type={passwordShown ? "text" : "password"}
-          register={register}
-          required={true}
-          requiredError="Введите пароль"
-          minLength={7}
-          minLengthError="Длина поля не менее 7 символов"
-          maxLength={32}
-          maxLengthError="Длина поля не более 32 символов"
+          register={{...register("password", registerPassword)}}
           error={errors?.password?.message ? `${errors?.password?.message}` : ''}
           optionalButton={{
             text: "Забыли пароль?",
