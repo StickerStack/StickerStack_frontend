@@ -1,7 +1,7 @@
 import { REG_EMAIL } from "./constants";
 
 const registerEmail = {
-  require: 'Введите E-mail',
+  required: 'Введите E-mail',
   minLength: {
     value: 5,
     message: 'Длина поля не менее 5 символов'
@@ -17,7 +17,7 @@ const registerEmail = {
 };
 
 const registerPassword = {
-  require: 'Введите пароль',
+  required: 'Введите пароль',
   minLength: {
     value: 7,
     message: 'Длина поля не менее 7 символов'
