@@ -30,18 +30,37 @@ input:-webkit-autofill {
   font-size: 16px;
   line-height: 19px;
   text-decoration: none;
-  color: rgba(0, 0, 0, 1);
+  color: #000;
   background-color: transparent;
   border: none;
   cursor: pointer;
-}
 
-.link:hover {
-  color: rgba(0, 0, 0, 0.7);
+  &_text::after {
+    content: '';
+    display: block;
+    margin-top: 5px;
+    width: 0;
+    height: 2px;
+    background: #000;
+    transition: width 0.3s;
+  }
+  &_text:hover::after {
+    width: 100%;
+    transition: width 0.3s;
+  }
 }
 
 .border {
   border: 1px solid #000;
+  border-radius: 5px;
+  padding: 0 0 0 20px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.border_error {
+  border: 1px solid $error-text-color;
   border-radius: 5px;
   padding: 0 0 0 20px;
   height: 30px;
@@ -57,6 +76,17 @@ input:-webkit-autofill {
   font-size: 16px;
   line-height: 19px;
   color: #000;
+  background-color: transparent;
+}
+
+.field_error {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: $error-text-color;
   background-color: transparent;
 }
 

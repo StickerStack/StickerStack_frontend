@@ -24,6 +24,17 @@
   margin-top: -30px;
 }
 
+.checktext {
+  margin: 0;
+  width: 100%;
+  font-size: 12px;
+  line-height: 15px;
+}
+
+.documentLink {
+  color: #000;
+}
+
 .button {
   background-color: transparent;
   border: none;
@@ -31,6 +42,16 @@
   cursor: pointer;
 }
 
-.button:hover {
-  opacity: .8;
+.text::after {
+  content: '';
+  display: block;
+  margin-top: 5px;
+  width: 0;
+  height: 2px;
+  background: #000;
+  transition: width 0.3s;
+}
+.text:hover::after {
+  width: 100%;
+  transition: width 0.3s;
 }

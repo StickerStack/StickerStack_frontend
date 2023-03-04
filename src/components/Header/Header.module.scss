@@ -25,10 +25,6 @@
   color: $main-text-color;
 }
 
-.logo:hover {
-  opacity: 0.8;
-}
-
 .navigation {
   padding: 0;
   margin: 0;
@@ -46,8 +42,18 @@
   color: $main-text-color;
 }
 
-.link:hover {
-  opacity: 0.8;
+.link::after {
+  content: '';
+  display: block;
+  margin-top: 5px;
+  width: 0;
+  height: 2px;
+  background: #000;
+  transition: width 0.3s;
+}
+.link:hover::after {
+  width: 100%;
+  transition: width 0.3s;
 }
 
 .profile {
@@ -56,8 +62,9 @@
   background-image: url(../../images/profile-icon.svg);
   background-color: transparent;
   cursor: pointer;
+  transition: opacity 0.3 ease-in-out;
 }
 
 .profile:hover {
-  opacity: 0.5;
+  opacity: 0.6;
 }
