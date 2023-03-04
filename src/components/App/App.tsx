@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { api } from '../../utils/api';
 
 import { Header } from '../Header';
 import { Popup } from '../Popup';
@@ -9,7 +8,6 @@ import styles from './App.module.scss';
 const App: React.FC = () => {
   const [isLogged, setIsLogged] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-
 
   const setClose = () => {
     setIsOpen(false);
