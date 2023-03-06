@@ -21,15 +21,15 @@ const Signup: React.FC = () => {
     handleSubmit,
   } = useForm({
     mode: 'onBlur',
+    defaultValues: {
+      email: '',
+      password: '',
+      passwordCheck: '',
+    },
   });
 
   const onSubmit = (data: FieldValues) => {
     console.log(data);
-  };
-
-  const [passwordShown, setPasswordShown] = useState<boolean>(false);
-  const togglePassword = () => {
-    setPasswordShown(passwordShown ? false : true);
   };
 
   return (
@@ -48,19 +48,18 @@ const Signup: React.FC = () => {
           placeholder='впишите пароль'
           name='password'
           label='Пароль'
-          type={passwordShown ? 'text' : 'password'}
+          type='password'
           register={{ ...register('password', registerPassword) }}
           error={errors?.password?.message ? `${errors?.password?.message}` : ''}
           optionalEyeButton={{
-            shown: passwordShown,
-            onClick: () => togglePassword(),
+            visible: watch('password') !== (undefined || ''),
           }}
         />
         <InputForm
           placeholder='еще раз пароль'
           name='passwordCheck'
           label='Подтвердите пароль'
-          type={passwordShown ? 'text' : 'password'}
+          type='password'
           register={{
             ...register('passwordCheck', {
               ...registerPassword,
@@ -74,8 +73,7 @@ const Signup: React.FC = () => {
           }}
           error={errors?.passwordCheck?.message ? `${errors?.passwordCheck?.message}` : ''}
           optionalEyeButton={{
-            shown: passwordShown,
-            onClick: () => togglePassword(),
+            visible: watch('passwordCheck') !== (undefined || ''),
           }}
         />
       </div>
