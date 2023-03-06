@@ -1,7 +1,8 @@
-import { FieldValues, RegisterOptions, UseFormRegisterReturn } from "react-hook-form";
-import { EyeButton } from "../EyeButton";
+import { useState } from 'react';
+import { FieldValues, RegisterOptions, UseFormRegisterReturn } from 'react-hook-form';
+import { EyeButton } from '../EyeButton';
 
-import styles from "./InputForm.module.scss";
+import styles from './InputForm.module.scss';
 
 // FIXME: register type any -> нужен осмысленный тип!!!
 interface IProps {
@@ -19,21 +20,30 @@ interface IProps {
   patternError?: string;
   validateFunc?: (val: string) => string;
   optionalButton?: { onClick: () => void; text: string };
-  optionalEyeButton?: { onClick: () => void; shown: boolean };
-  register: ((name: string, options?: RegisterOptions<FieldValues, string> | undefined) => UseFormRegisterReturn <string>) | any;
+  optionalEyeButton?: { visible: boolean };
+  register:
+    | ((
+        name: string,
+        options?: RegisterOptions<FieldValues, string> | undefined,
+      ) => UseFormRegisterReturn<string>)
+    | any;
   error?: string;
 }
 
 const InputForm: React.FC<IProps> = ({
   name,
   label,
-  type = "text",
+  type = 'text',
   optionalButton,
   optionalEyeButton,
   placeholder,
   register,
   error,
 }: IProps) => {
+  const [passwordShown, setPasswordShown] = useState<boolean>(false);
+  const togglePassword = () => {
+    setPasswordShown(passwordShown ? false : true);
+  };
   return (
     <div className={styles.input}>
       <label htmlFor={name} className={styles.label}>
@@ -48,15 +58,16 @@ const InputForm: React.FC<IProps> = ({
         <input
           {...register}
           placeholder={placeholder}
-          type={type}
+          type={passwordShown && type === 'password' ? 'text' : type}
           id={name}
           className={error ? styles.field_error : styles.field}
         />
       </div>
       {optionalEyeButton && (
         <EyeButton
-          onClick={optionalEyeButton.onClick}
-          shown={optionalEyeButton.shown}
+          onClick={() => togglePassword()}
+          shown={passwordShown}
+          visible={optionalEyeButton.visible}
         />
       )}
       <span className={styles.error}>{error}</span>
