@@ -25,6 +25,7 @@ const Signup: React.FC = () => {
       email: '',
       password: '',
       passwordCheck: '',
+      confirmCheckbox: false,
     },
   });
 
@@ -50,7 +51,9 @@ const Signup: React.FC = () => {
           label='Пароль'
           type='password'
           register={{ ...register('password', registerPassword) }}
-          error={errors?.password?.message ? `${errors?.password?.message}` : ''}
+          error={
+            errors?.password?.message ? `${errors?.password?.message}` : ''
+          }
           optionalEyeButton={{
             visible: watch('password') !== (undefined || ''),
           }}
@@ -71,13 +74,21 @@ const Signup: React.FC = () => {
               required: 'Введи пароль повторно',
             }),
           }}
-          error={errors?.passwordCheck?.message ? `${errors?.passwordCheck?.message}` : ''}
+          error={
+            errors?.passwordCheck?.message
+              ? `${errors?.passwordCheck?.message}`
+              : ''
+          }
           optionalEyeButton={{
             visible: watch('passwordCheck') !== (undefined || ''),
           }}
         />
       </div>
-      <CheckBoxForm>
+      <CheckBoxForm
+        name='confirmCheckbox'
+        register={register('confirmCheckbox', { required: true })}
+        error={errors?.confirmCheckbox ? true : false}
+      >
         <p className={styles.checktext}>
           Я согласен с{' '}
           <a href='#id' target='_blank' className={styles.documentLink}>

@@ -10,7 +10,7 @@ import styles from './App.module.scss';
 
 const App: React.FC = () => {
   const dispatch = useDispatch();
-  
+
   const [isLogged, setIsLogged] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
