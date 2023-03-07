@@ -10,38 +10,42 @@ interface IProps {
   onClickLogout: () => void;
 }
 
-const Header: React.FC<IProps> = ({ isLogged, onClickSignin, onClickLogout }: IProps) => {
+const Header: React.FC<IProps> = ({
+  isLogged,
+  onClickSignin,
+  onClickLogout,
+}: IProps) => {
   return (
     <header className={styles.header}>
-      <Link to="/" className={styles.logo}>
+      <Link to='/' className={styles.logo}>
         Лого
       </Link>
       <nav>
         <ul className={styles.navigation}>
           <li>
-            <NavLink className={styles.link} to="/">
+            <NavLink className={styles.link} to='/'>
               Как это работает?
             </NavLink>
           </li>
           <li>
-            <NavLink className={styles.link} to="/">
+            <NavLink className={styles.link} to='/'>
               Наши работы
             </NavLink>
           </li>
           <li>
-            <NavLink className={styles.link} to="/">
+            <NavLink className={styles.link} to='/'>
               Оплата и доставка
             </NavLink>
           </li>
           <li>
-            <NavLink className={styles.link} to="/">
+            <NavLink className={styles.link} to='/'>
               Отзывы
             </NavLink>
           </li>
         </ul>
       </nav>
       {isLogged ? (
-        <Link onClick={onClickLogout} to="/" className={styles.profile} />
+        <Link onClick={onClickLogout} to='/' className={styles.profile} />
       ) : (
         <Button onClick={onClickSignin}>Войти</Button>
       )}

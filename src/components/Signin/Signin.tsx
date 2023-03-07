@@ -26,6 +26,7 @@ const Signin: React.FC = () => {
     defaultValues: {
       email: '',
       password: '',
+      rememberCheckbox: false,
     },
   });
 
@@ -33,28 +34,23 @@ const Signin: React.FC = () => {
     console.log(data);
   };
 
-  const [passwordShown, setPasswordShown] = useState<boolean>(false);
-  const togglePassword = () => {
-    setPasswordShown(passwordShown ? false : true);
-  };
-
   return (
     <form className={styles.signin} onSubmit={handleSubmit(onSubmit)}>
       <TitleForm>Войти в личный кабинет</TitleForm>
       <div className={styles.inputs}>
         <InputForm
-          placeholder="vashapochta@gmail.com"
-          name="email"
-          label="Email"
-          type="text"
+          placeholder='vashapochta@gmail.com'
+          name='email'
+          label='Email'
+          type='text'
           register={{ ...register('email', registerEmail) }}
           error={errors?.email?.message ? `${errors?.email?.message}` : ''}
         />
         <InputForm
-          placeholder="впишите пароль"
-          name="password"
-          label="Пароль"
-          type={passwordShown ? 'text' : 'password'}
+          placeholder='впишите пароль'
+          name='password'
+          label='Пароль'
+          type='password'
           register={{ ...register('password', registerPassword) }}
           error={
             errors?.password?.message ? `${errors?.password?.message}` : ''
@@ -66,13 +62,12 @@ const Signin: React.FC = () => {
             },
           }}
           optionalEyeButton={{
-            shown: passwordShown,
-            onClick: () => togglePassword(),
+            visible: watch('password') !== (undefined || ''),
           }}
         />
         <CheckBoxForm
-          name="remember-checkbox"
-          register={register('remember-checkbox')}
+          name='rememberCheckbox'
+          register={register('rememberCheckbox')}
         >
           Запомнить меня
         </CheckBoxForm>
@@ -82,7 +77,7 @@ const Signin: React.FC = () => {
         Нет аккаунта?{' '}
         <button
           onClick={() => dispatch(switchForm(Signup))}
-          type="button"
+          type='button'
           className={styles.button}
         >
           <span className={styles.text}>Зарегистрироваться</span>

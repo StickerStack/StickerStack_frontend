@@ -1,5 +1,9 @@
 import { useState } from 'react';
-import { FieldValues, RegisterOptions, UseFormRegisterReturn } from 'react-hook-form';
+import {
+  FieldValues,
+  RegisterOptions,
+  UseFormRegisterReturn,
+} from 'react-hook-form';
 import { EyeButton } from '../EyeButton';
 
 import styles from './InputForm.module.scss';
@@ -24,7 +28,7 @@ interface IProps {
   register:
     | ((
         name: string,
-        options?: RegisterOptions<FieldValues, string> | undefined,
+        options?: RegisterOptions<FieldValues, string> | undefined
       ) => UseFormRegisterReturn<string>)
     | any;
   error?: string;
