@@ -38,20 +38,22 @@ const Signin: React.FC = () => {
       <TitleForm>Войти в личный кабинет</TitleForm>
       <div className={styles.inputs}>
         <InputForm
-          placeholder='vashapochta@gmail.com'
-          name='email'
-          label='Email'
-          type='text'
+          placeholder="vashapochta@gmail.com"
+          name="email"
+          label="Email"
+          type="text"
           register={{ ...register('email', registerEmail) }}
           error={errors?.email?.message ? `${errors?.email?.message}` : ''}
         />
         <InputForm
-          placeholder='впишите пароль'
-          name='password'
-          label='Пароль'
+          placeholder="впишите пароль"
+          name="password"
+          label="Пароль"
           type={passwordShown ? 'text' : 'password'}
           register={{ ...register('password', registerPassword) }}
-          error={errors?.password?.message ? `${errors?.password?.message}` : ''}
+          error={
+            errors?.password?.message ? `${errors?.password?.message}` : ''
+          }
           optionalButton={{
             text: 'Забыли пароль?',
             onClick: () => {
@@ -63,14 +65,19 @@ const Signin: React.FC = () => {
             onClick: () => togglePassword(),
           }}
         />
-        <CheckBoxForm>Запомнить меня</CheckBoxForm>
+        <CheckBoxForm
+          name="remember-checkbox"
+          register={register('remember-checkbox')}
+        >
+          Запомнить меня
+        </CheckBoxForm>
       </div>
       <ButtonSubmit>Войти</ButtonSubmit>
       <span className={styles.link}>
         Нет аккаунта?{' '}
         <button
           onClick={() => dispatch(switchForm(Signup))}
-          type='button'
+          type="button"
           className={styles.button}
         >
           <span className={styles.text}>Зарегистрироваться</span>
