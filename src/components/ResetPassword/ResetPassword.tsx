@@ -35,9 +35,14 @@ const ResetPassword: React.FC = () => {
         register={{ ...register('email', registerEmail) }}
         error={errors?.email?.message ? `${errors?.email?.message}` : ''}
       />
-      <TextForm>Мы направим ссылку на Вашу почту для восстановления пароля</TextForm>
+      <TextForm>
+        Мы направим ссылку на Вашу почту для восстановления пароля
+      </TextForm>
       <ButtonSubmit>Восстановить пароль</ButtonSubmit>
-      <button className={styles.button} onClick={() => dispatch(switchForm(Signin))}>
+      <button
+        className={styles.button}
+        onClick={() => dispatch(switchForm(Signin))}
+      >
         <span className={styles.button_text}>Вернуться назад</span>
       </button>
     </form>

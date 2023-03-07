@@ -1,25 +1,34 @@
-import { useState } from 'react';
-
 import styles from './CheckBoxForm.module.scss';
 
 interface IProps {
   children: React.ReactNode;
+  name: string;
+  register: any;
+  error?: boolean;
 }
 
-const CheckBoxForm: React.FC<IProps> = ({ children }: IProps) => {
-  const [isChecked, setIsChecked] = useState<boolean>(false);
-
+const CheckBoxForm: React.FC<IProps> = ({
+  register,
+  children,
+  name,
+  error,
+}: IProps) => {
   return (
-    <label className={styles.label} htmlFor='test'>
-      <input
-        className={styles.input}
-        type='checkbox'
-        id='test'
-        onChange={() => setIsChecked(!isChecked)}
-      />
-      <span className={isChecked ? styles.checkbox_active : styles.checkbox} />
+    <div className={styles.container}>
+      <div>
+        <input
+          className={styles.input}
+          {...register}
+          id={name}
+          type='checkbox'
+        />
+        <label
+          className={error ? styles.label_error : styles.label}
+          htmlFor={name}
+        />
+      </div>
       {children}
-    </label>
+    </div>
   );
 };
 

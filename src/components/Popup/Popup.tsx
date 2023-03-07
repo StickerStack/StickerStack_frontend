@@ -18,7 +18,7 @@ const Popup: React.FC<IProps> = ({ isOpen, onClose }: IProps) => {
             <PopupForm onClose={onClose} />
           </div>
         </div>,
-        document.getElementById('app-popup') as HTMLElement,
+        document.getElementById('app-popup') as HTMLElement
       )
     : null;
 };

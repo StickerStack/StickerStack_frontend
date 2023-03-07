@@ -21,15 +21,16 @@ const Signup: React.FC = () => {
     handleSubmit,
   } = useForm({
     mode: 'onBlur',
+    defaultValues: {
+      email: '',
+      password: '',
+      passwordCheck: '',
+      confirmCheckbox: false,
+    },
   });
 
   const onSubmit = (data: FieldValues) => {
     console.log(data);
-  };
-
-  const [passwordShown, setPasswordShown] = useState<boolean>(false);
-  const togglePassword = () => {
-    setPasswordShown(passwordShown ? false : true);
   };
 
   return (
@@ -48,19 +49,20 @@ const Signup: React.FC = () => {
           placeholder='впишите пароль'
           name='password'
           label='Пароль'
-          type={passwordShown ? 'text' : 'password'}
+          type='password'
           register={{ ...register('password', registerPassword) }}
-          error={errors?.password?.message ? `${errors?.password?.message}` : ''}
+          error={
+            errors?.password?.message ? `${errors?.password?.message}` : ''
+          }
           optionalEyeButton={{
-            shown: passwordShown,
-            onClick: () => togglePassword(),
+            visible: watch('password') !== (undefined || ''),
           }}
         />
         <InputForm
           placeholder='еще раз пароль'
           name='passwordCheck'
           label='Подтвердите пароль'
-          type={passwordShown ? 'text' : 'password'}
+          type='password'
           register={{
             ...register('passwordCheck', {
               ...registerPassword,
@@ -72,14 +74,21 @@ const Signup: React.FC = () => {
               required: 'Введи пароль повторно',
             }),
           }}
-          error={errors?.passwordCheck?.message ? `${errors?.passwordCheck?.message}` : ''}
+          error={
+            errors?.passwordCheck?.message
+              ? `${errors?.passwordCheck?.message}`
+              : ''
+          }
           optionalEyeButton={{
-            shown: passwordShown,
-            onClick: () => togglePassword(),
+            visible: watch('passwordCheck') !== (undefined || ''),
           }}
         />
       </div>
-      <CheckBoxForm>
+      <CheckBoxForm
+        name='confirmCheckbox'
+        register={register('confirmCheckbox', { required: true })}
+        error={errors?.confirmCheckbox ? true : false}
+      >
         <p className={styles.checktext}>
           Я согласен с{' '}
           <a href='#id' target='_blank' className={styles.documentLink}>

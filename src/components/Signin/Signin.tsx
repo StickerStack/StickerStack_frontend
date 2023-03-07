@@ -20,17 +20,18 @@ const Signin: React.FC = () => {
     register,
     formState: { errors },
     handleSubmit,
+    watch,
   } = useForm({
     mode: 'onBlur',
+    defaultValues: {
+      email: '',
+      password: '',
+      rememberCheckbox: false,
+    },
   });
 
   const onSubmit = (data: FieldValues) => {
     console.log(data);
-  };
-
-  const [passwordShown, setPasswordShown] = useState<boolean>(false);
-  const togglePassword = () => {
-    setPasswordShown(passwordShown ? false : true);
   };
 
   return (
@@ -49,9 +50,11 @@ const Signin: React.FC = () => {
           placeholder='впишите пароль'
           name='password'
           label='Пароль'
-          type={passwordShown ? 'text' : 'password'}
+          type='password'
           register={{ ...register('password', registerPassword) }}
-          error={errors?.password?.message ? `${errors?.password?.message}` : ''}
+          error={
+            errors?.password?.message ? `${errors?.password?.message}` : ''
+          }
           optionalButton={{
             text: 'Забыли пароль?',
             onClick: () => {
@@ -59,11 +62,15 @@ const Signin: React.FC = () => {
             },
           }}
           optionalEyeButton={{
-            shown: passwordShown,
-            onClick: () => togglePassword(),
+            visible: watch('password') !== (undefined || ''),
           }}
         />
-        <CheckBoxForm>Запомнить меня</CheckBoxForm>
+        <CheckBoxForm
+          name='rememberCheckbox'
+          register={register('rememberCheckbox')}
+        >
+          Запомнить меня
+        </CheckBoxForm>
       </div>
       <ButtonSubmit>Войти</ButtonSubmit>
       <span className={styles.link}>
