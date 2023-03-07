@@ -21,6 +21,11 @@ const Signup: React.FC = () => {
     handleSubmit,
   } = useForm({
     mode: 'onBlur',
+    defaultValues: {
+      email: '',
+      password: '',
+      passwordCheck: '',
+    },
   });
 
   const onSubmit = (data: FieldValues) => {
@@ -80,8 +85,7 @@ const Signup: React.FC = () => {
               : ''
           }
           optionalEyeButton={{
-            shown: passwordShown,
-            onClick: () => togglePassword(),
+            visible: watch('passwordCheck') !== (undefined || ''),
           }}
         />
       </div>

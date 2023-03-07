@@ -20,8 +20,13 @@ const Signin: React.FC = () => {
     register,
     formState: { errors },
     handleSubmit,
+    watch,
   } = useForm({
     mode: 'onBlur',
+    defaultValues: {
+      email: '',
+      password: '',
+    },
   });
 
   const onSubmit = (data: FieldValues) => {
