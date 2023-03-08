@@ -25,37 +25,6 @@
   color: $main-text-color;
 }
 
-.navigation {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  display: flex;
-  gap: 20px;
-}
-
-.link {
-  text-decoration: none;
-  cursor: pointer;
-  font-weight: 400;
-  font-size: $main-text-desktop-size;
-  line-height: 24px;
-  color: $main-text-color;
-}
-
-.link::after {
-  content: '';
-  display: block;
-  margin-top: 5px;
-  width: 0;
-  height: 2px;
-  background: #000;
-  transition: width 0.3s;
-}
-.link:hover::after {
-  width: 100%;
-  transition: width 0.3s;
-}
-
 .profile {
   width: 50px;
   height: 50px;
