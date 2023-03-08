@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../hooks/hooks';
 import { FieldValues, useForm } from 'react-hook-form';
 
 import { ButtonSubmit } from '../UI/ButtonSubmit';
@@ -10,12 +10,14 @@ import { Signin } from '../Signin';
 
 import styles from './Signup.module.scss';
 import { switchForm } from '../../store/formSlice';
+import { signUp } from '../../store/registerSlice';
 import { registerEmail, registerPassword } from '../../utils/registersRHF';
 
 const Signup: React.FC = () => {
   const dispatch = useDispatch();
   const {
     register,
+    getValues,
     formState: { errors },
     watch,
     handleSubmit,
@@ -29,8 +31,21 @@ const Signup: React.FC = () => {
     },
   });
 
-  const onSubmit = (data: FieldValues) => {
-    console.log(data);
+  const userEmail = getValues('email');
+  const userPassword = getValues('password');
+
+  const appDispatch = useAppDispatch();
+
+  const onSubmit = () => {
+    appDispatch(signUp({ email: userEmail, password: userPassword }))
+      /* .then(() =>
+    - закрыть попап
+    - открыть окошко с уведомлением о письме на почте
+    
+    ) */
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -51,9 +66,7 @@ const Signup: React.FC = () => {
           label='Пароль'
           type='password'
           register={{ ...register('password', registerPassword) }}
-          error={
-            errors?.password?.message ? `${errors?.password?.message}` : ''
-          }
+          error={errors?.password?.message ? `${errors?.password?.message}` : ''}
           optionalEyeButton={{
             visible: watch('password') !== (undefined || ''),
           }}
@@ -74,11 +87,7 @@ const Signup: React.FC = () => {
               required: 'Введи пароль повторно',
             }),
           }}
-          error={
-            errors?.passwordCheck?.message
-              ? `${errors?.passwordCheck?.message}`
-              : ''
-          }
+          error={errors?.passwordCheck?.message ? `${errors?.passwordCheck?.message}` : ''}
           optionalEyeButton={{
             visible: watch('passwordCheck') !== (undefined || ''),
           }}
