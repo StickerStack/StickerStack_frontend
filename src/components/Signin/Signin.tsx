@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../hooks/hooks';
 import { useForm, FieldValues } from 'react-hook-form';
 
 import { ButtonSubmit } from '../UI/ButtonSubmit';
@@ -10,14 +11,15 @@ import { Signup } from '../Signup';
 
 import styles from './Signin.module.scss';
 import { switchForm } from '../../store/formSlice';
+import { signIn } from '../../store/logSlice';
 import { ResetPassword } from '../ResetPassword';
 import { registerEmail, registerPassword } from '../../utils/registersRHF';
 
 const Signin: React.FC = () => {
   const dispatch = useDispatch();
-
   const {
     register,
+    getValues,
     formState: { errors },
     handleSubmit,
     watch,
@@ -30,8 +32,22 @@ const Signin: React.FC = () => {
     },
   });
 
-  const onSubmit = (data: FieldValues) => {
-    console.log(data);
+  const userEmail = getValues('email');
+  const userPassword = getValues('password');
+
+  const appDispatch = useAppDispatch();
+
+  const onSubmit = () => {
+    appDispatch(signIn({ email: userEmail, password: userPassword }))
+      /* .then(() =>
+    - закрыть попап
+    - поменять кнопку входа на иконку юзера
+    - сделать доступной страницу добавления картинок
+    
+    ) */
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -52,9 +68,7 @@ const Signin: React.FC = () => {
           label='Пароль'
           type='password'
           register={{ ...register('password', registerPassword) }}
-          error={
-            errors?.password?.message ? `${errors?.password?.message}` : ''
-          }
+          error={errors?.password?.message ? `${errors?.password?.message}` : ''}
           optionalButton={{
             text: 'Забыли пароль?',
             onClick: () => {
@@ -65,10 +79,7 @@ const Signin: React.FC = () => {
             visible: watch('password') !== (undefined || ''),
           }}
         />
-        <CheckBoxForm
-          name='rememberCheckbox'
-          register={register('rememberCheckbox')}
-        >
+        <CheckBoxForm name='rememberCheckbox' register={register('rememberCheckbox')}>
           Запомнить меня
         </CheckBoxForm>
       </div>
