@@ -13,7 +13,18 @@ class Api {
     if (res.ok) {
       return res.json();
     }
+    
     return Promise.reject(`Ошибка ${res.status}`);
+  }
+
+  private _formatingData(email: string, password: string) {
+    const data = new URLSearchParams();
+
+    data.append('username', email);
+    data.append('password', password);
+    
+
+    return data;
   }
 
   public async signUp(email: string, password: string) {
@@ -34,11 +45,12 @@ class Api {
   public async signIn(email: string, password: string) {
     const data = await fetch(`${this._url}/auth/login`, {
       method: "POST",
-      headers: this._headers,
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
+      headers: {
+        // "Content-Type": "application/json; charset=utf-8",
+        'Accept': 'application/json',
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      body: this._formatingData(email, password),
     });
 
     const response = await this._checkResponse(data);
