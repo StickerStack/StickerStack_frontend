@@ -1,7 +1,6 @@
-import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useAppDispatch } from '../../hooks/hooks';
-import { useForm, FieldValues } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 import { ButtonSubmit } from '../UI/ButtonSubmit';
 import { CheckBoxForm } from '../UI/CheckBoxForm';
