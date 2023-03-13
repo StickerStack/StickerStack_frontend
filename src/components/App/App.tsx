@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Route, Routes } from 'react-router-dom';
 import { switchForm } from '../../store/formSlice';
 
 import { Header } from '../Header';
 import { Popup } from '../Popup';
 import { Signin } from '../Signin';
+import { ChangePassword } from '../ChangePassword';
 
 import styles from './App.module.scss';
 
@@ -31,6 +33,11 @@ const App: React.FC = () => {
         }}
         isLogged={isLogged}
       />
+      <Routes>
+        <Route path='/' element={<></>} />
+        <Route path='/change-password' element={<ChangePassword />} />
+      </Routes>
+
       <Popup isOpen={isOpen} onClose={setClose} />
     </div>
   );

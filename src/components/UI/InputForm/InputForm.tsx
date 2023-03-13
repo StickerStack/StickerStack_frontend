@@ -13,15 +13,7 @@ interface IProps {
   name: string;
   label: string;
   type?: string;
-  placeholder: string;
-  required?: boolean;
-  requiredError?: string;
-  minLength?: number;
-  minLengthError?: string;
-  maxLength?: number;
-  maxLengthError?: string;
-  patternReg?: RegExp;
-  patternError?: string;
+  placeholder?: string;
   validateFunc?: (val: string) => string;
   optionalButton?: { onClick: () => void; text: string };
   optionalEyeButton?: { visible: boolean };
