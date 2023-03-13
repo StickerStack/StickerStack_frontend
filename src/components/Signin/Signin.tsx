@@ -63,7 +63,9 @@ const Signin: React.FC = () => {
           label='Пароль'
           type='password'
           register={{ ...register('password', registerPassword) }}
-          error={errors?.password?.message ? `${errors?.password?.message}` : ''}
+          error={
+            errors?.password?.message ? `${errors?.password?.message}` : ''
+          }
           optionalButton={{
             text: 'Забыли пароль?',
             onClick: () => {
@@ -74,7 +76,10 @@ const Signin: React.FC = () => {
             visible: watch('password') !== (undefined || ''),
           }}
         />
-        <CheckBoxForm name='rememberCheckbox' register={register('rememberCheckbox')}>
+        <CheckBoxForm
+          name='rememberCheckbox'
+          register={register('rememberCheckbox')}
+        >
           Запомнить меня
         </CheckBoxForm>
       </div>

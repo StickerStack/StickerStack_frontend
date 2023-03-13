@@ -8,12 +8,12 @@ class Api {
     this._url = url;
     this._headers = headers;
   }
-  
+
   private _checkResponse(res: Response) {
     if (res.ok) {
       return res.json();
     }
-    
+
     return Promise.reject(`Ошибка ${res.status}`);
   }
 
@@ -22,14 +22,13 @@ class Api {
 
     data.append('username', email);
     data.append('password', password);
-    
 
     return data;
   }
 
   public async signUp(email: string, password: string) {
     const data = await fetch(`${this._url}/auth/register`, {
-      method: "POST",
+      method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
         email: email,
@@ -44,23 +43,23 @@ class Api {
 
   public async signIn(email: string, password: string) {
     const data = await fetch(`${this._url}/auth/login`, {
-      method: "POST",
+      method: 'POST',
       headers: {
         // "Content-Type": "application/json; charset=utf-8",
-        'Accept': 'application/json',
-        "Content-Type": "application/x-www-form-urlencoded"
+        Accept: 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded',
       },
       body: this._formatingData(email, password),
     });
 
     const response = await this._checkResponse(data);
-    
+
     return response;
   }
 
   public async logOut() {
     const data = await fetch(`${this._url}/auth/logout`, {
-      method: "POST",
+      method: 'POST',
       headers: this._headers,
     });
 
@@ -71,7 +70,7 @@ class Api {
 
   public async getUser() {
     const data = await fetch(`${this._url}/users/me`, {
-      method: "GET",
+      method: 'GET',
       headers: this._headers,
     });
 
@@ -82,7 +81,7 @@ class Api {
 
   public async updateUser(email: string, password: string) {
     const data = await fetch(`${this._url}/users/me`, {
-      method: "PATCH",
+      method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
         email: email,
@@ -97,7 +96,7 @@ class Api {
 }
 
 const api = new Api(API_URL, {
-  "Content-Type": "application/json",
+  'Content-Type': 'application/json',
 });
 
 export { api };

@@ -4,7 +4,8 @@ import {
   RegisterOptions,
   UseFormRegisterReturn,
 } from 'react-hook-form';
-import { EyeButton } from '../EyeButton';
+
+import { EyeButton } from '../';
 
 import styles from './InputForm.module.scss';
 

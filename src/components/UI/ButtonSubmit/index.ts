@@ -1,2 +1,0 @@
-export { ButtonSubmit } from './ButtonSubmit';
-

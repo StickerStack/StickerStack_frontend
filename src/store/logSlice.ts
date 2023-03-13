@@ -1,10 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { api } from '../utils/api';
 
-const signIn = createAsyncThunk('log/signIn', async (data: { email: string; password: string }) => {
-  const response = await api.signIn(data.email, data.password);
-  return response.data;
-});
+const signIn = createAsyncThunk(
+  'log/signIn',
+  async (data: { email: string; password: string }) => {
+    const response = await api.signIn(data.email, data.password);
+    return response.data;
+  }
+);
 
 const logOut = createAsyncThunk('log/logOut', async () => {
   const response = await api.logOut();
@@ -31,7 +34,7 @@ const authSlice = createSlice({
       state.email = action.payload.email;
       state.password = action.payload.password;
     });
-    builder.addCase(signIn.rejected, (state, action) => {
+    builder.addCase(signIn.rejected, (state) => {
       state.loading = false;
     });
   },

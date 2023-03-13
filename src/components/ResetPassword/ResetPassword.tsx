@@ -8,7 +8,6 @@ import { Signin } from '../';
 import { registerEmail } from '../../utils/registersRHF';
 import styles from './ResetPassword.module.scss';
 
-
 const ResetPassword: React.FC = () => {
   const dispatch = useDispatch();
   const {
