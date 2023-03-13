@@ -2,7 +2,6 @@ import { NavLink } from 'react-router-dom';
 
 import styles from './Navigation.module.scss';
 
-
 const Navigation = () => {
   return (
     <nav>
@@ -31,6 +30,5 @@ const Navigation = () => {
     </nav>
   );
 };
-
 
 export { Navigation };

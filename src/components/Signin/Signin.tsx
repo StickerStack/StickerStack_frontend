@@ -1,18 +1,14 @@
 import { useDispatch } from 'react-redux';
 import { useAppDispatch } from '../../hooks/hooks';
 import { useForm } from 'react-hook-form';
-
-import { ButtonSubmit } from '../UI/ButtonSubmit';
-import { CheckBoxForm } from '../UI/CheckBoxForm';
-import { InputForm } from '../UI/InputForm';
-import { TitleForm } from '../UI/TitleForm';
-import { Signup } from '../Signup';
-
-import styles from './Signin.module.scss';
 import { switchForm } from '../../store/formSlice';
 import { signIn } from '../../store/logSlice';
-import { ResetPassword } from '../ResetPassword';
+
+import { ButtonSubmit, CheckBoxForm, InputForm, TitleForm } from '../UI';
+import { Signup, ResetPassword } from '../';
+
 import { registerEmail, registerPassword } from '../../utils/registersRHF';
+import styles from './Signin.module.scss';
 
 const Signin: React.FC = () => {
   const dispatch = useDispatch();
@@ -67,7 +63,9 @@ const Signin: React.FC = () => {
           label='Пароль'
           type='password'
           register={{ ...register('password', registerPassword) }}
-          error={errors?.password?.message ? `${errors?.password?.message}` : ''}
+          error={
+            errors?.password?.message ? `${errors?.password?.message}` : ''
+          }
           optionalButton={{
             text: 'Забыли пароль?',
             onClick: () => {
@@ -78,7 +76,10 @@ const Signin: React.FC = () => {
             visible: watch('password') !== (undefined || ''),
           }}
         />
-        <CheckBoxForm name='rememberCheckbox' register={register('rememberCheckbox')}>
+        <CheckBoxForm
+          name='rememberCheckbox'
+          register={register('rememberCheckbox')}
+        >
           Запомнить меня
         </CheckBoxForm>
       </div>

@@ -1,16 +1,13 @@
 import { useForm } from 'react-hook-form';
+
+import { InputForm, TitleForm, ButtonSubmit } from '../UI';
+
 import { registerPassword } from '../../utils/registersRHF';
-import { ButtonSubmit } from '../UI/ButtonSubmit';
-
-import { InputForm } from '../UI/InputForm';
-import { TitleForm } from '../UI/TitleForm';
-
 import styles from './ChangePassword.module.scss';
 
 const ChangePassword: React.FC = () => {
   const {
     register,
-    getValues,
     formState: { errors },
     handleSubmit,
     watch,
@@ -35,7 +32,11 @@ const ChangePassword: React.FC = () => {
           label='Новый пароль'
           type='password'
           register={register('newPassword', registerPassword)}
-          error={errors?.newPassword?.message ? `${errors?.newPassword?.message}` : ''}
+          error={
+            errors?.newPassword?.message
+              ? `${errors?.newPassword?.message}`
+              : ''
+          }
           optionalEyeButton={{
             visible: watch('newPassword') !== (undefined || ''),
           }}
@@ -55,7 +56,11 @@ const ChangePassword: React.FC = () => {
               required: 'Введи пароль повторно',
             }),
           }}
-          error={errors?.newPasswordCheck?.message ? `${errors?.newPasswordCheck?.message}` : ''}
+          error={
+            errors?.newPasswordCheck?.message
+              ? `${errors?.newPasswordCheck?.message}`
+              : ''
+          }
           optionalEyeButton={{
             visible: watch('newPasswordCheck') !== (undefined || ''),
           }}

@@ -11,7 +11,7 @@ const updateUser = createAsyncThunk(
   async (data: { email: string; password: string }) => {
     const response = await api.updateUser(data.email, data.password);
     return response.data;
-  },
+  }
 );
 
 const userSlice = createSlice({

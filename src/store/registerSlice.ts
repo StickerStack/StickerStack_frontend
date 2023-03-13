@@ -6,7 +6,7 @@ const signUp = createAsyncThunk(
   async (data: { email: string; password: string }) => {
     const response = await api.signUp(data.email, data.password);
     return response.data;
-  },
+  }
 );
 
 const registerSlice = createSlice({
@@ -28,7 +28,7 @@ const registerSlice = createSlice({
       state.email = action.payload.email;
       state.password = action.payload.password;
     });
-    builder.addCase(signUp.rejected, (state, action) => {
+    builder.addCase(signUp.rejected, (state) => {
       state.loading = false;
     });
   },

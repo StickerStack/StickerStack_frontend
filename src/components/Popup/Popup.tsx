@@ -1,6 +1,6 @@
 import { createPortal } from 'react-dom';
 
-import { PopupForm } from '../PopupForm';
+import { PopupForm } from '../';
 
 import styles from './Popup.module.scss';
 

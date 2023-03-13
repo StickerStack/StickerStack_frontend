@@ -1,17 +1,17 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
-import { Signin } from "../components/Signin";
+import { Signin } from '../components/Signin/Signin';
 
 const formSlice = createSlice({
-  name: "formSlice",
+  name: 'formSlice',
   initialState: {
-    form: Signin
+    form: Signin,
   },
   reducers: {
     switchForm(state, action) {
       state.form = action.payload;
-    }
-  }
+    },
+  },
 });
 
 const formSliceReducer = formSlice.reducer;

@@ -3,10 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import { switchForm } from '../../store/formSlice';
 
-import { Header } from '../Header';
-import { Popup } from '../Popup';
-import { Signin } from '../Signin';
-import { ChangePassword } from '../ChangePassword';
+import { Header, Popup, Signin, ChangePassword } from '../';
 
 import styles from './App.module.scss';
 
