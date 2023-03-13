@@ -1,16 +1,13 @@
 import { useForm } from 'react-hook-form';
+
+import { InputForm, TitleForm, ButtonSubmit } from '../UI';
+
 import { registerPassword } from '../../utils/registersRHF';
-import { ButtonSubmit } from '../UI/ButtonSubmit';
-
-import { InputForm } from '../UI/InputForm';
-import { TitleForm } from '../UI/TitleForm';
-
 import styles from './ChangePassword.module.scss';
 
 const ChangePassword: React.FC = () => {
   const {
     register,
-    getValues,
     formState: { errors },
     handleSubmit,
     watch,

@@ -1,15 +1,13 @@
 import { useDispatch } from 'react-redux';
 import { FieldValues, useForm } from 'react-hook-form';
-
-import { ButtonSubmit } from '../UI/ButtonSubmit';
-import { InputForm } from '../UI/InputForm';
-import { TitleForm } from '../UI/TitleForm';
-import { Signin } from '../Signin';
-
-import styles from './ResetPassword.module.scss';
 import { switchForm } from '../../store/formSlice';
-import { TextForm } from '../UI/TextForm';
+
+import { ButtonSubmit, InputForm, TitleForm, TextForm } from '../UI';
+import { Signin } from '../';
+
 import { registerEmail } from '../../utils/registersRHF';
+import styles from './ResetPassword.module.scss';
+
 
 const ResetPassword: React.FC = () => {
   const dispatch = useDispatch();
