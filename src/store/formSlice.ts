@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { Signin } from '../components';
+import { Signin } from '../components/Signin/Signin';
 
 const formSlice = createSlice({
   name: 'formSlice',
