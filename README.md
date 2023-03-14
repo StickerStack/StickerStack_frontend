@@ -4,7 +4,7 @@ ___
 
 ### 🌐 Ссылки на проект:
 
-* [https://postcard-eight-march-for-mom.vercel.app/](https://postcard-eight-march-for-mom.vercel.app/) - front-end часть
+* [ https://sticker-stack-frontend.vercel.app/]( https://sticker-stack-frontend.vercel.app/) - front-end часть
   на временном хостинге
 * [https://github.com/StickerStack/backend](https://github.com/StickerStack/backend) - репозиторий back-end части
 * [Макет проекта в Figma](https://www.figma.com/file/Z1qiU1QZYnQjvKMplUsRkj/PoC?node-id=0%3A1)
