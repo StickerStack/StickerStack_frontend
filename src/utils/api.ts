@@ -29,6 +29,7 @@ class Api {
   public async signUp(email: string, password: string) {
     const data = await fetch(`${this._url}/auth/register`, {
       method: 'POST',
+      credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({
         email: email,
@@ -44,8 +45,8 @@ class Api {
   public async signIn(email: string, password: string) {
     const data = await fetch(`${this._url}/auth/login`, {
       method: 'POST',
+      credentials: 'include',
       headers: {
-        // "Content-Type": "application/json; charset=utf-8",
         Accept: 'application/json',
         'Content-Type': 'application/x-www-form-urlencoded',
       },
@@ -60,6 +61,7 @@ class Api {
   public async logOut() {
     const data = await fetch(`${this._url}/auth/logout`, {
       method: 'POST',
+      credentials: 'include',
       headers: this._headers,
     });
 
@@ -71,6 +73,7 @@ class Api {
   public async getUser() {
     const data = await fetch(`${this._url}/users/me`, {
       method: 'GET',
+      credentials: 'include',
       headers: this._headers,
     });
 
@@ -82,6 +85,7 @@ class Api {
   public async updateUser(email: string, password: string) {
     const data = await fetch(`${this._url}/users/me`, {
       method: 'PATCH',
+      credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({
         email: email,
