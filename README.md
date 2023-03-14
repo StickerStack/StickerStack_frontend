@@ -1,46 +1,60 @@
-# Getting Started with Create React App
+## StickerStack
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+___
 
-## Available Scripts
+### 🌐 Ссылки на проект:
 
-In the project directory, you can run:
+* [https://postcard-eight-march-for-mom.vercel.app/](https://postcard-eight-march-for-mom.vercel.app/) - front-end часть
+  на временном хостинге
+* [https://github.com/StickerStack/backend](https://github.com/StickerStack/backend) - репозиторий back-end части
+* [Макет проекта в Figma](https://www.figma.com/file/Z1qiU1QZYnQjvKMplUsRkj/PoC?node-id=0%3A1)
 
-### `npm start`
+___
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### ⏱ Описание проекта:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Проект представляет из себя сайт для распечатки и продажи кастомных стикеров.
+Пользователь загружает картинки, выбирает размер стикеров, количество стикер-паков и оплачивает заказ.
+После покупки пользователь получит бандероль с виниловыми стикерами с матовой или глянцевой ламинацией, аккуратно 
+вырезанные по контуру. 
 
-### `npm test`
+![Скриншот главной страницы](./src/images/main-screenshot.png)
+*Главная страница*
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+У пользователя есть личный кабинет, где отображаются данные о пользователе и история заказов.
+Перед просмотром личного кабинета или оформления заказа необходимо зарегистрироваться или авторизироваться 
+через специальную форму.
 
-### `npm run build`
+![Пример стикерпака](./src/images/sticker-pack-screenshot.png)
+*Пример стикерпака*
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+В проекте имется front-end и back-end части. Из back-end части на front-end приходят данные для авторизации 
+пользователя (cookie), информация о пользователе и его история заказов.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+___
+<details>  <summary> <h3>Структура React Components и Redux</h3> </summary>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+</details>
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+___
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### 🔧 Стек технологий:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+*Html, CSS, SASS, Git, JavaScript, React, React Hook Form, Redux-toolkit, TypeScript*
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+![SASS](https://img.shields.io/badge/SASS%20-hotpink.svg?&style=for-the-badge&logo=SASS&logoColor=white)
+![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white)  
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![Redux](https://img.shields.io/badge/redux%20-%23593d88.svg?&style=for-the-badge&logo=redux&logoColor=white")  
+![TypeScript](https://img.shields.io/badge/typescript%20-%23007ACC.svg?&style=for-the-badge&logo=typescript&logoColor=white)
+___
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 🚀 Инструкция по запуску на локальной машине:
+* Установить [Node.js](https://nodejs.org/ru/)
+* Клонировать репозиторий ``` git clone git@github.com:StickerStack/StickerStack_frontend.git```
+* Установить зависимости ``` npm install ```
+* Запустить приложение ``` npm run start ```
