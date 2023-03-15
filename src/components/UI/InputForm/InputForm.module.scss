@@ -34,6 +34,7 @@ input:-webkit-autofill {
   background-color: transparent;
   border: none;
   cursor: pointer;
+  height: 19px;
 
   &_text::after {
     content: '';

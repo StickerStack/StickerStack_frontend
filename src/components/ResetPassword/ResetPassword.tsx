@@ -26,7 +26,7 @@ const ResetPassword: React.FC = () => {
     <form onSubmit={handleSubmit(onSubmit)} className={styles.resetpassword}>
       <TitleForm>Восстановление пароля</TitleForm>
       <InputForm
-        label='E-mail Вашего аккаунта'
+        label='E-mail'
         name='email'
         placeholder='vashapochta@gmail.com'
         register={{ ...register('email', registerEmail) }}
