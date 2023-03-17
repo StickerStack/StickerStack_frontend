@@ -52,7 +52,7 @@ const Signin: React.FC = () => {
         <InputForm
           placeholder='vashapochta@gmail.com'
           name='email'
-          label='Email'
+          label='E-mail'
           type='text'
           register={{ ...register('email', registerEmail) }}
           error={errors?.email?.message ? `${errors?.email?.message}` : ''}
