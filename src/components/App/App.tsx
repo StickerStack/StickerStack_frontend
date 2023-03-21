@@ -1,41 +1,35 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { Route, Routes } from 'react-router-dom';
-import { switchForm } from '../../store/formSlice';
+import { useEffect } from 'react';
+import { Route, Routes, Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-import { Header, Popup, Signin, ChangePassword, MainPage } from '../';
+import { Header, Popup, ChangePassword, MainPage } from '../';
 
+import { useAppDispatch } from '../../hooks/hooks';
+import { getUser } from '../../store/userSlice';
+import { ProfilePage } from '../ProfilePage/ProfilePage';
+import { IUserState } from '../../interfaces/IUserState';
 import styles from './App.module.scss';
 
 const App: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  
+  const isLogged = useSelector((state: { user: IUserState }) => state.user.isLogged);
 
-  const [isLogged, setIsLogged] = useState<boolean>(false);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-
-  const setClose = () => {
-    setIsOpen(false);
-    dispatch(switchForm(Signin));
-  };
+  useEffect(() => {
+    dispatch(getUser());
+  }, []) 
 
   return (
     <div className={styles.app}>
       <div id='app-popup' />
-      <Header
-        onClickSignin={() => {
-          setIsOpen(true);
-        }}
-        onClickLogout={() => {
-          setIsLogged(false);
-        }}
-        isLogged={isLogged}
-      />
+      <Header />
       <Routes>
-        <Route path='/' element={<MainPage isLogged={isLogged} openPopup={() => setIsOpen(true)} />} />
         <Route path='/change-password' element={<ChangePassword />} />
+        <Route path='/profile' element={isLogged ? <ProfilePage /> : <Navigate to='/'/>}/>
+        <Route path='/' element={<MainPage />} />
       </Routes>
 
-      <Popup isOpen={isOpen} onClose={setClose} />
+      <Popup />
     </div>
   );
 };

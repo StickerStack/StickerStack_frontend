@@ -1,29 +1,28 @@
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { Button } from '../UI';
 
+import { useAppDispatch } from '../../hooks/hooks';
+import { IUserState } from '../../interfaces';
 import styles from './Header.module.scss';
+import { setIsOpen } from '../../store/popupSlice';
 
-interface IProps {
-  isLogged: boolean;
-  onClickSignin: () => void;
-  onClickLogout: () => void;
-}
 
-const Header: React.FC<IProps> = ({
-  isLogged,
-  onClickSignin,
-  onClickLogout,
-}: IProps) => {
+const Header: React.FC = () => {
+  const isLogged = useSelector((state: { user: IUserState }) => state.user.isLogged)
+
+  const dispatch = useAppDispatch();
+
   return (
     <header className={styles.header}>
       <Link to='/' className={styles.logo}>
         Лого
       </Link>
       {isLogged ? (
-        <Link onClick={onClickLogout} to='/' className={styles.profile} />
+        <Link to='/profile' className={styles.profile} />
       ) : (
-        <Button onClick={onClickSignin}>Войти</Button>
+        <Button onClick={() => dispatch(setIsOpen(true))}>Войти</Button>
       )}
     </header>
   );

@@ -1,0 +1,8 @@
+@import '../../utils/_scss-variables.scss';
+
+.profile {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 80px $desktop-padding 0;
+}

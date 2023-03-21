@@ -1,13 +1,9 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { formSliceReducer } from './formSlice';
-import { registerSliceReducer } from './registerSlice';
-import { logSliceReducer } from './logSlice';
+import { popupSliceReducer } from './popupSlice';
 import { userSliceReducer } from './userSlice';
 
 const rootReducer = combineReducers({
-  forms: formSliceReducer,
-  register: registerSliceReducer,
-  log: logSliceReducer,
+  popup: popupSliceReducer,
   user: userSliceReducer,
 });
 
