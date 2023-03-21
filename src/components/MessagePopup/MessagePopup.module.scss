@@ -1,0 +1,14 @@
+@import '../../utils/_scss-variables.scss';
+
+.message {
+  position: absolute;
+  z-index: 6;
+  top: 80px;
+  right: $desktop-padding;
+  font-size: 28px;
+  line-height: 34px;
+  background-color: $success-color;
+  border-radius: 20px;
+  padding: 23px 40px;
+  box-sizing: border-box;
+}

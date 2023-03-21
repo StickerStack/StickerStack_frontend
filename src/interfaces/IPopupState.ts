@@ -1,4 +1,6 @@
 export interface IPopupState {
-  isOpen: boolean,
-  form: React.FC
+  message: '';
+  messageIsOpen: boolean;
+  isOpen: boolean;
+  form: React.FC;
 }
