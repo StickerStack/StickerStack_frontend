@@ -1,17 +1,16 @@
-import { useDispatch } from 'react-redux';
-import { useAppDispatch } from '../../hooks/hooks';
 import { useForm } from 'react-hook-form';
-import { switchForm } from '../../store/formSlice';
-import { signUp } from '../../store/registerSlice';
 
 import { ButtonSubmit, InputForm, CheckBoxForm, TitleForm } from '../UI';
 import { Signin } from '../';
 
+import { useAppDispatch } from '../../hooks/hooks';
+import { switchForm } from '../../store/popupSlice';
+import { signUp } from '../../store/userSlice';
 import { registerEmail, registerPassword } from '../../utils/registersRHF';
 import styles from './Signup.module.scss';
 
 const Signup: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const {
     register,
     getValues,
@@ -31,15 +30,11 @@ const Signup: React.FC = () => {
   const userEmail = getValues('email');
   const userPassword = getValues('password');
 
-  const appDispatch = useAppDispatch();
-
   const onSubmit = () => {
-    appDispatch(signUp({ email: userEmail, password: userPassword }))
-      /* .then(() =>
-    - закрыть попап
-    - открыть окошко с уведомлением о письме на почте
-    
-    ) */
+    dispatch(signUp({ email: userEmail, password: userPassword }))
+      .then(() => {
+        dispatch(switchForm(Signin));
+      })
       .catch((err) => {
         console.log(err);
       });

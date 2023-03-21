@@ -1,15 +1,22 @@
 import { createPortal } from 'react-dom';
+import { useSelector } from 'react-redux';
 
 import { PopupForm } from '../';
 
+import { IPopupState } from '../../interfaces/IPopupState'
+import { useAppDispatch } from '../../hooks/hooks';
+import { setIsOpen } from '../../store/popupSlice';
 import styles from './Popup.module.scss';
 
-interface IProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
+const Popup: React.FC = () => {
+  const dispatch = useAppDispatch();
 
-const Popup: React.FC<IProps> = ({ isOpen, onClose }: IProps) => {
+  const isOpen = useSelector((state: { popup: IPopupState}) => state.popup.isOpen);
+
+  const onClose = () => {
+    dispatch(setIsOpen(false));
+  }
+
   return isOpen
     ? createPortal(
         <div className={styles.overlay}>

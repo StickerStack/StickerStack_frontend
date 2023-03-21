@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+import { IPopupState } from '../../interfaces/IPopupState';
 
 import styles from './PopupForm.module.scss';
 
@@ -6,14 +7,8 @@ interface IProps {
   onClose: () => void;
 }
 
-interface IStateForm {
-  forms: {
-    form: React.FC;
-  };
-}
-
 const PopupForm: React.FC<IProps> = ({ onClose }: IProps) => {
-  const Form = useSelector((state: IStateForm) => state.forms.form);
+  const Form = useSelector((state: { popup: IPopupState}) => state.popup.form);
 
   return (
     <div className={styles.container}>

@@ -3,3 +3,4 @@ const REG_EMAIL = /^(([^<>()[\]\\.,;:\s@\"]+[A-Za-z0-9]+(\.[^<>()[\]\\.,;:\s@\"]
 const API_URL = 'http://k1kku.ddns.net/api'; // https://k1kku.ddns.net/api   http://localhost:8000/api
 
 export { API_URL, REG_EMAIL };
+  

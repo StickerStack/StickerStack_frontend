@@ -1,17 +1,16 @@
-import { useDispatch } from 'react-redux';
-import { useAppDispatch } from '../../hooks/hooks';
 import { useForm } from 'react-hook-form';
-import { switchForm } from '../../store/formSlice';
-import { signIn } from '../../store/logSlice';
 
 import { ButtonSubmit, CheckBoxForm, InputForm, TitleForm } from '../UI';
 import { Signup, ResetPassword } from '../';
 
+import { setIsOpen, switchForm } from '../../store/popupSlice';
+import { useAppDispatch } from '../../hooks/hooks';
+import { getUser, signIn } from '../../store/userSlice';
 import { registerEmail, registerPassword } from '../../utils/registersRHF';
 import styles from './Signin.module.scss';
 
 const Signin: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const {
     register,
     getValues,
@@ -30,16 +29,12 @@ const Signin: React.FC = () => {
   const userEmail = getValues('email');
   const userPassword = getValues('password');
 
-  const appDispatch = useAppDispatch();
-
   const onSubmit = () => {
-    appDispatch(signIn({ email: userEmail, password: userPassword }))
-      /* .then(() =>
-    - закрыть попап
-    - поменять кнопку входа на иконку юзера
-    - сделать доступной страницу добавления картинок
-    
-    ) */
+    dispatch(signIn({ email: userEmail, password: userPassword }))
+      .then(() => {
+        dispatch(getUser());
+        dispatch(setIsOpen(false));
+      })
       .catch((err) => {
         console.log(err);
       });
