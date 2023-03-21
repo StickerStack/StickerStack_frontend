@@ -4,7 +4,7 @@ import { ButtonSubmit, InputForm, CheckBoxForm, TitleForm } from '../UI';
 import { Signin } from '../';
 
 import { useAppDispatch } from '../../hooks/hooks';
-import { setMessageIsOpen, switchForm } from '../../store/popupSlice';
+import { setMessageIsOpen, setIsOpen, switchForm } from '../../store/popupSlice';
 import { signUp } from '../../store/userSlice';
 import { registerEmail, registerPassword } from '../../utils/registersRHF';
 import styles from './Signup.module.scss';
@@ -33,8 +33,8 @@ const Signup: React.FC = () => {
   const onSubmit = () => {
     dispatch(signUp({ email: userEmail, password: userPassword }))
       .then(() => {
-        dispatch(setMessageIsOpen([true, 'Вы успешно зарегистрировались!']));
-        dispatch(switchForm(Signin));
+        dispatch(setMessageIsOpen({ messageIsOpen: true, message: 'Вы успешно зарегистрировались!' }));
+        dispatch(setIsOpen(false));
       })
       .catch((err) => {
         console.log(err);
@@ -80,7 +80,7 @@ const Signup: React.FC = () => {
         />
       </div>
       <CheckBoxForm name='confirmCheckbox' register={register('confirmCheckbox', { required: true })} error={errors?.confirmCheckbox ? true : false}>
-        <p className={styles.checktext}>
+        <p className={styles.checktext} onClick={() => dispatch(setMessageIsOpen({ messageIsOpen: true, message: 'Вы успешно зарегистрировались!' }))}>
           Я согласен с{' '}
           <a href='#id' target='_blank' className={styles.documentLink}>
             Политикой конфиденциальности

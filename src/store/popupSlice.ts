@@ -12,8 +12,8 @@ const popupSlice = createSlice({
   },
   reducers: {
     setMessageIsOpen(state, action) {
-      state.messageIsOpen = action.payload[0];
-      state.message = action.payload[1];
+      state.messageIsOpen = action.payload.messageIsOpen;
+      state.message = action.payload.message;
     },
     setIsOpen(state, action) {
       state.isOpen = action.payload;
