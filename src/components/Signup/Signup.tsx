@@ -80,7 +80,7 @@ const Signup: React.FC = () => {
         />
       </div>
       <CheckBoxForm name='confirmCheckbox' register={register('confirmCheckbox', { required: true })} error={errors?.confirmCheckbox ? true : false}>
-        <p className={styles.checktext} onClick={() => dispatch(setMessageIsOpen({ messageIsOpen: true, message: 'Вы успешно зарегистрировались!' }))}>
+        <p className={styles.checktext}>
           Я согласен с{' '}
           <a href='#id' target='_blank' className={styles.documentLink}>
             Политикой конфиденциальности
