@@ -8,3 +8,4 @@ export { ResetPassword } from './ResetPassword/ResetPassword';
 export { Signin } from './Signin/Signin';
 export { Signup } from './Signup/Signup';
 export { MainPage } from './MainPage/MainPage';
+export { VerifyEmail } from './VerifyEmail/VerifyEmail';
