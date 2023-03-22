@@ -14,6 +14,10 @@ input:-webkit-autofill {
   -webkit-text-fill-color: $main-text-color;
 }
 
+input::-ms-reveal {
+  display: none;
+}
+
 .label {
   user-select: none;
   font-weight: 400;
