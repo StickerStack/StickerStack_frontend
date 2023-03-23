@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.68eefdf7.css",
-    "main.js": "/static/js/main.0123b2c3.js",
+    "main.css": "/static/css/main.e89466f2.css",
+    "main.js": "/static/js/main.ff0847b8.js",
     "static/media/main-page-image.png": "/static/media/main-page-image.6408064c57a8e640bfa3.png",
     "static/media/password-hidden.svg": "/static/media/password-hidden.4dbbadee7ba0d996e435.svg",
     "static/media/password-shown.svg": "/static/media/password-shown.39d6bc75579bc027b1a2.svg",
@@ -9,11 +9,11 @@
     "index.html": "/index.html",
     "static/media/profile-icon.svg": "/static/media/profile-icon.cbadf60756a787a5c751.svg",
     "static/media/checker-icon.svg": "/static/media/checker-icon.3542c2c8ec87396cfc60.svg",
-    "main.68eefdf7.css.map": "/static/css/main.68eefdf7.css.map",
-    "main.0123b2c3.js.map": "/static/js/main.0123b2c3.js.map"
+    "main.e89466f2.css.map": "/static/css/main.e89466f2.css.map",
+    "main.ff0847b8.js.map": "/static/js/main.ff0847b8.js.map"
   },
   "entrypoints": [
-    "static/css/main.68eefdf7.css",
-    "static/js/main.0123b2c3.js"
+    "static/css/main.e89466f2.css",
+    "static/js/main.ff0847b8.js"
   ]
 }

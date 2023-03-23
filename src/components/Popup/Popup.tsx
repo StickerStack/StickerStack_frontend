@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { PopupForm } from '../';
 
-import { IPopupState } from '../../interfaces/IPopupState'
+import { IPopupState } from '../../interfaces/IPopupState';
 import { useAppDispatch } from '../../hooks/hooks';
 import { setIsOpen } from '../../store/popupSlice';
 import styles from './Popup.module.scss';
@@ -11,11 +11,11 @@ import styles from './Popup.module.scss';
 const Popup: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  const isOpen = useSelector((state: { popup: IPopupState}) => state.popup.isOpen);
+  const isOpen = useSelector((state: { popup: IPopupState }) => state.popup.isOpen);
 
   const onClose = () => {
     dispatch(setIsOpen(false));
-  }
+  };
 
   return isOpen
     ? createPortal(
@@ -25,7 +25,7 @@ const Popup: React.FC = () => {
             <PopupForm onClose={onClose} />
           </div>
         </div>,
-        document.getElementById('app-popup') as HTMLElement
+        document.getElementById('app-popup') as HTMLElement,
       )
     : null;
 };

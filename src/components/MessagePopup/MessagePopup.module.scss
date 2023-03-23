@@ -1,0 +1,60 @@
+@import '../../utils/_scss-variables.scss';
+
+.message__block {
+  position: fixed;
+  z-index: 5;
+  top: 80px;
+  right: $desktop-padding;
+}
+
+.message {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  z-index: 6;
+  font-size: 28px;
+  line-height: 34px;
+  background-color: $success-color;
+  border-radius: 20px;
+  padding: 23px 40px;
+  box-sizing: border-box;
+}
+
+.message_opened {
+  animation: upwards 0.35s ease-out;
+}
+.message_closed {
+  animation: disappear 0.35s;
+}
+
+.button {
+  width: 15px;
+  height: 15px;
+  border: none;
+  opacity: 0.7;
+  background-color: $other-button-bg-color;
+  background-image: url(../../images/button-close.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  cursor: pointer;
+}
+
+@keyframes upwards {
+  0% {
+    transform: translateY(60px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes disappear {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
