@@ -19,7 +19,7 @@ const Popup: React.FC = () => {
   };
 
     useEffect(() => {
-        function handleKeyDown(evn: KeyboardEvent) {
+        const handleKeyDown = (evn: KeyboardEvent) => {
             if (evn.code === 'Escape'){
                 onClose();
             }
