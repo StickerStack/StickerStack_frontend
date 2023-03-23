@@ -1,3 +1,4 @@
+import React, {useEffect} from "react";
 import { createPortal } from 'react-dom';
 import { useSelector } from 'react-redux';
 
@@ -16,6 +17,18 @@ const Popup: React.FC = () => {
   const onClose = () => {
     dispatch(setIsOpen(false));
   };
+
+    useEffect(() => {
+        function handleKeyDown(evn: KeyboardEvent) {
+            if (evn.code === 'Escape'){
+                onClose();
+            }
+        }
+        document.addEventListener('keydown', handleKeyDown);
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown)
+        };
+    }, []);
 
   return isOpen
     ? createPortal(
