@@ -2,16 +2,24 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { api } from '../utils/api';
 
 const signUp = createAsyncThunk('user/signUp',
-  async (data: { email: string; password: string }) => {
-    const response = await api.signUp(data.email, data.password);
-    return response;
+  async (data: { email: string; password: string }, {rejectWithValue}) => {
+    try {
+      const response = await api.signUp(data.email, data.password);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err)
+    }
   }
 );
 
 const signIn = createAsyncThunk('user/signIn',
-  async (data: { email: string; password: string }) => {
-    const response = await api.signIn(data.email, data.password);
-    return response;
+  async (data: { email: string; password: string }, {rejectWithValue}) => {
+    try {
+      const response = await api.signIn(data.email, data.password);
+      return response;
+    } catch (err) {
+      return rejectWithValue(err)
+    }
   }
 );
 
@@ -50,8 +58,10 @@ const userSlice = createSlice({
       state.loading = false;
       state.success = true;
     });
-    builder.addCase(signUp.rejected, (state) => {
+    builder.addCase(signUp.rejected, (state, action) => {
       state.loading = false;
+      console.log(action);
+      
     });
 
     // Вход пользователя
