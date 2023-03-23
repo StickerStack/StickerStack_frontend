@@ -2,6 +2,7 @@ export { App } from './App/App';
 export { ChangePassword } from './ChangePassword/ChangePassword';
 export { Header } from './Header/Header';
 export { Navigation } from './Navigation/Navigation';
+export { MessagePopup } from './MessagePopup/MessagePopup';
 export { Popup } from './Popup/Popup';
 export { PopupForm } from './PopupForm/PopupForm';
 export { ResetPassword } from './ResetPassword/ResetPassword';

@@ -16,14 +16,14 @@ const MainPage: React.FC = () => {
   const isLogged = useSelector((state: { user: IUserState }) => state.user.isLogged);
 
   const onClickTry = (): void => {
-    if(isLogged) {
+    if (isLogged) {
       navigate('tut-budet-ssilka-na-sozdanie-stickerov');
     } else {
       dispatch(setIsOpen(true));
     }
   };
 
-  return(
+  return (
     <main className={styles.mainPage}>
       <div>
         <h1 className={styles.title}>StickerStack</h1>

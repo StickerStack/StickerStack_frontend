@@ -4,7 +4,7 @@ import { ButtonSubmit, InputForm, CheckBoxForm, TitleForm } from '../UI';
 import { Signin } from '../';
 
 import { useAppDispatch } from '../../hooks/hooks';
-import { switchForm } from '../../store/popupSlice';
+import { setMessageIsOpen, setIsOpen, switchForm } from '../../store/popupSlice';
 import { signUp } from '../../store/userSlice';
 import { registerEmail, registerPassword } from '../../utils/registersRHF';
 import styles from './Signup.module.scss';
@@ -33,7 +33,8 @@ const Signup: React.FC = () => {
   const onSubmit = () => {
     dispatch(signUp({ email: userEmail, password: userPassword }))
       .then(() => {
-        dispatch(switchForm(Signin));
+        dispatch(setMessageIsOpen({ messageIsOpen: true, message: 'Вы успешно зарегистрировались!' }));
+        dispatch(setIsOpen(false));
       })
       .catch((err) => {
         console.log(err);
@@ -44,23 +45,14 @@ const Signup: React.FC = () => {
     <form onSubmit={handleSubmit(onSubmit)} className={styles.signup}>
       <TitleForm>Регистрация</TitleForm>
       <div className={styles.inputs}>
-        <InputForm
-          placeholder='vashapochta@gmail.com'
-          name='email'
-          label='E-mail'
-          type='email'
-          register={{ ...register('email', registerEmail) }}
-          error={errors?.email?.message ? `${errors?.email?.message}` : ''}
-        />
+        <InputForm placeholder='vashapochta@gmail.com' name='email' label='E-mail' type='email' register={{ ...register('email', registerEmail) }} error={errors?.email?.message ? `${errors?.email?.message}` : ''} />
         <InputForm
           placeholder='впишите пароль'
           name='password'
           label='Пароль'
           type='password'
           register={{ ...register('password', registerPassword) }}
-          error={
-            errors?.password?.message ? `${errors?.password?.message}` : ''
-          }
+          error={errors?.password?.message ? `${errors?.password?.message}` : ''}
           optionalEyeButton={{
             visible: watch('password') !== (undefined || ''),
           }}
@@ -81,21 +73,13 @@ const Signup: React.FC = () => {
               required: 'Введи пароль повторно',
             }),
           }}
-          error={
-            errors?.passwordCheck?.message
-              ? `${errors?.passwordCheck?.message}`
-              : ''
-          }
+          error={errors?.passwordCheck?.message ? `${errors?.passwordCheck?.message}` : ''}
           optionalEyeButton={{
             visible: watch('passwordCheck') !== (undefined || ''),
           }}
         />
       </div>
-      <CheckBoxForm
-        name='confirmCheckbox'
-        register={register('confirmCheckbox', { required: true })}
-        error={errors?.confirmCheckbox ? true : false}
-      >
+      <CheckBoxForm name='confirmCheckbox' register={register('confirmCheckbox', { required: true })} error={errors?.confirmCheckbox ? true : false}>
         <p className={styles.checktext}>
           Я согласен с{' '}
           <a href='#id' target='_blank' className={styles.documentLink}>
@@ -110,11 +94,7 @@ const Signup: React.FC = () => {
       <ButtonSubmit>Зарегистрироваться</ButtonSubmit>
       <span className={styles.link}>
         Уже есть аккаунт?{' '}
-        <button
-          type='button'
-          onClick={() => dispatch(switchForm(Signin))}
-          className={styles.button}
-        >
+        <button type='button' onClick={() => dispatch(switchForm(Signin))} className={styles.button}>
           <span className={styles.text}>Войти</span>
         </button>
       </span>

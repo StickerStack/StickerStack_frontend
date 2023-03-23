@@ -19,6 +19,8 @@ $other-button-border-color: #000;
 
 $error-text-color: #d34d46;
 
+$success-color: #c7f2c6;
+
 @mixin font($size, $height, $weight) {
   font-size: $size;
   line-height: $height;
@@ -31,5 +33,3 @@ $error-text-color: #d34d46;
   justify-content: $justify-content;
   align-items: $align-items;
 }
-
-

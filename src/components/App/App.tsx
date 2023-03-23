@@ -2,8 +2,7 @@ import { useEffect } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import { Header, Popup, ChangePassword, MainPage, VerifyEmail } from '../';
-
+import { Header, MessagePopup, Popup, ChangePassword, MainPage, VerifyEmail } from '../';
 import { useAppDispatch } from '../../hooks/hooks';
 import { getUser } from '../../store/userSlice';
 import { ProfilePage } from '../ProfilePage/ProfilePage';
@@ -30,6 +29,7 @@ const App: React.FC = () => {
         <Route path='/auth/verifyemail' element={<VerifyEmail />} />
       </Routes>
 
+      <MessagePopup />
       <Popup />
     </div>
   );
