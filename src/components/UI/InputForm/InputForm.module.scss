@@ -13,7 +13,7 @@
     color: rgba(0, 0, 0, .7);
     @include flex(row, space-between, _);
     align-items: center;
-
+    
     .link {
       @include font(16px, 19px, 400);
       text-decoration: none;
@@ -75,6 +75,10 @@
     position: absolute;
     bottom: -22px;
   }
+}
+
+input::-ms-reveal {
+  display: none;
 }
 
 input:-webkit-autofill {
