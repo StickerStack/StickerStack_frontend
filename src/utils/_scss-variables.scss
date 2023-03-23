@@ -1,3 +1,5 @@
+@import '../vendor/fonts.scss';
+
 $main-bg-color: #fff;
 $secondary-bg-color: #d9d9d9;
 $desktop-padding: 165px;
@@ -16,3 +18,27 @@ $other-button-text-color: #000;
 $other-button-border-color: #000;
 
 $error-text-color: #d34d46;
+
+$base-width1920: 1920px;
+$base-width1280: 1280px;
+$base-width1024: 1024px;
+$base-width768: 768px;
+$base-width620: 620px;
+$base-width486: 486px;
+$base-width320: 320px;
+
+@mixin font($size, $height, $weight) {
+  font-family: 'Inter';
+  font-size: $size;
+  line-height: $height;
+  font-weight: $weight;
+}
+
+@mixin flex($flex-direction, $justify-content, $align-items) {
+  display: flex;
+  flex-direction: $flex-direction;
+  justify-content: $justify-content;
+  align-items: $align-items;
+}
+
+

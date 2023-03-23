@@ -6,21 +6,15 @@
   padding: 80px $desktop-padding 0;
   top: 0;
   background-color: $main-bg-color;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  @include flex(row, space-between, center);
 }
 
 .logo {
   width: 160px;
   height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flex(column, center, center);
   background-color: $secondary-bg-color;
-  font-weight: 400;
-  font-size: 40px;
-  line-height: 48px;
+  @include font(40px, 48px, 400);
   text-decoration: none;
   color: $main-text-color;
 }
@@ -32,8 +26,8 @@
   background-color: transparent;
   cursor: pointer;
   transition: opacity 0.3 ease-in-out;
-}
 
-.profile:hover {
-  opacity: 0.6;
+  &:hover {
+    opacity: 0.6;
+  }
 }
