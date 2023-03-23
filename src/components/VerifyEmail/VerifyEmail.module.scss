@@ -2,8 +2,6 @@
 
 .verify {
   margin: 180px auto;
-  display: flex;
-  flex-direction: column;
+  @include flex(column, _, center);
   gap: 35px;
-  align-items: center;
 }

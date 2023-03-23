@@ -1,19 +1,22 @@
+@import '../../utils/_scss-variables.scss';
+
 .overlay {
   position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flex(column, center, center);
   z-index: 3;
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.4);
+
+  .background {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+  }
+
+  .popup {
+    position: relative;
+    z-index: 4;
+  }
 }
-.background {
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-}
-.popup {
-  position: relative;
-  z-index: 4;
-}
+

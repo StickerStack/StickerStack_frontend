@@ -2,27 +2,27 @@
 
 .mainPage {
   padding: 80px $desktop-padding;
-  display: flex;
-  justify-content: space-between;
+  @include flex(row, space-between, flex-start);
+
+  .title {
+    font-style: normal;
+    @include font(60px, 73px, 400);
+    margin: 0 0 30px;
+  }
+
+  .description {
+    font-style: normal;
+    @include font(40px, 48px, 400);
+    margin: 0 0 60px;
+  }
+
+  .img {
+    width: auto;
+    height: 296px;
+  }
 }
 
-.title {
-  font-style: normal;
-  font-weight: 400;
-  font-size: 60px;
-  line-height: 73px;
-  margin: 0 0 30px;
-}
 
-.description {
-  font-style: normal;
-  font-weight: 400;
-  font-size: 40px;
-  line-height: 48px;
-  margin: 0 0 60px;
-}
 
-.img {
-  width: auto;
-  height: 296px;
-}
+
+

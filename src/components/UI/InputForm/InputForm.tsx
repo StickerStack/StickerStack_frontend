@@ -51,13 +51,13 @@ const InputForm: React.FC<IProps> = ({
           </button>
         )}
       </label>
-      <div className={error ? styles.border_error : styles.border}>
+      <div className={error ? `${styles.border_error} ${styles.border}` : styles.border}>
         <input
           {...register}
           placeholder={placeholder}
           type={passwordShown && type === 'password' ? 'text' : type}
           id={name}
-          className={error ? styles.field_error : styles.field}
+          className={error ? `${styles.field_error} ${styles.field}` : styles.field}
         />
       </div>
       {optionalEyeButton && (
