@@ -28,7 +28,7 @@ const ResetPassword: React.FC = () => {
       <InputForm
         label='E-mail'
         name='email'
-        placeholder='vashapochta@gmail.com'
+        placeholder='Введите E-mail'
         register={{ ...register('email', registerEmail) }}
         error={errors?.email?.message ? `${errors?.email?.message}` : ''}
       />

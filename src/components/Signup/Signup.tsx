@@ -4,7 +4,7 @@ import { ButtonSubmit, InputForm, CheckBoxForm, TitleForm } from '../UI';
 import { Signin } from '../';
 
 import { useAppDispatch } from '../../hooks/hooks';
-import { setMessageIsOpen, setIsOpen, switchForm } from '../../store/popupSlice';
+import { setMessageIsOpen, switchForm } from '../../store/popupSlice';
 import { signUp } from '../../store/userSlice';
 import { registerEmail, registerPassword } from '../../utils/registersRHF';
 import styles from './Signup.module.scss';
@@ -48,9 +48,9 @@ const Signup: React.FC = () => {
     <form onSubmit={handleSubmit(onSubmit)} className={styles.signup}>
       <TitleForm>Регистрация</TitleForm>
       <div className={styles.inputs}>
-        <InputForm placeholder='vashapochta@gmail.com' name='email' label='E-mail' type='email' register={{ ...register('email', registerEmail) }} error={errors?.email?.message ? `${errors?.email?.message}` : ''} />
+        <InputForm placeholder='example@gmail.com' name='email' label='E-mail' type='email' register={{ ...register('email', registerEmail) }} error={errors?.email?.message ? `${errors?.email?.message}` : ''} />
         <InputForm
-          placeholder='впишите пароль'
+          placeholder='Введите пароль'
           name='password'
           label='Пароль'
           type='password'
@@ -61,7 +61,7 @@ const Signup: React.FC = () => {
           }}
         />
         <InputForm
-          placeholder='еще раз пароль'
+          placeholder='Повторите пароль'
           name='passwordCheck'
           label='Подтвердите пароль'
           type='password'
