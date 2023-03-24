@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { ButtonSubmit, CheckBoxForm, InputForm, TitleForm } from '../UI';
 import { Signup, ResetPassword } from '../';
 
-import { setIsOpen, switchForm } from '../../store/popupSlice';
+import { setIsOpen, setMessageIsOpen, switchForm } from '../../store/popupSlice';
 import { useAppDispatch } from '../../hooks/hooks';
 import { getUser, signIn } from '../../store/userSlice';
 import { registerEmail, registerPassword } from '../../utils/registersRHF';
@@ -31,9 +31,15 @@ const Signin: React.FC = () => {
 
   const onSubmit = () => {
     dispatch(signIn({ email: userEmail, password: userPassword }))
-      .then(() => {
-        dispatch(getUser());
-        dispatch(setIsOpen(false));
+      .then((res) => {
+        if(res.meta.requestStatus === 'fulfilled') {
+          dispatch(getUser());
+          dispatch(setIsOpen(false));
+        }
+
+        if(res.meta.requestStatus === 'rejected' && res.payload === '400') {
+          dispatch(setMessageIsOpen({ messageIsOpen: true, message: 'Неверная почта или пароль' }));
+        }
       })
       .catch((err) => {
         console.log(err);
