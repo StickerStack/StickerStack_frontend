@@ -1,51 +1,51 @@
 @import '../../../utils/scss-variables';
 
 .container {
-  display: flex;
+  @include flex(row, flex-start, center);
   align-items: center;
   gap: 10px;
-}
 
-.input {
-  opacity: 0;
-  position: absolute;
-  z-index: -1;
-}
+  .input {
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
 
+    &:checked + .label{
+      background-image: url(../../../images/checker-icon.svg);
+      background-position: center;
+      background-size: 15px 9px;
+      background-repeat: no-repeat;
+    }
 
-.label {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  border: 1px solid #000;
-  border-radius: 5px;
-  content: '';
-}
+    &:checked + .label_error{
+      background-image: url(../../../images/checker-icon.svg);
+      background-position: center;
+      background-size: 15px 9px;
+      background-repeat: no-repeat;
+    }
+  }
 
-.label_error {
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  border: 1px solid $error-text-color;
-  border-radius: 5px;
-  content: '';
-}
+  .label {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    content: '';
+  }
 
-.input:checked + .label{
-  background-image: url(../../../images/checker-icon.svg);
-  background-position: center;
-  background-size: 15px 9px;
-  background-repeat: no-repeat;
-}
-
-.input:checked + .label_error{
-  background-image: url(../../../images/checker-icon.svg);
-  background-position: center;
-  background-size: 15px 9px;
-  background-repeat: no-repeat;
+  .label_error {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 1px solid $error-text-color;
+    border-radius: 5px;
+    content: '';
+  }
 }
 
 .text {
+  // что за текст?
   padding: 0;
   margin: 0;
 }

@@ -1,33 +1,6 @@
 @import './vendor/normalize.scss';
-@import './utils/_scss-variables.scss';
-
-$nunito-path: "./vendor/fonts/Nunito";
-$play-path: "./vendor/fonts/Play";
-
-@font-face {
-  font-family: "Nunito";
-  font-weight: 400;
-  src: url("#{$nunito-path}/Nunito-Regular.ttf") format('truetype');
-}
-
-@font-face {
-  font-family: "Nunito";
-  font-weight: 700;
-  src: url("#{$nunito-path}/Nunito-Bold.ttf") format('truetype');
-}
-
-@font-face {
-  font-family: "Play";
-  font-weight: 400;
-  src: url("#{$play-path}/Play-Regular.ttf") format('truetype');
-}
-
-@font-face {
-  font-family: "Play";
-  font-weight: 700;
-  src: url("#{$play-path}/Play-Bold.ttf") format('truetype');
-}
-
+@import './utils/scss-variables';
+@import './vendor/fonts/fonts';
 
 body {
   margin: 0;

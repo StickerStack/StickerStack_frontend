@@ -1,8 +1,6 @@
 @import '../../../utils/_scss-variables.scss';
 
 .textform {
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 140.02%;
+  @include font(14px, 140.02%, 400);
   color: $main-text-color;
 }

@@ -3,9 +3,7 @@
 .title {
   margin: 0;
   padding: 0;
-  font-weight: 400;
-  font-size: 30px;
-  line-height: 36px;
+  @include font(30px, 36px, 400);
   text-align: center;
   color: $main-text-color;
 }

@@ -5,15 +5,15 @@
   background-color: $regular-button-bg-color;
   border-radius: 20px;
   text-align: center;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 24px;
+  @include font(20px, 24px, 400);
   color: $regular-button-text-color;
   cursor: pointer;
-  transition: opacity 0.3s ease-in-out;
+  transition: opacity .3s ease-in-out;
   border: none;
+
+  &:hover {
+    opacity: 0.6;
+  }
 }
 
-.button:hover {
-  opacity: 0.6;
-}
+

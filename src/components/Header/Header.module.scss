@@ -6,34 +6,32 @@
   padding: 80px $desktop-padding 0;
   top: 0;
   background-color: $main-bg-color;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  @include flex(row, space-between, center);
+
+  .logo {
+    width: 160px;
+    height: 70px;
+    @include flex(column, center, center);
+    background-color: $secondary-bg-color;
+    @include font(40px, 48px, 400);
+    text-decoration: none;
+    color: $main-text-color;
+  }
+
+  .profile {
+    width: 50px;
+    height: 50px;
+    background-image: url(../../images/profile-icon.svg);
+    background-color: transparent;
+    cursor: pointer;
+    transition: opacity .3s ease-in-out;
+
+    &:hover {
+      opacity: .6;
+    }
+  }
 }
 
-.logo {
-  width: 160px;
-  height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: $secondary-bg-color;
-  font-weight: 400;
-  font-size: 40px;
-  line-height: 48px;
-  text-decoration: none;
-  color: $main-text-color;
-}
 
-.profile {
-  width: 50px;
-  height: 50px;
-  background-image: url(../../images/profile-icon.svg);
-  background-color: transparent;
-  cursor: pointer;
-  transition: opacity 0.3 ease-in-out;
-}
 
-.profile:hover {
-  opacity: 0.6;
-}
+

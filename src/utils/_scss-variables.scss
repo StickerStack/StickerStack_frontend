@@ -1,3 +1,5 @@
+@import '../vendor/fonts/fonts';
+
 $main-bg-color: #fff;
 $secondary-bg-color: #d9d9d9;
 $desktop-padding: 165px;
@@ -16,4 +18,18 @@ $other-button-text-color: #000;
 $other-button-border-color: #000;
 
 $error-text-color: #d34d46;
+
 $success-color: #c7f2c6;
+
+@mixin font($size, $height, $weight) {
+  font-size: $size;
+  line-height: $height;
+  font-weight: $weight;
+}
+
+@mixin flex($flex-direction, $justify-content, $align-items) {
+  display: flex;
+  flex-direction: $flex-direction;
+  justify-content: $justify-content;
+  align-items: $align-items;
+}
