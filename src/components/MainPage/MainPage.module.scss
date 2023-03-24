@@ -5,8 +5,8 @@
   @include flex(row, space-between, flex-start);
 
   .title {
-    font-style: normal;
     font-family: 'Play', sans-serif;
+    font-style: normal;
     @include font(60px, 73px, 400);
     margin: 0 0 30px;
   }
