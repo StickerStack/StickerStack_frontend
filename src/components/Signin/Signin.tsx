@@ -59,7 +59,7 @@ const Signin: React.FC = () => {
           error={errors?.email?.message ? `${errors?.email?.message}` : ''}
         />
         <InputForm
-          placeholder='впишите пароль'
+          placeholder='Введите пароль'
           name='password'
           label='Пароль'
           type='password'
