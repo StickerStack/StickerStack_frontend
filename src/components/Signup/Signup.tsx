@@ -32,12 +32,15 @@ const Signup: React.FC = () => {
 
   const onSubmit = () => {
     dispatch(signUp({ email: userEmail, password: userPassword }))
-      .then(() => {
-        dispatch(setMessageIsOpen({ messageIsOpen: true, message: 'Вы успешно зарегистрировались!' }));
-        dispatch(setIsOpen(false));
-      })
-      .catch((err) => {
-        console.log(err);
+      .then((res) => {
+        if(res.meta.requestStatus === 'fulfilled') {
+          dispatch(setMessageIsOpen({ messageIsOpen: true, message: 'Вы успешно зарегистрировались!' }));
+          dispatch(switchForm(Signin));
+        }
+
+        if(res.meta.requestStatus === 'rejected' && res.payload === '400') {
+          dispatch(setMessageIsOpen({ messageIsOpen: true, message: 'Учётная запись с такой почтой уже существует' }));
+        }
       });
   };
 
