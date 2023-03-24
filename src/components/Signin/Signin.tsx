@@ -51,7 +51,7 @@ const Signin: React.FC = () => {
       <TitleForm>Войти в личный кабинет</TitleForm>
       <div className={styles.inputs}>
         <InputForm
-          placeholder='vashapochta@gmail.com'
+          placeholder='Введите E-mail'
           name='email'
           label='E-mail'
           type='text'

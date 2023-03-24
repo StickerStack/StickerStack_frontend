@@ -30,6 +30,7 @@ const ChangePassword: React.FC = () => {
         <InputForm
           name='newPassword'
           label='Новый пароль'
+          placeholder='Введите новый пароль'
           type='password'
           register={register('newPassword', registerPassword)}
           error={
@@ -44,6 +45,7 @@ const ChangePassword: React.FC = () => {
         <InputForm
           name='newPasswordCheck'
           label='Повторите пароль'
+          placeholder='Повторите пароль'
           type='password'
           register={{
             ...register('newPasswordCheck', {
