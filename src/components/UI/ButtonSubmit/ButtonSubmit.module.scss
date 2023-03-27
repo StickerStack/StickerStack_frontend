@@ -8,12 +8,10 @@
   @include font(20px, 24px, 400);
   color: $regular-button-text-color;
   cursor: pointer;
-  transition: opacity .3s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
   border: none;
 
   &:hover {
     opacity: 0.6;
   }
 }
-
-

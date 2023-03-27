@@ -1,16 +1,22 @@
-import { Button, TitleForm, TextForm } from '../UI';
+import { useAppDispatch } from '../../hooks/hooks';
+import { ButtonSubmit, TitleForm, TextForm } from '../UI';
+import { setIsOpen } from '../../store/popupSlice';
 
 import styles from './VerifyEmail.module.scss';
 
 const VerifyEmail: React.FC = () => {
+  const dispatch = useAppDispatch();
   return (
     <div className={styles.verify}>
-      <TitleForm>Почта подтверждена!</TitleForm>
-      <TextForm>Теперь вам доступны загрузка и заказ стикеров.</TextForm>
-      <Button>ОК</Button>
+      <TitleForm>Спасибо за регистрацию!</TitleForm>
+      <TextForm>
+        Ваша почта успешно подтверждена.
+        <br />
+        Купи нам кофе по ссылочке :D
+      </TextForm>
+      <ButtonSubmit onClick={() => dispatch(setIsOpen(true))}>Купить!</ButtonSubmit>
     </div>
-  ); // По кнопке открытие авторизации/редирект на главную со входом,
-  // либо на профиль, если вход будет автоматическим после регистрации и захода на подтверждение
+  );
 };
 
 export { VerifyEmail };
