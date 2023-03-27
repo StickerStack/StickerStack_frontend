@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 
 import { ButtonSubmit, InputForm, CheckBoxForm, TitleForm } from '../UI';
-import { Signin } from '../';
+import { SuccessfulSignup, Signin } from '../';
 
 import { useAppDispatch } from '../../hooks/hooks';
 import { setMessageIsOpen, switchForm } from '../../store/popupSlice';
@@ -34,8 +34,7 @@ const Signup: React.FC = () => {
     dispatch(signUp({ email: userEmail, password: userPassword }))
       .then((res) => {
         if(res.meta.requestStatus === 'fulfilled') {
-          dispatch(setMessageIsOpen({ messageIsOpen: true, message: 'Вы успешно зарегистрировались!' }));
-          dispatch(switchForm(Signin));
+          dispatch(switchForm(SuccessfulSignup));
         }
 
         if(res.meta.requestStatus === 'rejected' && res.payload === '400') {
