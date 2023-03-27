@@ -1,6 +1,7 @@
 @import '../../../utils/scss-variables.scss';
 
 .button {
+  width: 100%;
   padding: 15px 35px;
   background-color: $regular-button-bg-color;
   border-radius: 20px;
@@ -8,12 +9,10 @@
   @include font(20px, 24px, 400);
   color: $regular-button-text-color;
   cursor: pointer;
-  transition: opacity .3s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
   border: none;
 
   &:hover {
     opacity: 0.6;
   }
 }
-
-

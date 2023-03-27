@@ -1,7 +1,9 @@
 @import '../../utils/_scss-variables.scss';
 
 .verify {
-  margin: 180px auto;
+  max-width: 310px;
+  text-align: center;
+  margin: 148px auto;
   @include flex(column, _, center);
-  gap: 35px;
+  gap: 30px;
 }

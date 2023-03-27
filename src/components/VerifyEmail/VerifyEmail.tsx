@@ -1,5 +1,5 @@
 import { useAppDispatch } from '../../hooks/hooks';
-import { Button, TitleForm, TextForm } from '../UI';
+import { ButtonSubmit, TitleForm, TextForm } from '../UI';
 import { setIsOpen } from '../../store/popupSlice';
 
 import styles from './VerifyEmail.module.scss';
@@ -8,9 +8,13 @@ const VerifyEmail: React.FC = () => {
   const dispatch = useAppDispatch();
   return (
     <div className={styles.verify}>
-      <TitleForm>Почта подтверждена!</TitleForm>
-      <TextForm>Теперь вам доступны загрузка и заказ стикеров.</TextForm>
-      <Button onClick={() => dispatch(setIsOpen(true))}>ОК</Button>
+      <TitleForm>Спасибо за регистрацию!</TitleForm>
+      <TextForm>
+        Ваша почта успешно подтверждена.
+        <br />
+        Купи нам кофе по ссылочке :D
+      </TextForm>
+      <ButtonSubmit onClick={() => dispatch(setIsOpen(true))}>Купить!</ButtonSubmit>
     </div>
   );
 };
