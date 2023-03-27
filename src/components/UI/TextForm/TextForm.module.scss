@@ -1,6 +1,6 @@
 @import '../../../utils/_scss-variables.scss';
 
 .textform {
-  @include font(14px, 140.02%, 400);
+  @include font(16px, 140.02%, 400);
   color: $main-text-color;
 }

@@ -1,5 +1,4 @@
 export { App } from './App/App';
-export { ChangePassword } from './ChangePassword/ChangePassword';
 export { Popup } from './Popup/Popup';
 export { Header } from './Header/Header';
 export { Signin } from './Signin/Signin';
@@ -10,4 +9,5 @@ export { Navigation } from './Navigation/Navigation';
 export { VerifyEmail } from './VerifyEmail/VerifyEmail';
 export { MessagePopup } from './MessagePopup/MessagePopup';
 export { ResetPassword } from './ResetPassword/ResetPassword';
+export { ChangePassword } from './ChangePassword/ChangePassword';
 export { SuccessfulSignup } from './SuccessfulSignup/SuccessfulSignup';
