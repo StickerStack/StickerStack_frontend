@@ -1,0 +1,8 @@
+@import '../../utils/_scss-variables.scss';
+
+.successful {
+  @include flex(column, _, _);
+  gap: 35px;
+  width: 310px;
+  text-align: center;
+}
