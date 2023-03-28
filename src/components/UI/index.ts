@@ -5,6 +5,7 @@ import { EyeButton } from './EyeButton/EyeButton';
 import { InputForm } from './InputForm/InputForm';
 import { TextForm } from './TextForm/TextForm';
 import { TitleForm } from './TitleForm/TitleForm';
+export { NewInput } from './NewInput/NewInput';
 
 export {
   Button,

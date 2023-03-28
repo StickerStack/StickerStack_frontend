@@ -9,7 +9,7 @@ import { EyeButton } from '../';
 
 import styles from './InputForm.module.scss';
 
-// FIXME: register type any -> нужен осмысленный тип!!!
+// FIXME: После тестов удалить этот компонент
 interface IProps {
   name: string;
   label: string;
