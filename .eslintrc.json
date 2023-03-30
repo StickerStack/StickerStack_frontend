@@ -20,7 +20,8 @@
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
     // Тут вставляем те расширения файлов, которые допустимы для импорта, если он не в массиве, то будет Warning
-    "react/jsx-filename-extension": ["warn", { "extensions": [".tsx", ".ts"] }]
+    "react/jsx-filename-extension": ["warn", { "extensions": [".tsx", ".ts"] }],
+    "react/display-name": "off"
   },
   "settings": {
     "import/resolver": {

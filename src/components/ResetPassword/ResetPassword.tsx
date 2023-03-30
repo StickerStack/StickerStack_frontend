@@ -25,13 +25,15 @@ const ResetPassword: React.FC = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.resetpassword}>
       <TitleForm>Восстановление пароля</TitleForm>
-      <InputForm
-        label='E-mail'
-        name='email'
-        placeholder='Введите E-mail'
-        register={{ ...register('email', registerEmail) }}
-        error={errors?.email?.message ? `${errors?.email?.message}` : ''}
-      />
+      <InputForm 
+          register={register}
+          option={registerEmail}
+          error={errors?.email}
+          placeholder='Введите E-mail'
+          name='email'
+          label='E-mail'
+          type='email'
+        />
       <TextForm>
         Мы направим ссылку на Вашу почту для восстановления пароля
       </TextForm>

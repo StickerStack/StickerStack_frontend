@@ -1,75 +1,70 @@
-import { useState } from 'react';
+import { forwardRef, useState } from 'react';
 import {
+  FieldError,
+  FieldErrorsImpl,
   FieldValues,
+  Merge,
   RegisterOptions,
-  UseFormRegisterReturn,
+  UseFormRegister,
 } from 'react-hook-form';
 
 import { EyeButton } from '../';
 
 import styles from './InputForm.module.scss';
 
-// FIXME: register type any -> нужен осмысленный тип!!!
 interface IProps {
   name: string;
   label: string;
-  type?: string;
+  type: 'email' | 'text' | 'submit' | 'password';
   placeholder?: string;
-  validateFunc?: (val: string) => string;
+  option?: RegisterOptions;
+  register?: UseFormRegister<FieldValues>;
+  error?: FieldError | Merge<FieldError, FieldErrorsImpl>;
   optionalButton?: { onClick: () => void; text: string };
   optionalEyeButton?: { visible: boolean };
-  register:
-    | ((
-        name: string,
-        options?: RegisterOptions<FieldValues, string> | undefined
-      ) => UseFormRegisterReturn<string>)
-    | any;
-  error?: string;
 }
 
-const InputForm: React.FC<IProps> = ({
-  name,
-  label,
-  type = 'text',
-  optionalButton,
-  optionalEyeButton,
-  placeholder,
-  register,
-  error,
-}: IProps) => {
-  const [passwordShown, setPasswordShown] = useState<boolean>(false);
-  const togglePassword = () => {
-    setPasswordShown(passwordShown ? false : true);
-  };
-  return (
-    <div className={styles.input}>
-      <label htmlFor={name} className={styles.label}>
-        {label}
-        {optionalButton && (
-          <button className={styles.link} onClick={optionalButton.onClick}>
-            <span className={styles.link_text}>{optionalButton.text}</span>
-          </button>
-        )}
-      </label>
-      <div className={error ? `${styles.border_error} ${styles.border}` : styles.border}>
-        <input
-          {...register}
-          placeholder={placeholder}
-          type={passwordShown && type === 'password' ? 'text' : type}
-          id={name}
-          className={error ? `${styles.field_error} ${styles.field}` : styles.field}
-        />
-      </div>
-      {optionalEyeButton && (
+const InputForm: React.FC<IProps> = forwardRef<HTMLInputElement, IProps>(
+  ({ name, label, type, option, register, error, optionalButton, optionalEyeButton, placeholder }, ref) => {
+    const [passwordShown, setPasswordShown] = useState<boolean>(false);
+    const togglePassword = () => {
+      setPasswordShown(passwordShown ? false : true);
+    };
+    
+    return (
+      <div className={styles.input}>
+        <label htmlFor={name} className={styles.label}>
+          {label} 
+          {
+            optionalButton && (
+              <button className={styles.link} onClick={optionalButton.onClick}>
+                <span className={styles.link_text}>{optionalButton.text}</span>
+              </button>
+            )
+          }
+        </label>
+        <div className={error ?  `${styles.border} ${styles.border_error}` : styles.border}>
+          <input
+            className={styles.field}
+            placeholder={placeholder}
+            type={passwordShown && type === 'password' ? 'text' : type}
+            ref={ref}
+            name={name}
+            id={name}
+            {...(register && register(name, option))}
+          />
+        </div>
+        {optionalEyeButton && (
         <EyeButton
           onClick={() => togglePassword()}
           shown={passwordShown}
           visible={optionalEyeButton.visible}
         />
       )}
-      <span className={styles.error}>{error}</span>
-    </div>
-  );
-};
+        <span className={styles.error}>{error && `${error.message}`}</span>
+      </div>
+    );
+  }
+);
 
 export { InputForm };

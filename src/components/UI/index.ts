@@ -1,17 +1,7 @@
-import { Button } from './Button/Button';
-import { ButtonSubmit } from './ButtonSubmit/ButtonSubmit';
-import { CheckBoxForm } from './CheckBoxForm/CheckBoxForm';
-import { EyeButton } from './EyeButton/EyeButton';
-import { InputForm } from './InputForm/InputForm';
-import { TextForm } from './TextForm/TextForm';
-import { TitleForm } from './TitleForm/TitleForm';
-
-export {
-  Button,
-  ButtonSubmit,
-  CheckBoxForm,
-  EyeButton,
-  InputForm,
-  TextForm,
-  TitleForm,
-};
+export { Button } from './Button/Button';
+export { ButtonSubmit } from './ButtonSubmit/ButtonSubmit';
+export { CheckBoxForm } from './CheckBoxForm/CheckBoxForm';
+export { EyeButton } from './EyeButton/EyeButton';
+export { TextForm } from './TextForm/TextForm';
+export { TitleForm } from './TitleForm/TitleForm';
+export { InputForm } from './InputForm/InputForm';

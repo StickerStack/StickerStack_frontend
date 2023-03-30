@@ -13,10 +13,6 @@ const ChangePassword: React.FC = () => {
     watch,
   } = useForm({
     mode: 'onBlur',
-    defaultValues: {
-      newPassword: '',
-      newPasswordCheck: '',
-    },
   });
 
   const onSubmit = () => {
@@ -28,41 +24,33 @@ const ChangePassword: React.FC = () => {
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <TitleForm>Смена пароля</TitleForm>
         <InputForm
+          register={register}
+          option={registerPassword}
+          error={errors?.newPassword}
+          placeholder='Введите новый пароль'
           name='newPassword'
           label='Новый пароль'
-          placeholder='Введите новый пароль'
           type='password'
-          register={register('newPassword', registerPassword)}
-          error={
-            errors?.newPassword?.message
-              ? `${errors?.newPassword?.message}`
-              : ''
-          }
           optionalEyeButton={{
             visible: watch('newPassword') !== (undefined || ''),
           }}
         />
         <InputForm
+          register={register}
+          option={{
+            ...registerPassword,
+            validate: (val: string) => {
+              if (val !== watch('newPassword')) {
+                return 'Пароли не совпадают';
+              }
+            },
+            required: 'Введи пароль повторно',
+          }}
+          error={errors?.newPasswordCheck}
+          placeholder='Повторите пароль'
           name='newPasswordCheck'
           label='Повторите пароль'
-          placeholder='Повторите пароль'
           type='password'
-          register={{
-            ...register('newPasswordCheck', {
-              ...registerPassword,
-              validate: (val: string) => {
-                if (val !== watch('newPassword')) {
-                  return 'Пароли не совпадают';
-                }
-              },
-              required: 'Введи пароль повторно',
-            }),
-          }}
-          error={
-            errors?.newPasswordCheck?.message
-              ? `${errors?.newPasswordCheck?.message}`
-              : ''
-          }
           optionalEyeButton={{
             visible: watch('newPasswordCheck') !== (undefined || ''),
           }}
