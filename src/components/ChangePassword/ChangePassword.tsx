@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 
-import { NewInput, TitleForm, ButtonSubmit } from '../UI';
+import { InputForm, TitleForm, ButtonSubmit } from '../UI';
 
 import { registerPassword } from '../../utils/registersRHF';
 import styles from './ChangePassword.module.scss';
@@ -23,7 +23,7 @@ const ChangePassword: React.FC = () => {
     <div className={styles.container}>
       <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <TitleForm>Смена пароля</TitleForm>
-        <NewInput
+        <InputForm
           register={register}
           option={registerPassword}
           error={errors?.newPassword}
@@ -35,7 +35,7 @@ const ChangePassword: React.FC = () => {
             visible: watch('newPassword') !== (undefined || ''),
           }}
         />
-        <NewInput
+        <InputForm
           register={register}
           option={{
             ...registerPassword,

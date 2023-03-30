@@ -5,7 +5,7 @@ import {
   ButtonSubmit,
   CheckBoxForm,
   TitleForm,
-  NewInput,
+  InputForm,
 } from '../UI';
 import { Signup, ResetPassword } from '../';
 
@@ -61,7 +61,7 @@ const Signin: React.FC = () => {
     <form className={styles.signin} onSubmit={handleSubmit(onSubmit)}>
       <TitleForm>Войти в личный кабинет</TitleForm>
       <div className={styles.inputs}>
-        <NewInput 
+        <InputForm 
           register={register}
           option={registerEmail}
           error={errors?.email}
@@ -70,7 +70,7 @@ const Signin: React.FC = () => {
           label='E-mail'
           type='email'
         />
-        <NewInput
+        <InputForm
           register={register}
           option={registerPassword}
           error={errors?.password}

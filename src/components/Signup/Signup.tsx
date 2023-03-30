@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 
-import { ButtonSubmit, NewInput, CheckBoxForm, TitleForm } from '../UI';
+import { ButtonSubmit, InputForm, CheckBoxForm, TitleForm } from '../UI';
 import { SuccessfulSignup, Signin } from '../';
 
 import { useAppDispatch } from '../../hooks/hooks';
@@ -47,7 +47,7 @@ const Signup: React.FC = () => {
     <form onSubmit={handleSubmit(onSubmit)} className={styles.signup}>
       <TitleForm>Регистрация</TitleForm>
       <div className={styles.inputs}>
-        <NewInput
+        <InputForm
           register={register}
           option={registerEmail}
           error={errors?.email}
@@ -56,7 +56,7 @@ const Signup: React.FC = () => {
           label='E-mail'
           type='email'
         />
-        <NewInput
+        <InputForm
           register={register}
           option={registerPassword}
           error={errors?.password}
@@ -69,7 +69,7 @@ const Signup: React.FC = () => {
           }}
         />
 
-        <NewInput
+        <InputForm
           register={register}
           option={{
             ...registerPassword,

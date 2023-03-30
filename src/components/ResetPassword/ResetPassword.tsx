@@ -1,6 +1,6 @@
 import { FieldValues, useForm } from 'react-hook-form';
 
-import { ButtonSubmit, NewInput, TitleForm, TextForm } from '../UI';
+import { ButtonSubmit, InputForm, TitleForm, TextForm } from '../UI';
 import { Signin } from '../';
 
 import { switchForm } from '../../store/popupSlice';
@@ -25,7 +25,7 @@ const ResetPassword: React.FC = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.resetpassword}>
       <TitleForm>Восстановление пароля</TitleForm>
-      <NewInput 
+      <InputForm 
           register={register}
           option={registerEmail}
           error={errors?.email}
