@@ -97,6 +97,37 @@ class Api {
 
     return response;
   }
+
+  public async forgotPassword(email: string) {
+    const data = await fetch(`${this._url}/auth/forgot-password`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: this._headers,
+      body: JSON.stringify({
+        email: email,
+      }),
+    });
+
+    const response = await this._checkResponse(data);
+
+    return response;
+  }
+
+  public async resetPassword(token: string, newPassword: string) {
+    const data = await fetch(`${this._url}/auth/reset-password`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: this._headers,
+      body: JSON.stringify({
+        token: token,
+        password: newPassword
+      }),
+    });
+
+    const response = await this._checkResponse(data);
+
+    return response;
+  }
 }
 
 const api = new Api(API_URL, {

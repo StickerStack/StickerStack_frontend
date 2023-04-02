@@ -1,7 +1,11 @@
-import { useForm } from 'react-hook-form';
+import { FieldValues, useForm } from 'react-hook-form';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import { InputForm, TitleForm, ButtonSubmit } from '../UI';
 
+import { useAppDispatch } from '../../hooks/hooks';
+import { resetPassword } from '../../store/userSlice';
 import { registerPassword } from '../../utils/registersRHF';
 import styles from './ChangePassword.module.scss';
 
@@ -14,10 +18,17 @@ const ChangePassword: React.FC = () => {
   } = useForm({
     mode: 'onBlur',
   });
+  const location = useLocation();
+  const [token, setToken] = useState<string>('');
+  const dispatch = useAppDispatch();
 
-  const onSubmit = () => {
-    console.log('РАБОТАЕТ');
+  const onSubmit = (data: FieldValues) => {
+    dispatch(resetPassword({token: token, password: data.newPassword}))
   };
+
+  useEffect(() => {
+    setToken(location.pathname.replace('/auth/verify-forgot-password/', ''));
+  }, []);
 
   return (
     <div className={styles.container}>
