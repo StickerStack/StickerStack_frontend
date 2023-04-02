@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 import { Button } from '../UI';
 
@@ -8,13 +8,12 @@ import { IUserState } from '../../interfaces';
 import styles from './Header.module.scss';
 import { setIsOpen } from '../../store/popupSlice';
 
-
 const Header: React.FC = () => {
-  const isLogged = useSelector((state: { user: IUserState }) => state.user.isLogged)
-
+  const isLogged = useSelector((state: { user: IUserState }) => state.user.isLogged);
+  const location = useLocation();
   const dispatch = useAppDispatch();
 
-  return (
+  return location.pathname !== '/page-not-found' ? (
     <header className={styles.header}>
       <Link to='/' className={styles.logo}>
         Лого
@@ -25,7 +24,7 @@ const Header: React.FC = () => {
         <Button onClick={() => dispatch(setIsOpen(true))}>Войти</Button>
       )}
     </header>
-  );
+  ) : null;
 };
 
 export { Header };
