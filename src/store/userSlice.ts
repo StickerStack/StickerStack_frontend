@@ -49,8 +49,6 @@ const forgotPassword = createAsyncThunk('user/forgotPassword',
 
 const resetPassword = createAsyncThunk('user/resetPassword',
   async (data: { token: string, password: string }) => {
-    console.log(data.token, data.password);
-    
     const response = await api.resetPassword(data.token, data.password);
     return response.data;
   }
