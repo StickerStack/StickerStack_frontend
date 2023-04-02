@@ -6,6 +6,7 @@ import { Signin } from '../';
 import { switchForm } from '../../store/popupSlice';
 import { useAppDispatch } from '../../hooks/hooks';
 import { registerEmail } from '../../utils/registersRHF';
+import { forgotPassword } from '../../store/userSlice';
 import styles from './ResetPassword.module.scss';
 
 const ResetPassword: React.FC = () => {
@@ -19,7 +20,7 @@ const ResetPassword: React.FC = () => {
   });
 
   const onSubmit = (data: FieldValues) => {
-    console.log(data);
+    dispatch(forgotPassword({email: data.email}));
   };
 
   return (
