@@ -6,6 +6,7 @@ import { Header, MessagePopup, Popup, ChangePassword, MainPage, VerifyEmail } fr
 import { useAppDispatch } from '../../hooks/hooks';
 import { getUser } from '../../store/userSlice';
 import { ProfilePage } from '../ProfilePage/ProfilePage';
+import { AddStickers } from '../AddStickers/AddStickers';
 import { IUserState } from '../../interfaces/IUserState';
 import styles from './App.module.scss';
 
@@ -24,6 +25,7 @@ const App: React.FC = () => {
       <Header />
       <Routes>
         <Route path='/change-password' element={<ChangePassword />} />
+        <Route path='/add-stickers' element={!isLogged ? <AddStickers /> : <Navigate to='/' />} />
         <Route path='/profile' element={isLogged ? <ProfilePage /> : <Navigate to='/' />} />
         <Route path='/' element={<MainPage />} />
         <Route path='/auth/verifyemail' element={<VerifyEmail />} />
