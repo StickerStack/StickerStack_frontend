@@ -40,6 +40,23 @@ const updateUser = createAsyncThunk('user/updateUser',
   }
 );
 
+const forgotPassword = createAsyncThunk('user/forgotPassword',
+  async (data: { email: string }) => {
+    const response = await api.forgotPassword(data.email);
+    return response.data;
+  }
+);
+
+const resetPassword = createAsyncThunk('user/resetPassword',
+  async (data: { token: string, password: string }) => {
+    console.log(data.token, data.password);
+    
+    const response = await api.resetPassword(data.token, data.password);
+    return response.data;
+  }
+);
+
+
 const userSlice = createSlice({
   name: 'user',
   initialState: {
@@ -108,9 +125,35 @@ const userSlice = createSlice({
       state.loading = false;
       state.success = false;
     });
+
+    // Воставновление пароля, по email
+    builder.addCase(forgotPassword.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(forgotPassword.fulfilled, (state) => {
+      state.loading = false;
+      state.success = true;
+    });
+    builder.addCase(forgotPassword.rejected, (state) => {
+      state.loading = false;
+      state.success = false;
+    });
+
+    // Сохранение нового пароля, по токену
+    builder.addCase(resetPassword.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(resetPassword.fulfilled, (state) => {
+      state.loading = false;
+      state.success = true;
+    });
+    builder.addCase(resetPassword.rejected, (state) => {
+      state.loading = false;
+      state.success = false;
+    });
   }
 });
 
 const userSliceReducer = userSlice.reducer;
 
-export { userSliceReducer, getUser, updateUser, logOut, signIn, signUp };
+export { userSliceReducer, getUser, updateUser, logOut, signIn, signUp, forgotPassword, resetPassword };

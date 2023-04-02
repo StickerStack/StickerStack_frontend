@@ -27,6 +27,7 @@ const App: React.FC = () => {
         <Route path='/profile' element={isLogged ? <ProfilePage /> : <Navigate to='/' />} />
         <Route path='/' element={<MainPage />} />
         <Route path='/auth/verifyemail' element={<VerifyEmail />} />
+        <Route path='/auth/verify-forgot-password/:token' element={<ChangePassword />} />
       </Routes>
 
       <MessagePopup />
