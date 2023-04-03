@@ -1,20 +1,15 @@
-import { useAppDispatch } from '../../hooks/hooks';
 import { ButtonSubmit, TitleForm, TextForm } from '../UI';
-import { setIsOpen } from '../../store/popupSlice';
 
 import styles from './VerifyEmail.module.scss';
+import { useNavigate } from 'react-router-dom';
 
 const VerifyEmail: React.FC = () => {
-  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   return (
     <div className={styles.verify}>
-      <TitleForm>Спасибо за регистрацию!</TitleForm>
-      <TextForm>
-        Ваша почта успешно подтверждена.
-        <br />
-        Купи нам кофе по ссылочке :D
-      </TextForm>
-      <ButtonSubmit onClick={() => dispatch(setIsOpen(true))}>Купить!</ButtonSubmit>
+      <TitleForm>Почта успешно подтверждена</TitleForm>
+      <TextForm>Теперь вам доступен полный функционал для создания стикеров!</TextForm>
+      <ButtonSubmit onClick={() => navigate('/add-stickers')}>Начать!</ButtonSubmit>
     </div>
   );
 };

@@ -1,15 +1,17 @@
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 import { ButtonSubmit, InputForm, CheckBoxForm, TitleForm } from '../UI';
-import { SuccessfulSignup, Signin } from '../';
+import { Signin } from '../';
 
 import { useAppDispatch } from '../../hooks/hooks';
-import { setMessageIsOpen, switchForm } from '../../store/popupSlice';
-import { signUp } from '../../store/userSlice';
+import { setMessageIsOpen, switchForm, setIsOpen } from '../../store/popupSlice';
+import { signUp, signIn, getUser } from '../../store/userSlice';
 import { registerEmail, registerPassword } from '../../utils/registersRHF';
 import styles from './Signup.module.scss';
 
 const Signup: React.FC = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const {
     register,
@@ -25,22 +27,29 @@ const Signup: React.FC = () => {
   const userPassword = getValues('password');
 
   const onSubmit = () => {
-    dispatch(signUp({ email: userEmail, password: userPassword })).then(
-      (res) => {
-        if (res.meta.requestStatus === 'fulfilled') {
-          dispatch(switchForm(SuccessfulSignup));
-        }
-
-        if (res.meta.requestStatus === 'rejected' && res.payload === '400') {
-          dispatch(
-            setMessageIsOpen({
-              messageIsOpen: true,
-              message: 'Учётная запись с такой почтой уже существует',
-            })
-          );
-        }
+    dispatch(signUp({ email: userEmail, password: userPassword })).then((res) => {
+      if (res.meta.requestStatus === 'fulfilled') {
+        dispatch(setIsOpen(false));
+        dispatch(signIn({ email: userEmail, password: userPassword }));
+        dispatch(getUser());
+        navigate('/add-stickers');
+        dispatch(
+          setMessageIsOpen({
+            messageIsOpen: true,
+            message: 'Подтвердите почту',
+          }),
+        );
       }
-    );
+
+      if (res.meta.requestStatus === 'rejected' && res.payload === '400') {
+        dispatch(
+          setMessageIsOpen({
+            messageIsOpen: true,
+            message: 'Учётная запись с такой почтой уже существует',
+          }),
+        );
+      }
+    });
   };
 
   return (
