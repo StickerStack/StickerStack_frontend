@@ -1,19 +1,10 @@
 import { useForm } from 'react-hook-form';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
-import {
-  ButtonSubmit,
-  CheckBoxForm,
-  TitleForm,
-  InputForm,
-} from '../UI';
+import { ButtonSubmit, CheckBoxForm, TitleForm, InputForm } from '../UI';
 import { Signup, ResetPassword } from '../';
 
-import {
-  setIsOpen,
-  setMessageIsOpen,
-  switchForm,
-} from '../../store/popupSlice';
+import { setIsOpen, setMessageIsOpen, switchForm } from '../../store/popupSlice';
 import { useAppDispatch } from '../../hooks/hooks';
 import { getUser, signIn } from '../../store/userSlice';
 import { registerEmail, registerPassword } from '../../utils/registersRHF';
@@ -21,6 +12,7 @@ import styles from './Signin.module.scss';
 
 const Signin: React.FC = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const {
     register,
@@ -41,6 +33,7 @@ const Signin: React.FC = () => {
         if (res.meta.requestStatus === 'fulfilled') {
           dispatch(getUser());
           dispatch(setIsOpen(false));
+          navigate('/add-stickers');
         }
 
         if (res.meta.requestStatus === 'rejected' && res.payload === '400') {
@@ -48,7 +41,7 @@ const Signin: React.FC = () => {
             setMessageIsOpen({
               messageIsOpen: true,
               message: 'Неверная почта или пароль',
-            })
+            }),
           );
         }
       })
@@ -61,7 +54,7 @@ const Signin: React.FC = () => {
     <form className={styles.signin} onSubmit={handleSubmit(onSubmit)}>
       <TitleForm>Войти в личный кабинет</TitleForm>
       <div className={styles.inputs}>
-        <InputForm 
+        <InputForm
           register={register}
           option={registerEmail}
           error={errors?.email}
@@ -97,10 +90,7 @@ const Signin: React.FC = () => {
             visible: watch('password') !== (undefined || ''),
           }}
         />
-        <CheckBoxForm
-          name='rememberCheckbox'
-          register={register('rememberCheckbox')}
-        >
+        <CheckBoxForm name='rememberCheckbox' register={register('rememberCheckbox')}>
           Запомнить меня
         </CheckBoxForm>
       </div>
