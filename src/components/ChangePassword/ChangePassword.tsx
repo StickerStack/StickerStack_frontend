@@ -23,7 +23,7 @@ const ChangePassword: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const onSubmit = (data: FieldValues) => {
-    dispatch(resetPassword({token: token, password: data.newPassword}))
+    dispatch(resetPassword({token: token, password: data.newPassword}));
   };
 
   useEffect(() => {

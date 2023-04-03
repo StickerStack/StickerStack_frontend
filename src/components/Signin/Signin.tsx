@@ -41,6 +41,7 @@ const Signin: React.FC = () => {
             setMessageIsOpen({
               messageIsOpen: true,
               message: 'Неверная почта или пароль',
+              messageIsError: true
             }),
           );
         }
