@@ -37,6 +37,7 @@ const Signup: React.FC = () => {
           setMessageIsOpen({
             messageIsOpen: true,
             message: 'Подтвердите почту',
+            messageIsError: false,
           }),
         );
       }
@@ -46,6 +47,7 @@ const Signup: React.FC = () => {
           setMessageIsOpen({
             messageIsOpen: true,
             message: 'Учётная запись с такой почтой уже существует',
+            messageIsError: true
           }),
         );
       }

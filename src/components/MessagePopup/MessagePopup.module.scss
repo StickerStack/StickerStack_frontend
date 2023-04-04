@@ -18,6 +18,10 @@
   border-radius: 20px;
   padding: 23px 40px;
   box-sizing: border-box;
+
+  &.error {
+    background-color: $error-text-color;
+  }
 }
 
 .message_opened {
