@@ -29,25 +29,27 @@ const Signup: React.FC = () => {
   const onSubmit = () => {
     dispatch(signUp({ email: userEmail, password: userPassword })).then((res) => {
       if (res.meta.requestStatus === 'fulfilled') {
-        dispatch(setIsOpen(false));
-        dispatch(signIn({ email: userEmail, password: userPassword }));
-        dispatch(getUser());
-        navigate('/add-stickers');
-        dispatch(
-          setMessageIsOpen({
-            messageIsOpen: true,
-            message: 'Подтвердите почту',
-            messageIsError: false,
-          }),
-        );
+        dispatch(signIn({ email: userEmail, password: userPassword })).then((res) => {
+          if (res.meta.requestStatus === 'fulfilled') {
+            dispatch(getUser());
+            dispatch(setIsOpen(false));
+            navigate('/add-stickers');
+            dispatch(
+              setMessageIsOpen({
+                messageIsOpen: true,
+                message: 'Подтвердите почту',
+                messageIsError: false,
+              }),
+            );
+          }
+        });
       }
-
       if (res.meta.requestStatus === 'rejected' && res.payload === '400') {
         dispatch(
           setMessageIsOpen({
             messageIsOpen: true,
             message: 'Учётная запись с такой почтой уже существует',
-            messageIsError: true
+            messageIsError: true,
           }),
         );
       }
