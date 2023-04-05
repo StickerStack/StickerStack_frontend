@@ -17,7 +17,7 @@ const MainPage: React.FC = () => {
 
   const onClickTry = (): void => {
     if (isLogged) {
-      navigate('tut-budet-ssilka-na-sozdanie-stickerov');
+      navigate('/add-stickers');
     } else {
       dispatch(setIsOpen(true));
     }
