@@ -22,12 +22,12 @@ const MessagePopup: React.FC = () => {
     setTimeout(() => {
       dispatch(setMessageIsOpen([false, '']));
       setClosing(false);
-    }, 340);
+    }, 330);
   };
 
   useEffect(() => {
     if (messageIsOpen) {
-      setTimeout(() => closeMessage(), 8000);
+      setTimeout(() => closeMessage(), 6000);
     }
   }, [messageIsOpen]);
 
