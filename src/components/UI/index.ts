@@ -1,4 +1,4 @@
-export { ButtonCustom } from './Button/ButtonCustom';
+export { ButtonCustom } from './ButtonCustom/ButtonCustom';
 export { ButtonWithText } from './ButtonWithText/ButtonWithText';
 export { TextUnderline } from './TextUnderline/TextUnderline';
 export { CheckBoxForm } from './CheckBoxForm/CheckBoxForm';
