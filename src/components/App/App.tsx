@@ -44,12 +44,19 @@ const App: React.FC = () => {
           <div id='app-popup' />
           <Header />
           <Routes>
-            <Route path='/auth/verifyemail' element={<VerifyEmail />} />
+            <Route path='/auth/verifyemail' element={
+              <ProtectedRoute isLogged={!isLogged} redirectPath='/'>
+                <VerifyEmail />
+              </ProtectedRoute>
+            } />
             <Route
               path='/auth/verify-forgot-password/:token'
-              element={<ChangePassword />}
+              element={
+                <ProtectedRoute isLogged={!isLogged}>
+                  <ChangePassword />
+                </ProtectedRoute>
+              }
             />
-            <Route path='/change-password' element={<ChangePassword />} />
             <Route
               path='/add-stickers'
               element={
