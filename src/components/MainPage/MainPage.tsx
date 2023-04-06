@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import { ButtonSubmit } from '../UI';
+import { ButtonWithText, TextUnderline } from '../UI';
 
 import { useAppDispatch } from '../../hooks/hooks';
 import MainPageImage from '../../images/main-page-image.png';
@@ -28,7 +28,9 @@ const MainPage: React.FC = () => {
       <div>
         <h1 className={styles.title}>StickerStack</h1>
         <h2 className={styles.description}>Кастомные стикеры на заказ</h2>
-        <ButtonSubmit onClick={() => onClickTry()}>Попробовать</ButtonSubmit>
+        <ButtonWithText type='button' onClick={() => onClickTry()}>
+          Попробовать
+        </ButtonWithText>
       </div>
       <img className={styles.img} src={MainPageImage} />
     </main>

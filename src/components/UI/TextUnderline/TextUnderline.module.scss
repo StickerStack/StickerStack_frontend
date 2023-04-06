@@ -1,0 +1,24 @@
+@import '../../../utils/_scss-variables.scss';
+
+.button {
+  background-color: transparent;
+  border: none;
+  color: $main-text-color;
+  @include font(16px, 19px, 400);
+  cursor: pointer;
+
+  .text::after {
+    content: '';
+    display: block;
+    margin-top: 5px;
+    width: 0;
+    height: 2px;
+    background: #000;
+    transition: width 0.3s;
+  }
+
+  .text:hover::after {
+    width: 100%;
+    transition: width 0.3s;
+  }
+}

@@ -1,0 +1,31 @@
+@import '../../../utils/scss-variables.scss';
+
+.button {
+  padding: 16px 45px;
+  box-sizing: border-box;
+  height: 55px;
+  border-radius: 20px;
+  text-align: center;
+  @include font(20px, 24px, 400);
+  cursor: pointer;
+  transition: opacity 0.3s ease-in-out;
+
+  &:hover {
+    opacity: 0.6;
+  }
+}
+
+.button_filled {
+  background-color: $regular-button-bg-color;
+  color: $regular-button-text-color;
+  border: 1px solid $regular-button-bg-color;
+}
+
+.button_transparent {
+  padding: 10px 50px;
+  height: 45px;
+  border-radius: 15px;
+  background-color: $other-button-bg-color;
+  color: $other-button-text-color;
+  border: 1px solid $other-button-text-color;
+}

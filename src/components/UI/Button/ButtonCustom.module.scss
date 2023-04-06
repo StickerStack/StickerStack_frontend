@@ -1,0 +1,25 @@
+@import '../../../utils/_scss-variables.scss';
+
+.button {
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.3s ease-in-out;
+
+  &:hover {
+    opacity: 0.6;
+  }
+}
+.button_close {
+  width: 20px;
+  height: 20px;
+  background-image: url(../../../images/button-close.svg);
+}
+
+.button_person {
+  width: 32px;
+  height: 32px;
+  background-image: url(../../../images/profile-icon.svg);
+}

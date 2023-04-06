@@ -1,5 +1,6 @@
-export { Button } from './Button/Button';
-export { ButtonSubmit } from './ButtonSubmit/ButtonSubmit';
+export { ButtonCustom } from './Button/ButtonCustom';
+export { ButtonWithText } from './ButtonWithText/ButtonWithText';
+export { TextUnderline } from './TextUnderline/TextUnderline';
 export { CheckBoxForm } from './CheckBoxForm/CheckBoxForm';
 export { EyeButton } from './EyeButton/EyeButton';
 export { TextForm } from './TextForm/TextForm';
