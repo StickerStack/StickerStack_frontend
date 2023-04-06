@@ -5,7 +5,7 @@ export type ButtonType = 'close' | 'person' | 'cart';
 
 interface IProps {
   type: ButtonType;
-  className: string;
+  className?: string;
   onClick?: () => void;
 }
 
