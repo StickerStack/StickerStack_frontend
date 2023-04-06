@@ -13,7 +13,7 @@ import {
   PageNotFound,
   ProfilePage,
   AddStickers,
-  Preloader
+  Preloader,
 } from '../';
 
 import { useAppDispatch } from '../../hooks/hooks';
@@ -44,15 +44,18 @@ const App: React.FC = () => {
           <div id='app-popup' />
           <Header />
           <Routes>
-            <Route path='/auth/verifyemail' element={
-              <ProtectedRoute isLogged={!isLogged} redirectPath='/'>
-                <VerifyEmail />
-              </ProtectedRoute>
-            } />
+            <Route
+              path='/auth/verifyemail'
+              element={
+                <ProtectedRoute isLogged={!isLogged} redirectPath='/'>
+                  <VerifyEmail />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path='/auth/verify-forgot-password/:token'
               element={
-                <ProtectedRoute isLogged={!isLogged}>
+                <ProtectedRoute isLogged={!isLogged} redirectPath='/'>
                   <ChangePassword />
                 </ProtectedRoute>
               }
