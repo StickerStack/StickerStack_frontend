@@ -9,29 +9,10 @@
   @include flex(row, space-between, center);
 
   .logo {
-    width: 160px;
-    height: 70px;
-    @include flex(column, center, center);
-    background-color: $secondary-bg-color;
-    @include font(40px, 48px, 400);
-    text-decoration: none;
-    color: $main-text-color;
-  }
-
-  .profile {
-    width: 50px;
-    height: 50px;
-    background-image: url(../../images/profile-icon.svg);
-    background-color: transparent;
-    cursor: pointer;
-    transition: opacity .3s ease-in-out;
-
-    &:hover {
-      opacity: .6;
-    }
+    width: 105px;
+    height: 100px;
+    background-image: url(../../images/logo.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
   }
 }
-
-
-
-

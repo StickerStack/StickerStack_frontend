@@ -15,9 +15,7 @@ const Header: React.FC = () => {
 
   return location.pathname !== '/page-not-found' ? (
     <header className={styles.header}>
-      <Link to='/' className={styles.logo}>
-        Лого
-      </Link>
+      <Link to='/' className={styles.logo} />
       {isLogged ? (
         <Link to='/profile'>
           <ButtonCustom className={styles.profile} type='person' />

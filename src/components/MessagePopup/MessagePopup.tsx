@@ -7,14 +7,14 @@ import { useAppDispatch } from '../../hooks/hooks';
 import { setMessageIsOpen } from '../../store/popupSlice';
 
 import styles from './MessagePopup.module.scss';
-
+import { ButtonCustom } from '../UI';
 
 const MessagePopup: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const messageIsOpen = useSelector((state: { popup: IPopupState }) => state.popup.messageIsOpen);
   const message = useSelector((state: { popup: IPopupState }) => state.popup.message);
-  const messageIsError = useSelector((state: { popup: IPopupState}) => state.popup.messageIsError)
+  const messageIsError = useSelector((state: { popup: IPopupState }) => state.popup.messageIsError);
   const [closing, setClosing] = useState<boolean>(false);
 
   const closeMessage = () => {
@@ -23,7 +23,7 @@ const MessagePopup: React.FC = () => {
       dispatch(setMessageIsOpen([false, '']));
       setClosing(false);
     }, 340);
-  }
+  };
 
   useEffect(() => {
     if (messageIsOpen) {
@@ -34,9 +34,13 @@ const MessagePopup: React.FC = () => {
   return messageIsOpen
     ? createPortal(
         <div className={styles.message__block}>
-          <p className={`${styles.message} ${messageIsOpen ? styles.message_opened : ''} ${closing ? styles.message_closed : ''} ${messageIsError && styles.error}`}>
+          <p
+            className={`${styles.message} ${messageIsOpen ? styles.message_opened : ''} ${
+              closing ? styles.message_closed : ''
+            } ${messageIsError && styles.error}`}
+          >
             {message}
-            <button className={styles.button} onClick={() => closeMessage()} />
+            <ButtonCustom className={styles.button} type='close' onClick={() => closeMessage()} />
           </p>
         </div>,
         document.getElementById('app-popup') as HTMLElement,
