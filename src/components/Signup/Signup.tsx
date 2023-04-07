@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-import { ButtonSubmit, InputForm, CheckBoxForm, TitleForm } from '../UI';
+import { ButtonWithText, InputForm, CheckBoxForm, TitleForm, TextUnderline } from '../UI';
 import { Signin } from '../';
 
 import { useAppDispatch } from '../../hooks/hooks';
@@ -119,16 +119,12 @@ const Signup: React.FC = () => {
           </a>
         </p>
       </CheckBoxForm>
-      <ButtonSubmit>Зарегистрироваться</ButtonSubmit>
+      <ButtonWithText type='submit'>Зарегистрироваться</ButtonWithText>
       <span className={styles.link}>
         Уже есть аккаунт?{' '}
-        <button
-          type='button'
-          onClick={() => dispatch(switchForm(Signin))}
-          className={styles.button}
-        >
-          <span className={styles.text}>Войти</span>
-        </button>
+        <TextUnderline type='button' onClick={() => dispatch(switchForm(Signin))}>
+          Войти
+        </TextUnderline>
       </span>
     </form>
   );

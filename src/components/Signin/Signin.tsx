@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { ButtonSubmit, CheckBoxForm, TitleForm, InputForm } from '../UI';
+import { ButtonWithText, CheckBoxForm, TitleForm, InputForm, TextUnderline } from '../UI';
 import { Signup, ResetPassword } from '../';
 
 import { setIsOpen, setMessageIsOpen, switchForm } from '../../store/popupSlice';
@@ -41,7 +41,7 @@ const Signin: React.FC = () => {
             setMessageIsOpen({
               messageIsOpen: true,
               message: 'Неверная почта или пароль',
-              messageIsError: true
+              messageIsError: true,
             }),
           );
         }
@@ -95,17 +95,13 @@ const Signin: React.FC = () => {
           Запомнить меня
         </CheckBoxForm>
       </div>
-      <ButtonSubmit>Войти</ButtonSubmit>
+      <ButtonWithText type='submit'>Войти</ButtonWithText>
       {!location.pathname.startsWith('/api/auth/verifyemail') ? (
         <span className={styles.link}>
           Нет аккаунта?{' '}
-          <button
-            onClick={() => dispatch(switchForm(Signup))}
-            type='button'
-            className={styles.button}
-          >
-            <span className={styles.text}>Зарегистрироваться</span>
-          </button>
+          <TextUnderline onClick={() => dispatch(switchForm(Signup))} type='button'>
+            Зарегистрироваться
+          </TextUnderline>
         </span>
       ) : null}
     </form>

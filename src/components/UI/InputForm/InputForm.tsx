@@ -8,7 +8,7 @@ import {
   UseFormRegister,
 } from 'react-hook-form';
 
-import { EyeButton } from '../';
+import { EyeButton, TextUnderline } from '../';
 
 import styles from './InputForm.module.scss';
 
@@ -25,25 +25,28 @@ interface IProps {
 }
 
 const InputForm: React.FC<IProps> = forwardRef<HTMLInputElement, IProps>(
-  ({ name, label, type, option, register, error, optionalButton, optionalEyeButton, placeholder }, ref) => {
+  (
+    { name, label, type, option, register, error, optionalButton, optionalEyeButton, placeholder },
+    ref,
+  ) => {
     const [passwordShown, setPasswordShown] = useState<boolean>(false);
     const togglePassword = () => {
       setPasswordShown(passwordShown ? false : true);
     };
-    
+
     return (
       <div className={styles.input}>
         <label htmlFor={name} className={styles.label}>
-          {label} 
-          {
-            optionalButton && (
-              <button className={styles.link} onClick={optionalButton.onClick}>
-                <span className={styles.link_text}>{optionalButton.text}</span>
-              </button>
-            )
-          }
+          {label}
+          {optionalButton && (
+            <span className={styles.link}>
+              <TextUnderline type='button' onClick={optionalButton.onClick}>
+                {optionalButton.text}
+              </TextUnderline>
+            </span>
+          )}
         </label>
-        <div className={error ?  `${styles.border} ${styles.border_error}` : styles.border}>
+        <div className={error ? `${styles.border} ${styles.border_error}` : styles.border}>
           <input
             className={styles.field}
             placeholder={placeholder}
@@ -55,16 +58,16 @@ const InputForm: React.FC<IProps> = forwardRef<HTMLInputElement, IProps>(
           />
         </div>
         {optionalEyeButton && (
-        <EyeButton
-          onClick={() => togglePassword()}
-          shown={passwordShown}
-          visible={optionalEyeButton.visible}
-        />
-      )}
+          <EyeButton
+            onClick={() => togglePassword()}
+            shown={passwordShown}
+            visible={optionalEyeButton.visible}
+          />
+        )}
         <span className={styles.error}>{error && `${error.message}`}</span>
       </div>
     );
-  }
+  },
 );
 
 export { InputForm };
