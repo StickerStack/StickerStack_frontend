@@ -2,7 +2,7 @@ import { FieldValues, useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import { InputForm, TitleForm, ButtonSubmit } from '../UI';
+import { InputForm, TitleForm, ButtonWithText } from '../UI';
 
 import { useAppDispatch } from '../../hooks/hooks';
 import { resetPassword } from '../../store/userSlice';
@@ -23,7 +23,7 @@ const ChangePassword: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const onSubmit = (data: FieldValues) => {
-    dispatch(resetPassword({token: token, password: data.newPassword}))
+    dispatch(resetPassword({ token: token, password: data.newPassword }));
   };
 
   useEffect(() => {
@@ -66,7 +66,7 @@ const ChangePassword: React.FC = () => {
             visible: watch('newPasswordCheck') !== (undefined || ''),
           }}
         />
-        <ButtonSubmit>Изменить пароль</ButtonSubmit>
+        <ButtonWithText type='button'>Изменить пароль</ButtonWithText>
       </form>
     </div>
   );

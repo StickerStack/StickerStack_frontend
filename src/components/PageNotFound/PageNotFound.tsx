@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { ButtonSubmit, TitleForm, TextForm } from '../UI';
+import { ButtonWithText, TitleForm, TextForm } from '../UI';
 
 import styles from './PageNotFound.module.scss';
 
@@ -14,7 +14,9 @@ const PageNotFound: React.FC = () => {
           <br />
           Страница не найдена.
         </TextForm>
-        <ButtonSubmit onClick={() => navigate('/')}>Вернуться на главную</ButtonSubmit>
+        <ButtonWithText type='button' onClick={() => navigate('/')}>
+          Вернуться на главную
+        </ButtonWithText>
       </div>
     </div>
   );

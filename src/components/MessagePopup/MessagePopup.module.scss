@@ -8,36 +8,49 @@
 }
 
 .message {
-  display: flex;
-  align-items: center;
-  gap: 40px;
   z-index: 6;
+  font-weight: 700;
   font-size: 28px;
-  line-height: 34px;
+  line-height: 38px;
   background-color: $success-color;
-  border-radius: 20px;
-  padding: 23px 40px;
+  border-radius: 15px;
+  padding: 16px 48px;
+  margin: 0;
   box-sizing: border-box;
+
+  &.error {
+    background-color: $error-text-color;
+  }
+  &::before {
+    content: '';
+    position: absolute;
+    left: 10px;
+    bottom: 0;
+    width: calc(100% - 20px);
+    height: 4px;
+    border-radius: 15px;
+    z-index: 10;
+    background-color: rgba(255, 255, 255, 0.5);
+    transition: width 7s ease-in;
+  }
 }
 
 .message_opened {
   animation: upwards 0.35s ease-out;
+  &::before {
+    animation: timer 6.2s ease-in;
+  }
 }
 .message_closed {
   animation: disappear 0.35s;
 }
 
 .button {
-  width: 15px;
-  height: 15px;
-  border: none;
-  opacity: 0.7;
-  background-color: $other-button-bg-color;
-  background-image: url(../../images/button-close.svg);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  width: 15px !important;
+  height: 15px !important;
 }
 
 @keyframes upwards {
@@ -50,6 +63,21 @@
     opacity: 1;
   }
 }
+
+@keyframes timer {
+  0% {
+    width: calc(100% - 20px);
+    opacity: 1;
+  }
+  95% {
+    opacity: 1;
+  }
+  100% {
+    width: 0%;
+    opacity: 0;
+  }
+}
+
 @keyframes disappear {
   0% {
     opacity: 1;

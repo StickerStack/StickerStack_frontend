@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 
-import { Button } from '../UI';
+import { ButtonCustom, ButtonWithText } from '../UI';
 
 import { useAppDispatch } from '../../hooks/hooks';
 import { IUserState } from '../../interfaces';
@@ -15,13 +15,15 @@ const Header: React.FC = () => {
 
   return location.pathname !== '/page-not-found' ? (
     <header className={styles.header}>
-      <Link to='/' className={styles.logo}>
-        Лого
-      </Link>
+      <Link to='/' className={styles.logo} />
       {isLogged ? (
-        <Link to='/profile' className={styles.profile} />
+        <Link to='/profile'>
+          <ButtonCustom className={styles.profile} type='person' />
+        </Link>
       ) : (
-        <Button onClick={() => dispatch(setIsOpen(true))}>Войти</Button>
+        <ButtonWithText type='button' theme='transparent' onClick={() => dispatch(setIsOpen(true))}>
+          Войти
+        </ButtonWithText>
       )}
     </header>
   ) : null;

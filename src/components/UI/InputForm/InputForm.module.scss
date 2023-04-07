@@ -10,32 +10,13 @@
   .label {
     user-select: none;
     @include font(20px, 24px, 400);
-    color: rgba(0, 0, 0, .7);
+    color: rgba(0, 0, 0, 0.7);
     @include flex(row, space-between, _);
     align-items: center;
-    
+
     .link {
       @include font(16px, 19px, 400);
-      text-decoration: none;
-      color: #000;
-      background-color: transparent;
-      border: none;
-      cursor: pointer;
       height: 19px;
-
-      &_text::after {
-        content: '';
-        display: block;
-        margin-top: 5px;
-        width: 0;
-        height: 2px;
-        background: #000;
-        transition: width 0.3s;
-      }
-      &_text:hover::after {
-        width: 100%;
-        transition: width 0.3s;
-      }
     }
   }
 
@@ -59,11 +40,10 @@
       background-color: transparent;
 
       &_error {
-
       }
 
       &::placeholder {
-        opacity: .4;
+        opacity: 0.4;
       }
     }
   }

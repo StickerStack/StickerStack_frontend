@@ -1,5 +1,5 @@
 import { useAppDispatch } from '../../hooks/hooks';
-import { ButtonSubmit, TitleForm, TextForm } from '../UI';
+import { ButtonWithText, TitleForm, TextForm } from '../UI';
 import { setIsOpen } from '../../store/popupSlice';
 
 import styles from './AddStickers.module.scss';

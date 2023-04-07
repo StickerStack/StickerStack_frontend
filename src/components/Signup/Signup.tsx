@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-import { ButtonSubmit, InputForm, CheckBoxForm, TitleForm } from '../UI';
+import { ButtonWithText, InputForm, CheckBoxForm, TitleForm, TextUnderline } from '../UI';
 import { Signin } from '../';
 
 import { useAppDispatch } from '../../hooks/hooks';
@@ -29,23 +29,27 @@ const Signup: React.FC = () => {
   const onSubmit = () => {
     dispatch(signUp({ email: userEmail, password: userPassword })).then((res) => {
       if (res.meta.requestStatus === 'fulfilled') {
-        dispatch(setIsOpen(false));
-        dispatch(signIn({ email: userEmail, password: userPassword }));
-        dispatch(getUser());
-        navigate('/add-stickers');
-        dispatch(
-          setMessageIsOpen({
-            messageIsOpen: true,
-            message: 'Подтвердите почту',
-          }),
-        );
+        dispatch(signIn({ email: userEmail, password: userPassword })).then((res) => {
+          if (res.meta.requestStatus === 'fulfilled') {
+            dispatch(getUser());
+            dispatch(setIsOpen(false));
+            navigate('/add-stickers');
+            dispatch(
+              setMessageIsOpen({
+                messageIsOpen: true,
+                message: 'Подтвердите почту',
+                messageIsError: false,
+              }),
+            );
+          }
+        });
       }
-
       if (res.meta.requestStatus === 'rejected' && res.payload === '400') {
         dispatch(
           setMessageIsOpen({
             messageIsOpen: true,
             message: 'Учётная запись с такой почтой уже существует',
+            messageIsError: true,
           }),
         );
       }
@@ -115,16 +119,12 @@ const Signup: React.FC = () => {
           </a>
         </p>
       </CheckBoxForm>
-      <ButtonSubmit>Зарегистрироваться</ButtonSubmit>
+      <ButtonWithText type='submit'>Зарегистрироваться</ButtonWithText>
       <span className={styles.link}>
         Уже есть аккаунт?{' '}
-        <button
-          type='button'
-          onClick={() => dispatch(switchForm(Signin))}
-          className={styles.button}
-        >
-          <span className={styles.text}>Войти</span>
-        </button>
+        <TextUnderline type='button' onClick={() => dispatch(switchForm(Signin))}>
+          Войти
+        </TextUnderline>
       </span>
     </form>
   );
