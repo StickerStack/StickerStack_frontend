@@ -7,20 +7,21 @@ interface IProps {
   state: boolean;
   style?: CSS.Properties;
   timeout?: number;
+  display?: string;
 }
 
-const TransitionsComponent: React.FC<IProps> = ({ children, style = { transition: `opacity 500ms ease-in-out`, opacity: 0 }, state, timeout = 300 }: IProps) => {
+const TransitionsComponent: React.FC<IProps> = ({ children, style = { transition: `opacity 500ms ease-in-out`, opacity: 0 }, state, timeout = 300, display = 'block' }: IProps) => {
   const transitionsStyle: Partial<Record<TransitionStatus, CSS.Properties>> = {
     entering: {
-      display: 'block'
+      display: display
     },
     entered: {
       opacity: 1,
-      display: 'block'
+      display: display
     },
     exiting: {
       opacity: 0,
-      display: 'block'
+      display: display
     },
     exited: {
       opacity: '0',
