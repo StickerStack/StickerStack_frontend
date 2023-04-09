@@ -1,7 +1,8 @@
 import { FieldValues, useForm } from 'react-hook-form';
+import { useState } from 'react';
 
-import { ButtonWithText, InputForm, TitleForm, TextForm } from '../UI';
-import { Signin } from '../';
+import { ButtonWithText, InputForm, TextForm, TitleForm } from '../UI';
+import { Signin, TransitionsComponent } from '../';
 
 import { switchForm } from '../../store/popupSlice';
 import { useAppDispatch } from '../../hooks/hooks';
@@ -18,9 +19,11 @@ const ResetPassword: React.FC = () => {
   } = useForm({
     mode: 'onBlur',
   });
+  const [formSubmit, setFormSubmit] = useState<boolean>(false);
+
 
   const onSubmit = (data: FieldValues) => {
-    dispatch(forgotPassword({ email: data.email }));
+    dispatch(forgotPassword({ email: data.email })).then(() => setFormSubmit(true));
   };
 
   return (
@@ -35,7 +38,11 @@ const ResetPassword: React.FC = () => {
         label='E-mail'
         type='email'
       />
-      <TextForm>Мы направим ссылку на Вашу почту для восстановления пароля</TextForm>
+      
+      <TransitionsComponent timeout={300} state={formSubmit}>
+        <TextForm>Мы направим ссылку на Вашу почту для восстановления пароля</TextForm>
+      </TransitionsComponent>
+
       <ButtonWithText type='submit'>Восстановить пароль</ButtonWithText>
       <button className={styles.button_back} onClick={() => dispatch(switchForm(Signin))}>
         <span className={styles.button_back_text}>Вернуться назад</span>
