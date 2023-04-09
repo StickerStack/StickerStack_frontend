@@ -14,6 +14,9 @@ class Api {
       return res.json();
     }
 
+    // Для тестов бэкенда 
+    res.json().then(res => console.log(res.detail));
+
     return Promise.reject(`${res.status}`);
   }
 

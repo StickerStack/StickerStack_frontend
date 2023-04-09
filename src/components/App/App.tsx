@@ -41,7 +41,6 @@ const App: React.FC = () => {
         <Preloader />
       ) : (
         <div className={styles.app}>
-          <div id='app-popup' />
           <Header />
           <Routes>
             <Route

@@ -1,6 +1,8 @@
 import { FieldValues, useForm } from 'react-hook-form';
+import { useState } from 'react';
+import { motion, usePresence, AnimatePresence } from 'framer-motion';
 
-import { ButtonWithText, InputForm, TitleForm, TextForm } from '../UI';
+import { ButtonWithText, InputForm, TextForm, TitleForm } from '../UI';
 import { Signin } from '../';
 
 import { switchForm } from '../../store/popupSlice';
@@ -18,9 +20,12 @@ const ResetPassword: React.FC = () => {
   } = useForm({
     mode: 'onBlur',
   });
+  const [formSubmit, setFormSubmit] = useState<boolean>(false);
 
   const onSubmit = (data: FieldValues) => {
-    dispatch(forgotPassword({ email: data.email }));
+    dispatch(forgotPassword({ email: data.email })).then(() =>
+      setFormSubmit(true)
+    );
   };
 
   return (
@@ -35,9 +40,27 @@ const ResetPassword: React.FC = () => {
         label='E-mail'
         type='email'
       />
-      <TextForm>Мы направим ссылку на Вашу почту для восстановления пароля</TextForm>
+      {formSubmit && (
+        <motion.span
+          style={{ position: 'absolute', width: '310px', top: '155px' }}
+          initial={{
+            opacity: 0,
+          }}
+          animate={{
+            transition: {
+              duration: 0.5,
+            },
+            opacity: 1,
+          }}
+        >
+          Мы направим ссылку на Вашу почту для восстановления пароля
+        </motion.span>
+      )}
       <ButtonWithText type='submit'>Восстановить пароль</ButtonWithText>
-      <button className={styles.button_back} onClick={() => dispatch(switchForm(Signin))}>
+      <button
+        className={styles.button_back}
+        onClick={() => dispatch(switchForm(Signin))}
+      >
         <span className={styles.button_back_text}>Вернуться назад</span>
       </button>
     </form>
