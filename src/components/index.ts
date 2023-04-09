@@ -16,4 +16,3 @@ export { ProfilePage } from './ProfilePage/ProfilePage';
 export { AddStickers } from './AddStickers/AddStickers';
 export { PageNotFound } from './PageNotFound/PageNotFound';
 export { Preloader } from './Preloader/Preloader';
-export { TransitionsComponent } from './TransitionsComponent/TransitionsComponent';

@@ -35,8 +35,8 @@ const Signin: React.FC = () => {
           dispatch(setIsOpen(false));
           navigate('/add-stickers');
         }
-
-        if (res.meta.requestStatus === 'rejected' && res.payload === '400') {
+        
+        if (res.meta.requestStatus === 'rejected' && res.payload === '400') {    
           dispatch(
             setMessageIsOpen({
               messageIsOpen: true,

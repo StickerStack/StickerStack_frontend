@@ -18,8 +18,10 @@ const popupSlice = createSlice({
       state.messageIsError = action.payload.messageIsError;
     },
     setIsOpen(state, action) {
+      if(!state.isOpen) {
+        state.form = Signin;
+      }
       state.isOpen = action.payload;
-      state.form = Signin;
     },
     switchForm(state, action) {
       state.form = action.payload;
