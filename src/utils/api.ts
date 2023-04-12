@@ -131,6 +131,18 @@ class Api {
 
     return response;
   }
+
+  public async verifyEmail(token: string) {
+    const data = await fetch(`${this._url}/auth/verifyemail`, {
+      body: JSON.stringify({
+        token: token
+      })
+    });
+
+    const response = await this._checkResponse(data);
+
+    return response;
+  }
 }
 
 const api = new Api(API_URL, {
