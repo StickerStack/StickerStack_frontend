@@ -1,6 +1,6 @@
 @import '../../utils/_scss-variables.scss';
 
-.message__block {
+.message_container {
   position: fixed;
   z-index: 5;
   top: 80px;
@@ -36,13 +36,9 @@
 }
 
 .message_opened {
-  animation: upwards 0.35s ease-out;
   &::before {
     animation: timer 6.2s ease-in;
   }
-}
-.message_closed {
-  animation: disappear 0.35s;
 }
 
 .button {
@@ -51,17 +47,6 @@
   top: 10px;
   width: 15px !important;
   height: 15px !important;
-}
-
-@keyframes upwards {
-  0% {
-    transform: translateY(60px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 1;
-  }
 }
 
 @keyframes timer {
@@ -74,15 +59,6 @@
   }
   100% {
     width: 0%;
-    opacity: 0;
-  }
-}
-
-@keyframes disappear {
-  0% {
-    opacity: 1;
-  }
-  100% {
     opacity: 0;
   }
 }
