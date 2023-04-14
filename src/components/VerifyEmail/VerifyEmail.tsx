@@ -12,13 +12,16 @@ const VerifyEmail: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useAppDispatch();
-
-  const [token, setToken] = useState<string>('');
+  
   const [isLoading, setIsLoading] = useState<boolean>(true);
   
   useEffect(() => {
-    setToken(location.pathname.replace('/auth/verifyemail/', ''));
-    dispatch(verifyEmail({ token })).finally(() => setIsLoading(false));
+    dispatch(verifyEmail({ token: location.pathname.replace('/auth/verifyemail/', '') }))
+      .then((res) => {
+        console.log(res);        
+        if (res.meta.requestStatus === 'rejected' && res.payload === '403') navigate('/page-not-found'); 
+      })
+      .finally(() => setIsLoading(false));
   }, [])
 
   return (

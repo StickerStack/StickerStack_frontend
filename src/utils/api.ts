@@ -48,7 +48,7 @@ class Api {
   public async signIn(email: string, password: string) {
     const data = await fetch(`${this._url}/auth/login`, {
       method: 'POST',
-      credentials: 'include',
+      credentials: 'same-origin',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -134,13 +134,16 @@ class Api {
 
   public async verifyEmail(token: string) {
     const data = await fetch(`${this._url}/auth/verifyemail`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: this._headers,
       body: JSON.stringify({
         token: token
       })
     });
 
     const response = await this._checkResponse(data);
-
+        
     return response;
   }
 }
