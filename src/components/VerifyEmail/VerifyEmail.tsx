@@ -17,8 +17,7 @@ const VerifyEmail: React.FC = () => {
   
   useEffect(() => {
     dispatch(verifyEmail({ token: location.pathname.replace('/auth/verifyemail/', '') }))
-      .then((res) => {
-        console.log(res);        
+      .then((res) => {       
         if (res.meta.requestStatus === 'rejected' && res.payload === '403') navigate('/page-not-found'); 
       })
       .finally(() => setIsLoading(false));

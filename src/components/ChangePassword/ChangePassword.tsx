@@ -12,7 +12,7 @@ import styles from './ChangePassword.module.scss';
 const ChangePassword: React.FC = () => {
   const {
     register,
-    formState: { errors },
+    formState: { errors, dirtyFields },
     handleSubmit,
     watch,
   } = useForm({
@@ -43,7 +43,7 @@ const ChangePassword: React.FC = () => {
           label='Новый пароль'
           type='password'
           optionalEyeButton={{
-            visible: watch('newPassword') !== (undefined || ''),
+            visible: dirtyFields.newPassword && watch('newPassword') !== '',
           }}
         />
         <InputForm
@@ -63,7 +63,7 @@ const ChangePassword: React.FC = () => {
           label='Повторите пароль'
           type='password'
           optionalEyeButton={{
-            visible: watch('newPasswordCheck') !== (undefined || ''),
+            visible: dirtyFields.newPasswordCheck && watch('newPasswordCheck') !== '',
           }}
         />
         <ButtonWithText type='button'>Изменить пароль</ButtonWithText>

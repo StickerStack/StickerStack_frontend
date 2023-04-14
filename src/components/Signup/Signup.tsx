@@ -16,7 +16,7 @@ const Signup: React.FC = () => {
   const {
     register,
     getValues,
-    formState: { errors },
+    formState: { errors, dirtyFields },
     watch,
     handleSubmit,
   } = useForm({
@@ -78,7 +78,7 @@ const Signup: React.FC = () => {
           label='Пароль'
           type='password'
           optionalEyeButton={{
-            visible: watch('password') !== (undefined || ''),
+            visible: dirtyFields.password && watch('password') !== '',
           }}
         />
 
@@ -99,7 +99,7 @@ const Signup: React.FC = () => {
           label='Подтвердите пароль'
           type='password'
           optionalEyeButton={{
-            visible: watch('passwordCheck') !== (undefined || ''),
+            visible: dirtyFields.passwordCheck && watch('passwordCheck') !== '',
           }}
         />
       </div>

@@ -48,7 +48,7 @@ class Api {
   public async signIn(email: string, password: string) {
     const data = await fetch(`${this._url}/auth/login`, {
       method: 'POST',
-      credentials: 'same-origin',
+      credentials: 'include',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/x-www-form-urlencoded',

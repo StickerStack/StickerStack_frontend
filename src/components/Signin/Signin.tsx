@@ -17,7 +17,7 @@ const Signin: React.FC = () => {
   const {
     register,
     getValues,
-    formState: { errors },
+    formState: { errors, dirtyFields },
     handleSubmit,
     watch,
   } = useForm({
@@ -35,8 +35,8 @@ const Signin: React.FC = () => {
           dispatch(setIsOpen(false));
           navigate('/add-stickers');
         }
-        
-        if (res.meta.requestStatus === 'rejected' && res.payload === '400') {    
+
+        if (res.meta.requestStatus === 'rejected' && res.payload === '400') {
           dispatch(
             setMessageIsOpen({
               messageIsOpen: true,
@@ -88,7 +88,7 @@ const Signin: React.FC = () => {
                 }
           }
           optionalEyeButton={{
-            visible: watch('password') !== (undefined || ''),
+            visible: dirtyFields.password && watch('password') !== '',
           }}
         />
         <CheckBoxForm name='rememberCheckbox' register={register('rememberCheckbox')}>
