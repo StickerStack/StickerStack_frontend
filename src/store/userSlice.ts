@@ -1,24 +1,26 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { api } from '../utils/api';
 
-const signUp = createAsyncThunk('user/signUp',
-  async (data: { email: string; password: string }, {rejectWithValue}) => {
+const signUp = createAsyncThunk(
+  'user/signUp',
+  async (data: { email: string; password: string }, { rejectWithValue }) => {
     try {
       const response = await api.signUp(data.email, data.password);
       return response.data;
     } catch (err) {
-      return rejectWithValue(err)
+      return rejectWithValue(err);
     }
   }
 );
 
-const signIn = createAsyncThunk('user/signIn',
-  async (data: { email: string; password: string }, {rejectWithValue}) => {
+const signIn = createAsyncThunk(
+  'user/signIn',
+  async (data: { email: string; password: string }, { rejectWithValue }) => {
     try {
       const response = await api.signIn(data.email, data.password);
       return response;
     } catch (err) {
-      return rejectWithValue(err)
+      return rejectWithValue(err);
     }
   }
 );
@@ -33,27 +35,41 @@ const getUser = createAsyncThunk('user/getUser', async () => {
   return response;
 });
 
-const updateUser = createAsyncThunk('user/updateUser',
+const updateUser = createAsyncThunk(
+  'user/updateUser',
   async (data: { email: string; password: string }) => {
     const response = await api.updateUser(data.email, data.password);
     return response.data;
   }
 );
 
-const forgotPassword = createAsyncThunk('user/forgotPassword',
+const forgotPassword = createAsyncThunk(
+  'user/forgotPassword',
   async (data: { email: string }) => {
     const response = await api.forgotPassword(data.email);
     return response.data;
   }
 );
 
-const resetPassword = createAsyncThunk('user/resetPassword',
-  async (data: { token: string, password: string }) => {
+const resetPassword = createAsyncThunk(
+  'user/resetPassword',
+  async (data: { token: string; password: string }) => {
     const response = await api.resetPassword(data.token, data.password);
     return response.data;
   }
 );
 
+const verifyEmail = createAsyncThunk(
+  'user/verifyEmail',
+  async (data: { token: string }, { rejectWithValue }) => {
+    try {
+      const response = await api.verifyEmail(data.token);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);
 
 const userSlice = createSlice({
   name: 'user',
@@ -76,7 +92,6 @@ const userSlice = createSlice({
     builder.addCase(signUp.rejected, (state, action) => {
       state.loading = false;
       console.log(action);
-      
     });
 
     // Вход пользователя
@@ -107,7 +122,7 @@ const userSlice = createSlice({
       state.success = false;
       state.email = '';
       state.isLogged = false;
-    })
+    });
 
     // Выход пользователя, если есть token
     builder.addCase(logOut.pending, (state) => {
@@ -149,9 +164,32 @@ const userSlice = createSlice({
       state.loading = false;
       state.success = false;
     });
-  }
+
+    // Верификация Email по токен
+    builder.addCase(verifyEmail.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(verifyEmail.fulfilled, (state) => {
+      state.loading = false;
+      state.success = true;
+    });
+    builder.addCase(verifyEmail.rejected, (state) => {
+      state.loading = false;
+      state.success = false;
+    });
+  },
 });
 
 const userSliceReducer = userSlice.reducer;
 
-export { userSliceReducer, getUser, updateUser, logOut, signIn, signUp, forgotPassword, resetPassword };
+export {
+  userSliceReducer,
+  getUser,
+  updateUser,
+  logOut,
+  signIn,
+  signUp,
+  forgotPassword,
+  resetPassword,
+  verifyEmail
+};
