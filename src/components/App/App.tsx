@@ -46,9 +46,7 @@ const App: React.FC = () => {
             <Route
               path='/auth/verifyemail/:token'
               element={
-                <ProtectedRoute isLogged={!isLogged} redirectPath='/'>
-                  <VerifyEmail />
-                </ProtectedRoute>
+                <VerifyEmail />
               }
             />
             <Route
