@@ -61,9 +61,13 @@ const resetPassword = createAsyncThunk(
 
 const verifyEmail = createAsyncThunk(
   'user/verifyEmail',
-  async (data: { token: string }) => {
-    const response = await api.verifyEmail(data.token);
-    return response.data;
+  async (data: { token: string }, { rejectWithValue }) => {
+    try {
+      const response = await api.verifyEmail(data.token);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
   }
 );
 
