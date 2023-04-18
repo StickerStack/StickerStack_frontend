@@ -2,7 +2,7 @@
 
 .signin {
   @include flex(column, _, _);
-  gap: 50px;
+  gap: 35px;
   width: 310px;
 
   .inputs {
