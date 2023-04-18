@@ -36,16 +36,13 @@ const InputForm: React.FC<IProps> = forwardRef<HTMLInputElement, IProps>(
 
     return (
       <div className={styles.input}>
-        <label htmlFor={name} className={styles.label}>
-          {label}
-          {optionalButton && (
-            <span className={styles.link}>
-              <TextUnderline type='button' onClick={optionalButton.onClick}>
-                {optionalButton.text}
-              </TextUnderline>
-            </span>
-          )}
-        </label>
+        {optionalButton && (
+              <span className={styles.link}>
+                <TextUnderline type='button' onClick={optionalButton.onClick}>
+                  {optionalButton.text}
+                </TextUnderline>
+              </span>
+        )}
         <div className={error ? `${styles.border} ${styles.border_error}` : styles.border}>
           <input
             className={styles.field}
@@ -56,6 +53,9 @@ const InputForm: React.FC<IProps> = forwardRef<HTMLInputElement, IProps>(
             id={name}
             {...(register && register(name, option))}
           />
+          <label htmlFor={name} className={styles.label}>
+            {label}
+          </label>
         </div>
         {optionalEyeButton && (
           <EyeButton

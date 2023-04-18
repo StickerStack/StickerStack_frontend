@@ -42,7 +42,7 @@ const ResetPassword: React.FC = () => {
       />
       {formSubmit && (
         <motion.span
-          style={{ position: 'absolute', width: '310px', top: '155px' }}
+          style={{ position: 'absolute', width: '310px', top: '125px' }}
           initial={{
             opacity: 0,
           }}
