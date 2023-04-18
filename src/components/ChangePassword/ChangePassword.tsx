@@ -66,7 +66,7 @@ const ChangePassword: React.FC = () => {
             visible: dirtyFields.newPasswordCheck && watch('newPasswordCheck') !== '',
           }}
         />
-        <ButtonWithText type='button'>Изменить пароль</ButtonWithText>
+        <ButtonWithText type='submit'>Изменить пароль</ButtonWithText>
       </form>
     </div>
   );
