@@ -7,17 +7,10 @@
   position: relative;
   color: $main-text-color;
 
-  .label {
-    user-select: none;
-    @include font(20px, 24px, 400);
-    color: rgba(0, 0, 0, 0.7);
-    @include flex(row, space-between, _);
-    align-items: center;
-
-    .link {
-      @include font(16px, 19px, 400);
-      height: 19px;
-    }
+  .link {
+    @include font(16px, 19px, 400);
+    height: 19px;
+    align-self: flex-end;
   }
 
   .border {
@@ -26,6 +19,17 @@
     padding: 0 0 0 20px;
     height: 30px;
     @include flex(_, _, center);
+    position: relative;
+    transform: opacity 500ms;
+
+    .label {
+      user-select: none;
+      @include font(14px, 19px, 400);
+      color: rgba(0, 0, 0, 0.7);
+      @include flex(row, space-between, _);
+      align-items: center;
+      opacity: 0;
+    }
 
     &_error {
       border: 1px solid $error-text-color;
@@ -40,6 +44,28 @@
       background-color: transparent;
 
       &_error {
+      }
+
+      &:focus {
+        ~ {
+          .label {
+            opacity: 1;
+            position: absolute;
+            top: -12px;
+            background-color: $secondary-bg-color;
+          }
+        }
+      }
+
+      &:not(:placeholder-shown) {
+        ~ {
+          .label {
+            opacity: 1;
+            position: absolute;
+            top: -12px;
+            background-color: $secondary-bg-color;
+          }
+        }
       }
 
       &::placeholder {
