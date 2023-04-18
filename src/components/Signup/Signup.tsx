@@ -105,8 +105,9 @@ const Signup: React.FC = () => {
       </div>
       <CheckBoxForm
         name='confirmCheckbox'
-        register={register('confirmCheckbox', { required: true })}
-        error={errors?.confirmCheckbox ? true : false}
+        register={register}
+        option={{ required: 'Обязательное поле' }}
+        error={errors?.confirmCheckbox}
       >
         <p className={styles.checktext}>
           Я согласен с{' '}

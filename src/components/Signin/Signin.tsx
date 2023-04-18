@@ -91,7 +91,7 @@ const Signin: React.FC = () => {
             visible: dirtyFields.password && watch('password') !== '',
           }}
         />
-        <CheckBoxForm name='rememberCheckbox' register={register('rememberCheckbox')}>
+        <CheckBoxForm name='rememberCheckbox' register={register}>
           Запомнить меня
         </CheckBoxForm>
       </div>
