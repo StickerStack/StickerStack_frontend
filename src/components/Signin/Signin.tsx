@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { ButtonWithText, CheckBoxForm, TitleForm, InputForm, TextUnderline } from '../UI';
+import { ButtonWithText, TitleForm, InputForm, TextUnderline } from '../UI';
 import { Signup, ResetPassword } from '../';
 
 import { setIsOpen, setMessageIsOpen, switchForm } from '../../store/popupSlice';
@@ -91,9 +91,6 @@ const Signin: React.FC = () => {
             visible: dirtyFields.password && watch('password') !== '',
           }}
         />
-        <CheckBoxForm name='rememberCheckbox' register={register}>
-          Запомнить меня
-        </CheckBoxForm>
       </div>
       <ButtonWithText type='submit'>Войти</ButtonWithText>
       {!location.pathname.startsWith('/api/auth/verifyemail') ? (
