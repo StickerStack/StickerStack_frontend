@@ -26,8 +26,18 @@ interface IProps {
 
 const InputForm: React.FC<IProps> = forwardRef<HTMLInputElement, IProps>(
   (
-    { name, label, type, option, register, error, optionalButton, optionalEyeButton, placeholder },
-    ref,
+    {
+      name,
+      label,
+      type,
+      option,
+      register,
+      error,
+      optionalButton,
+      optionalEyeButton,
+      placeholder,
+    },
+    ref
   ) => {
     const [passwordShown, setPasswordShown] = useState<boolean>(false);
     const togglePassword = () => {
@@ -37,13 +47,17 @@ const InputForm: React.FC<IProps> = forwardRef<HTMLInputElement, IProps>(
     return (
       <div className={styles.input}>
         {optionalButton && (
-              <span className={styles.link}>
-                <TextUnderline type='button' onClick={optionalButton.onClick}>
-                  {optionalButton.text}
-                </TextUnderline>
-              </span>
+          <span className={styles.link}>
+            <TextUnderline type='button' onClick={optionalButton.onClick}>
+              {optionalButton.text}
+            </TextUnderline>
+          </span>
         )}
-        <div className={error ? `${styles.border} ${styles.border_error}` : styles.border}>
+        <div
+          className={
+            error ? `${styles.border} ${styles.border_error}` : styles.border
+          }
+        >
           <input
             className={styles.field}
             placeholder={placeholder}
@@ -67,7 +81,7 @@ const InputForm: React.FC<IProps> = forwardRef<HTMLInputElement, IProps>(
         <span className={styles.error}>{error && `${error.message}`}</span>
       </div>
     );
-  },
+  }
 );
 
 export { InputForm };
