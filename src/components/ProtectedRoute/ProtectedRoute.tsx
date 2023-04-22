@@ -1,12 +1,17 @@
+import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
+import { IUserState } from "../../interfaces";
 
 interface IProps {
-  isLogged: boolean;
   redirectPath?: string;
   children: React.ReactNode;
 }
 
-const ProtectedRoute: React.FC<IProps> = ({ isLogged, redirectPath = '/', children }: IProps) => {
+const ProtectedRoute: React.FC<IProps> = ({ redirectPath = '/', children }: IProps) => {
+  const isLogged = useSelector(
+    (state: { user: IUserState }) => state.user.isLogged
+  );
+
   if(!isLogged) {
     return <Navigate to={redirectPath} replace />
   }
