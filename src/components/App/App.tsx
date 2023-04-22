@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
 import {
   Header,
@@ -16,16 +15,19 @@ import {
   Preloader,
 } from '../';
 
+import {
+  PROFILE,
+  PAGE_404,
+  ADD_STICKERS,
+  VERIFY_EMAIL,
+  VERIFY_FORGOT_PASSWORD,
+} from '../../utils/constants';
 import { useAppDispatch } from '../../hooks/hooks';
 import { getUser } from '../../store/userSlice';
-import { IUserState } from '../../interfaces/IUserState';
 import styles from './App.module.scss';
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
-  const isLogged = useSelector(
-    (state: { user: IUserState }) => state.user.isLogged
-  );
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -43,38 +45,33 @@ const App: React.FC = () => {
         <div className={styles.app}>
           <Header />
           <Routes>
+            <Route path={VERIFY_EMAIL} element={<VerifyEmail />} />
             <Route
-              path='/auth/verifyemail/:token'
+              path={VERIFY_FORGOT_PASSWORD}
               element={
-                <VerifyEmail />
-              }
-            />
-            <Route
-              path='/auth/verify-forgot-password/:token'
-              element={
-                <ProtectedRoute isLogged={!isLogged} redirectPath='/'>
+                <ProtectedRoute redirectPath='/'>
                   <ChangePassword />
                 </ProtectedRoute>
               }
             />
             <Route
-              path='/add-stickers'
+              path={ADD_STICKERS}
               element={
-                <ProtectedRoute isLogged={isLogged} redirectPath='/'>
+                <ProtectedRoute redirectPath='/'>
                   <AddStickers />
                 </ProtectedRoute>
               }
             />
             <Route
-              path='/profile'
+              path={PROFILE}
               element={
-                <ProtectedRoute isLogged={isLogged} redirectPath='/'>
+                <ProtectedRoute redirectPath='/'>
                   <ProfilePage />
                 </ProtectedRoute>
               }
             />
-            <Route path='*' element={<Navigate to={'/page-not-found'} />} />
-            <Route path='/page-not-found' element={<PageNotFound />} />
+            <Route path='*' element={<Navigate to={PAGE_404} />} />
+            <Route path={PAGE_404} element={<PageNotFound />} />
             <Route path='/' element={<MainPage />} />
           </Routes>
           <MessagePopup />
