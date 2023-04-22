@@ -5,3 +5,57 @@
   gap: 20px;
   padding: 80px $desktop-padding 0;
 }
+
+.avatar {
+  position: relative;
+  width: 256px;
+  height: 255px;
+  border-radius: 20px;
+  overflow: hidden;
+  background-color: $secondary-bg-color;
+
+  &:hover .overlay {
+    @include flex(column, flex-start, flex-start);
+    height: 74px;
+    padding: 14px;
+  }
+}
+
+.image {
+  width: 256px;
+  height: 255px;
+  border-radius: 20px;
+}
+
+.overlay {
+  position: absolute;
+  width: 256px;
+  height: 0;
+  box-sizing: border-box;
+  gap: 16px;
+  background: rgba(255, 255, 255, 0.6);
+  bottom: 0;
+  transition: height 0.3s, padding 0.3s ease-in-out;
+}
+
+.buttons {
+  display: none;
+}
+
+.buttons_visible {
+  display: flex;
+  gap: 16px;
+}
+
+.label {
+  cursor: pointer;
+}
+
+.input {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}

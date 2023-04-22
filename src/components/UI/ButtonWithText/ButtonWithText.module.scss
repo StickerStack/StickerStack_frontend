@@ -29,3 +29,11 @@
   color: $other-button-text-color;
   border: 1px solid $other-button-text-color;
 }
+
+.button_no-border {
+  background: transparent;
+  @include font(14px, 16px, 400);
+  padding: 0;
+  height: 16px;
+  border: none;
+}

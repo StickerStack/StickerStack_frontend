@@ -1,7 +1,7 @@
 import cn from 'classnames';
 import styles from './ButtonWithText.module.scss';
 
-export type ButtonTheme = 'filled' | 'transparent';
+export type ButtonTheme = 'filled' | 'transparent' | 'no-border';
 
 interface IProps {
   children: React.ReactNode;
