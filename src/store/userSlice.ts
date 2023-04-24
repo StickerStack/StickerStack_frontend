@@ -83,7 +83,7 @@ const userSlice = createSlice({
     singInMockUser(state, action) {
       state.isLogged = true;
       state.email = action.payload;
-      state.loading = true;
+      state.loading = false;
       state.success = true;
     }
   },
