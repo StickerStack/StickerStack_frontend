@@ -8,21 +8,21 @@
 
 .avatar {
   position: relative;
-  width: 256px;
+  width: 255px;
   height: 255px;
   border-radius: 20px;
   overflow: hidden;
   background-color: $secondary-bg-color;
 
   &:hover .overlay {
-    @include flex(column, flex-start, flex-start);
+    @include flex(column, center, flex-start);
     height: 74px;
     padding: 14px;
   }
 }
 
 .image {
-  width: 256px;
+  width: 255px;
   height: 255px;
   border-radius: 20px;
 }
@@ -45,6 +45,24 @@
 .buttons_visible {
   display: flex;
   gap: 16px;
+}
+
+.button {
+  @include flex(row, center, flex-start);
+  gap: 15px;
+}
+
+.button_pen {
+  background: url(../../images/pen.svg);
+  width: 16px;
+  height: 16px;
+}
+
+.button_bin {
+  background: url(../../images/bin.svg) no-repeat;
+  background-size: contain;
+  width: 16px;
+  height: 15px;
 }
 
 .label {

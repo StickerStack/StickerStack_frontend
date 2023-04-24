@@ -4,4 +4,6 @@ export interface IPopupState {
   messageIsError: boolean;
   isOpen: boolean;
   form: React.FC;
+  imageSrc: '';
+  newCrop: '';
 }

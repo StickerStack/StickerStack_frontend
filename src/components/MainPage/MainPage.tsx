@@ -28,7 +28,7 @@ const MainPage: React.FC = () => {
       <div>
         <h1 className={styles.title}>StickerStack</h1>
         <h2 className={styles.description}>Кастомные стикеры на заказ</h2>
-        <ButtonWithText type='button' onClick={() => onClickTry()}>
+        <ButtonWithText type='button' onClick={() => onClickTry()} className={styles.button}>
           Попробовать
         </ButtonWithText>
       </div>

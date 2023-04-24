@@ -1,10 +1,11 @@
 @import '../../../utils/scss-variables.scss';
 
 .button {
-  padding: 16px 45px;
+  padding: 10px 50px;
+  height: 45px;
   box-sizing: border-box;
-  height: 55px;
-  border-radius: 20px;
+  border-radius: 15px;
+
   text-align: center;
   @include font(20px, 24px, 400);
   cursor: pointer;
@@ -22,9 +23,6 @@
 }
 
 .button_transparent {
-  padding: 10px 50px;
-  height: 45px;
-  border-radius: 15px;
   background-color: $other-button-bg-color;
   color: $other-button-text-color;
   border: 1px solid $other-button-text-color;
