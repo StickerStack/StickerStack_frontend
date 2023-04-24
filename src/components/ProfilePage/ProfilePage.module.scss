@@ -5,3 +5,82 @@
   gap: 20px;
   padding: 80px $desktop-padding 0;
 }
+
+.container {
+  @include flex(row, flex-start, flex-start);
+  gap: 29px;
+}
+
+.image {
+  border-radius: 20px;
+  object-fit: cover;
+
+  &.fill {
+    width: 100%;
+    height: 100%;
+  }
+
+  &.empty {
+    width: 151px;
+    height: 133px;
+  }
+}
+
+.avatar {
+  @include flex(column, center, center);
+  width: 256px;
+  height: 255px;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+
+.profile_data {
+  width: 253px;
+}
+
+.button {
+  @include font(16px, 22px, 400);
+  width: 100%;
+  height: 46px;
+  letter-spacing: -0.01em;
+  padding: 10px 23px;
+  border-radius: 10px;
+}
+
+.inputs {
+  margin-bottom: 45px;
+}
+
+.input_container {
+  position: relative;
+
+  &:not(:last-child) {
+    margin-bottom: 20px;
+  }
+}
+
+.input {
+  @include font(16px, 18px, 400);
+  border: none;
+  outline: none;
+  background: transparent;
+  height: 30px;
+  width: 100%;
+  color: $main-text-color;
+  border-bottom: 2px solid #929292;
+  padding: 0;
+}
+
+.clear_icon {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background-image: url(../../images/clear-field.svg);
+  background-color: transparent;
+  border: 0;
+  right: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
