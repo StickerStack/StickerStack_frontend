@@ -13,6 +13,11 @@ const ProfilePage = () => {
   const dispatch = useAppDispatch();
 
   const onLogOut = () => {
+    if(localStorage.getItem('token')) {
+      localStorage.removeItem('token');
+      return;
+    }
+
     dispatch(logOut());
   };
 

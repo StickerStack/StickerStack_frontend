@@ -23,7 +23,7 @@ import {
   VERIFY_FORGOT_PASSWORD,
 } from '../../utils/constants';
 import { useAppDispatch } from '../../hooks/hooks';
-import { getUser } from '../../store/userSlice';
+import { getUser, singInMockUser } from '../../store/userSlice';
 import styles from './App.module.scss';
 
 const App: React.FC = () => {
@@ -32,6 +32,12 @@ const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
+    if(localStorage.getItem('token')) {
+      dispatch(singInMockUser('my@super.user'));
+      setIsLoading(false);
+      return;
+    }
+
     dispatch(getUser()).then(() => {
       setIsLoading(false);
     });
