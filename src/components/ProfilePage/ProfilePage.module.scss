@@ -49,7 +49,9 @@
 }
 
 .inputs {
+  @include flex(column, flex-start, _);
   margin-bottom: 45px;
+  gap: 20px;
 }
 
 .input_container {
@@ -58,29 +60,4 @@
   &:not(:last-child) {
     margin-bottom: 20px;
   }
-}
-
-.input {
-  @include font(16px, 18px, 400);
-  border: none;
-  outline: none;
-  background: transparent;
-  height: 30px;
-  width: 100%;
-  color: $main-text-color;
-  border-bottom: 2px solid #929292;
-  padding: 0;
-}
-
-.clear_icon {
-  position: absolute;
-  width: 18px;
-  height: 18px;
-  background-image: url(../../images/clear-field.svg);
-  background-color: transparent;
-  border: 0;
-  right: 2px;
-  top: 50%;
-  transform: translateY(-50%);
-  cursor: pointer;
 }

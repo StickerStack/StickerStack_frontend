@@ -1,4 +1,4 @@
-import { forwardRef, useState } from 'react';
+import React, { forwardRef, useState } from 'react';
 import {
   FieldError,
   FieldErrorsImpl,
@@ -8,7 +8,7 @@ import {
   UseFormRegister,
 } from 'react-hook-form';
 
-import { EyeButton, TextUnderline } from '../';
+import {IconButton, TextUnderline} from '../';
 
 import styles from './InputForm.module.scss';
 
@@ -72,9 +72,9 @@ const InputForm: React.FC<IProps> = forwardRef<HTMLInputElement, IProps>(
           </label>
         </div>
         {optionalEyeButton && (
-          <EyeButton
+          <IconButton
             onClick={() => togglePassword()}
-            shown={passwordShown}
+            icon={passwordShown ? 'password-shown.svg' : 'password-hidden.svg'}
             visible={optionalEyeButton.visible}
           />
         )}

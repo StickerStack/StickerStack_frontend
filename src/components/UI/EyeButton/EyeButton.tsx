@@ -6,6 +6,7 @@ interface IProps {
   visible: boolean;
 }
 
+//TODO Удалить? есть аналогичный компонент - IconButton.
 const EyeButton: React.FC<IProps> = ({ onClick, shown, visible }: IProps) => {
   return (
     <button
