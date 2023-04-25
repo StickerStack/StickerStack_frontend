@@ -10,7 +10,17 @@ import styles from './ProfilePage.module.scss';
 
 const ProfilePage: React.FC = () => {
   const email = useSelector((state: { user: IUserState }) => state.user.email);
+  const dispatch = useAppDispatch();
 
+  const onLogOut = () => {
+    if(localStorage.getItem('token')) {
+      localStorage.removeItem('token');
+      return;
+    }
+
+    dispatch(logOut());
+  };
+  
   return (
     <main className={styles.profile}>
       <TitlePage>Мои данные</TitlePage>
