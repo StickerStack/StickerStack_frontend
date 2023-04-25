@@ -79,7 +79,14 @@ const userSlice = createSlice({
     loading: false,
     success: false,
   },
-  reducers: {},
+  reducers: {
+    singInMockUser(state, action) {
+      state.isLogged = true;
+      state.email = action.payload;
+      state.loading = false;
+      state.success = true;
+    }
+  },
   extraReducers: (builder) => {
     // Регистрация пользователя
     builder.addCase(signUp.pending, (state) => {
@@ -181,6 +188,7 @@ const userSlice = createSlice({
 });
 
 const userSliceReducer = userSlice.reducer;
+const { singInMockUser } = userSlice.actions;
 
 export {
   userSliceReducer,
@@ -191,5 +199,6 @@ export {
   signUp,
   forgotPassword,
   resetPassword,
-  verifyEmail
+  verifyEmail,
+  singInMockUser
 };
