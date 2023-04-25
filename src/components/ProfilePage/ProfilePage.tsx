@@ -1,10 +1,13 @@
 import cn from 'classnames';
-import {useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import {ButtonWithText, TitlePage} from '../UI';
+import { ButtonWithText, TitlePage} from '../UI';
 import ProfileInput from "../UI/ProfileInput/ProfileInput";
 
-import {IUserState} from '../../interfaces';
+import { useAppDispatch } from "../../hooks/hooks";
+import { IUserState } from '../../interfaces';
+import { logOut } from '../../store/userSlice';
+
 import EmptyAvatarImage from '../../images/empty-avatar.png';
 import styles from './ProfilePage.module.scss';
 
