@@ -1,0 +1,9 @@
+@import '../../../utils/_scss-variables.scss';
+
+.title {
+  margin: 0;
+  padding: 0;
+  @include font(20px, 27px, 600);
+  letter-spacing: -0.01em;
+  color: $main-text-color;
+}

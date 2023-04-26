@@ -5,4 +5,6 @@ export { CheckBoxForm } from './CheckBoxForm/CheckBoxForm';
 export { EyeButton } from './EyeButton/EyeButton';
 export { TextForm } from './TextForm/TextForm';
 export { TitleForm } from './TitleForm/TitleForm';
+export { TitlePage } from './TitlePage/TitlePage';
 export { InputForm } from './InputForm/InputForm';
+export { IconButton } from './IconButton/IconButton';
