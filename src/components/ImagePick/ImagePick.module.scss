@@ -1,21 +1,10 @@
 @import '../../utils/_scss-variables.scss';
 
-.profile {
-  @include flex(column, flex-start, flex-start);
-  gap: 20px;
-  padding: 80px $desktop-padding 0;
-}
-
-.container {
-  @include flex(row, flex-start, flex-start);
-  gap: 29px;
-}
-
 .avatar {
   @include flex(column, center, center);
   position: relative;
   width: 255px;
-  height: 255px;
+  height: 262px;
   border-radius: 10px;
   overflow: hidden;
   background-color: #f1f1f1;
@@ -30,16 +19,8 @@
 .image {
   border-radius: 20px;
   object-fit: cover;
-
-  &.fill {
-    width: 100%;
-    height: 100%;
-  }
-
-  &.empty {
-    width: 151px;
-    height: 133px;
-  }
+  width: 100%;
+  height: 100%;
 }
 
 .overlay {
@@ -54,7 +35,7 @@
   transition: height 0.3s, opacity 0.3s, padding 0.3s ease-in-out;
 }
 
-.overlay_button {
+.button {
   @include flex(row, flex-start, center);
   width: 245px;
   height: 32px;
@@ -66,7 +47,7 @@
   transition: background-color 0.3s ease-in-out;
   &:hover {
     opacity: 1;
-    background: #929292e3;
+    background: #929292b6;
   }
 }
 
@@ -94,31 +75,4 @@
   overflow: hidden;
   position: absolute;
   z-index: -1;
-}
-
-.profile_data {
-  width: 253px;
-}
-
-.button {
-  @include font(16px, 22px, 400);
-  width: 100%;
-  height: 46px;
-  letter-spacing: -0.01em;
-  padding: 10px 23px;
-  border-radius: 10px;
-}
-
-.inputs {
-  @include flex(column, flex-start, _);
-  margin-bottom: 45px;
-  gap: 20px;
-}
-
-.input_container {
-  position: relative;
-
-  &:not(:last-child) {
-    margin-bottom: 20px;
-  }
 }

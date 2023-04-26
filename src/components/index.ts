@@ -15,4 +15,5 @@ export { SuccessfulSignup } from './SuccessfulSignup/SuccessfulSignup';
 export { ProfilePage } from './ProfilePage/ProfilePage';
 export { AddStickers } from './AddStickers/AddStickers';
 export { PageNotFound } from './PageNotFound/PageNotFound';
+export { ImagePick } from './ImagePick/ImagePick';
 export { Preloader } from './Preloader/Preloader';
