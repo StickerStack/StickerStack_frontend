@@ -1,30 +1,47 @@
-import { forwardRef } from 'react';
+import {forwardRef} from 'react';
 
-import { IconButton } from "../IconButton/IconButton";
+import {IconButton} from "../IconButton/IconButton";
 
 import styles from "./ProfileInput.module.scss";
 
 interface IProps {
   name: string;
+  value: string;
   type: 'email' | 'text' | 'submit';
   placeholder?: string,
+  onChange: (val: string) => void,
 }
 
-const ProfileInput: React.FC<IProps> = forwardRef<HTMLInputElement, IProps>(({ type, placeholder }) => {
-  return (
-    <div className={styles.input_container}>
-      <input
-        type={type}
-        className={styles.input}
-        placeholder={placeholder}
-      />
+const ProfileInput: React.FC<IProps> = forwardRef<HTMLInputElement, IProps>(
+  (
+    {
+      type,
+      placeholder,
+      value,
+      onChange,
+    },
+    ref
+    ) => {
 
-      <IconButton
-        className={styles.clear_icon}
-        visible={true}
-        icon='clear-field.svg'/>
-    </div>
-  )
-})
+    return (
+      <div className={styles.input_container}>
+        <input
+          value={value}
+          ref={ref}
+          type={type}
+          className={styles.input}
+          placeholder={placeholder}
+          onChange={(e) => onChange(e.target.value)}
+        />
+
+        <IconButton
+          className={styles.clear_icon}
+          visible={value !== ''}
+          icon='clear-field.svg'
+          onClick={() => onChange('')}
+        />
+      </div>
+    )
+  })
 
 export default ProfileInput;
