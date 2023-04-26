@@ -75,6 +75,7 @@ const InputForm: React.FC<IProps> = forwardRef<HTMLInputElement, IProps>(
           <IconButton
             onClick={() => togglePassword()}
             icon={passwordShown ? 'password-shown.svg' : 'password-hidden.svg'}
+            className={passwordShown ? styles.icon_show : styles.icon_hidden}
             visible={optionalEyeButton.visible}
           />
         )}
