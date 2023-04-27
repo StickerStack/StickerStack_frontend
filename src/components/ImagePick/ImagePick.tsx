@@ -15,7 +15,7 @@ const ImagePick: React.FC<IProps> = ({ image, className }: IProps) => {
       <img className={cn(styles.image, className)} alt='Изображение' src={image} />
       <form className={styles.overlay}>
         <ButtonWithText type='button' theme='no-border' className={styles.button}>
-          <div className={styles.button_pen} />
+          <div className={styles.button_img} />
           <label htmlFor='myimage' className={styles.label}>
             Загрузить изображение
           </label>
