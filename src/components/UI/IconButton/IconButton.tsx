@@ -23,6 +23,7 @@ interface IProps {
 const IconButton: React.FC<IProps> = ({ onClick, visible, icon, className }: IProps) => {
   return (
     <button
+      type='button'
       className={ cn( styles.button, { [styles.hidden]: !visible}, className ) }
       style={{
         backgroundImage: `url(${icons[icon]})`
