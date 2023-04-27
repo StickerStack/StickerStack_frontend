@@ -1,4 +1,5 @@
 import cn from 'classnames';
+import { useState } from "react";
 import { useSelector } from 'react-redux';
 
 import { ButtonWithText, TitlePage } from '../UI';
@@ -14,6 +15,11 @@ import styles from './ProfilePage.module.scss';
 
 const ProfilePage: React.FC = () => {
   const email = useSelector((state: { user: IUserState }) => state.user.email);
+
+  const [name, setName] = useState<string>('');
+  const [surname, setSurname] = useState<string>('');
+  const [profileEmail, setProfileEmail] = useState<string>(email);
+
   const dispatch = useAppDispatch();
 
   const onLogOut = () => {
@@ -32,11 +38,28 @@ const ProfilePage: React.FC = () => {
         <ImagePick image={EmptyAvatarImage} />
         <div className={styles.profile_data}>
           <div className={styles.inputs}>
-            <ProfileInput name='Имя' type='text' placeholder='Имя' />
+            <ProfileInput
+              name='Имя'
+              type='text'
+              placeholder='Имя'
+              onChange={setName}
+              value={name}
+            />
 
-            <ProfileInput name='Фамилия' type='text' placeholder='Фамилия' />
-
-            <ProfileInput name='Email' type='email' placeholder='E-mail' />
+            <ProfileInput
+              name='Фамилия'
+              type='text'
+              placeholder='Фамилия'
+              onChange={setSurname}
+              value={surname}
+            />
+            <ProfileInput
+              name='Email'
+              type='email'
+              placeholder='E-mail'
+              onChange={setProfileEmail}
+              value={profileEmail}
+            />
           </div>
           <ButtonWithText className={styles.button} type='button' theme='filled'>
             Сохранить
