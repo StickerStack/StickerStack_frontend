@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import { ButtonWithText, TextUnderline } from '../UI';
+import { ButtonWithText } from '../UI';
 
 import { useAppDispatch } from '../../hooks/hooks';
 import MainPageImage from '../../images/main-page-image.png';

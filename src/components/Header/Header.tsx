@@ -5,8 +5,8 @@ import { ButtonCustom, ButtonWithText } from '../UI';
 
 import { useAppDispatch } from '../../hooks/hooks';
 import { IUserState } from '../../interfaces';
-import styles from './Header.module.scss';
 import { setIsOpen } from '../../store/popupSlice';
+import styles from './Header.module.scss';
 
 const Header: React.FC = () => {
   const isLogged = useSelector((state: { user: IUserState }) => state.user.isLogged);

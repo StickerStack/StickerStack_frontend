@@ -6,7 +6,6 @@ import {
 } from 'framer-motion';
 
 import { PopupForm } from '../';
-
 import { IPopupState } from '../../interfaces/IPopupState';
 import { useAppDispatch } from '../../hooks/hooks';
 import { setIsOpen } from '../../store/popupSlice';

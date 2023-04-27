@@ -6,7 +6,8 @@ import { Signin } from '../';
 
 import { useAppDispatch } from '../../hooks/hooks';
 import { setMessageIsOpen, switchForm, setIsOpen } from '../../store/popupSlice';
-import { signUp, signIn, getUser } from '../../store/userSlice';
+import { getUser } from '../../store/userSlice';
+import { signUp, signIn } from '../../store/authSlice';
 import { registerEmail, registerPassword } from '../../utils/registersRHF';
 import styles from './Signup.module.scss';
 
