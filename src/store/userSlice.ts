@@ -14,11 +14,6 @@ const updateUser = createAsyncThunk(
   }
 );
 
-const logOut = createAsyncThunk('user/logOut', async () => {
-  const response = await api.logOut();
-  return response;
-});
-
 const userSlice = createSlice({
   name: 'user',
   initialState: {
@@ -28,11 +23,15 @@ const userSlice = createSlice({
     isLogged: false
   },
   reducers: {
-    singInMockUser(state, action) {
+    signInMockUser(state, action) {
       state.email = action.payload;
       state.isLogged = true;
       state.loading = false;
       state.success = true;
+    },
+
+    updateStatus(state, action) {
+      state.isLogged = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -52,31 +51,16 @@ const userSlice = createSlice({
       state.email = '';
       state.isLogged = false;
     });
-
-    // Выход пользователя, если есть token
-    builder.addCase(logOut.pending, (state) => {
-      state.loading = true;
-    });
-    builder.addCase(logOut.fulfilled, (state) => {
-      state.loading = false;
-      state.success = true;
-      state.email = '';
-      state.isLogged = false;
-    });
-    builder.addCase(logOut.rejected, (state) => {
-      state.loading = false;
-      state.success = false;
-    });
   },
 });
 
 const userSliceReducer = userSlice.reducer;
-const { singInMockUser } = userSlice.actions;
+const { signInMockUser, updateStatus } = userSlice.actions;
 
 export {
   userSliceReducer,
   getUser,
   updateUser,
-  logOut,
-  singInMockUser
+  signInMockUser,
+  updateStatus
 };

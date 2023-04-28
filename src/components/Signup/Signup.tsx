@@ -6,7 +6,7 @@ import { Signin } from '../';
 
 import { useAppDispatch } from '../../hooks/hooks';
 import { setMessageIsOpen, switchForm, setIsOpen } from '../../store/popupSlice';
-import { getUser } from '../../store/userSlice';
+import { getUser, updateStatus } from '../../store/userSlice';
 import { signUp, signIn } from '../../store/authSlice';
 import { registerEmail, registerPassword } from '../../utils/registersRHF';
 import styles from './Signup.module.scss';
@@ -33,6 +33,7 @@ const Signup: React.FC = () => {
         dispatch(signIn({ email: userEmail, password: userPassword })).then((res) => {
           if (res.meta.requestStatus === 'fulfilled') {
             dispatch(getUser());
+            dispatch(updateStatus(true));
             dispatch(setIsOpen(false));
             navigate('/add-stickers');
             dispatch(

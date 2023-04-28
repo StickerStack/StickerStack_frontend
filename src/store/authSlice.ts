@@ -1,5 +1,5 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { api } from "../utils/api";
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { api } from '../utils/api';
 
 const signUp = createAsyncThunk(
   'auth/signUp',
@@ -47,6 +47,18 @@ const verifyEmail = createAsyncThunk(
     try {
       const response = await api.verifyEmail(data.token);
       return response.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);
+
+const logOut = createAsyncThunk(
+  'auth/logOut',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await api.logOut();
+      return response;
     } catch (err) {
       return rejectWithValue(err);
     }
@@ -123,6 +135,19 @@ const authSlice = createSlice({
       state.loading = false;
       state.success = false;
     });
+
+    // Удаления токена - выход из профиля
+    builder.addCase(logOut.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(logOut.fulfilled, (state) => {
+      state.loading = false;
+      state.success = true;
+    });
+    builder.addCase(logOut.rejected, (state) => {
+      state.loading = false;
+      state.success = false;
+    });
   },
 });
 
@@ -134,5 +159,6 @@ export {
   resetPassword,
   forgotPassword,
   verifyEmail,
-  authSliceReducer
+  authSliceReducer,
+  logOut,
 };
