@@ -6,7 +6,8 @@ import { Signup, ResetPassword } from '../';
 
 import { setIsOpen, setMessageIsOpen, switchForm } from '../../store/popupSlice';
 import { useAppDispatch } from '../../hooks/hooks';
-import { getUser, signIn, singInMockUser } from '../../store/userSlice';
+import { getUser, signInMockUser, updateStatus } from '../../store/userSlice';
+import { signIn } from '../../store/authSlice';
 import { registerEmail, registerPassword } from '../../utils/registersRHF';
 import styles from './Signin.module.scss';
 
@@ -29,7 +30,7 @@ const Signin: React.FC = () => {
 
   const onSubmit = () => {
     if( userEmail === 'my@super.user' && userPassword === 'my@super.user') {
-      dispatch(singInMockUser('my@super.user'));
+      dispatch(signInMockUser('my@super.user'));
       dispatch(setIsOpen(false));
       navigate('/add-stickers');
       localStorage.setItem('token', 'moc');
@@ -40,6 +41,7 @@ const Signin: React.FC = () => {
       .then((res) => {
         if (res.meta.requestStatus === 'fulfilled') {
           dispatch(getUser());
+          dispatch(updateStatus(true));
           dispatch(setIsOpen(false));
           navigate('/add-stickers');
         }

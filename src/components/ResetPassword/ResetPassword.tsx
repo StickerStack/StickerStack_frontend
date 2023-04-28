@@ -8,7 +8,7 @@ import { Signin } from '../';
 import { switchForm } from '../../store/popupSlice';
 import { useAppDispatch } from '../../hooks/hooks';
 import { registerEmail } from '../../utils/registersRHF';
-import { forgotPassword } from '../../store/userSlice';
+import { forgotPassword } from '../../store/authSlice';
 import styles from './ResetPassword.module.scss';
 
 const ResetPassword: React.FC = () => {
