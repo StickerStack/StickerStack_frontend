@@ -1,9 +1,14 @@
 import cn from 'classnames';
-import {FieldError, FieldErrorsImpl, FieldValues, Merge, RegisterOptions, UseFormRegister} from "react-hook-form";
+import {
+  FieldError,
+  FieldErrorsImpl,
+  FieldValues, Merge,
+  RegisterOptions,
+  UseFormRegister
+} from "react-hook-form";
 
 import {IconButton} from "../IconButton/IconButton";
 
-import {PROFILE_INPUT_MAX_LENGTH, PROFILE_INPUT_MIN_LENGTH} from "../../../utils/constants";
 import styles from "./ProfileInput.module.scss";
 
 interface IProps {
@@ -24,8 +29,7 @@ const ProfileInput: React.FC<IProps> = ({ name, type, placeholder, register, opt
         type={type}
         className={styles.input}
         placeholder={placeholder}
-        minLength={PROFILE_INPUT_MIN_LENGTH}
-        maxLength={PROFILE_INPUT_MAX_LENGTH}
+        aria-invalid={error ? "true" : "false"}
         {...register && register(name, option)}
       />
 
