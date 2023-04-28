@@ -1,4 +1,10 @@
-import {PROFILE_INPUT_MAX_LENGTH, PROFILE_INPUT_MIN_LENGTH, REG_EMAIL, PROFILE_ONLY_LETTERS, REG_PASS} from './constants';
+import {
+  PROFILE_INPUT_MAX_LENGTH,
+  PROFILE_INPUT_MIN_LENGTH,
+  REG_EMAIL,
+  PROFILE_ONLY_LETTERS,
+  REG_PASS
+} from './constants';
 
 const registerEmail = {
   required: 'Введите E-mail',
@@ -24,20 +30,20 @@ const registerPassword = {
   }
 };
 
-const profileName ={
-  required: 'Поле обязательное!',
-    minLength: {
-      value: PROFILE_INPUT_MIN_LENGTH,
-      message: `Минимум ${PROFILE_INPUT_MIN_LENGTH} символа!`,
-    },
-    maxLength: {
-      value: PROFILE_INPUT_MAX_LENGTH,
-      message: `Максимум ${PROFILE_INPUT_MAX_LENGTH} символов!`,
-    },
-    pattern: {
-      value: PROFILE_ONLY_LETTERS,
-      message: 'Только буквы!'
-    }
+const profileName = {
+  required: 'Поле обязательное',
+  minLength: {
+    value: PROFILE_INPUT_MIN_LENGTH,
+    message: `Минимум ${PROFILE_INPUT_MIN_LENGTH} символа`,
+  },
+  maxLength: {
+    value: PROFILE_INPUT_MAX_LENGTH,
+    message: `Максимум ${PROFILE_INPUT_MAX_LENGTH} символов`,
+  },
+  pattern: {
+    value: PROFILE_ONLY_LETTERS,
+    message: 'Только буквы'
+  }
 }
 
 export { registerEmail, registerPassword, profileName };
