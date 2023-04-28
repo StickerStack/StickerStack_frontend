@@ -5,8 +5,8 @@ import { ButtonWithText, TitleForm, TextForm } from '../UI';
 import { Preloader } from '../Preloader/Preloader';
 
 import { useAppDispatch } from '../../hooks/hooks';
+import { verifyEmail } from '../../store/authSlice';
 import styles from './VerifyEmail.module.scss';
-import { verifyEmail } from '../../store/userSlice';
 
 const VerifyEmail: React.FC = () => {
   const navigate = useNavigate();

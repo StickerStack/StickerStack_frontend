@@ -3,8 +3,9 @@ const REG_EMAIL =/^(([^<>()[\]\\.,;:\s@\"]+[A-Za-z0-9]+(\.[^<>()[\]\\.,;:\s@\"]+
 const REG_PASS = /(^[A-Za-z0-9])\w+/g;
 /* Только латинские и кириллические буквы и знак - */
 const PROFILE_ONLY_LETTERS = /^[а-яА-ЯёЁa-zA-Z-]+$/;
-// http://api.stickerstack.ru/api   http://localhost:8000/api
-const API_URL = 'http://api.stickerstack.ru/api';
+// http://api.stickerstack.ru/api   http://localhost:8000/api  http://93.95.98.73:7080/api
+const API_URL = 'http://93.95.98.73:7080/api';
+
 
 // Route paths
 const PROFILE = '/profile';

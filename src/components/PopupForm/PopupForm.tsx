@@ -1,8 +1,8 @@
 import { useSelector } from 'react-redux';
-import { IPopupState } from '../../interfaces/IPopupState';
 
-import styles from './PopupForm.module.scss';
+import { IPopupState } from '../../interfaces/IPopupState';
 import { ButtonCustom } from '../UI';
+import styles from './PopupForm.module.scss';
 
 interface IProps {
   onClose: () => void;

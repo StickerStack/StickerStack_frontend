@@ -7,11 +7,12 @@ import ProfileInput from '../UI/ProfileInput/ProfileInput';
 
 import { useAppDispatch } from '../../hooks/hooks';
 import { IUserState } from '../../interfaces';
-import { logOut } from '../../store/userSlice';
+import { logOut } from '../../store/authSlice';
 
 import EmptyAvatarImage from '../../images/empty-avatar.svg';
 import { profileName } from "../../utils/registersRHF";
 import styles from './ProfilePage.module.scss';
+import { updateStatus } from '../../store/userSlice';
 
 const FIRSTNAME_INPUT_LABEL = 'firstName';
 const LASTNAME_INPUT_LABEL = 'lastName';
@@ -32,13 +33,19 @@ const ProfilePage: React.FC = () => {
 
   const dispatch = useAppDispatch();
 
+
+  // #TODO: Когда будет готово выпадающее меню перенести туда onLogOut!
   const onLogOut = () => {
     if (localStorage.getItem('token')) {
       localStorage.removeItem('token');
       return;
     }
 
-    dispatch(logOut());
+    dispatch(logOut()).then((res) => {
+      if (res.meta.requestStatus === 'fulfilled') {
+        dispatch(updateStatus(false));
+      }
+    });
   };
 
   const onSubmit = () => {
