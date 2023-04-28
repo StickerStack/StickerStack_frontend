@@ -146,6 +146,29 @@ class Api {
         
     return response;
   }
+
+  public async uploadProfileImage(formData: FormData) {
+    const data = await fetch(`{this._url}/auth/uploadprofileimage`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      },
+      body: formData,
+    });
+
+    const response = await this._checkResponse(data);
+
+    return response;
+  }
+
+  public async getProfileImage() {
+    const data = await fetch(`${this._url}/auth/profileimage`);
+
+    const response = await this._checkResponse(data);
+
+    return response;
+  }
 }
 
 const api = new Api(API_URL, {
