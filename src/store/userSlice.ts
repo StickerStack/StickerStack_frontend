@@ -8,8 +8,8 @@ const getUser = createAsyncThunk('user/getUser', async () => {
 
 const updateUser = createAsyncThunk(
   'user/updateUser',
-  async (data: { email: string; password: string }) => {
-    const response = await api.updateUser(data.email, data.password);
+  async (data: { email: string; firstName: string; lastName: string }) => {
+    const response = await api.updateUser(data.email, data.firstName, data.lastName);
     return response.data;
   }
 );

@@ -9,10 +9,10 @@ import { useAppDispatch } from '../../hooks/hooks';
 import { IUserState } from '../../interfaces';
 import { logOut } from '../../store/authSlice';
 
+import { updateStatus, updateUser } from '../../store/userSlice';
 import EmptyAvatarImage from '../../images/empty-avatar.svg';
 import { profileName } from "../../utils/registersRHF";
 import styles from './ProfilePage.module.scss';
-import { updateStatus } from '../../store/userSlice';
 
 const FIRSTNAME_INPUT_LABEL = 'firstName';
 const LASTNAME_INPUT_LABEL = 'lastName';
@@ -21,6 +21,7 @@ const ProfilePage: React.FC = () => {
   const email = useSelector((state: { user: IUserState }) => state.user.email);
   const {
     register,
+    getValues,
     formState: {
       errors,
     },
@@ -33,6 +34,8 @@ const ProfilePage: React.FC = () => {
 
   const dispatch = useAppDispatch();
 
+  const firstname = getValues(FIRSTNAME_INPUT_LABEL);
+  const lastname = getValues(LASTNAME_INPUT_LABEL);
 
   // #TODO: Когда будет готово выпадающее меню перенести туда onLogOut!
   const onLogOut = () => {
@@ -49,7 +52,7 @@ const ProfilePage: React.FC = () => {
   };
 
   const onSubmit = () => {
-    console.log('server request')
+    dispatch(updateUser({ email: email, firstName: firstname, lastName: lastname}));
   }
 
   return (
