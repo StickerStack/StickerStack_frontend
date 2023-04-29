@@ -1,7 +1,13 @@
 @import '../../../utils/scss-variables';
 
 .input_container {
+  @include flex(column, _, _);
   position: relative;
+  border-bottom: 2px solid #929292;
+
+  &.border_error {
+    border-color: $error-text-color;
+  }
 }
 
 .input {
@@ -12,8 +18,15 @@
   height: 30px;
   width: 100%;
   color: $main-text-color;
-  border-bottom: 2px solid #929292;
+
   padding: 0;
+}
+
+.error {
+  @include font(14px, 17px, 400);
+  color: $error-text-color;
+  position: absolute;
+  bottom: -22px;
 }
 
 .clear_icon {

@@ -85,14 +85,15 @@ class Api {
     return response;
   }
 
-  public async updateUser(email: string, password: string) {
+  public async updateUser(email: string, firstName: string, lastName: string) {
     const data = await fetch(`${this._url}/users/me`, {
       method: 'PATCH',
       credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({
         email: email,
-        password: password,
+        first_name: firstName,
+        last_name: lastName
       }),
     });
 

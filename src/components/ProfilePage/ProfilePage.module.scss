@@ -12,7 +12,7 @@
 }
 
 .profile_data {
-  width: 253px;
+  width: 270px;
 }
 
 .button {
@@ -27,7 +27,7 @@
 .inputs {
   @include flex(column, flex-start, _);
   margin-bottom: 45px;
-  gap: 20px;
+  gap: 25px;
 }
 
 .input_container {
