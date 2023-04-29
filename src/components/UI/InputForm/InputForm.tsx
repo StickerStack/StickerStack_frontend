@@ -1,4 +1,4 @@
-import { forwardRef, useState } from 'react';
+import React, { forwardRef, useState } from 'react';
 import {
   FieldError,
   FieldErrorsImpl,
@@ -8,7 +8,7 @@ import {
   UseFormRegister,
 } from 'react-hook-form';
 
-import { EyeButton, TextUnderline } from '../';
+import {EyeButton, TextUnderline} from '../';
 
 import styles from './InputForm.module.scss';
 

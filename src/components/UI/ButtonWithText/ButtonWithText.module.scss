@@ -31,6 +31,8 @@
 .button_no-border {
   background: transparent;
   @include font(14px, 16px, 400);
+  color: $main-bg-color;
+  text-align: left;
   padding: 0;
   height: 16px;
   border: none;

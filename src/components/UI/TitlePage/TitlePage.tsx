@@ -1,6 +1,6 @@
 import cn from 'classnames';
+
 import styles from './TitlePage.module.scss';
-import classNames from 'classnames';
 
 interface IProps {
   children: React.ReactNode;

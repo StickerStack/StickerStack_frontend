@@ -6,7 +6,7 @@ import { setMessageIsOpen } from '../../store/popupSlice';
 import { InputForm, TitleForm, ButtonWithText } from '../UI';
 
 import { useAppDispatch } from '../../hooks/hooks';
-import { resetPassword } from '../../store/userSlice';
+import { resetPassword } from '../../store/authSlice';
 import { registerPassword } from '../../utils/registersRHF';
 import styles from './ChangePassword.module.scss';
 

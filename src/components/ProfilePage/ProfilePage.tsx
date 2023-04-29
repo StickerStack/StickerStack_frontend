@@ -1,77 +1,89 @@
 import { ChangeEvent } from 'react';
 import { useSelector } from 'react-redux';
-import cn from 'classnames';
+import { useForm } from 'react-hook-form';
 
-import { ButtonWithText, TitleForm, TitlePage } from '../UI';
+import { ButtonWithText, TitlePage } from '../UI';
+import { ImagePick } from '../ImagePick/ImagePick';
+import ProfileInput from '../UI/ProfileInput/ProfileInput';
 
 import { setCropIsOpen, setNewCrop } from '../../store/popupSlice';
+import { updateStatus } from '../../store/userSlice';
 import { useAppDispatch } from '../../hooks/hooks';
-import { IPopupState } from '../../interfaces';
 import { IUserState } from '../../interfaces/IUserState';
-import { logOut } from '../../store/userSlice';
+import { logOut } from '../../store/authSlice';
+import { profileName } from '../../utils/registersRHF';
+
+import EmptyAvatarImage from '../../images/empty-avatar.svg';
 import styles from './ProfilePage.module.scss';
 
-const ProfilePage = () => {
+const FIRSTNAME_INPUT_LABEL = 'firstName';
+const LASTNAME_INPUT_LABEL = 'lastName';
+
+const ProfilePage: React.FC = () => {
   const email = useSelector((state: { user: IUserState }) => state.user.email);
-  const newAvatar = useSelector((state: { popup: IPopupState }) => state.popup.newCrop);
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    resetField,
+    watch,
+  } = useForm({
+    mode: 'onBlur',
+  });
   const dispatch = useAppDispatch();
 
+  // #TODO: Когда будет готово выпадающее меню перенести туда onLogOut!
   const onLogOut = () => {
-    dispatch(logOut());
-  };
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      const reader = new FileReader();
-      reader.addEventListener('load', () =>
-        dispatch(setCropIsOpen({ imageIsOpen: true, imageSrc: reader.result?.toString() || '' })),
-      );
-      reader.readAsDataURL(e.target.files[0]);
+    if (localStorage.getItem('token')) {
+      localStorage.removeItem('token');
+      return;
     }
+
+    dispatch(logOut()).then((res) => {
+      if (res.meta.requestStatus === 'fulfilled') {
+        dispatch(updateStatus(false));
+      }
+    });
   };
 
-  function handleSubmit(e: { preventDefault: () => void }) {
-    e.preventDefault();
-  }
+  const onSubmit = () => {
+    console.log('server request');
+  };
 
   return (
     <main className={styles.profile}>
       <TitlePage>Мои данные</TitlePage>
-      <div className={styles.avatar}>
-        <img className={styles.image} alt='Аватар' src={newAvatar || ''} />
-        <form className={styles.overlay} onSubmit={handleSubmit}>
-          <ButtonWithText type='button' theme='no-border' className={styles.button}>
-            <div className={styles.button_pen} />
-            <label htmlFor='myimage' className={styles.label}>
-              Сменить аватар
-            </label>
-          </ButtonWithText>
-          <input
-            type='file'
-            name='file'
-            id='myimage'
-            accept='image/*'
-            className={styles.input}
-            onChange={handleFileChange}
-          ></input>
-          <div className={cn(styles.buttons, newAvatar && styles.buttons_visible)}>
-            <ButtonWithText
-              type='button'
-              theme='no-border'
-              onClick={() => {
-                dispatch(setNewCrop(''));
-              }}
-              className={styles.button}
-            >
-              <div className={styles.button_bin} />
-              Удалить аватар
+      <div className={styles.container}>
+        <ImagePick image={EmptyAvatarImage} />
+        <div className={styles.profile_data}>
+          <form className={styles.inputs} onSubmit={handleSubmit(onSubmit)}>
+            <ProfileInput
+              name={FIRSTNAME_INPUT_LABEL}
+              type='text'
+              placeholder='Имя'
+              register={register}
+              option={profileName}
+              iconVisible={watch(FIRSTNAME_INPUT_LABEL)?.length}
+              error={errors && errors[FIRSTNAME_INPUT_LABEL]}
+              onClear={() => resetField(FIRSTNAME_INPUT_LABEL)}
+            />
+
+            <ProfileInput
+              name={LASTNAME_INPUT_LABEL}
+              type='text'
+              placeholder='Фамилия'
+              register={register}
+              option={profileName}
+              iconVisible={watch(LASTNAME_INPUT_LABEL)?.length}
+              error={errors && errors[LASTNAME_INPUT_LABEL]}
+              onClear={() => resetField(LASTNAME_INPUT_LABEL)}
+            />
+            <ButtonWithText className={styles.button} type='submit' theme='filled'>
+              Сохранить
             </ButtonWithText>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
-      <TitleForm>Почта: {email}</TitleForm>
-      <ButtonWithText theme='transparent' type='button' onClick={() => onLogOut()}>
-        Выйти
-      </ButtonWithText>
     </main>
   );
 };
