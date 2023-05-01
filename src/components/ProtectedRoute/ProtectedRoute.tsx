@@ -11,7 +11,7 @@ interface IProps {
 const ProtectedRoute: React.FC<IProps> = ({ redirectPath = '/', children }: IProps) => {
   const isLogged = useSelector((state: { user: IUserState }) => state.user.isLogged);
 
-  if (isLogged) {
+  if (!isLogged) {
     return <Navigate to={redirectPath} replace />;
   }
   return <>{children}</>;
