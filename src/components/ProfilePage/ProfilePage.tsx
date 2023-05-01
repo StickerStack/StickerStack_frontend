@@ -1,4 +1,3 @@
-import { ChangeEvent } from 'react';
 import { useSelector } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
@@ -6,7 +5,6 @@ import { ButtonWithText, TitlePage } from '../UI';
 import { ImagePick } from '../ImagePick/ImagePick';
 import ProfileInput from '../UI/ProfileInput/ProfileInput';
 
-import { setCropIsOpen, setNewCrop } from '../../store/popupSlice';
 import { updateStatus } from '../../store/userSlice';
 import { useAppDispatch } from '../../hooks/hooks';
 import { IUserState } from '../../interfaces/IUserState';

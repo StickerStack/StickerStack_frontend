@@ -1,34 +1,47 @@
 @import '../../utils/_scss-variables.scss';
 
-.crop {
-  max-width: 500px;
-}
-
-.overlay {
+.container {
   @include flex(column, center, center);
   box-sizing: border-box;
   gap: 30px;
 }
 
-.buttons {
-  display: none;
+.image {
+  position: relative;
+  width: 280px;
+  height: 290px;
 }
 
-.buttons_visible {
+.crop_container {
+}
+
+.media {
+  max-width: fit-content;
+  max-height: 100%;
+}
+
+.crop_area {
+}
+
+.zoom {
+  cursor: pointer;
+  color: $main-text-color;
+  background-color: transparent;
+}
+
+.buttons {
   width: 100%;
   @include flex(row, space-between, center);
   gap: 20px;
 }
 
-.label {
-  cursor: pointer;
+.button {
+  padding: 8px 20px;
+  height: 40px;
+  border-radius: 10px;
+  font-size: 18px;
 }
 
-.input {
-  width: 0.1px;
-  height: 0.1px;
-  opacity: 0;
-  overflow: hidden;
-  position: absolute;
-  z-index: -1;
+.label {
+  visibility: hidden;
 }

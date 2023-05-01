@@ -1,172 +1,73 @@
-import { useState, useRef, useEffect } from 'react';
-import { IPopupState } from '../../interfaces';
-import ReactCrop, { Crop, centerCrop, makeAspectCrop, PixelCrop } from 'react-image-crop';
-
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { useSelector } from 'react-redux';
-import cn from 'classnames';
-import { ButtonWithText, TitleForm } from '../UI';
+import Cropper from 'react-easy-crop';
+
+import { IPopupState } from '../../interfaces';
 import { useAppDispatch } from '../../hooks/hooks';
 import { setNewCrop, setIsOpen } from '../../store/popupSlice';
+import { ButtonWithText, TitleForm } from '../UI';
+import { getCompletedCrop } from '../../utils/imageCrop';
 
-import 'react-image-crop/dist/ReactCrop.css';
 import styles from './ImageForm.module.scss';
 
 const ImageForm: React.FC = () => {
   const dispatch = useAppDispatch();
   const imageSrc = useSelector((state: { popup: IPopupState }) => state.popup.imageSrc);
-  const [crop, setCrop] = useState<Crop>();
-  const [completedCrop, setCompletedCrop] = useState<PixelCrop>();
-  const [aspect, setAspect] = useState<number>(1 / 1);
-  const previewCanvasRef = useRef<HTMLCanvasElement>(null);
-  const imgRef = useRef<HTMLImageElement>(null);
-  const blobUrlRef = useRef('');
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [croppedArea, setCroppedArea] = useState(null);
+  const [zoom, setZoom] = useState(1);
 
-  function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: number) {
-    return centerCrop(
-      makeAspectCrop(
-        {
-          unit: '%',
-          x: 25,
-          y: 25,
-          width: 100,
-          height: 100,
-        },
-        aspect,
-        mediaWidth,
-        mediaHeight,
-      ),
-      mediaWidth,
-      mediaHeight,
-    );
-  }
+  const onCropComplete = useCallback((croppedArea: any, croppedAreaPixels: any) => {
+    console.log(croppedArea, croppedAreaPixels);
+    setCroppedArea(croppedAreaPixels);
+  }, []);
 
-  function onImageLoad(e: React.SyntheticEvent<HTMLImageElement>) {
-    const { width, height } = e.currentTarget;
-    setCrop(centerAspectCrop(width, height, aspect));
-  }
+  function handleSave() {
+    getCompletedCrop(imageSrc, croppedArea);
 
-  async function canvasPreview(
-    image: HTMLImageElement,
-    canvas: HTMLCanvasElement,
-    crop: PixelCrop,
-  ) {
-    const ctx = canvas.getContext('2d');
-
-    if (!ctx) {
-      throw new Error('No 2d context');
-    }
-
-    const scaleX = image.naturalWidth / image.width;
-    const scaleY = image.naturalHeight / image.height;
-    const pixelRatio = window.devicePixelRatio;
-
-    canvas.width = Math.floor(crop.width * scaleX * pixelRatio);
-    canvas.height = Math.floor(crop.height * scaleY * pixelRatio);
-
-    ctx.scale(pixelRatio, pixelRatio);
-    ctx.imageSmoothingQuality = 'high';
-
-    const cropX = crop.x * scaleX;
-    const cropY = crop.y * scaleY;
-
-    const centerX = image.naturalWidth / 2;
-    const centerY = image.naturalHeight / 2;
-
-    ctx.save();
-    ctx.translate(-cropX, -cropY);
-    ctx.translate(centerX, centerY);
-    ctx.translate(-centerX, -centerY);
-    ctx.drawImage(
-      image,
-      0,
-      0,
-      image.naturalWidth,
-      image.naturalHeight,
-      0,
-      0,
-      image.naturalWidth,
-      image.naturalHeight,
-    );
-
-    ctx.restore();
-  }
-
-  useEffect(() => {
-    completedCrop &&
-      imgRef.current &&
-      previewCanvasRef.current &&
-      canvasPreview(imgRef.current, previewCanvasRef.current, completedCrop);
-  });
-
-  async function completeCrop() {
-    if (!previewCanvasRef.current) {
-      throw new Error('Crop canvas does not exist');
-    }
-    previewCanvasRef.current.toBlob((blob) => {
-      if (!blob) {
-        console.error('Canvas is empty');
-        return;
-      }
-
-      if (blobUrlRef.current) {
-        URL.revokeObjectURL(blobUrlRef.current);
-      }
-      blobUrlRef.current = URL.createObjectURL(blob);
-    }, 'image/jpeg');
-  }
-
-  function handleSubmit() {
-    dispatch(setNewCrop(blobUrlRef.current));
     dispatch(setIsOpen(false));
   }
 
   return (
-    <form className={styles.overlay} onSubmit={handleSubmit}>
+    <form className={styles.container}>
       <TitleForm>Выберите область</TitleForm>
-      <ReactCrop
-        crop={crop}
-        onChange={(c) => {
-          setCrop(c);
-        }}
-        onComplete={(c) => {
-          setCompletedCrop(c);
-          completeCrop();
-        }}
-        aspect={aspect}
-        className={styles.crop}
-        minWidth={255}
-        minHeight={255}
-      >
-        <img
-          className={styles.image}
-          ref={imgRef}
-          alt='Аватар'
-          src={imageSrc}
-          onLoad={onImageLoad}
+      <div className={styles.image}>
+        <Cropper
+          image={imageSrc}
+          crop={crop}
+          zoom={zoom}
+          aspect={255 / 263}
+          onCropChange={setCrop}
+          onCropComplete={onCropComplete}
+          onZoomChange={setZoom}
+          classes={{
+            containerClassName: styles.crop_container,
+            mediaClassName: styles.media,
+            cropAreaClassName: styles.crop_area,
+          }}
         />
-      </ReactCrop>
-      <TitleForm>Превью</TitleForm>
-      {!!completedCrop && (
-        <>
-          <canvas
-            ref={previewCanvasRef}
-            style={{
-              border: '1px solid black',
-              borderRadius: '20px',
-              objectFit: 'contain',
-              width: completedCrop.width,
-              height: completedCrop.height,
-            }}
-          />
-        </>
-      )}
-      <div className={cn(styles.buttons, imageSrc && styles.buttons_visible)}>
-        <ButtonWithText type='button' onClick={handleSubmit}>
+      </div>
+      <input
+        type='range'
+        id='zoom'
+        value={zoom}
+        min={1}
+        max={3}
+        step={0.1}
+        onChange={(e) => {
+          setZoom(Number(e.target.value));
+        }}
+        className={styles.zoom}
+        aria-label='Масштаб'
+      />
+      <div className={styles.buttons}>
+        <ButtonWithText type='button' className={styles.button} onClick={handleSave}>
           Сохранить
         </ButtonWithText>
         <ButtonWithText
           type='button'
           theme='transparent'
+          className={styles.button}
           onClick={() => dispatch(setIsOpen(false))}
         >
           Отменить
