@@ -6,15 +6,13 @@ import { ImagePick } from '../ImagePick/ImagePick';
 import ProfileInput from '../UI/ProfileInput/ProfileInput';
 
 import { useAppDispatch } from '../../hooks/hooks';
-import { updateStatus } from '../../store/userSlice';
+import { updateStatus, updateUser } from '../../store/userSlice';
 import { IUserState } from '../../interfaces/IUserState';
 import { logOut } from '../../store/authSlice';
 import { profileName } from '../../utils/registersRHF';
 
 import EmptyAvatarImage from '../../images/empty-avatar.svg';
 import styles from './ProfilePage.module.scss';
-import { AsyncThunkAction } from '@reduxjs/toolkit';
-import { Dispatch, AnyAction } from 'redux';
 
 const FIRSTNAME_INPUT_LABEL = 'firstName';
 const LASTNAME_INPUT_LABEL = 'lastName';

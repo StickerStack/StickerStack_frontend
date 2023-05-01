@@ -1,5 +1,3 @@
-import { MutableRefObject } from 'react';
-
 const createImage = (url: string) =>
   new Promise<HTMLImageElement>((resolve, reject) => {
     const image = new Image();
@@ -37,7 +35,6 @@ const canvasPreview = async (imageSrc: string, crop: any) => {
       0 - safeArea / 2 + image.height * 0.5 - crop.y,
     );
   }
-
   return canvas;
 };
 
@@ -47,7 +44,7 @@ const getCompletedCrop = async (image: string, crop: any) => {
     throw new Error('Crop canvas does not exist');
   }
   const canvas = await canvasPreview(image, crop);
-
+  const data = new FormData();
   canvas.toBlob((blob) => {
     if (!blob) {
       console.error('Canvas is empty');
@@ -59,9 +56,12 @@ const getCompletedCrop = async (image: string, crop: any) => {
     anchor.download = 'image.png';
     anchor.href = URL.createObjectURL(blob);
     anchor.click();
-
+    // Возможная реализация
+    data.append('file', blob, 'image.png');
     window.URL.revokeObjectURL(previewUrl);
   }, 'image/png');
+
+  return data;
 };
 
 export { canvasPreview, getCompletedCrop };

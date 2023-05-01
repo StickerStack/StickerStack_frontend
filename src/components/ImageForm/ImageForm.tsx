@@ -4,7 +4,8 @@ import Cropper from 'react-easy-crop';
 
 import { IPopupState } from '../../interfaces';
 import { useAppDispatch } from '../../hooks/hooks';
-import { setNewCrop, setIsOpen } from '../../store/popupSlice';
+import { updateProfileImage, getProfileImage } from '../../store/userSlice';
+import { setNewCrop, setIsOpen, setMessageIsOpen } from '../../store/popupSlice';
 import { ButtonWithText, TitleForm } from '../UI';
 import { getCompletedCrop } from '../../utils/imageCrop';
 
@@ -22,11 +23,24 @@ const ImageForm: React.FC = () => {
     setCroppedArea(croppedAreaPixels);
   }, []);
 
-  function handleSave() {
-    getCompletedCrop(imageSrc, croppedArea);
-
-    dispatch(setIsOpen(false));
-  }
+  const handleSave = async () => {
+    const completedCrop = await getCompletedCrop(imageSrc, croppedArea);
+    dispatch(updateProfileImage({ formData: completedCrop })).then((res) => {
+      if (res.meta.requestStatus === 'fulfilled') {
+        dispatch(getProfileImage());
+        dispatch(setIsOpen(false));
+      }
+      if (res.meta.requestStatus === 'rejected') {
+        dispatch(
+          setMessageIsOpen({
+            messageIsOpen: true,
+            message: 'Не удалось загрузить фото',
+            messageIsError: true,
+          }),
+        );
+      }
+    });
+  };
 
   return (
     <form className={styles.container}>
