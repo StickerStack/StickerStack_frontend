@@ -8,13 +8,21 @@
 
 .image {
   position: relative;
-  width: 280px;
-  height: 290px;
+  width: 255px;
+  height: 263px;
+}
+
+.crop_container {
+  display: block !important;
 }
 
 .media {
-  max-width: fit-content;
-  max-height: 100%;
+}
+.crop_area {
+  position: static !important;
+  transform: none !important;
+  width: 100% !important;
+  height: 100% !important;
 }
 
 .zoom {
