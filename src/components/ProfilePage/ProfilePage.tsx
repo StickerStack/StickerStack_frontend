@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { useForm } from "react-hook-form";
+import { useEffect } from "react";
 
 import { ButtonWithText, TitlePage } from '../UI';
 import { ImagePick } from '../ImagePick/ImagePick';
@@ -11,17 +12,19 @@ import { logOut } from '../../store/authSlice';
 
 import { updateStatus, updateUser } from '../../store/userSlice';
 import EmptyAvatarImage from '../../images/empty-avatar.svg';
-import { profileName } from "../../utils/registersRHF";
+import { profileName, registerEmail } from "../../utils/registersRHF";
 import styles from './ProfilePage.module.scss';
 
 const FIRSTNAME_INPUT_LABEL = 'firstName';
 const LASTNAME_INPUT_LABEL = 'lastName';
+const EMAIL_INPUT_LABEL = 'email';
 
 const ProfilePage: React.FC = () => {
   const email = useSelector((state: { user: IUserState }) => state.user.email);
   const {
     register,
     getValues,
+    setValue,
     formState: {
       errors,
     },
@@ -33,6 +36,12 @@ const ProfilePage: React.FC = () => {
   });
 
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (email) {
+      setValue(EMAIL_INPUT_LABEL, email);
+    }
+  }, [email]);
 
   const firstname = getValues(FIRSTNAME_INPUT_LABEL);
   const lastname = getValues(LASTNAME_INPUT_LABEL);
@@ -82,6 +91,17 @@ const ProfilePage: React.FC = () => {
               iconVisible={watch(LASTNAME_INPUT_LABEL)?.length}
               error={errors && errors[LASTNAME_INPUT_LABEL]}
               onClear={() => resetField(LASTNAME_INPUT_LABEL)}
+            />
+
+            <ProfileInput
+                name={EMAIL_INPUT_LABEL}
+                type='email'
+                placeholder='Email'
+                register={register}
+                option={registerEmail}
+                iconVisible={watch(EMAIL_INPUT_LABEL)?.length}
+                error={errors && errors[EMAIL_INPUT_LABEL]}
+                onClear={() => resetField(EMAIL_INPUT_LABEL)}
             />
             <ButtonWithText className={styles.button} type='submit' theme='filled'>
               Сохранить
