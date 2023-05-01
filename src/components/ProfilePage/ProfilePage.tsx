@@ -5,14 +5,16 @@ import { ButtonWithText, TitlePage } from '../UI';
 import { ImagePick } from '../ImagePick/ImagePick';
 import ProfileInput from '../UI/ProfileInput/ProfileInput';
 
-import { updateStatus } from '../../store/userSlice';
 import { useAppDispatch } from '../../hooks/hooks';
+import { updateStatus } from '../../store/userSlice';
 import { IUserState } from '../../interfaces/IUserState';
 import { logOut } from '../../store/authSlice';
 import { profileName } from '../../utils/registersRHF';
 
 import EmptyAvatarImage from '../../images/empty-avatar.svg';
 import styles from './ProfilePage.module.scss';
+import { AsyncThunkAction } from '@reduxjs/toolkit';
+import { Dispatch, AnyAction } from 'redux';
 
 const FIRSTNAME_INPUT_LABEL = 'firstName';
 const LASTNAME_INPUT_LABEL = 'lastName';
@@ -21,6 +23,7 @@ const ProfilePage: React.FC = () => {
   const email = useSelector((state: { user: IUserState }) => state.user.email);
   const {
     register,
+    getValues,
     formState: { errors },
     handleSubmit,
     resetField,
@@ -29,6 +32,9 @@ const ProfilePage: React.FC = () => {
     mode: 'onBlur',
   });
   const dispatch = useAppDispatch();
+
+  const firstname = getValues(FIRSTNAME_INPUT_LABEL);
+  const lastname = getValues(LASTNAME_INPUT_LABEL);
 
   // #TODO: Когда будет готово выпадающее меню перенести туда onLogOut!
   const onLogOut = () => {
@@ -45,7 +51,7 @@ const ProfilePage: React.FC = () => {
   };
 
   const onSubmit = () => {
-    console.log('server request');
+    dispatch(updateUser({ email: email, firstName: firstname, lastName: lastname }));
   };
 
   return (
