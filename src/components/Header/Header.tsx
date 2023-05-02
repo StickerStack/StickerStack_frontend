@@ -4,10 +4,10 @@ import { Link, useLocation } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks/hooks';
 import { IUserState } from '../../interfaces';
 import { setIsOpen } from '../../store/popupSlice';
+import { PAGE_404 } from '../../utils/constants';
 import { ProfileMenu } from '../ProfileMenu/ProfileMenu';
 import { ButtonCustom, ButtonWithText } from '../UI';
 import styles from './Header.module.scss';
-import { PAGE_404, PROFILE } from '../../utils/constants';
 
 const Header: React.FC = () => {
   // const isLogged = false;

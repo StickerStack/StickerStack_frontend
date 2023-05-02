@@ -1,16 +1,19 @@
 
 import { Link, useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks/hooks';
 import { ButtonWithText } from '../UI';
 import styles from './ProfileMenu.module.scss';
+import { logOut } from '../../store/authSlice';
+import { useAppDispatch } from '../../hooks/hooks';
+import { useSelector } from 'react-redux';
+import { IUserState } from '../../interfaces';
 
 const ProfileMenu: React.FC = () => {
-    const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+    const { firstName, lastName } = useSelector((state: { user: IUserState }) => state.user);
 
     const onLogOut = () => {
-        console.log('logout');
-
+        dispatch(logOut())
     };
 
     return (
@@ -20,7 +23,7 @@ const ProfileMenu: React.FC = () => {
                 </div>
                 <Link to='/profile' className={styles.prfile_link}>
                     <div className={styles.name}>
-                        Иванов Иван
+                        {`${lastName} ${firstName}`}
                     </div>
                 </ Link>
             </div>

@@ -29,7 +29,7 @@ const Signin: React.FC = () => {
 
   const onSubmit = () => {
     if (userEmail === 'my@super.user' && userPassword === 'my@super.user') {
-      dispatch(signInMockUser('my@super.user'));
+      dispatch(signInMockUser({ email: 'my@super.user', firstName: 'Иван', lastName: 'Иванов' }));
       dispatch(setIsOpen(false));
       navigate('/add-stickers');
       localStorage.setItem('token', 'moc');

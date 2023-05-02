@@ -18,7 +18,7 @@ const LASTNAME_INPUT_LABEL = 'lastName';
 const EMAIL_INPUT_LABEL = 'email';
 
 const ProfilePage: React.FC = () => {
-  const email = useSelector((state: { user: IUserState }) => state.user.email);
+  const { email, firstName, lastName } = useSelector((state: { user: IUserState }) => state.user);
   const {
     register,
     getValues,
@@ -38,6 +38,12 @@ const ProfilePage: React.FC = () => {
   useEffect(() => {
     if (email) {
       setValue(EMAIL_INPUT_LABEL, email);
+    }
+    if (firstName) {
+      setValue(FIRSTNAME_INPUT_LABEL, firstName);
+    }
+    if (lastName) {
+      setValue(LASTNAME_INPUT_LABEL, lastName);
     }
 
     // eslint-disable-next-line

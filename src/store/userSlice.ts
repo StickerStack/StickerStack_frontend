@@ -17,7 +17,7 @@ const updateUser = createAsyncThunk(
 
 const updateProfileImage = createAsyncThunk(
   'user/updateProfileImage',
-  async (data : { formData: FormData }, { rejectWithValue }) => {
+  async (data: { formData: FormData }, { rejectWithValue }) => {
     try {
       const response = await api.uploadProfileImage(data.formData);
       return response;
@@ -29,7 +29,7 @@ const updateProfileImage = createAsyncThunk(
 
 const getProfileImage = createAsyncThunk(
   'user/getProfileImage',
-  async (data, {rejectWithValue}) => {
+  async (data, { rejectWithValue }) => {
     try {
       const response = await api.getProfileImage();
       return response
@@ -43,13 +43,17 @@ const userSlice = createSlice({
   name: 'user',
   initialState: {
     email: '',
+    firstName: '',
+    lastName: '',
     loading: false,
     success: false,
     isLogged: false
   },
   reducers: {
     signInMockUser(state, action) {
-      state.email = action.payload;
+      state.email = action.payload.email;
+      state.firstName = action.payload.firstName;
+      state.lastName = action.payload.lastName;
       state.isLogged = true;
       state.loading = false;
       state.success = true;
@@ -89,7 +93,7 @@ const userSlice = createSlice({
       state.loading = false;
       state.success = false;
     });
-    
+
     // Получение фото профиля
     builder.addCase(getProfileImage.pending, (state) => {
       state.loading = true;
