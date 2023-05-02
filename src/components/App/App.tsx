@@ -32,7 +32,7 @@ const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    if(localStorage.getItem('token')) {
+    if (localStorage.getItem('token')) {
       dispatch(signInMockUser('my@super.user'));
       setIsLoading(false);
       return;
@@ -41,6 +41,8 @@ const App: React.FC = () => {
     dispatch(getUser()).then(() => {
       setIsLoading(false);
     });
+
+    // eslint-disable-next-line
   }, []);
 
   return (
