@@ -12,6 +12,7 @@ import { ButtonWithText, TitlePage } from '../UI';
 import ProfileInput from '../UI/ProfileInput/ProfileInput';
 import styles from './ProfilePage.module.scss';
 
+
 const FIRSTNAME_INPUT_LABEL = 'firstName';
 const LASTNAME_INPUT_LABEL = 'lastName';
 const EMAIL_INPUT_LABEL = 'email';

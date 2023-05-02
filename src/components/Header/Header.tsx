@@ -7,6 +7,7 @@ import { setIsOpen } from '../../store/popupSlice';
 import { ProfileMenu } from '../ProfileMenu/ProfileMenu';
 import { ButtonCustom, ButtonWithText } from '../UI';
 import styles from './Header.module.scss';
+import { PAGE_404, PROFILE } from '../../utils/constants';
 
 const Header: React.FC = () => {
   // const isLogged = false;
@@ -33,7 +34,7 @@ const Header: React.FC = () => {
     // eslint-disable-next-line
   }, []);
 
-  return location.pathname !== '/page-not-found' ? (
+  return location.pathname !== PAGE_404 ? (
     <header className={styles.header}>
       <Link to='/' className={styles.logo} />
       {isLogged ? (
