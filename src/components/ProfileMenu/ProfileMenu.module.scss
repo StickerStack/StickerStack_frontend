@@ -1,0 +1,76 @@
+@import '../../utils/_scss-variables.scss';
+
+.menu {
+    width: 255px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 25px 40px 45px;
+    background: #FFFFFF;
+    box-shadow: 3px 3px 10px rgba(65, 65, 65, 0.15);
+    border-radius: 10px;
+    position: absolute;
+    top: 80px;
+    right: 165px;
+
+    .profile {
+        display: flex;
+        align-items: center;
+    }
+
+    .avatar {
+        background-color: #D9D9D9;
+        width: 64px;
+        height: 64px;
+        border-radius: 32px;
+    }
+
+    .prfile_link {
+        text-decoration: none !important;
+    }
+
+    .name {
+        padding-left: 15px;
+        color: #333333;
+    }
+
+    .button_container {
+        padding-top: 25px;
+    }
+
+    .button {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 22px;
+    }
+
+    .list {
+        margin: 0;
+        padding: 0;
+        margin-top: 40px;
+    }
+
+    .list li {
+        list-style-type: none;
+        height: 19px;
+        font-family: 'Nunito';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 19px;
+        letter-spacing: -0.01em;
+        color: #333333;
+        padding-bottom: 20px;
+        padding-left: 10px;
+        cursor: pointer;
+    }
+
+    .list li:hover {
+        color: #000;
+        font-weight: 600;
+    }
+
+    .list :last-child {
+        padding-bottom: 0;
+    }
+}
