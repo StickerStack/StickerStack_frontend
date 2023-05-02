@@ -11,7 +11,6 @@ export { MessagePopup } from './MessagePopup/MessagePopup';
 export { ResetPassword } from './ResetPassword/ResetPassword';
 export { ProtectedRoute } from './ProtectedRoute/ProtectedRoute';
 export { ChangePassword } from './ChangePassword/ChangePassword';
-export { SuccessfulSignup } from './SuccessfulSignup/SuccessfulSignup';
 export { ProfilePage } from './ProfilePage/ProfilePage';
 export { AddStickers } from './AddStickers/AddStickers';
 export { PageNotFound } from './PageNotFound/PageNotFound';
