@@ -10,6 +10,8 @@ import { getUser, updateStatus } from '../../store/userSlice';
 import { signUp, signIn } from '../../store/authSlice';
 import { registerEmail, registerPassword } from '../../utils/registersRHF';
 import styles from './Signup.module.scss';
+import { ADD_STICKERS } from '../../utils/constants';
+
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
@@ -35,7 +37,7 @@ const Signup: React.FC = () => {
             dispatch(getUser());
             dispatch(updateStatus(true));
             dispatch(setIsOpen(false));
-            navigate('/add-stickers');
+            navigate(ADD_STICKERS);
             dispatch(
               setMessageIsOpen({
                 messageIsOpen: true,

@@ -7,17 +7,18 @@ import { useAppDispatch } from '../../hooks/hooks';
 import { IUserState } from '../../interfaces';
 import { setIsOpen } from '../../store/popupSlice';
 import styles from './Header.module.scss';
+import { PAGE_404, PROFILE } from '../../utils/constants';
 
 const Header: React.FC = () => {
   const isLogged = useSelector((state: { user: IUserState }) => state.user.isLogged);
   const location = useLocation();
   const dispatch = useAppDispatch();
 
-  return location.pathname !== '/page-not-found' ? (
+  return location.pathname !== PAGE_404 ? (
     <header className={styles.header}>
       <Link to='/' className={styles.logo} />
       {isLogged ? (
-        <Link to='/profile'>
+        <Link to={PROFILE}>
           <ButtonCustom className={styles.profile} type='person' />
         </Link>
       ) : (

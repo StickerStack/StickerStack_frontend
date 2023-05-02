@@ -1,19 +1,17 @@
 import { useSelector } from 'react-redux';
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
-
 import { ButtonWithText, TitlePage } from '../UI';
 import { ImagePick } from '../ImagePick/ImagePick';
 import ProfileInput from '../UI/ProfileInput/ProfileInput';
-
 import { useAppDispatch } from '../../hooks/hooks';
 import { IUserState } from '../../interfaces';
 import { logOut } from '../../store/authSlice';
-
 import { updateStatus, updateUser } from '../../store/userSlice';
 import EmptyAvatarImage from '../../images/empty-avatar.svg';
 import { profileName, registerEmail } from "../../utils/registersRHF";
 import styles from './ProfilePage.module.scss';
+
 
 const FIRSTNAME_INPUT_LABEL = 'firstName';
 const LASTNAME_INPUT_LABEL = 'lastName';
@@ -61,14 +59,14 @@ const ProfilePage: React.FC = () => {
   };
 
   const onSubmit = () => {
-    dispatch(updateUser({ email: email, firstName: firstname, lastName: lastname}));
+    dispatch(updateUser({ email: email, firstName: firstname, lastName: lastname }));
   }
 
   return (
     <main className={styles.profile}>
       <TitlePage>Мои данные</TitlePage>
       <div className={styles.container}>
-        <ImagePick image={EmptyAvatarImage}/>
+        <ImagePick image={EmptyAvatarImage} />
         <div className={styles.profile_data}>
           <form className={styles.inputs} onSubmit={handleSubmit(onSubmit)}>
             <ProfileInput
@@ -94,14 +92,14 @@ const ProfilePage: React.FC = () => {
             />
 
             <ProfileInput
-                name={EMAIL_INPUT_LABEL}
-                type='email'
-                placeholder='Email'
-                register={register}
-                option={registerEmail}
-                iconVisible={watch(EMAIL_INPUT_LABEL)?.length}
-                error={errors && errors[EMAIL_INPUT_LABEL]}
-                onClear={() => resetField(EMAIL_INPUT_LABEL)}
+              name={EMAIL_INPUT_LABEL}
+              type='email'
+              placeholder='Email'
+              register={register}
+              option={registerEmail}
+              iconVisible={watch(EMAIL_INPUT_LABEL)?.length}
+              error={errors && errors[EMAIL_INPUT_LABEL]}
+              onClear={() => resetField(EMAIL_INPUT_LABEL)}
             />
             <ButtonWithText className={styles.button} type='submit' theme='filled'>
               Сохранить
