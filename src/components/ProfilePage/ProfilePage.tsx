@@ -1,15 +1,15 @@
-import { useSelector } from 'react-redux';
-import { useForm } from "react-hook-form";
 import { useEffect } from "react";
-import { ButtonWithText, TitlePage } from '../UI';
-import { ImagePick } from '../ImagePick/ImagePick';
-import ProfileInput from '../UI/ProfileInput/ProfileInput';
+import { useForm } from "react-hook-form";
+import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../hooks/hooks';
+import EmptyAvatarImage from '../../images/empty-avatar.svg';
 import { IUserState } from '../../interfaces';
 import { logOut } from '../../store/authSlice';
 import { updateStatus, updateUser } from '../../store/userSlice';
-import EmptyAvatarImage from '../../images/empty-avatar.svg';
 import { profileName, registerEmail } from "../../utils/registersRHF";
+import { ImagePick } from '../ImagePick/ImagePick';
+import { ButtonWithText, TitlePage } from '../UI';
+import ProfileInput from '../UI/ProfileInput/ProfileInput';
 import styles from './ProfilePage.module.scss';
 
 
@@ -39,12 +39,15 @@ const ProfilePage: React.FC = () => {
     if (email) {
       setValue(EMAIL_INPUT_LABEL, email);
     }
+
+    // eslint-disable-next-line
   }, [email]);
 
   const firstname = getValues(FIRSTNAME_INPUT_LABEL);
   const lastname = getValues(LASTNAME_INPUT_LABEL);
 
   // #TODO: Когда будет готово выпадающее меню перенести туда onLogOut!
+  // eslint-disable-next-line
   const onLogOut = () => {
     if (localStorage.getItem('token')) {
       localStorage.removeItem('token');
