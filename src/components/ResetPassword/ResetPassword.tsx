@@ -1,14 +1,12 @@
-import { FieldValues, useForm } from 'react-hook-form';
+import { motion } from 'framer-motion';
 import { useState } from 'react';
-import { motion, usePresence, AnimatePresence } from 'framer-motion';
-
-import { ButtonWithText, InputForm, TextForm, TitleForm } from '../UI';
+import { FieldValues, useForm } from 'react-hook-form';
 import { Signin } from '../';
-
-import { switchForm } from '../../store/popupSlice';
+import { ButtonWithText, InputForm, TitleForm } from '../UI';
 import { useAppDispatch } from '../../hooks/hooks';
-import { registerEmail } from '../../utils/registersRHF';
 import { forgotPassword } from '../../store/authSlice';
+import { switchForm } from '../../store/popupSlice';
+import { registerEmail } from '../../utils/registersRHF';
 import styles from './ResetPassword.module.scss';
 
 const ResetPassword: React.FC = () => {
