@@ -11,6 +11,7 @@ import { ImagePick } from '../ImagePick/ImagePick';
 import { ButtonWithText, TitlePage } from '../UI';
 import ProfileInput from '../UI/ProfileInput/ProfileInput';
 import styles from './ProfilePage.module.scss';
+import {setMessageIsOpen} from "../../store/popupSlice";
 
 
 const FIRSTNAME_INPUT_LABEL = 'firstName';
@@ -19,6 +20,8 @@ const EMAIL_INPUT_LABEL = 'email';
 
 const ProfilePage: React.FC = () => {
   const email = useSelector((state: { user: IUserState }) => state.user.email);
+  const firstName = useSelector((state: { user: IUserState }) => state.user.firstName);
+  const lastName = useSelector((state: { user: IUserState }) => state.user.lastName);
   const {
     register,
     getValues,
@@ -38,6 +41,14 @@ const ProfilePage: React.FC = () => {
   useEffect(() => {
     if (email) {
       setValue(EMAIL_INPUT_LABEL, email);
+    }
+
+    if (firstName) {
+      setValue(FIRSTNAME_INPUT_LABEL, firstName);
+    }
+
+    if (lastName) {
+      setValue(LASTNAME_INPUT_LABEL, lastName);
     }
 
     // eslint-disable-next-line
@@ -62,7 +73,11 @@ const ProfilePage: React.FC = () => {
   };
 
   const onSubmit = () => {
-    dispatch(updateUser({ email: email, firstName: firstname, lastName: lastname }));
+    dispatch(updateUser({ email: email, firstName: firstname, lastName: lastname })).then((res) => {
+      if(res.meta.requestStatus === 'fulfilled') {
+        dispatch(setMessageIsOpen({ message: 'Успешно изменено', messageIsOpen: true}))
+      }
+    });
   }
 
   return (
