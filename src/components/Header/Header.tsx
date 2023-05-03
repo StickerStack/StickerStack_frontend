@@ -5,16 +5,17 @@ import { useAppDispatch } from '../../hooks/hooks';
 import { IUserState } from '../../interfaces';
 import { setIsOpen } from '../../store/popupSlice';
 import { PAGE_404 } from '../../utils/constants';
+import { useOutsideClick } from '../../utils/useOutsideClick';
 import { ProfileMenu } from '../ProfileMenu/ProfileMenu';
 import { ButtonCustom, ButtonWithText } from '../UI';
 import styles from './Header.module.scss';
 
+
 const Header: React.FC = () => {
-  // const isLogged = false;
   const isLogged = useSelector((state: { user: IUserState }) => state.user.isLogged);
   const location = useLocation();
   const dispatch = useAppDispatch();
-  const [isMenuShow, setIsMenuShow] = useState(false)
+  const [isMenuShow, setIsMenuShow] = useState(true)
 
   useEffect(() => {
     setIsMenuShow(false)
@@ -34,6 +35,10 @@ const Header: React.FC = () => {
     // eslint-disable-next-line
   }, []);
 
+  const ref = useOutsideClick(() => {
+    setIsMenuShow(false);
+  });
+
   return location.pathname !== PAGE_404 ? (
     <header className={styles.header}>
       <Link to='/' className={styles.logo} />
@@ -45,7 +50,7 @@ const Header: React.FC = () => {
         </ButtonWithText>
       )
       }
-      {isMenuShow && <ProfileMenu />}
+      {isMenuShow && <ProfileMenu ref={ref} />}
     </header >
   ) : null;
 };

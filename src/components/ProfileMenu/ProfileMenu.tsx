@@ -1,13 +1,14 @@
-
+import { forwardRef } from "react";
+import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAppDispatch } from '../../hooks/hooks';
+import { IUserState } from '../../interfaces';
+import { logOut } from '../../store/authSlice';
 import { ButtonWithText } from '../UI';
 import styles from './ProfileMenu.module.scss';
-import { logOut } from '../../store/authSlice';
-import { useAppDispatch } from '../../hooks/hooks';
-import { useSelector } from 'react-redux';
-import { IUserState } from '../../interfaces';
 
-const ProfileMenu: React.FC = () => {
+// eslint-disable-next-line react/prop-types
+const ProfileMenu = forwardRef<HTMLHeadingElement>((props, ref) => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
     const { firstName, lastName } = useSelector((state: { user: IUserState }) => state.user);
@@ -17,7 +18,7 @@ const ProfileMenu: React.FC = () => {
     };
 
     return (
-        <div className={styles.menu}>
+        <div className={styles.menu} ref={ref}>
             <div className={styles.profile}>
                 <div className={styles.avatar}>
                 </div>
@@ -38,6 +39,6 @@ const ProfileMenu: React.FC = () => {
                 <li onClick={() => onLogOut()}>Выход</li>
             </ul>
         </div>)
-}
+})
 
 export { ProfileMenu };
