@@ -67,15 +67,12 @@ const userSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(getUser.fulfilled, (state, action) => {
-
-      console.log(action.payload)
       state.loading = false;
       state.success = true;
       state.email = action.payload.email;
       state.firstName = action.payload.first_name;
       state.lastName = action.payload.last_name;
       state.isLogged = true;
-      console.log(state)
     });
     builder.addCase(getUser.rejected, (state) => {
       state.loading = false;
