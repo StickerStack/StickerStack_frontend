@@ -21,7 +21,7 @@ const MessagePopup: React.FC = () => {
   const messageIsError = useSelector(
     (state: { popup: IPopupState }) => state.popup.messageIsError
   );
-  
+
   const closeMessage = () => {
     setTimeout(() => {
       dispatch(setMessageIsOpen([false, '']));
@@ -32,6 +32,8 @@ const MessagePopup: React.FC = () => {
     if (messageIsOpen) {
       setTimeout(() => closeMessage(), 6000);
     }
+
+    // eslint-disable-next-line
   }, [messageIsOpen]);
 
   return (
@@ -56,7 +58,7 @@ const MessagePopup: React.FC = () => {
           }}
         >
           <motion.p className={`${styles.message} ${messageIsError && styles.error} ${messageIsOpen ? styles.message_opened : ''}`}>
-            {message} 
+            {message}
             <ButtonCustom
               className={styles.button}
               type='close'
