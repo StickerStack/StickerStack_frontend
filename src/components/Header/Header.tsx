@@ -5,7 +5,7 @@ import { useAppDispatch } from '../../hooks/hooks';
 import { IUserState } from '../../interfaces';
 import { setIsOpen } from '../../store/popupSlice';
 import { PAGE_404 } from '../../utils/constants';
-import { useOutsideClick } from '../../utils/useOutsideClick';
+import { useOutsideClick } from '../../hooks/useOutsideClick';
 import { ProfileMenu } from '../ProfileMenu/ProfileMenu';
 import { ButtonCustom, ButtonWithText } from '../UI';
 import styles from './Header.module.scss';
@@ -15,7 +15,7 @@ const Header: React.FC = () => {
   const isLogged = useSelector((state: { user: IUserState }) => state.user.isLogged);
   const location = useLocation();
   const dispatch = useAppDispatch();
-  const [isMenuShow, setIsMenuShow] = useState(true)
+  const [isMenuShow, setIsMenuShow] = useState(false)
 
   useEffect(() => {
     setIsMenuShow(false)
@@ -43,7 +43,7 @@ const Header: React.FC = () => {
     <header className={styles.header}>
       <Link to='/' className={styles.logo} />
       {isLogged ? (
-        < ButtonCustom className={styles.profile} type='person' onClick={() => setIsMenuShow(true)} />
+        < ButtonCustom className={styles.profile} type='person' onClick={() => setIsMenuShow(!isMenuShow)} />
       ) : (
         <ButtonWithText type='button' theme='transparent' onClick={() => dispatch(setIsOpen(true))}>
           Войти

@@ -32,7 +32,7 @@ const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    if (localStorage.getItem('token')) {
+    if (!localStorage.getItem('token')) {
       dispatch(signInMockUser({ email: 'my@super.user', firstName: 'Иван', lastName: 'Иванов' }));
       setIsLoading(false);
       return;
