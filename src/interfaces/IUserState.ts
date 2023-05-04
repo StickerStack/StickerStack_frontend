@@ -3,4 +3,5 @@ export interface IUserState {
   isLogged: boolean,
   firstName: string,
   lastName: string,
+  isVerified: boolean
 }
