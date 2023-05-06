@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import { useAppDispatch } from '../../hooks/hooks';
@@ -35,9 +35,9 @@ const Header: React.FC = () => {
     // eslint-disable-next-line
   }, []);
 
-  const ref = useOutsideClick(() => {
+  const ref = useOutsideClick(useCallback(() => {
     setIsMenuShow(false);
-  });
+  }, []));
 
   return location.pathname !== PAGE_404 ? (
     <header className={styles.header}>
