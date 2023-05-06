@@ -4,8 +4,8 @@ import {useSelector} from 'react-redux';
 import {useAppDispatch} from '../../hooks/hooks';
 import EmptyAvatarImage from '../../images/empty-avatar.svg';
 import {IUserState} from '../../interfaces';
-import {logOut, sendVerificationCode} from '../../store/authSlice';
-import {updateStatus, updateUser} from '../../store/userSlice';
+import {sendVerificationCode} from '../../store/authSlice';
+import {updateUser} from '../../store/userSlice';
 import {profileName, registerEmail} from "../../utils/registersRHF";
 import {ImagePick} from '../ImagePick/ImagePick';
 import {ButtonWithText, TitlePage} from '../UI';
@@ -54,22 +54,7 @@ const ProfilePage: React.FC = () => {
 
   const firstname = getValues(FIRSTNAME_INPUT_LABEL);
   const lastname = getValues(LASTNAME_INPUT_LABEL);
-  const email = getValues(EMAIL_INPUT_LABEL)
-
-  // #TODO: Когда будет готово выпадающее меню перенести туда onLogOut!
-  // eslint-disable-next-line
-  const onLogOut = () => {
-    if (localStorage.getItem('token')) {
-      localStorage.removeItem('token');
-      return;
-    }
-
-    dispatch(logOut()).then((res) => {
-      if (res.meta.requestStatus === 'fulfilled') {
-        dispatch(updateStatus(false));
-      }
-    });
-  };
+  const email = getValues(EMAIL_INPUT_LABEL);
 
   const onSubmit = () => {
     dispatch(updateUser({

@@ -12,7 +12,7 @@ const updateUser = createAsyncThunk(
   async (data: { email: string; firstName: string; lastName: string }, {rejectWithValue}) => {
     try {
       const response = await api.updateUser(data.email, data.firstName, data.lastName);
-      return response.data;
+      return response;
     } catch (err) {
       return rejectWithValue(err);
     }
