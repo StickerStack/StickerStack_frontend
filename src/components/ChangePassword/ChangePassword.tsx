@@ -1,10 +1,8 @@
-import { FieldValues, useForm } from 'react-hook-form';
 import { useEffect, useState } from 'react';
+import { FieldValues, useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
-
 import { setMessageIsOpen } from '../../store/popupSlice';
-import { InputForm, TitleForm, ButtonWithText } from '../UI';
-
+import { ButtonWithText, InputForm, TitleForm } from '../UI';
 import { useAppDispatch } from '../../hooks/hooks';
 import { resetPassword } from '../../store/authSlice';
 import { registerPassword } from '../../utils/registersRHF';
@@ -50,6 +48,8 @@ const ChangePassword: React.FC = () => {
 
   useEffect(() => {
     setToken(location.pathname.replace('/auth/verify-forgot-password/', ''));
+
+    // eslint-disable-next-line
   }, []);
 
   return (

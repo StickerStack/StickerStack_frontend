@@ -1,26 +1,26 @@
-import { useSelector } from 'react-redux';
-import { useForm } from "react-hook-form";
-import { useEffect } from "react";
-
-import { ButtonWithText, TitlePage } from '../UI';
-import { ImagePick } from '../ImagePick/ImagePick';
-import ProfileInput from '../UI/ProfileInput/ProfileInput';
-
-import { useAppDispatch } from '../../hooks/hooks';
-import { IUserState } from '../../interfaces';
-import { logOut } from '../../store/authSlice';
-
-import { updateStatus, updateUser } from '../../store/userSlice';
+import {useEffect} from "react";
+import {useForm} from "react-hook-form";
+import {useSelector} from 'react-redux';
+import {useAppDispatch} from '../../hooks/hooks';
 import EmptyAvatarImage from '../../images/empty-avatar.svg';
-import { profileName, registerEmail } from "../../utils/registersRHF";
+import {IUserState} from '../../interfaces';
+import {sendVerificationCode} from '../../store/authSlice';
+import {updateUser} from '../../store/userSlice';
+import {profileName, registerEmail} from "../../utils/registersRHF";
+import {ImagePick} from '../ImagePick/ImagePick';
+import {ButtonWithText, TitlePage} from '../UI';
+import ProfileInput from '../UI/ProfileInput/ProfileInput';
 import styles from './ProfilePage.module.scss';
+import {setMessageIsOpen} from "../../store/popupSlice";
+
 
 const FIRSTNAME_INPUT_LABEL = 'firstName';
 const LASTNAME_INPUT_LABEL = 'lastName';
 const EMAIL_INPUT_LABEL = 'email';
 
 const ProfilePage: React.FC = () => {
-  const email = useSelector((state: { user: IUserState }) => state.user.email);
+  const user = useSelector((state: { user: IUserState }) => state.user);
+
   const {
     register,
     getValues,
@@ -38,30 +38,40 @@ const ProfilePage: React.FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (email) {
-      setValue(EMAIL_INPUT_LABEL, email);
+    if (user.email) {
+      setValue(EMAIL_INPUT_LABEL, user.email);
     }
-  }, [email]);
+
+    if (user.firstName) {
+      setValue(FIRSTNAME_INPUT_LABEL, user.firstName);
+    }
+
+    if (user.lastName) {
+      setValue(LASTNAME_INPUT_LABEL, user.lastName);
+    }
+    // eslint-disable-next-line
+  }, [user.email]);
 
   const firstname = getValues(FIRSTNAME_INPUT_LABEL);
   const lastname = getValues(LASTNAME_INPUT_LABEL);
-
-  // #TODO: Когда будет готово выпадающее меню перенести туда onLogOut!
-  const onLogOut = () => {
-    if (localStorage.getItem('token')) {
-      localStorage.removeItem('token');
-      return;
-    }
-
-    dispatch(logOut()).then((res) => {
-      if (res.meta.requestStatus === 'fulfilled') {
-        dispatch(updateStatus(false));
-      }
-    });
-  };
+  const email = getValues(EMAIL_INPUT_LABEL);
 
   const onSubmit = () => {
-    dispatch(updateUser({ email: email, firstName: firstname, lastName: lastname}));
+    dispatch(updateUser({
+      email: email,
+      firstName: firstname,
+      lastName: lastname
+    })).then((res) => {
+      if (res.meta.requestStatus === 'fulfilled') {
+        dispatch(setMessageIsOpen({message: 'Успешно изменено', messageIsOpen: true}));
+        dispatch(sendVerificationCode());
+      }
+
+      if (res.meta.requestStatus === 'rejected') {
+        dispatch(setMessageIsOpen({message: 'Ошибка. Информация профиля не была изменана', messageIsOpen: true, messageIsError: true}))
+      }
+
+    });
   }
 
   return (
@@ -94,23 +104,28 @@ const ProfilePage: React.FC = () => {
             />
 
             <ProfileInput
-                name={EMAIL_INPUT_LABEL}
-                type='email'
-                placeholder='Email'
-                register={register}
-                option={registerEmail}
-                iconVisible={watch(EMAIL_INPUT_LABEL)?.length}
-                error={errors && errors[EMAIL_INPUT_LABEL]}
-                onClear={() => resetField(EMAIL_INPUT_LABEL)}
+              name={EMAIL_INPUT_LABEL}
+              type='email'
+              placeholder='Email'
+              register={register}
+              option={registerEmail}
+              iconVisible={watch(EMAIL_INPUT_LABEL)?.length}
+              error={errors && errors[EMAIL_INPUT_LABEL]}
+              onClear={() => resetField(EMAIL_INPUT_LABEL)}
             />
             <ButtonWithText className={styles.button} type='submit' theme='filled'>
               Сохранить
             </ButtonWithText>
           </form>
+          {
+            !user.isVerified &&
+            <ButtonWithText className={styles.button} onClick={() => dispatch(sendVerificationCode())}>Подтверждение
+              почты</ButtonWithText>
+          }
         </div>
       </div>
     </main>
   );
 };
 
-export { ProfilePage };
+export {ProfilePage};

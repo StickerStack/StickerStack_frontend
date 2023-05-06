@@ -53,12 +53,24 @@ const verifyEmail = createAsyncThunk(
   }
 );
 
+const sendVerificationCode = createAsyncThunk(
+  'auth/sendVerificationCode',
+  async (data, {rejectWithValue}) => {
+    try {
+      const response = await api.sendVerifycationCode();
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);
+
 const logOut = createAsyncThunk(
   'auth/logOut',
   async (data, { rejectWithValue }) => {
     try {
       const response = await api.logOut();
-      return response;
+      return response.data;
     } catch (err) {
       return rejectWithValue(err);
     }
@@ -154,11 +166,12 @@ const authSlice = createSlice({
 const authSliceReducer = authSlice.reducer;
 
 export {
+  authSliceReducer,
   signIn,
   signUp,
   resetPassword,
   forgotPassword,
   verifyEmail,
-  authSliceReducer,
   logOut,
+  sendVerificationCode
 };
