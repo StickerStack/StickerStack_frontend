@@ -117,7 +117,17 @@ const ProfilePage: React.FC = () => {
               error={errors && errors[EMAIL_INPUT_LABEL]}
               onClear={() => resetField(EMAIL_INPUT_LABEL)}
             />
-            <ButtonWithText className={styles.button} type='submit' theme='filled'>
+            <ButtonWithText
+              className={styles.button}
+              type='submit'
+              disabled={
+                !(
+                  user.firstName !== firstname ||
+                  user.lastName !== lastname ||
+                  user.email !== email
+                )
+              }
+            >
               Сохранить
             </ButtonWithText>
           </form>
