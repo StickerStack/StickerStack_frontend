@@ -1,15 +1,14 @@
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
-
 import { ButtonWithText, TitleForm, InputForm, TextUnderline } from '../UI';
 import { Signup, ResetPassword } from '../';
-
 import { setIsOpen, setMessageIsOpen, switchForm } from '../../store/popupSlice';
 import { useAppDispatch } from '../../hooks/hooks';
 import { getUser, signInMockUser, updateStatus } from '../../store/userSlice';
 import { signIn } from '../../store/authSlice';
 import { registerEmail, registerPassword } from '../../utils/registersRHF';
 import styles from './Signin.module.scss';
+
 
 const Signin: React.FC = () => {
   const location = useLocation();
@@ -29,8 +28,8 @@ const Signin: React.FC = () => {
   const userPassword = getValues('password');
 
   const onSubmit = () => {
-    if( userEmail === 'my@super.user' && userPassword === 'my@super.user') {
-      dispatch(signInMockUser('my@super.user'));
+    if (userEmail === 'my@super.user' && userPassword === 'my@super.user') {
+      dispatch(signInMockUser({ email: 'my@super.user', firstName: 'Иван', lastName: 'Иванов' }));
       dispatch(setIsOpen(false));
       navigate('/add-stickers');
       localStorage.setItem('token', 'moc');
@@ -85,17 +84,17 @@ const Signin: React.FC = () => {
           optionalButton={
             !location.pathname.startsWith('/api/auth/verifyemail')
               ? {
-                  text: 'Забыли пароль?',
-                  onClick: () => {
-                    dispatch(switchForm(ResetPassword));
-                  },
-                }
+                text: 'Забыли пароль?',
+                onClick: () => {
+                  dispatch(switchForm(ResetPassword));
+                },
+              }
               : {
-                  text: '',
-                  onClick: () => {
-                    return;
-                  },
-                }
+                text: '',
+                onClick: () => {
+                  return;
+                },
+              }
           }
           optionalEyeButton={{
             visible: dirtyFields.password && watch('password') !== '',
