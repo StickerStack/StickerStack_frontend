@@ -19,8 +19,9 @@ const ProfileMenu = forwardRef<HTMLHeadingElement>((props, ref) => {
             return;
         }
 
-        dispatch(logOut());
-        location.reload();
+        dispatch(logOut()).then(() => {
+            location.reload();
+        });
     };
 
     return (
