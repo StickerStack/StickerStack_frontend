@@ -105,8 +105,6 @@ const userSlice = createSlice({
     builder.addCase(updateUser.rejected, (state) => {
       state.loading = false;
       state.success = false;
-      state.email = '';
-      state.isLogged = false;
     });
 
     // Обновление фото профиля
