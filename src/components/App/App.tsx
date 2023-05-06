@@ -33,7 +33,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
-      dispatch(signInMockUser('my@super.user'));
+      dispatch(signInMockUser({ email: 'my@super.user', firstName: 'Иван', lastName: 'Иванов' }));
       setIsLoading(false);
       return;
     }
