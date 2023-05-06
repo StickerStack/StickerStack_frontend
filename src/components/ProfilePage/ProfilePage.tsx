@@ -54,6 +54,7 @@ const ProfilePage: React.FC = () => {
   const email = getValues(EMAIL_INPUT_LABEL);
 
   const onSubmit = () => {
+    const emailChanged = user.email !== email;
     dispatch(
       updateUser({
         email: email,
@@ -63,13 +64,15 @@ const ProfilePage: React.FC = () => {
     ).then((res) => {
       if (res.meta.requestStatus === 'fulfilled') {
         dispatch(setMessageIsOpen({ message: 'Успешно изменено', messageIsOpen: true }));
-        dispatch(sendVerificationCode());
+        if (emailChanged) {
+          dispatch(sendVerificationCode());
+        }
       }
 
       if (res.meta.requestStatus === 'rejected') {
         dispatch(
           setMessageIsOpen({
-            message: 'Ошибка. Информация профиля не была изменана',
+            message: 'Ошибка. Информация профиля не изменана',
             messageIsOpen: true,
             messageIsError: true,
           }),
