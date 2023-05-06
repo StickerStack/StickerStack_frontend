@@ -14,7 +14,13 @@ const ProfileMenu = forwardRef<HTMLHeadingElement>((props, ref) => {
     const { email, firstName, lastName } = useSelector((state: { user: IUserState }) => state.user);
 
     const onLogOut = () => {
-        dispatch(logOut())
+        if (localStorage.getItem('token')) {
+            localStorage.removeItem('token');
+            return;
+        }
+
+        dispatch(logOut());
+        location.reload();
     };
 
     return (

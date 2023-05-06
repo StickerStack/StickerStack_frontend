@@ -14,9 +14,6 @@ class Api {
       return res.json();
     }
 
-    // Для тестов бэкенда 
-    res.json().then(res => console.log(res.detail));
-
     return Promise.reject(`${res.status}`);
   }
 
@@ -134,7 +131,7 @@ class Api {
   }
 
   public async verifyEmail(token: string) {
-    const data = await fetch(`${this._url}/auth/verifyemail`, {
+    const data = await fetch(`${this._url}/auth/verify-email`, {
       method: 'POST',
       credentials: 'include',
       headers: this._headers,
@@ -145,6 +142,17 @@ class Api {
 
     const response = await this._checkResponse(data);
         
+    return response;
+  }
+
+  public async sendVerifycationCode() {
+    const data = await fetch(`${this._url}/auth/send-verification-code`, {
+      method: 'GET',
+      credentials: 'include',
+    });
+
+    const response = this._checkResponse(data);
+
     return response;
   }
 

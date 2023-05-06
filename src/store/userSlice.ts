@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 
-import { api } from '../utils/api';
+import {api} from '../utils/api';
 
 const getUser = createAsyncThunk('user/getUser', async () => {
   const response = await api.getUser();
@@ -9,18 +9,22 @@ const getUser = createAsyncThunk('user/getUser', async () => {
 
 const updateUser = createAsyncThunk(
   'user/updateUser',
-  async (data: { email: string; firstName: string; lastName: string }) => {
-    const response = await api.updateUser(data.email, data.firstName, data.lastName);
-    return response.data;
+  async (data: { email: string; firstName: string; lastName: string }, {rejectWithValue}) => {
+    try {
+      const response = await api.updateUser(data.email, data.firstName, data.lastName);
+      return response;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
   }
 );
 
 const updateProfileImage = createAsyncThunk(
   'user/updateProfileImage',
-  async (data: { formData: FormData }, { rejectWithValue }) => {
+  async (data : { formData: FormData }, { rejectWithValue }) => {
     try {
       const response = await api.uploadProfileImage(data.formData);
-      return response;
+      return response.data;
     } catch (err) {
       return rejectWithValue(err);
     }
@@ -32,7 +36,7 @@ const getProfileImage = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await api.getProfileImage();
-      return response
+      return response.data;
     } catch (err) {
       return rejectWithValue(err);
     }
@@ -47,7 +51,8 @@ const userSlice = createSlice({
     lastName: '',
     loading: false,
     success: false,
-    isLogged: false
+    isLogged: false,
+    isVerified: false
   },
   reducers: {
     signInMockUser(state, action) {
@@ -72,6 +77,9 @@ const userSlice = createSlice({
       state.loading = false;
       state.success = true;
       state.email = action.payload.email;
+      state.firstName = action.payload.first_name;
+      state.lastName = action.payload.last_name;
+      state.isVerified = action.payload.is_verified;
       state.isLogged = true;
     });
     builder.addCase(getUser.rejected, (state) => {
@@ -79,6 +87,24 @@ const userSlice = createSlice({
       state.success = false;
       state.email = '';
       state.isLogged = false;
+    });
+
+
+    builder.addCase(updateUser.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(updateUser.fulfilled, (state, action) => {
+      state.loading = false;
+      state.success = true;
+      state.email = action.payload.email;
+      state.firstName = action.payload.first_name;
+      state.lastName = action.payload.last_name;
+      state.isVerified = action.payload.is_verified;
+      state.isLogged = true;
+    });
+    builder.addCase(updateUser.rejected, (state) => {
+      state.loading = false;
+      state.success = false;
     });
 
     // Обновление фото профиля
@@ -93,6 +119,7 @@ const userSlice = createSlice({
       state.loading = false;
       state.success = false;
     });
+
 
     // Получение фото профиля
     builder.addCase(getProfileImage.pending, (state) => {
@@ -110,7 +137,7 @@ const userSlice = createSlice({
 });
 
 const userSliceReducer = userSlice.reducer;
-const { signInMockUser, updateStatus } = userSlice.actions;
+const {signInMockUser, updateStatus} = userSlice.actions;
 
 export {
   userSliceReducer,
