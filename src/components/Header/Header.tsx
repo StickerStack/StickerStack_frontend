@@ -36,7 +36,7 @@ const Header: React.FC = () => {
 
   const ref = useOutsideClick(
     useCallback(() => {
-      setIsMenuShow(false);
+      setTimeout(() => setIsMenuShow(false), 100);
     }, []),
   );
 
