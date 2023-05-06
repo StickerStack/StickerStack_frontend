@@ -24,7 +24,7 @@ const ProfilePage: React.FC = () => {
     register,
     getValues,
     setValue,
-    formState: { errors },
+    formState: { errors, isValid },
     handleSubmit,
     resetField,
     watch,
@@ -128,7 +128,7 @@ const ProfilePage: React.FC = () => {
                   user.firstName !== firstname ||
                   user.lastName !== lastname ||
                   user.email !== email
-                )
+                ) || !isValid
               }
             >
               Сохранить
