@@ -11,7 +11,7 @@ import styles from './ProfileMenu.module.scss';
 const ProfileMenu = forwardRef<HTMLHeadingElement>((props, ref) => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const { firstName, lastName } = useSelector((state: { user: IUserState }) => state.user);
+    const { email, firstName, lastName } = useSelector((state: { user: IUserState }) => state.user);
 
     const onLogOut = () => {
         dispatch(logOut())
@@ -24,7 +24,7 @@ const ProfileMenu = forwardRef<HTMLHeadingElement>((props, ref) => {
                 </div>
                 <Link to='/profile' className={styles.prfile_link}>
                     <div className={styles.name}>
-                        {`${lastName} ${firstName}`}
+                        {(lastName || firstName) ? `${lastName} ${firstName}` : email}
                     </div>
                 </ Link>
             </div>
