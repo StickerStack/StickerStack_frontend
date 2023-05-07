@@ -32,64 +32,66 @@ const Popup: React.FC = () => {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
+
+    // eslint-disable-next-line
   }, []);
 
   return (
     <AnimatePresence>
       {isOpen
-        && 
-            <motion.div
-              initial={{
-                opacity: 0,
-              }}
-              animate={{
-                transition: {
-                  duration: 0.5,
-                },
-                opacity: 1,
-              }}
-              exit={{
-                opacity: 0,
-                transition: {
-                  duration: 0.5,
-                },
-              }}
-              className={styles.overlay}
-            >
-              <motion.div
-                initial={{
-                  opacity: 0,
-                }}
-                animate={{
-                  transition: {
-                    duration: 0.5,
-                  },
-                  opacity: 1,
-                }}
-                exit={{
-                  opacity: 0,
-                  transition: {
-                    duration: 0.5,
-                  },
-                }}
-                className={styles.background}
-                onClick={onClose}
-              ></motion.div>
-              <motion.div
-                initial={{
-                  scale: 0.4,
-                }}
-                animate={{
-                  transition: {
-                    duration: 0.5,
-                  },
-                  scale: 1,
-                }}
-                className={styles.popup}
-              >
-                <PopupForm onClose={onClose} />
-              </motion.div>
-            </motion.div>}
+        &&
+        <motion.div
+          initial={{
+            opacity: 0,
+          }}
+          animate={{
+            transition: {
+              duration: 0.5,
+            },
+            opacity: 1,
+          }}
+          exit={{
+            opacity: 0,
+            transition: {
+              duration: 0.5,
+            },
+          }}
+          className={styles.overlay}
+        >
+          <motion.div
+            initial={{
+              opacity: 0,
+            }}
+            animate={{
+              transition: {
+                duration: 0.5,
+              },
+              opacity: 1,
+            }}
+            exit={{
+              opacity: 0,
+              transition: {
+                duration: 0.5,
+              },
+            }}
+            className={styles.background}
+            onClick={onClose}
+          ></motion.div>
+          <motion.div
+            initial={{
+              scale: 0.4,
+            }}
+            animate={{
+              transition: {
+                duration: 0.5,
+              },
+              scale: 1,
+            }}
+            className={styles.popup}
+          >
+            <PopupForm onClose={onClose} />
+          </motion.div>
+        </motion.div>}
       ;
     </AnimatePresence>
   );
