@@ -1,18 +1,17 @@
-import {useEffect} from "react";
-import {useForm} from "react-hook-form";
-import {useSelector} from 'react-redux';
-import {useAppDispatch} from '../../hooks/hooks';
+import { useEffect } from 'react';
+import { FieldValues, useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from '../../hooks/hooks';
 import EmptyAvatarImage from '../../images/empty-avatar.svg';
-import {IUserState} from '../../interfaces';
-import {sendVerificationCode} from '../../store/authSlice';
-import {updateUser} from '../../store/userSlice';
-import {profileName, registerEmail} from "../../utils/registersRHF";
-import {ImagePick} from '../ImagePick/ImagePick';
-import {ButtonWithText, TitlePage} from '../UI';
+import { IUserState } from '../../interfaces';
+import { sendVerificationCode } from '../../store/authSlice';
+import { updateUser } from '../../store/userSlice';
+import { profileName, registerEmail } from '../../utils/registersRHF';
+import { ImagePick } from '../ImagePick/ImagePick';
+import { ButtonWithText, TitlePage } from '../UI';
 import ProfileInput from '../UI/ProfileInput/ProfileInput';
 import styles from './ProfilePage.module.scss';
-import {setMessageIsOpen} from "../../store/popupSlice";
-
+import { setMessageIsOpen } from '../../store/popupSlice';
 
 const FIRSTNAME_INPUT_LABEL = 'firstName';
 const LASTNAME_INPUT_LABEL = 'lastName';
@@ -25,14 +24,17 @@ const ProfilePage: React.FC = () => {
     register,
     getValues,
     setValue,
-    formState: {
-      errors,
-    },
+    formState: { errors, isValid },
     handleSubmit,
     resetField,
     watch,
-  } = useForm({
+  } = useForm<FieldValues>({
     mode: 'onBlur',
+    defaultValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+    },
   });
 
   const dispatch = useAppDispatch();
@@ -57,28 +59,38 @@ const ProfilePage: React.FC = () => {
   const email = getValues(EMAIL_INPUT_LABEL);
 
   const onSubmit = () => {
-    dispatch(updateUser({
-      email: email,
-      firstName: firstname,
-      lastName: lastname
-    })).then((res) => {
+    const emailChanged = user.email !== email;
+    dispatch(
+      updateUser({
+        email: email,
+        firstName: firstname,
+        lastName: lastname,
+      }),
+    ).then((res) => {
       if (res.meta.requestStatus === 'fulfilled') {
-        dispatch(setMessageIsOpen({message: 'Успешно изменено', messageIsOpen: true}));
-        dispatch(sendVerificationCode());
+        dispatch(setMessageIsOpen({ message: 'Успешно изменено', messageIsOpen: true }));
+        if (emailChanged) {
+          dispatch(sendVerificationCode());
+        }
       }
 
       if (res.meta.requestStatus === 'rejected') {
-        dispatch(setMessageIsOpen({message: 'Ошибка. Информация профиля не была изменана', messageIsOpen: true, messageIsError: true}))
+        dispatch(
+          setMessageIsOpen({
+            message: 'Ошибка. Информация профиля не изменана',
+            messageIsOpen: true,
+            messageIsError: true,
+          }),
+        );
       }
-
     });
-  }
+  };
 
   return (
     <main className={styles.profile}>
       <TitlePage>Мои данные</TitlePage>
       <div className={styles.container}>
-        <ImagePick image={EmptyAvatarImage}/>
+        <ImagePick image={EmptyAvatarImage} />
         <div className={styles.profile_data}>
           <form className={styles.inputs} onSubmit={handleSubmit(onSubmit)}>
             <ProfileInput
@@ -113,19 +125,36 @@ const ProfilePage: React.FC = () => {
               error={errors && errors[EMAIL_INPUT_LABEL]}
               onClear={() => resetField(EMAIL_INPUT_LABEL)}
             />
-            <ButtonWithText className={styles.button} type='submit' theme='filled'>
+            <ButtonWithText
+              className={styles.button}
+              type='submit'
+              disabled={
+                !(
+                  user.firstName !== firstname ||
+                  user.lastName !== lastname ||
+                  user.email !== email
+                ) || !isValid
+              }
+            >
               Сохранить
             </ButtonWithText>
           </form>
-          {
-            !user.isVerified &&
-            <ButtonWithText className={styles.button} onClick={() => dispatch(sendVerificationCode())}>Подтверждение
-              почты</ButtonWithText>
-          }
+          {!user.isVerified && (
+            <>
+              <p>Не пришло письмо подтверждения электронной почты? Жми кнопку!</p>
+              <ButtonWithText
+                className={styles.button}
+                theme='transparent'
+                onClick={() => dispatch(sendVerificationCode())}
+              >
+                Выслать повторно
+              </ButtonWithText>
+            </>
+          )}
         </div>
       </div>
     </main>
   );
 };
 
-export {ProfilePage};
+export { ProfilePage };

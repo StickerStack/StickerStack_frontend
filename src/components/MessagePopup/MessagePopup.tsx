@@ -12,25 +12,19 @@ import styles from './MessagePopup.module.scss';
 const MessagePopup: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  const messageIsOpen = useSelector(
-    (state: { popup: IPopupState }) => state.popup.messageIsOpen
-  );
-  const message = useSelector(
-    (state: { popup: IPopupState }) => state.popup.message
-  );
-  const messageIsError = useSelector(
-    (state: { popup: IPopupState }) => state.popup.messageIsError
-  );
+  const messageIsOpen = useSelector((state: { popup: IPopupState }) => state.popup.messageIsOpen);
+  const message = useSelector((state: { popup: IPopupState }) => state.popup.message);
+  const messageIsError = useSelector((state: { popup: IPopupState }) => state.popup.messageIsError);
 
   const closeMessage = () => {
     setTimeout(() => {
       dispatch(setMessageIsOpen([false, '']));
-    }, 330);
+    }, 10);
   };
 
   useEffect(() => {
     if (messageIsOpen) {
-      setTimeout(() => closeMessage(), 6000);
+      setTimeout(() => closeMessage(), 3000);
     }
 
     // eslint-disable-next-line
@@ -57,13 +51,13 @@ const MessagePopup: React.FC = () => {
             },
           }}
         >
-          <motion.p className={`${styles.message} ${messageIsError && styles.error} ${messageIsOpen ? styles.message_opened : ''}`}>
+          <motion.p
+            className={`${styles.message} ${messageIsError && styles.error} ${
+              messageIsOpen ? styles.message_opened : ''
+            }`}
+          >
             {message}
-            <ButtonCustom
-              className={styles.button}
-              type='close'
-              onClick={() => closeMessage()}
-            />
+            <ButtonCustom className={styles.button} type='close' onClick={() => closeMessage()} />
           </motion.p>
         </motion.div>
       )}
