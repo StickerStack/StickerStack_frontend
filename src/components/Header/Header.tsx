@@ -10,21 +10,20 @@ import { ProfileMenu } from '../ProfileMenu/ProfileMenu';
 import { ButtonCustom, ButtonWithText } from '../UI';
 import styles from './Header.module.scss';
 
-
 const Header: React.FC = () => {
   const isLogged = useSelector((state: { user: IUserState }) => state.user.isLogged);
   const location = useLocation();
   const dispatch = useAppDispatch();
-  const [isMenuShow, setIsMenuShow] = useState(false)
+  const [isMenuShow, setIsMenuShow] = useState(false);
 
   useEffect(() => {
-    setIsMenuShow(false)
-  }, [location])
+    setIsMenuShow(false);
+  }, [location]);
 
   useEffect(() => {
     const handleKeyDown = (evn: KeyboardEvent) => {
       if (evn.code === 'Escape') {
-        setIsMenuShow(false)
+        setIsMenuShow(false);
       }
     };
     document.addEventListener('keydown', handleKeyDown);
@@ -35,23 +34,28 @@ const Header: React.FC = () => {
     // eslint-disable-next-line
   }, []);
 
-  const ref = useOutsideClick(useCallback(() => {
-    setIsMenuShow(false);
-  }, []));
+  const ref = useOutsideClick(
+    useCallback(() => {
+      setTimeout(() => setIsMenuShow(false), 100);
+    }, []),
+  );
 
   return location.pathname !== PAGE_404 ? (
     <header className={styles.header}>
       <Link to='/' className={styles.logo} />
       {isLogged ? (
-        < ButtonCustom className={styles.profile} type='person' onClick={() => setIsMenuShow(!isMenuShow)} />
+        <ButtonCustom
+          className={styles.profile}
+          type='person'
+          onClick={() => setIsMenuShow(!isMenuShow)}
+        />
       ) : (
         <ButtonWithText type='button' theme='transparent' onClick={() => dispatch(setIsOpen(true))}>
           Войти
         </ButtonWithText>
-      )
-      }
+      )}
       {isMenuShow && <ProfileMenu ref={ref} />}
-    </header >
+    </header>
   ) : null;
 };
 
