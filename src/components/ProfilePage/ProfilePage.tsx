@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
+import { FieldValues, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../hooks/hooks';
 import EmptyAvatarImage from '../../images/empty-avatar.svg';
@@ -28,8 +28,13 @@ const ProfilePage: React.FC = () => {
     handleSubmit,
     resetField,
     watch,
-  } = useForm({
+  } = useForm<FieldValues>({
     mode: 'onBlur',
+    defaultValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+    },
   });
 
   const dispatch = useAppDispatch();

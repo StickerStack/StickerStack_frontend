@@ -31,13 +31,13 @@
     border-radius: 15px;
     z-index: 10;
     background-color: rgba(255, 255, 255, 0.5);
-    transition: width 7s ease-in;
+    transition: width 3s ease-in;
   }
 }
 
 .message_opened {
   &::before {
-    animation: timer 6.2s ease-in;
+    animation: timer 3.15s ease-in;
   }
 }
 

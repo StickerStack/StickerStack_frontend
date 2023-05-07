@@ -18,8 +18,11 @@
   height: 30px;
   width: 100%;
   color: $main-text-color;
-
   padding: 0;
+
+  &:focus::placeholder {
+    visibility: hidden;
+  }
 }
 
 .error {
