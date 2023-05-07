@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
+
+import { motion, AnimatePresence } from 'framer-motion';
 import { useAppDispatch } from '../../hooks/hooks';
 import { IUserState } from '../../interfaces';
 import { setIsOpen } from '../../store/popupSlice';
@@ -8,6 +10,7 @@ import { PAGE_404 } from '../../utils/constants';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 import { ProfileMenu } from '../ProfileMenu/ProfileMenu';
 import { ButtonCustom, ButtonWithText } from '../UI';
+
 import styles from './Header.module.scss';
 
 const Header: React.FC = () => {
@@ -43,6 +46,30 @@ const Header: React.FC = () => {
   return location.pathname !== PAGE_404 ? (
     <header className={styles.header}>
       <Link to='/' className={styles.logo} />
+      <AnimatePresence>
+        {isMenuShow && (
+          <motion.div
+            className={styles.motion}
+            initial={{
+              opacity: 0,
+            }}
+            animate={{
+              transition: {
+                duration: 0.4,
+              },
+              opacity: 1,
+            }}
+            exit={{
+              opacity: 0,
+              transition: {
+                duration: 0.4,
+              },
+            }}
+          >
+            <ProfileMenu ref={ref} />
+          </motion.div>
+        )}
+      </AnimatePresence>
       {isLogged ? (
         <ButtonCustom
           className={styles.profile}
@@ -54,7 +81,6 @@ const Header: React.FC = () => {
           Войти
         </ButtonWithText>
       )}
-      {isMenuShow && <ProfileMenu ref={ref} />}
     </header>
   ) : null;
 };
