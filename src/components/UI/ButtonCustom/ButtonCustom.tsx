@@ -1,7 +1,7 @@
 import cn from 'classnames';
 import styles from './ButtonCustom.module.scss';
 
-export type ButtonType = 'close' | 'person' | 'cart';
+export type ButtonType = 'close' | 'person' | 'cart' | 'delete';
 
 interface IProps {
   type: ButtonType;
@@ -13,7 +13,15 @@ const ButtonCustom: React.FC<IProps> = ({ type, className, onClick }: IProps) =>
   return (
     <button
       className={cn(styles.button, styles[`button_${type}`], className)}
-      aria-label={type === 'close' ? 'Закрыть' : type === 'person' ? 'Профиль' : ''}
+      aria-label={
+        type === 'close'
+          ? 'Закрыть'
+          : type === 'person'
+          ? 'Профиль'
+          : type === 'delete'
+          ? 'Удалить'
+          : ''
+      }
       onClick={onClick}
     />
   );

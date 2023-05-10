@@ -5,7 +5,7 @@ import { ButtonWithText } from '../UI';
 import styles from './ImagePick.module.scss';
 
 interface IProps {
-  image: string;
+  image?: string;
   className?: string;
 }
 
