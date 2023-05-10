@@ -3,6 +3,10 @@ import { ButtonCustom, ButtonWithText, TitlePage } from '../UI';
 import { ImagePick } from '../index';
 import { setIsOpen } from '../../store/popupSlice';
 
+import rect from '../../images/rect.svg';
+import rect_ronded from '../../images/rect-rounded.svg';
+import circle from '../../images/circle.svg';
+import contour from '../../images/contour.svg';
 import styles from './AddStickers.module.scss';
 
 const AddStickers: React.FC = () => {
@@ -16,19 +20,27 @@ const AddStickers: React.FC = () => {
             <p className={styles.category}>Форма</p>
             <div className={styles.shapes}>
               <div className={styles.shape}>
-                <div className={styles.shape_pic}></div>
+                <div className={styles.shape_pic}>
+                  <img src={rect} />
+                </div>
                 <span className={styles.shape_title}>Квадрат</span>
               </div>
               <div className={styles.shape}>
-                <div className={styles.shape_pic}></div>
+                <div className={styles.shape_pic}>
+                  <img src={rect_ronded} />
+                </div>
                 <span className={styles.shape_title}>Закругленный квадрат</span>
               </div>
               <div className={styles.shape}>
-                <div className={styles.shape_pic}></div>
+                <div className={styles.shape_pic}>
+                  <img src={circle} />
+                </div>
                 <span className={styles.shape_title}>Круг</span>
               </div>
               <div className={styles.shape}>
-                <div className={styles.shape_pic}></div>
+                <div className={styles.shape_pic}>
+                  <img src={contour} />
+                </div>
                 <span className={styles.shape_title}>По контуру</span>
               </div>
             </div>

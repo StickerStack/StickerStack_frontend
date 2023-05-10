@@ -61,13 +61,20 @@
   height: 79px;
   @include flex(column, start, start);
   gap: 5px;
+  cursor: pointer;
+
+  &:hover .shape_pic {
+    background: #d9d9d9;
+  }
 }
 
 .shape_pic {
   width: 56px;
   height: 56px;
-  background: #d9d9d9;
+  background: #f1f1f1;
   border-radius: 10px;
+  @include flex(row, center, center);
+  transition: background-color 0.2s ease-in-out;
 }
 
 .shape_title {
