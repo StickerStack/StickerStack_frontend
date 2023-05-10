@@ -15,4 +15,5 @@ export { ProfilePage } from './ProfilePage/ProfilePage';
 export { AddStickers } from './AddStickers/AddStickers';
 export { PageNotFound } from './PageNotFound/PageNotFound';
 export { ImagePick } from './ImagePick/ImagePick';
+export { NewSticker } from './NewSticker/NewSticker';
 export { Preloader } from './Preloader/Preloader';
