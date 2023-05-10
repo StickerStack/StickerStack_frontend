@@ -72,7 +72,7 @@ const NewSticker: React.FC = () => {
           <p className={styles.text}>винил</p>
         </div>
       </form>
-      <ButtonCustom type='delete' className={styles.delete} />
+      <ButtonCustom type='delete' className={styles.delete} label='Удалить' />
     </div>
   );
 };

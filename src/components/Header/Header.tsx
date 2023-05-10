@@ -74,6 +74,7 @@ const Header: React.FC = () => {
         <ButtonCustom
           className={styles.profile}
           type='person'
+          label='Профиль'
           onClick={() => setIsMenuShow(!isMenuShow)}
         />
       ) : (
