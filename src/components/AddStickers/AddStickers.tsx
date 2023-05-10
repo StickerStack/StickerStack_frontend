@@ -64,7 +64,7 @@ const AddStickers: React.FC = () => {
           </div>
         </form>
 
-        <ButtonCustom type='delete' />
+        <ButtonCustom type='delete' className={styles.delete} />
       </div>
     </div>
   );
