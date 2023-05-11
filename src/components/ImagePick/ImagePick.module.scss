@@ -4,6 +4,7 @@
   @include flex(column, center, center);
   position: relative;
   width: 255px;
+  min-width: 255px;
   height: 262px;
   border-radius: 10px;
   overflow: hidden;

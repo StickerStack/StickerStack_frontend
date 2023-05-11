@@ -1,5 +1,5 @@
-import { useAppDispatch } from '../../hooks/hooks';
-import { ButtonCustom, ButtonWithText, TitlePage } from '../UI';
+import cn from 'classnames';
+import { ButtonCustom } from '../UI';
 import { ImagePick } from '../index';
 
 import rect from '../../images/icons/rect.svg';
@@ -11,9 +11,9 @@ import styles from './NewSticker.module.scss';
 const NewSticker: React.FC = () => {
   return (
     <div className={styles.card}>
-      <ImagePick />
       <form className={styles.info}>
-        <div className={styles.flex}>
+        <ImagePick className={styles.image} />
+        <div className={cn(styles.flex, styles.flex_shapes)}>
           <p className={styles.category}>Форма</p>
           <div className={styles.shapes}>
             <div className={styles.shape}>
