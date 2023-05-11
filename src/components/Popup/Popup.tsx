@@ -1,9 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import {
-  motion,
-  AnimatePresence,
-} from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import { PopupForm } from '../';
 import { IPopupState } from '../../interfaces/IPopupState';
@@ -14,9 +11,7 @@ import styles from './Popup.module.scss';
 const Popup: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  const isOpen = useSelector(
-    (state: { popup: IPopupState }) => state.popup.isOpen
-  );
+  const isOpen = useSelector((state: { popup: IPopupState }) => state.popup.isOpen);
 
   const onClose = () => {
     dispatch(setIsOpen(false));
@@ -38,8 +33,7 @@ const Popup: React.FC = () => {
 
   return (
     <AnimatePresence>
-      {isOpen
-        &&
+      {isOpen && (
         <motion.div
           initial={{
             opacity: 0,
@@ -91,7 +85,8 @@ const Popup: React.FC = () => {
           >
             <PopupForm onClose={onClose} />
           </motion.div>
-        </motion.div>}
+        </motion.div>
+      )}
       ;
     </AnimatePresence>
   );

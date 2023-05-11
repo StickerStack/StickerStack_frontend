@@ -1,0 +1,82 @@
+@import '../../utils/_scss-variables.scss';
+
+.container {
+  padding: 40px 65px 50px;
+  box-sizing: border-box;
+  @include flex(column, center, center);
+  gap: 25px;
+  background-color: $secondary-bg-color;
+  border-radius: 20px;
+}
+
+.title {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 16px;
+}
+
+.page {
+  width: 402px;
+  height: 568px;
+  background: #fff;
+}
+
+.slider {
+  width: 402px;
+  height: 568px;
+}
+
+.prev_arrow {
+  z-index: 2;
+
+  &::before {
+    background: url(../../images/icons/arrow.svg) no-repeat center;
+  }
+}
+.next_arrow {
+  &::before {
+    left: 45px;
+    background: url(../../images/icons/arrow.svg) no-repeat center;
+    transform: rotate(180deg);
+  }
+}
+
+.next_arrow,
+.prev_arrow {
+  display: block;
+  width: 42px;
+  height: 42px;
+
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    right: 45px;
+    width: 42px;
+    height: 42px;
+    border-radius: 40px;
+    background-color: transparent;
+    opacity: 1;
+  }
+  &:hover::before {
+    opacity: 0.7;
+  }
+}
+
+.paging {
+  bottom: -45px;
+
+  & li {
+    display: none;
+  }
+
+  & :global(li.slick-active) {
+    display: inline;
+  }
+}
+
+.paging .page_numbers {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 16px;
+}
