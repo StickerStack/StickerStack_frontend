@@ -2,10 +2,10 @@ import { useAppDispatch } from '../../hooks/hooks';
 import { ButtonCustom, ButtonWithText, TitlePage } from '../UI';
 import { ImagePick } from '../index';
 
-import rect from '../../images/rect.svg';
-import rect_ronded from '../../images/rect-rounded.svg';
-import circle from '../../images/circle.svg';
-import contour from '../../images/contour.svg';
+import rect from '../../images/icons/rect.svg';
+import rect_ronded from '../../images/icons/rect_rounded.svg';
+import circle from '../../images/icons/circle.svg';
+import contour from '../../images/icons/contour.svg';
 import styles from './NewSticker.module.scss';
 
 const NewSticker: React.FC = () => {
