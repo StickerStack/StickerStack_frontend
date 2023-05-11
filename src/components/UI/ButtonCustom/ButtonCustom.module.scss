@@ -25,11 +25,17 @@
 .button_close {
   width: 20px;
   height: 20px;
-  background-image: url(../../../images/button-close.svg);
+  background-image: url(../../../images/icons/button-close.svg);
 }
 
 .button_person {
   width: 32px;
   height: 32px;
-  background-image: url(../../../images/profile-icon.svg);
+  background-image: url(../../../images/icons/profile-icon.svg);
+}
+
+.button_delete {
+  width: 24px;
+  height: 24px;
+  background-image: url(../../../images/icons/bin-dark.svg);
 }

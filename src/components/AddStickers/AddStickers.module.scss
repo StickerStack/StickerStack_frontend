@@ -1,9 +1,8 @@
 @import '../../utils/_scss-variables.scss';
 
 .container {
-  width: 100%;
-  text-align: center;
-  margin: 148px auto;
-  @include flex(column, center, center);
+  text-align: left;
+  margin: 75px 165px;
+  @include flex(column, center, start);
   gap: 30px;
 }

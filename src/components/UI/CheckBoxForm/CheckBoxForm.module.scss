@@ -10,15 +10,15 @@
     position: absolute;
     z-index: -1;
 
-    &:checked + .label{
-      background-image: url(../../../images/checker-icon.svg);
+    &:checked + .label {
+      background-image: url(../../../images/icons/checker-icon.svg);
       background-position: center;
       background-size: 15px 9px;
       background-repeat: no-repeat;
     }
 
-    &:checked + .label_error{
-      background-image: url(../../../images/checker-icon.svg);
+    &:checked + .label_error {
+      background-image: url(../../../images/icons/checker-icon.svg);
       background-position: center;
       background-size: 15px 9px;
       background-repeat: no-repeat;
