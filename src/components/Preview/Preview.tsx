@@ -3,11 +3,14 @@ import { MouseEventHandler } from 'react';
 import cn from 'classnames';
 import Slider from 'react-slick';
 
+import { ButtonCustom } from '../UI';
+
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import sticker_page from '../../images/sticker_page.svg';
 import styles from './Preview.module.scss';
 
-const pages = [{ link: '' }, { link: '' }, { link: '' }];
+const pages = [{ link: sticker_page }, { link: sticker_page }, { link: sticker_page }];
 
 const NextArrow = (props: {
   className: string;
@@ -64,13 +67,23 @@ const settings = {
   prevArrow: <PrevArrow className={''} style={{}} onClick={() => {}} />,
 };
 
-const Preview: React.FC = () => {
+interface IProps {
+  onClose: () => void;
+}
+
+const Preview: React.FC<IProps> = ({ onClose }: IProps) => {
   return (
     <div className={styles.container}>
+      <ButtonCustom className={styles.button} type='close' label='Закрыть' onClick={onClose} />
       <h2 className={styles.title}>Так будет выглядеть набор на листе А4</h2>
       <Slider {...settings}>
         {pages.map((page) => (
-          <img key={page.link} className={styles.page} src={page.link} />
+          <img
+            key={page.link}
+            className={styles.page}
+            src={page.link}
+            alt='Расположение стикеров на листе'
+          />
         ))}
       </Slider>
     </div>

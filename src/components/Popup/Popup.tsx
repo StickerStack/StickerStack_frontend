@@ -7,11 +7,13 @@ import { IPopupState } from '../../interfaces/IPopupState';
 import { useAppDispatch } from '../../hooks/hooks';
 import { setIsOpen } from '../../store/popupSlice';
 import styles from './Popup.module.scss';
+import { Preview } from '../Preview/Preview';
 
 const Popup: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const isOpen = useSelector((state: { popup: IPopupState }) => state.popup.isOpen);
+  const previewIsOpen = useSelector((state: { popup: IPopupState }) => state.popup.previewIsOpen);
 
   const onClose = () => {
     dispatch(setIsOpen(false));
@@ -83,7 +85,7 @@ const Popup: React.FC = () => {
             }}
             className={styles.popup}
           >
-            <PopupForm onClose={onClose} />
+            {previewIsOpen ? <Preview onClose={onClose} /> : <PopupForm onClose={onClose} />}
           </motion.div>
         </motion.div>
       )}

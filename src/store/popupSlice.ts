@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { Signin } from '../components/Signin/Signin';
-import { Preview } from '../components/Preview/Preview';
 
 const popupSlice = createSlice({
   name: 'popupSlice',
   initialState: {
     isOpen: false,
     form: Signin,
+    previewIsOpen: false,
     messageIsOpen: false,
     message: '',
     messageIsError: false,
@@ -20,7 +20,7 @@ const popupSlice = createSlice({
     },
     setPreviewIsOpen(state, action) {
       state.isOpen = action.payload;
-      state.form = Preview;
+      state.previewIsOpen = action.payload;
     },
     setIsOpen(state, action) {
       if (!state.isOpen) {
