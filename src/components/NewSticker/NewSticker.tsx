@@ -1,11 +1,13 @@
 import cn from 'classnames';
-import { ButtonCustom } from '../UI';
+import { ButtonCustom, TooltipCustom } from '../UI';
 import { ImagePick } from '../index';
 
 import rect from '../../images/icons/rect.svg';
 import rect_ronded from '../../images/icons/rect_rounded.svg';
 import circle from '../../images/icons/circle.svg';
 import contour from '../../images/icons/contour.svg';
+import {tooltipText} from "../../utils/texts";
+
 import styles from './NewSticker.module.scss';
 
 const NewSticker: React.FC = () => {
@@ -52,6 +54,7 @@ const NewSticker: React.FC = () => {
             <label className={styles.text}>
               <input type='radio' />
               Оптимальный размер
+              <TooltipCustom text={tooltipText}/>
             </label>
 
             <label className={styles.text}>

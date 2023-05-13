@@ -1,0 +1,60 @@
+@import '../../../utils/scss-variables';
+.tooltip {
+  position: relative;
+  display: inline-flex;
+}
+
+.container {
+  @include flex(row, center, center);
+  position: absolute;
+  top: calc(100% + -1px);
+  bottom: unset;
+  margin-left: 0;
+  margin-right: auto;
+  max-width: 242px;
+  width: max-content;
+  pointer-events: none;
+}
+
+.content {
+  @include font(10px, 13px, 400);
+  position: relative;
+  padding: 10px;
+  color: #000;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 3px 3px 10px rgba(45, 56, 68, 0.25);
+}
+
+.icon {
+  width: 19px;
+  height: 19px;
+}
+
+/* === Enter Transition === */
+.transitionEnter {
+  opacity: 0;
+}
+
+.transitionEnterActive {
+  opacity: 1;
+  transition: opacity 300ms;
+}
+
+.transitionEnterDone {
+  opacity: 1;
+}
+
+/* === Exit Transition === */
+.transitionExit {
+  opacity: 1;
+}
+
+.transitionExitActive {
+  opacity: 0;
+  transition: opacity 300ms;
+}
+
+.transitionExitDone {
+  opacity: 0;
+}
