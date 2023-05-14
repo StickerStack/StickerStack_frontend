@@ -8,3 +8,4 @@ export { TitleForm } from './TitleForm/TitleForm';
 export { TitlePage } from './TitlePage/TitlePage';
 export { InputForm } from './InputForm/InputForm';
 export { IconButton } from './IconButton/IconButton';
+export { RadioButton } from './RadioButton/RadioButton';
