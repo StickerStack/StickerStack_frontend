@@ -4,13 +4,11 @@ import cn from 'classnames';
 import Slider from 'react-slick';
 
 import { ButtonCustom } from '../UI';
+import { pages } from '../../utils/constants';
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import sticker_page from '../../images/sticker_page.svg';
 import styles from './Preview.module.scss';
-
-const pages = [{ link: sticker_page }, { link: sticker_page }, { link: sticker_page }];
 
 const NextArrow = (props: {
   className: string;

@@ -9,6 +9,9 @@ import styles from './AddStickers.module.scss';
 const AddStickers: React.FC = () => {
   const dispatch = useAppDispatch();
 
+  const fullPrice = pagePrice * pages.length;
+  const itemPrice = (pagePrice * pages.length) / (pages.length * 35);
+
   return (
     <div className={styles.container}>
       <TitlePage>Заказать стикеры</TitlePage>
@@ -21,14 +24,11 @@ const AddStickers: React.FC = () => {
         <div className={styles.flex}>
           <span className={styles.text}>Стоимость</span>
           <div className={styles.prices}>
-            <span className={styles.price}>{pagePrice * pages.length} ₽</span>
-            <span className={styles.price_small}>
-              {(pagePrice * pages.length) / (pages.length * 10)}₽/ за шт
-            </span>
+            <span className={styles.price}>{fullPrice} ₽</span>
+            <span className={styles.price_small}>{itemPrice}₽/ за шт</span>
           </div>
         </div>
       </div>
-
       <TextUnderline
         type='button'
         className={styles.preview}
