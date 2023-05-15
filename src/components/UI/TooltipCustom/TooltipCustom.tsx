@@ -1,6 +1,6 @@
 import cn from "classnames";
-import React, { useRef } from "react";
-import { CSSTransition } from "react-transition-group";
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState } from "react";
 
 import { IconButton } from "../IconButton/IconButton";
 
@@ -11,11 +11,8 @@ interface IProps {
   text: string,
 }
 
-const TOOLTIP_TRANSITION_TIMEOUT = 300;
-
 const TooltipCustom: React.FC<IProps> = ({ className, text }: IProps) => {
-  const [isHovered, setIsHovered] = React.useState(false);
-  const nodeRef = useRef(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -26,34 +23,31 @@ const TooltipCustom: React.FC<IProps> = ({ className, text }: IProps) => {
   }
 
   return (
-    <div className={cn(styles.tooltip, className)}>
+    <div className={cn(styles.tooltip, className)} onMouseLeave={handleMouseLeave}>
       <IconButton
         className={styles.icon}
         visible={true}
         icon={'tooltip-icon.svg'}
         onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
       />
-      <CSSTransition
-        classNames={{
-          enter: styles.transitionEnter,
-          enterActive: styles.transitionEnterActive,
-          enterDone: styles.transitionEnterDone,
-          exit: styles.transitionExit,
-          exitActive: styles.transitionExitActive,
-          exitDone: styles.transitionExitDone
-        }}
-        nodeRef={nodeRef}
-        in={isHovered}
-        timeout={TOOLTIP_TRANSITION_TIMEOUT}
-        unmountOnExit
-      >
-        <div className={styles.container} ref={nodeRef}>
-          <div className={styles.content}>
-            { text }
-          </div>
-        </div>
-      </CSSTransition>
+
+      <AnimatePresence>
+        {
+          isHovered && (
+            <motion.div
+              initial={{opacity: 0}}
+              animate={{opacity: 1}}
+              exit={{opacity: 0}}
+              transition={{duration: 0.2}}
+              className={styles.container}
+            >
+              <div className={styles.content}>
+                { text }
+              </div>
+            </motion.div>
+          )
+        }
+      </AnimatePresence>
     </div>
   );
 };

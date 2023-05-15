@@ -22,10 +22,9 @@ interface IProps {
   className?: string;
   onClick?: () => void;
   onMouseEnter?: () => void;
-  onMouseLeave?: () => void;
 }
 
-const IconButton: React.FC<IProps> = ({ onClick, onMouseEnter, onMouseLeave, visible, icon, className }: IProps) => {
+const IconButton: React.FC<IProps> = ({ onClick, onMouseEnter, visible, icon, className }: IProps) => {
   return (
     <button
       type='button'
@@ -35,7 +34,6 @@ const IconButton: React.FC<IProps> = ({ onClick, onMouseEnter, onMouseLeave, vis
       }}
       onClick={onClick}
       onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
     />
   );
 };
