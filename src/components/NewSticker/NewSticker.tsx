@@ -1,6 +1,6 @@
 import cn from 'classnames';
 import { ButtonCustom } from '../UI';
-import { ImagePick } from '../index';
+import {DragAndDrop} from '../';
 
 import rect from '../../images/icons/rect.svg';
 import rect_ronded from '../../images/icons/rect_rounded.svg';
@@ -12,7 +12,7 @@ const NewSticker: React.FC = () => {
   return (
     <div className={styles.card}>
       <form className={styles.info}>
-        <ImagePick className={styles.image} />
+        <DragAndDrop />
         <div className={cn(styles.flex, styles.flex_shapes)}>
           <p className={styles.category}>Форма</p>
           <div className={styles.shapes}>
