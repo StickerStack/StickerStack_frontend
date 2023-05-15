@@ -1,7 +1,5 @@
-import { useAppDispatch } from '../../hooks/hooks';
-import { ButtonCustom, ButtonWithText, TitlePage } from '../UI';
+import { TitlePage } from '../UI';
 import { NewSticker } from '../index';
-import { setIsOpen } from '../../store/popupSlice';
 
 import styles from './AddStickers.module.scss';
 
