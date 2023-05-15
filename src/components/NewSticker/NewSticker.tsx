@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import cn from 'classnames';
-import { ButtonCustom, TooltipCustom } from '../UI';
+import { ButtonCustom, RadioButton, TooltipCustom } from '../UI';
 import { ImagePick } from '../index';
 
 import rect from '../../images/icons/rect.svg';
@@ -11,11 +12,13 @@ import {tooltipText} from "../../utils/texts";
 import styles from './NewSticker.module.scss';
 
 const NewSticker: React.FC = () => {
+  const [customVisible, setCustomVisible] = useState<boolean>(false);
+
   return (
     <div className={styles.card}>
       <form className={styles.info}>
         <ImagePick className={styles.image} />
-        <div className={cn(styles.flex, styles.flex_shapes)}>
+        <fieldset className={cn(styles.flex, styles.flex_shapes)}>
           <p className={styles.category}>Форма</p>
           <div className={styles.shapes}>
             <div className={styles.shape}>
@@ -43,26 +46,32 @@ const NewSticker: React.FC = () => {
               <span className={styles.shape_title}>По контуру</span>
             </div>
           </div>
-        </div>
+        </fieldset>
         <div className={styles.flex}>
           <p className={styles.category}>Количество стикеров</p>
-          <input className={styles.quantity_input} />
+          <input className={cn(styles.input, styles.quantity_input)} />
         </div>
-        <div className={styles.flex}>
+        <fieldset className={styles.flex}>
           <p className={styles.category}>Размер</p>
           <div className={styles.options}>
-            <label className={styles.text}>
-              <input type='radio' />
+            <RadioButton name='size' value='optimal' onClick={() => setCustomVisible(false)}>
               Оптимальный размер
               <TooltipCustom text={tooltipText}/>
-            </label>
-
-            <label className={styles.text}>
-              <input type='radio' />
+            </RadioButton>
+            <RadioButton name='size' value='custom' onClick={() => setCustomVisible(true)}>
               Свой размер
-            </label>
+              <input
+                className={cn(
+                  styles.input,
+                  styles.size_input,
+                  customVisible ? styles.visible : styles.hidden,
+                )}
+                placeholder='5*5'
+              />
+              <span className={cn(customVisible ? styles.visible : styles.hidden)}>см</span>
+            </RadioButton>
           </div>
-        </div>
+        </fieldset>
         <div className={styles.flex}>
           <p className={styles.category}>Цвет фона</p>
           <label className={styles.text}>
