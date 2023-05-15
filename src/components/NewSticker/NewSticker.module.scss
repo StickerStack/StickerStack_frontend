@@ -53,6 +53,8 @@
 }
 
 .flex {
+  padding: 0;
+  border: none;
   @include flex(row, start, start);
   flex-wrap: wrap;
   gap: 20px;
@@ -100,11 +102,22 @@
   text-align: center;
 }
 
-.quantity_input {
+.input {
   width: 60px;
-  height: 30px;
   border: 1px solid #333333;
+  padding: 5px auto;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.quantity_input {
+  height: 30px;
   border-radius: 5px;
+}
+
+.size_input {
+  height: 26px;
+  border-radius: 10px;
 }
 
 .options {
@@ -117,4 +130,11 @@
   position: absolute;
   right: 30px;
   top: 40px;
+}
+
+.visible {
+  visibility: visible;
+}
+.hidden {
+  visibility: hidden;
 }
