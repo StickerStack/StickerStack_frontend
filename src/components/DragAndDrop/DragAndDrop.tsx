@@ -8,6 +8,8 @@ const DragAndDrop: React.FC = () => {
     urlFilePreview: string | ArrayBuffer | null;
   } | null;
 
+  const allowedTypeFile = ["image/png", "image/jpeg", "image/jpg"]
+
   const [imageFile, setImageFile] = useState<TFile>(null);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -15,7 +17,8 @@ const DragAndDrop: React.FC = () => {
 
     const files = e.target.files;
 
-    if (files) {
+
+    if (files && allowedTypeFile.includes(files[0].type)) {
       const reader = new FileReader();
       
       reader.readAsDataURL(files[0]);
@@ -34,18 +37,18 @@ const DragAndDrop: React.FC = () => {
       {imageFile ? (
         <img className={styles.image} src={`${imageFile.urlFilePreview}`} />
       ) : (
-        <form className={styles.form}>
+        <div className={styles.form}>
           <div className={styles.text}>
             <span className={styles.main}>Перетащите фото или выберите файл</span>
-            <span className={styles.sub}>Допустимые форматы:
-              ai, pdf, tiff</span>
+            <span className={styles.sub}>Допустимые форматы: .jpg, .jpeg, .png</span>
           </div>
           <input
             className={styles.input}
             type="file"
             onChange={handleImageChange}
+            accept=".jpg, .jpeg, .png"
           />
-        </form>
+        </div>
       )}
     </div>
   );
