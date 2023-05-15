@@ -2,6 +2,7 @@
 
 .button {
   background-color: transparent;
+  padding: 0;
   border: none;
   color: $main-text-color;
   @include font(16px, 19px, 400);
