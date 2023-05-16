@@ -3,11 +3,11 @@ import cn from 'classnames';
 import { ButtonCustom, RadioButton, TooltipCustom } from '../UI';
 import { ImagePick } from '../index';
 
-import rect from '../../images/icons/rect.svg';
-import rect_ronded from '../../images/icons/rect_rounded.svg';
-import circle from '../../images/icons/circle.svg';
-import contour from '../../images/icons/contour.svg';
-import {tooltipText} from "../../utils/texts";
+import { ReactComponent as Rect } from '../../images/icons/rect.svg';
+import { ReactComponent as Rect_ronded } from '../../images/icons/rect_rounded.svg';
+import { ReactComponent as Circle } from '../../images/icons/circle.svg';
+import { ReactComponent as Contour } from '../../images/icons/contour.svg';
+import { tooltipText } from '../../utils/texts';
 
 import styles from './NewSticker.module.scss';
 
@@ -23,25 +23,25 @@ const NewSticker: React.FC = () => {
           <div className={styles.shapes}>
             <div className={styles.shape}>
               <div className={styles.shape_pic}>
-                <img src={rect} />
+                <Rect />
               </div>
               <span className={styles.shape_title}>Квадрат</span>
             </div>
             <div className={styles.shape}>
               <div className={styles.shape_pic}>
-                <img src={rect_ronded} />
+                <Rect_ronded />
               </div>
               <span className={styles.shape_title}>Закругленный квадрат</span>
             </div>
             <div className={styles.shape}>
               <div className={styles.shape_pic}>
-                <img src={circle} />
+                <Circle />
               </div>
               <span className={styles.shape_title}>Круг</span>
             </div>
             <div className={styles.shape}>
               <div className={styles.shape_pic}>
-                <img src={contour} />
+                <Contour />
               </div>
               <span className={styles.shape_title}>По контуру</span>
             </div>
@@ -56,7 +56,7 @@ const NewSticker: React.FC = () => {
           <div className={styles.options}>
             <RadioButton name='size' value='optimal' onClick={() => setCustomVisible(false)}>
               Оптимальный размер
-              <TooltipCustom text={tooltipText}/>
+              <TooltipCustom text={tooltipText} />
             </RadioButton>
             <RadioButton name='size' value='custom' onClick={() => setCustomVisible(true)}>
               Свой размер

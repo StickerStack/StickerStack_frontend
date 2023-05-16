@@ -2,6 +2,7 @@
 
 .label {
   margin: 0;
+  min-width: max-content;
   @include flex(row, start, center);
   gap: 10px;
   font-weight: 400;
@@ -16,6 +17,7 @@
   appearance: none;
 
   border-radius: 50%;
+  min-width: 15px;
   width: 15px;
   height: 15px;
   border: 1px solid #929292;
