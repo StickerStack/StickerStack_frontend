@@ -18,7 +18,7 @@ const TextUnderline: React.FC<IProps> = ({
   onClick,
 }: IProps) => {
   return type === 'button' ? (
-    <button type='button' onClick={onClick} className={styles.button}>
+    <button type='button' onClick={onClick} className={cn(styles.button, className)}>
       <span className={cn(styles.text, className)}>{children}</span>
     </button>
   ) : type === 'link' ? (
