@@ -1,0 +1,30 @@
+@import '../../../utils/_scss-variables.scss';
+
+.label {
+  margin: 0;
+  min-width: max-content;
+  @include flex(row, start, center);
+  gap: 10px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  cursor: pointer;
+}
+
+.radio {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  border-radius: 50%;
+  min-width: 15px;
+  width: 15px;
+  height: 15px;
+  border: 1px solid #929292;
+  transition: 0.15s all linear;
+  cursor: pointer;
+}
+
+.radio:checked {
+  border: 3px solid #1d91fe;
+}
