@@ -1,16 +1,19 @@
+import { useState } from 'react';
 import cn from 'classnames';
 import { useSelector } from 'react-redux';
 
-import { ButtonCustom } from '../UI';
+import { ButtonCustom, RadioButton, TooltipCustom } from '../UI';
 import { ImagePick } from '../index';
 import { useAppDispatch } from '../../hooks/hooks';
 import { deleteCard } from '../../store/cardsSlice';
 import { ICardsState } from '../../interfaces';
 
-import rect from '../../images/icons/rect.svg';
-import rect_ronded from '../../images/icons/rect_rounded.svg';
-import circle from '../../images/icons/circle.svg';
-import contour from '../../images/icons/contour.svg';
+import { ReactComponent as RectSvg } from '../../images/icons/rect.svg';
+import { ReactComponent as RectRondedSvg } from '../../images/icons/rect_rounded.svg';
+import { ReactComponent as CircleSvg } from '../../images/icons/circle.svg';
+import { ReactComponent as ContourSvg } from '../../images/icons/contour.svg';
+import { tooltipText } from '../../utils/texts';
+
 import styles from './NewSticker.module.scss';
 
 interface IProps {
@@ -27,57 +30,67 @@ const NewSticker: React.FC<IProps> = ({ card, id }: IProps) => {
     dispatch(deleteCard(id));
   };
 
+const NewSticker: React.FC = () => {
+  const [customVisible, setCustomVisible] = useState<boolean>(false);
+
   return (
     <div className={styles.card}>
       <form className={styles.info}>
         <ImagePick className={styles.image} />
-        <div className={cn(styles.flex, styles.flex_shapes)}>
+        <fieldset className={cn(styles.flex, styles.flex_shapes)}>
           <p className={styles.category}>Форма</p>
           <div className={styles.shapes}>
             <div className={styles.shape}>
               <div className={styles.shape_pic}>
-                <img src={rect} />
+                <RectSvg />
               </div>
               <span className={styles.shape_title}>Квадрат</span>
             </div>
             <div className={styles.shape}>
               <div className={styles.shape_pic}>
-                <img src={rect_ronded} />
+                <RectRondedSvg />
               </div>
               <span className={styles.shape_title}>Закругленный квадрат</span>
             </div>
             <div className={styles.shape}>
               <div className={styles.shape_pic}>
-                <img src={circle} />
+                <CircleSvg />
               </div>
               <span className={styles.shape_title}>Круг</span>
             </div>
             <div className={styles.shape}>
               <div className={styles.shape_pic}>
-                <img src={contour} />
+                <ContourSvg />
               </div>
               <span className={styles.shape_title}>По контуру</span>
             </div>
           </div>
-        </div>
+        </fieldset>
         <div className={styles.flex}>
           <p className={styles.category}>Количество стикеров</p>
-          <input className={styles.quantity_input} />
+          <input className={cn(styles.input, styles.quantity_input)} />
         </div>
-        <div className={styles.flex}>
+        <fieldset className={styles.flex}>
           <p className={styles.category}>Размер</p>
           <div className={styles.options}>
-            <label className={styles.text}>
-              <input type='radio' />
+            <RadioButton name='size' value='optimal' onClick={() => setCustomVisible(false)}>
               Оптимальный размер
-            </label>
-
-            <label className={styles.text}>
-              <input type='radio' />
+              <TooltipCustom text={tooltipText} />
+            </RadioButton>
+            <RadioButton name='size' value='custom' onClick={() => setCustomVisible(true)}>
               Свой размер
-            </label>
+              <input
+                className={cn(
+                  styles.input,
+                  styles.size_input,
+                  customVisible ? styles.visible : styles.hidden,
+                )}
+                placeholder='5*5'
+              />
+              <span className={cn(customVisible ? styles.visible : styles.hidden)}>см</span>
+            </RadioButton>
           </div>
-        </div>
+        </fieldset>
         <div className={styles.flex}>
           <p className={styles.category}>Цвет фона</p>
           <label className={styles.text}>
