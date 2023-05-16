@@ -3,10 +3,10 @@ import cn from 'classnames';
 import { ButtonCustom, RadioButton, TooltipCustom } from '../UI';
 import { ImagePick } from '../index';
 
-import { ReactComponent as Rect } from '../../images/icons/rect.svg';
-import { ReactComponent as Rect_ronded } from '../../images/icons/rect_rounded.svg';
-import { ReactComponent as Circle } from '../../images/icons/circle.svg';
-import { ReactComponent as Contour } from '../../images/icons/contour.svg';
+import { ReactComponent as RectSvg } from '../../images/icons/rect.svg';
+import { ReactComponent as RectRondedSvg } from '../../images/icons/rect_rounded.svg';
+import { ReactComponent as CircleSvg } from '../../images/icons/circle.svg';
+import { ReactComponent as ContourSvg } from '../../images/icons/contour.svg';
 import { tooltipText } from '../../utils/texts';
 
 import styles from './NewSticker.module.scss';
@@ -23,25 +23,25 @@ const NewSticker: React.FC = () => {
           <div className={styles.shapes}>
             <div className={styles.shape}>
               <div className={styles.shape_pic}>
-                <Rect />
+                <RectSvg />
               </div>
               <span className={styles.shape_title}>Квадрат</span>
             </div>
             <div className={styles.shape}>
               <div className={styles.shape_pic}>
-                <Rect_ronded />
+                <RectRondedSvg />
               </div>
               <span className={styles.shape_title}>Закругленный квадрат</span>
             </div>
             <div className={styles.shape}>
               <div className={styles.shape_pic}>
-                <Circle />
+                <CircleSvg />
               </div>
               <span className={styles.shape_title}>Круг</span>
             </div>
             <div className={styles.shape}>
               <div className={styles.shape_pic}>
-                <Contour />
+                <ContourSvg />
               </div>
               <span className={styles.shape_title}>По контуру</span>
             </div>
