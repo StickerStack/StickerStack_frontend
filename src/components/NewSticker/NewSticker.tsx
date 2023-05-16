@@ -23,16 +23,13 @@ interface IProps {
 
 const NewSticker: React.FC<IProps> = ({ card, id }: IProps) => {
   const dispatch = useAppDispatch();
-
+  const [customVisible, setCustomVisible] = useState<boolean>(false);
   const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
 
   const handleDelete = () => {
     dispatch(deleteCard(id));
   };
-
-const NewSticker: React.FC = () => {
-  const [customVisible, setCustomVisible] = useState<boolean>(false);
-
+  
   return (
     <div className={styles.card}>
       <form className={styles.info}>
