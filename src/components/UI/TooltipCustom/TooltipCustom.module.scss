@@ -16,10 +16,10 @@
 }
 
 .content {
-  @include font(10px, 13px, 400);
+  @include font(12px, 14px, 400);
   position: relative;
   padding: 10px;
-  color: #000;
+  color: $main-text-color;
   background-color: white;
   border-radius: 10px;
   box-shadow: 3px 3px 10px rgba(45, 56, 68, 0.25);

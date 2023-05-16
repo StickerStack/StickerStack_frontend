@@ -90,6 +90,7 @@
   width: 56px;
   height: 56px;
   background: #f1f1f1;
+  color: $main-text-color;
   border-radius: 10px;
   @include flex(row, center, center);
   transition: background-color 0.2s ease-in-out;
@@ -104,7 +105,7 @@
 
 .input {
   width: 60px;
-  border: 1px solid #333333;
+  border: 1px solid $main-text-color;
   padding: 5px auto;
   box-sizing: border-box;
   text-align: center;
