@@ -1,6 +1,8 @@
 import {useEffect, useState} from "react";
 
 import styles from "./DragAndDrop.module.scss";
+import {ImagePick} from "../ImagePick/ImagePick";
+import {ButtonWithText} from "../UI";
 
 const DragAndDrop: React.FC = () => {
   type TFile = {
@@ -35,9 +37,10 @@ const DragAndDrop: React.FC = () => {
   return (
     <div className={styles.container}>
       {imageFile ? (
-        <img className={styles.image} src={`${imageFile.urlFilePreview}`} />
+        <ImagePick onLoadImage={handleImageChange} deleteImage={() => setImageFile(null)} image={imageFile.urlFilePreview} />
+
       ) : (
-        <div className={styles.form}>
+        <div className={styles.dnd}>
           <div className={styles.text}>
             <span className={styles.main}>Перетащите фото или выберите файл</span>
             <span className={styles.sub}>Допустимые форматы: .jpg, .jpeg, .png</span>
