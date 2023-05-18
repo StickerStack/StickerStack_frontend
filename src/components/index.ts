@@ -17,3 +17,4 @@ export { PageNotFound } from './PageNotFound/PageNotFound';
 export { ImagePick } from './ImagePick/ImagePick';
 export { NewSticker } from './NewSticker/NewSticker';
 export { Preloader } from './Preloader/Preloader';
+export {DragAndDrop} from './DragAndDrop/DragAndDrop';

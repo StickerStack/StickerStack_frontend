@@ -12,7 +12,7 @@ import {
   PageNotFound,
   ProfilePage,
   AddStickers,
-  Preloader,
+  Preloader
 } from '../';
 
 import {
