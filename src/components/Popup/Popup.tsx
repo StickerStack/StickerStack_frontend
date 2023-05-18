@@ -1,11 +1,9 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import {
-  motion,
-  AnimatePresence,
-} from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import { PopupForm } from '../';
+import { Preview } from '../Preview/Preview';
 import { IPopupState } from '../../interfaces/IPopupState';
 import { useAppDispatch } from '../../hooks/hooks';
 import { setIsOpen } from '../../store/popupSlice';
@@ -14,9 +12,8 @@ import styles from './Popup.module.scss';
 const Popup: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  const isOpen = useSelector(
-    (state: { popup: IPopupState }) => state.popup.isOpen
-  );
+  const isOpen = useSelector((state: { popup: IPopupState }) => state.popup.isOpen);
+  const previewIsOpen = useSelector((state: { popup: IPopupState }) => state.popup.previewIsOpen);
 
   const onClose = () => {
     dispatch(setIsOpen(false));
@@ -38,8 +35,7 @@ const Popup: React.FC = () => {
 
   return (
     <AnimatePresence>
-      {isOpen
-        &&
+      {isOpen && (
         <motion.div
           initial={{
             opacity: 0,
@@ -89,9 +85,10 @@ const Popup: React.FC = () => {
             }}
             className={styles.popup}
           >
-            <PopupForm onClose={onClose} />
+            {previewIsOpen ? <Preview onClose={onClose} /> : <PopupForm onClose={onClose} />}
           </motion.div>
-        </motion.div>}
+        </motion.div>
+      )}
       ;
     </AnimatePresence>
   );

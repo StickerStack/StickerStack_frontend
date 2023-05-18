@@ -33,9 +33,15 @@
 }
 
 .clear_icon {
+  position: absolute;
+  right: 2px;
+  transition: opacity 0.3s ease-in-out;
   width: 18px;
   height: 18px;
-  right: 2px;
   top: 50%;
   transform: translateY(-50%);
+
+  &:hover {
+    opacity: 0.6;
+  }
 }

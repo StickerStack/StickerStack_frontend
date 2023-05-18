@@ -2,6 +2,8 @@ import cn from 'classnames';
 
 import { ButtonWithText } from '../UI';
 
+import { ReactComponent as PictureSvg } from '../../images/icons/upload-image.svg';
+import { ReactComponent as BinSvg } from '../../images/icons/bin.svg';
 import styles from './ImagePick.module.scss';
 
 interface IProps {
@@ -17,7 +19,7 @@ const ImagePick: React.FC<IProps> = ({ image, className, onLoadImage, deleteImag
       <img className={styles.image} alt='Изображение' src={`${image}`} />
       <form className={styles.overlay}>
         <ButtonWithText type='button' theme='no-border' className={styles.button}>
-          <div className={styles.button_img} />
+          <PictureSvg />
           <label htmlFor='myimage' className={styles.label}>
             Загрузить изображение
           </label>
@@ -31,7 +33,7 @@ const ImagePick: React.FC<IProps> = ({ image, className, onLoadImage, deleteImag
           onChange={onLoadImage}
         ></input>
         <ButtonWithText onClick={deleteImage} type='button' theme='no-border' className={styles.button}>
-          <div className={styles.button_bin} />
+          <BinSvg />
           Удалить изображение
         </ButtonWithText>
       </form>
