@@ -3,11 +3,11 @@ import { useSelector } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import { PopupForm } from '../';
+import { Preview } from '../Preview/Preview';
 import { IPopupState } from '../../interfaces/IPopupState';
 import { useAppDispatch } from '../../hooks/hooks';
 import { setIsOpen } from '../../store/popupSlice';
 import styles from './Popup.module.scss';
-import { Preview } from '../Preview/Preview';
 
 const Popup: React.FC = () => {
   const dispatch = useAppDispatch();
