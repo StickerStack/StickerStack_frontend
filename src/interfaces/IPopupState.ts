@@ -3,5 +3,6 @@ export interface IPopupState {
   messageIsOpen: boolean;
   messageIsError: boolean;
   isOpen: boolean;
+  previewIsOpen: boolean;
   form: React.FC;
 }

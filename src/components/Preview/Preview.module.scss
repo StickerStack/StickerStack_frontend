@@ -1,0 +1,95 @@
+@import '../../utils/_scss-variables.scss';
+
+.container {
+  position: relative;
+  padding: 50px 112px 90px;
+  box-sizing: border-box;
+  @include flex(column, center, center);
+  gap: 25px;
+  background: #fff;
+  border-radius: 20px;
+}
+
+.button {
+  position: absolute;
+  top: 22px;
+  right: 26px;
+  width: 10px;
+  height: 10px;
+}
+
+.title {
+  margin: 0;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.page {
+  width: 402px;
+  height: 568px;
+  background-color: $secondary-bg-color;
+}
+
+.prev_arrow {
+  transform: translate(-100%, -50%);
+  &::before {
+    background: url(../../images/icons/arrow.svg) no-repeat center;
+  }
+}
+.next_arrow {
+  transform: translate(100%, -50%);
+  &::before {
+    background: url(../../images/icons/arrow.svg) no-repeat center;
+    transform: rotate(180deg);
+  }
+}
+
+.next_arrow,
+.prev_arrow {
+  width: 42px;
+  height: 42px;
+  border-radius: 40px;
+
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 42px;
+    height: 42px;
+    border-radius: 40px;
+    background-color: transparent;
+    opacity: 1;
+  }
+  &:hover::before {
+    opacity: 0.7;
+  }
+}
+
+.paging {
+  bottom: -45px;
+
+  & li {
+    display: none;
+  }
+
+  & :global(li.slick-active) {
+    display: inline;
+  }
+}
+
+.paging .page_numbers {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.slider {
+  width: 402px;
+  height: 568px;
+
+  & :global(.slick-disabled::before) {
+    cursor: auto;
+    opacity: 0.25;
+  }
+}
