@@ -11,6 +11,7 @@ import { useOutsideClick } from '../../hooks/useOutsideClick';
 import { ProfileMenu } from '../ProfileMenu/ProfileMenu';
 import { ButtonCustom, ButtonWithText } from '../UI';
 
+import logo from '../../images/logo.svg';
 import styles from './Header.module.scss';
 
 const Header: React.FC = () => {
@@ -45,7 +46,10 @@ const Header: React.FC = () => {
 
   return location.pathname !== PAGE_404 ? (
     <header className={styles.header}>
-      <Link to='/' className={styles.logo} />
+      <Link to='/' className={styles.logo}>
+        <img className={styles.logo_image} src={logo} alt='Логотип StickerStack' />
+        StickerStack
+      </Link>
       <AnimatePresence>
         {isMenuShow && (
           <motion.div

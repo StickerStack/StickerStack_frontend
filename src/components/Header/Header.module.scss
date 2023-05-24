@@ -8,11 +8,20 @@
   @include flex(row, space-between, center);
 
   .logo {
-    width: 105px;
-    height: 100px;
-    background-image: url(../../images/logo.svg);
-    background-repeat: no-repeat;
-    background-size: cover;
+    text-decoration: none;
+    color: $main-text-color;
+    font-family: 'Nunito';
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 33px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    &_image {
+      width: 96px;
+      height: 96px;
+    }
   }
 }
 
