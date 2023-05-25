@@ -7,11 +7,13 @@ import { ReactComponent as BinSvg } from '../../images/icons/bin.svg';
 import styles from './ImagePick.module.scss';
 
 interface IProps {
-  image?: string;
+  image?: string | ArrayBuffer | null;
   className?: string;
+  onLoadImage?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  deleteImage?: () => void;
 }
 
-const ImagePick: React.FC<IProps> = ({ image, className }: IProps) => {
+const ImagePick: React.FC<IProps> = ({ image, className, onLoadImage, deleteImage }: IProps) => {
   return (
     <div className={cn(styles.avatar, className)}>
       <img className={styles.image} alt='Изображение' src={image} />
@@ -28,8 +30,14 @@ const ImagePick: React.FC<IProps> = ({ image, className }: IProps) => {
           id='myimage'
           accept='image/*'
           className={styles.input}
+          onChange={onLoadImage}
         ></input>
-        <ButtonWithText type='button' theme='no-border' className={styles.button}>
+        <ButtonWithText
+          onClick={deleteImage}
+          type='button'
+          theme='no-border'
+          className={styles.button}
+        >
           <BinSvg />
           Удалить изображение
         </ButtonWithText>

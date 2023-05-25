@@ -3,7 +3,7 @@ import cn from 'classnames';
 import { useSelector } from 'react-redux';
 
 import { ButtonCustom, RadioButton, TooltipCustom } from '../UI';
-import { ImagePick } from '../index';
+import { DragAndDrop } from '../';
 import { useAppDispatch } from '../../hooks/hooks';
 import { deleteCard } from '../../store/cardsSlice';
 import { ICardsState } from '../../interfaces';
@@ -29,11 +29,11 @@ const NewSticker: React.FC<IProps> = ({ card, id }: IProps) => {
   const handleDelete = () => {
     dispatch(deleteCard(id));
   };
-  
+
   return (
     <div className={styles.card}>
       <form className={styles.info}>
-        <ImagePick className={styles.image} />
+        <DragAndDrop />
         <fieldset className={cn(styles.flex, styles.flex_shapes)}>
           <p className={styles.category}>Форма</p>
           <div className={styles.shapes}>
