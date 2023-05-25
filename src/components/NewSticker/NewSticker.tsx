@@ -6,7 +6,7 @@ import { ButtonCustom, RadioButton, TooltipCustom } from '../UI';
 import { DragAndDrop } from '../';
 import { useAppDispatch } from '../../hooks/hooks';
 import { deleteCard } from '../../store/cardsSlice';
-import { ICardsState } from '../../interfaces';
+import { ICard, ICardsState } from '../../interfaces';
 
 import { ReactComponent as RectSvg } from '../../images/icons/rect.svg';
 import { ReactComponent as RectRondedSvg } from '../../images/icons/rect_rounded.svg';
@@ -17,24 +17,23 @@ import { tooltipText } from '../../utils/texts';
 import styles from './NewSticker.module.scss';
 
 interface IProps {
-  card: object;
-  id: number;
+  card: ICard;
 }
 
-const NewSticker: React.FC<IProps> = ({ card, id }: IProps) => {
+const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
   const dispatch = useAppDispatch();
   const [customVisible, setCustomVisible] = useState<boolean>(false);
   const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
 
   const handleDelete = () => {
-    dispatch(deleteCard(id));
+    dispatch(deleteCard(card.id));
   };
 
   return (
     <div className={styles.card}>
       <form className={styles.info}>
         <div className={styles.image}>
-          <DragAndDrop />
+          <DragAndDrop card={card} />
         </div>
 
         <fieldset className={cn(styles.flex, styles.flex_shapes)}>
