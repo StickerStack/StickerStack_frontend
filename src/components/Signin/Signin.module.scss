@@ -2,18 +2,21 @@
 
 .signin {
   @include flex(column, _, _);
-  gap: 35px;
-  width: 310px;
+  gap: 25px;
+  width: 330px;
 
   .inputs {
     @include flex(column, flex-start, flex-start);
-    gap: 40px;
+    gap: 25px;
   }
 
   .link {
-    @include font(16px, 19px, 400);
+    @include font(14px, 16px, 400);
     color: $span-text-color;
     text-align: center;
-    margin-top: -30px;
   }
+}
+
+.button {
+  margin-top: 10px;
 }

@@ -1,14 +1,13 @@
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ButtonWithText, TitleForm, InputForm, TextUnderline } from '../UI';
-import { Signup, ResetPassword } from '../';
+import { Signup, ResetPassword, SocialsAuth } from '../';
 import { setIsOpen, setMessageIsOpen, switchForm } from '../../store/popupSlice';
 import { useAppDispatch } from '../../hooks/hooks';
 import { getUser, signInMockUser, updateStatus } from '../../store/userSlice';
 import { signIn } from '../../store/authSlice';
 import { registerEmail, registerPassword } from '../../utils/registersRHF';
 import styles from './Signin.module.scss';
-
 
 const Signin: React.FC = () => {
   const location = useLocation();
@@ -17,7 +16,7 @@ const Signin: React.FC = () => {
   const {
     register,
     getValues,
-    formState: { errors, dirtyFields },
+    formState: { errors, dirtyFields, isValid },
     handleSubmit,
     watch,
   } = useForm({
@@ -62,13 +61,14 @@ const Signin: React.FC = () => {
 
   return (
     <form className={styles.signin} onSubmit={handleSubmit(onSubmit)}>
-      <TitleForm>Войти в личный кабинет</TitleForm>
+      <TitleForm>Вход</TitleForm>
+      <SocialsAuth />
       <div className={styles.inputs}>
         <InputForm
           register={register}
           option={registerEmail}
           error={errors?.email}
-          placeholder='Введите E-mail'
+          placeholder='E-mail'
           name='email'
           label='E-mail'
           type='email'
@@ -77,35 +77,41 @@ const Signin: React.FC = () => {
           register={register}
           option={registerPassword}
           error={errors?.password}
-          placeholder='Введите пароль'
+          placeholder='Пароль'
           name='password'
           label='Пароль'
           type='password'
           optionalButton={
             !location.pathname.startsWith('/api/auth/verifyemail')
               ? {
-                text: 'Забыли пароль?',
-                onClick: () => {
-                  dispatch(switchForm(ResetPassword));
-                },
-              }
+                  text: 'Забыли пароль?',
+                  onClick: () => {
+                    dispatch(switchForm(ResetPassword));
+                  },
+                }
               : {
-                text: '',
-                onClick: () => {
-                  return;
-                },
-              }
+                  text: '',
+                  onClick: () => {
+                    return;
+                  },
+                }
           }
           optionalEyeButton={{
             visible: dirtyFields.password && watch('password') !== '',
           }}
         />
       </div>
-      <ButtonWithText type='submit'>Войти</ButtonWithText>
+      <ButtonWithText type='submit' disabled={!isValid} className={styles.button}>
+        Войти
+      </ButtonWithText>
       {!location.pathname.startsWith('/api/auth/verifyemail') ? (
         <span className={styles.link}>
           Нет аккаунта?{' '}
-          <TextUnderline onClick={() => dispatch(switchForm(Signup))} type='button'>
+          <TextUnderline
+            onClick={() => dispatch(switchForm(Signup))}
+            type='button'
+            className={styles.link}
+          >
             Зарегистрироваться
           </TextUnderline>
         </span>

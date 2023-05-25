@@ -3,10 +3,10 @@
 .button {
   padding: 16px 45px;
   box-sizing: border-box;
-  height: 55px;
-  border-radius: 20px;
+  height: 50px;
+  border-radius: 10px;
   text-align: center;
-  @include font(20px, 24px, 400);
+  @include font(16px, 19px, 400);
   cursor: pointer;
   transition: opacity 0.3s, background-color 0.3s ease-in-out;
 

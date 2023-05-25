@@ -2,16 +2,15 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import { ButtonWithText, InputForm, CheckBoxForm, TitleForm, TextUnderline } from '../UI';
-import { Signin } from '../';
-
+import { Signin, SocialsAuth } from '../';
+import { ADD_STICKERS } from '../../utils/constants';
 import { useAppDispatch } from '../../hooks/hooks';
 import { setMessageIsOpen, switchForm, setIsOpen } from '../../store/popupSlice';
 import { getUser, updateStatus } from '../../store/userSlice';
-import {signUp, signIn, sendVerificationCode} from '../../store/authSlice';
+import { signUp, signIn, sendVerificationCode } from '../../store/authSlice';
 import { registerEmail, registerPassword } from '../../utils/registersRHF';
-import styles from './Signup.module.scss';
-import { ADD_STICKERS } from '../../utils/constants';
 
+import styles from './Signup.module.scss';
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
@@ -19,7 +18,7 @@ const Signup: React.FC = () => {
   const {
     register,
     getValues,
-    formState: { errors, dirtyFields },
+    formState: { errors, dirtyFields, isValid },
     watch,
     handleSubmit,
   } = useForm({
@@ -64,12 +63,13 @@ const Signup: React.FC = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.signup}>
       <TitleForm>Регистрация</TitleForm>
+      <SocialsAuth />
       <div className={styles.inputs}>
         <InputForm
           register={register}
           option={registerEmail}
           error={errors?.email}
-          placeholder='example@gmail.com'
+          placeholder='E-mail'
           name='email'
           label='E-mail'
           type='email'
@@ -78,7 +78,7 @@ const Signup: React.FC = () => {
           register={register}
           option={registerPassword}
           error={errors?.password}
-          placeholder='Введите пароль'
+          placeholder='Пароль'
           name='password'
           label='Пароль'
           type='password'
@@ -108,27 +108,35 @@ const Signup: React.FC = () => {
           }}
         />
       </div>
-      <CheckBoxForm
-        name='confirmCheckbox'
-        register={register}
-        option={{ required: 'Обязательное поле' }}
-        error={errors?.confirmCheckbox}
-      >
-        <p className={styles.checktext}>
-          Я согласен с{' '}
-          <a href='#id' target='_blank' className={styles.documentLink}>
-            Политикой конфиденциальности
-          </a>{' '}
-          и{' '}
-          <a href='#id' target='_blank' className={styles.documentLink}>
-            Условиями использования сервиса
-          </a>
-        </p>
-      </CheckBoxForm>
-      <ButtonWithText type='submit'>Зарегистрироваться</ButtonWithText>
+      <div className={styles.checkbox}>
+        <CheckBoxForm
+          name='confirmCheckbox'
+          register={register}
+          option={{ required: 'Обязательное поле' }}
+          error={errors?.confirmCheckbox}
+        >
+          <p className={styles.checktext}>
+            Я согласен с{' '}
+            <a href='#id' target='_blank' className={styles.documentLink}>
+              Политикой конфиденциальности
+            </a>{' '}
+            и{' '}
+            <a href='#id' target='_blank' className={styles.documentLink}>
+              Условиями использования сервиса
+            </a>
+          </p>
+        </CheckBoxForm>
+      </div>
+      <ButtonWithText type='submit' disabled={!isValid}>
+        Зарегистрироваться
+      </ButtonWithText>
       <span className={styles.link}>
         Уже есть аккаунт?{' '}
-        <TextUnderline type='button' onClick={() => dispatch(switchForm(Signin))}>
+        <TextUnderline
+          type='button'
+          className={styles.link}
+          onClick={() => dispatch(switchForm(Signin))}
+        >
           Войти
         </TextUnderline>
       </span>

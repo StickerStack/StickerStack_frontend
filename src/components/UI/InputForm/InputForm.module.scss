@@ -8,24 +8,27 @@
   color: $main-text-color;
 
   .link {
-    @include font(16px, 19px, 400);
-    height: 19px;
+    height: 14px;
     align-self: flex-end;
   }
 
+  .button {
+    @include font(14px, 16px, 400);
+  }
+
   .border {
-    border: 1px solid #000;
-    border-radius: 5px;
+    border: 1px solid #78787a;
+    border-radius: 15px;
     padding: 0 0 0 20px;
-    height: 30px;
+    height: 38px;
     @include flex(_, _, center);
     position: relative;
     transform: opacity 500ms;
 
     .label {
       user-select: none;
-      @include font(14px, 19px, 400);
-      color: rgba(0, 0, 0, 0.7);
+      @include font(14px, 16px, 400);
+      color: $main-text-color;
       @include flex(row, space-between, _);
       align-items: center;
       opacity: 0;
@@ -39,20 +42,21 @@
       border: none;
       outline: none;
       width: 100%;
-      @include font(16px, 19px, 400);
-      color: #000;
+      @include font(14px, 16px, 400);
+      color: $main-text-color;
       background-color: transparent;
 
-      &_error {
+      &:focus::placeholder {
+        color: transparent;
       }
-
       &:focus {
         ~ {
           .label {
             opacity: 1;
             position: absolute;
-            top: -12px;
-            background-color: $secondary-bg-color;
+            top: -10px;
+            padding: 0 3px;
+            background-color: $main-bg-color;
           }
         }
       }
@@ -62,8 +66,9 @@
           .label {
             opacity: 1;
             position: absolute;
-            top: -12px;
-            background-color: $secondary-bg-color;
+            top: -10px;
+            padding: 0 3px;
+            background-color: $main-bg-color;
           }
         }
       }

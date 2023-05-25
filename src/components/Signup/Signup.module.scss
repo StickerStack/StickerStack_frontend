@@ -2,29 +2,32 @@
 
 .signup {
   @include flex(column, _, _);
-  gap: 50px;
-  width: 310px;
+  gap: 25px;
+  width: 330px;
   box-sizing: border-box;
 
   .inputs {
     @include flex(column, flex-start, flex-start);
-    gap: 40px;
+    gap: 35px;
+  }
+
+  .checkbox {
+    margin-top: 10px;
   }
 
   .checktext {
-    @include font(12px, 15px, 400);
+    @include font(12px, 14px, 400);
     margin: 0;
     width: 100%;
 
     .documentLink {
-      color: #000;
+      color: $main-text-color;
     }
   }
 
   .link {
-    @include font(16px, 19px, 400);
+    @include font(14px, 16px, 400);
     color: $span-text-color;
     text-align: center;
-    margin-top: -30px;
   }
 }
