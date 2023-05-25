@@ -4,6 +4,7 @@ import {
   REG_EMAIL,
   PROFILE_ONLY_LETTERS,
   REG_PASS,
+  EMAIL_INPUT_MAX_LENGTH,
 } from './constants';
 
 const registerEmail = {
@@ -11,6 +12,10 @@ const registerEmail = {
   pattern: {
     value: REG_EMAIL,
     message: 'E-mail введен некорректно',
+  },
+  maxLength: {
+    value: EMAIL_INPUT_MAX_LENGTH,
+    message: 'Максимум 50 символов',
   },
 };
 
