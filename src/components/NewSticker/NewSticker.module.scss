@@ -3,7 +3,7 @@
 .card {
   position: relative;
   width: 100%;
-  max-width: 968px;
+  max-width: 1076px;
   box-sizing: border-box;
   padding: 40px 50px 40px 30px;
   box-shadow: 3px 3px 10px rgba(45, 56, 68, 0.25);
@@ -29,7 +29,7 @@
 
 .info {
   display: grid;
-  grid-template-columns: 255px repeat(2, 1fr);
+  grid-template-columns: 255px minmax(160px, 255px) 1fr;
   grid-template-rows: repeat(3, min-content);
   row-gap: 35px;
   column-gap: 25px;
@@ -117,14 +117,26 @@
 }
 
 .size_input {
+  width: 75px;
   height: 26px;
-  border-radius: 10px;
+  border-radius: 8px;
+  padding: 5px 15px;
+  box-sizing: border-box;
+
+  &::placeholder {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 14px;
+  }
 }
 
 .options {
   display: flex;
   flex-direction: column;
   gap: 18px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
 }
 
 .delete {

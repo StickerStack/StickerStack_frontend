@@ -33,7 +33,10 @@ const NewSticker: React.FC<IProps> = ({ card, id }: IProps) => {
   return (
     <div className={styles.card}>
       <form className={styles.info}>
-        <DragAndDrop />
+        <div className={styles.image}>
+          <DragAndDrop />
+        </div>
+
         <fieldset className={cn(styles.flex, styles.flex_shapes)}>
           <p className={styles.category}>Форма</p>
           <div className={styles.shapes}>
@@ -76,15 +79,11 @@ const NewSticker: React.FC<IProps> = ({ card, id }: IProps) => {
             </RadioButton>
             <RadioButton name='size' value='custom' onClick={() => setCustomVisible(true)}>
               Свой размер
-              <input
-                className={cn(
-                  styles.input,
-                  styles.size_input,
-                  customVisible ? styles.visible : styles.hidden,
-                )}
-                placeholder='5*5'
-              />
-              <span className={cn(customVisible ? styles.visible : styles.hidden)}>см</span>
+              <div className={cn(customVisible ? styles.visible : styles.hidden)}>
+                <input className={cn(styles.input, styles.size_input)} placeholder='ширина' /> x{' '}
+                <input className={cn(styles.input, styles.size_input)} placeholder='высота' />
+                <span className={cn(customVisible ? styles.visible : styles.hidden)}> см</span>
+              </div>
             </RadioButton>
           </div>
         </fieldset>
