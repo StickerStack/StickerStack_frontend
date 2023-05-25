@@ -16,7 +16,7 @@ interface IProps {
 const ImagePick: React.FC<IProps> = ({ image, className, onLoadImage, deleteImage }: IProps) => {
   return (
     <div className={cn(styles.avatar, className)}>
-      <img className={styles.image} alt='Изображение' src={image} />
+      <img className={styles.image} alt='Изображение' src={`${image}`} />
       <div className={styles.overlay}>
         <ButtonWithText type='button' theme='no-border' className={styles.button}>
           <PictureSvg />
