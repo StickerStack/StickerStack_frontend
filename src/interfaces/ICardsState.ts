@@ -1,3 +1,5 @@
+import { ICard } from "./";
+
 export interface ICardsState {
-  cards: [{ image: ''; shape: ''; amount: ''; size: ''; id: 0 }];
+  cards: Array<ICard>;
 }
