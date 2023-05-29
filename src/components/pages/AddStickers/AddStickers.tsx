@@ -7,6 +7,7 @@ import { setPreviewIsOpen } from '../../../store/popupSlice';
 import { pages, pagePrice } from '../../../utils/constants';
 import { ICardsState } from '../../../interfaces';
 import { addCard } from '../../../store/cardsSlice';
+import { generateRandomNumber } from '../../../utils/generateRandomNumber';
 
 import styles from './AddStickers.module.scss';
 
@@ -19,7 +20,15 @@ const AddStickers: React.FC = () => {
   const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
 
   const handleAddCard = () => {
-    dispatch(addCard({ image: '', shape: '', amount: '', size: '', id: cards.length }));
+    dispatch(
+      addCard({
+        image: '',
+        shape: 'square',
+        amount: 1,
+        size: { width: 0, height: 0 },
+        id: generateRandomNumber(),
+      }),
+    );
   };
 
   return (
@@ -27,7 +36,7 @@ const AddStickers: React.FC = () => {
       <Container className={styles.container}>
         <TitlePage>Заказать стикеры</TitlePage>
         {cards.map((card) => (
-          <NewSticker key={card.id} card={card} id={card.id} />
+          <NewSticker key={card.id} card={card} />
         ))}
         <ButtonWithText theme='transparent' onClick={handleAddCard}>
           Добавить стикер
