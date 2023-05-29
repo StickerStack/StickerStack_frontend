@@ -7,18 +7,25 @@
   color: $main-text-color;
   @include font(16px, 19px, 400);
   cursor: pointer;
+}
 
-  .text::after {
+.text {
+  color: $main-text-color;
+  text-decoration: none;
+  position: relative;
+
+  &::after {
     content: '';
+    position: absolute;
     display: block;
     margin-top: 2px;
     width: 0;
     height: 1px;
-    background: #000;
+    background: $main-text-color;
     transition: width 0.3s;
   }
 
-  .text:hover::after {
+  &:hover::after {
     width: 100%;
   }
 }

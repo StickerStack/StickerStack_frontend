@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { ButtonWithText, TitleForm, TextForm } from '../UI';
+import { ButtonWithText, TitleForm, TextForm } from '../../UI';
 
 import styles from './PageNotFound.module.scss';
 

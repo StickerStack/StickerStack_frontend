@@ -31,12 +31,11 @@ const NewSticker: React.FC<IProps> = ({ card, id }: IProps) => {
   };
 
   return (
-    <div className={styles.card}>
+    <section className={styles.card}>
       <form className={styles.info}>
         <div className={styles.image}>
           <DragAndDrop />
         </div>
-
         <fieldset className={cn(styles.flex, styles.flex_shapes)}>
           <p className={styles.category}>Форма</p>
           <div className={styles.shapes}>
@@ -107,7 +106,7 @@ const NewSticker: React.FC<IProps> = ({ card, id }: IProps) => {
           onClick={handleDelete}
         />
       ) : null}
-    </div>
+    </section>
   );
 };
 

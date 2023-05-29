@@ -1,11 +1,13 @@
 @import '../../utils/_scss-variables.scss';
 
 .header {
-  height: 70px;
-  padding: 80px $desktop-padding 0;
+  height: 96px;
+  margin-top: 32px;
   top: 0;
-  background-color: $main-bg-color;
-  @include flex(row, space-between, center);
+
+  &_container {
+    @include flex(row, space-between, center);
+  }
 
   .logo {
     text-decoration: none;

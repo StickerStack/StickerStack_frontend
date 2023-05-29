@@ -10,3 +10,4 @@ export { InputForm } from './InputForm/InputForm';
 export { IconButton } from './IconButton/IconButton';
 export { RadioButton } from './RadioButton/RadioButton';
 export { TooltipCustom } from './TooltipCustom/TooltipCustom';
+export { Container } from './Container/Container';
