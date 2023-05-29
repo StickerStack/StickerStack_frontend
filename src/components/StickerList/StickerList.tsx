@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 
-import styles from './StickerList.module.scss';
 import { ICardsState } from '../../interfaces';
+import styles from './StickerList.module.scss';
 
 const StickerList: React.FC = () => {
   const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards)
@@ -9,7 +9,7 @@ const StickerList: React.FC = () => {
     <div className={styles.container}>
       {
         cards.map((card) => {
-          if(card.image !== '')
+          if(card.image)
             return <img className={styles.image} key={card.id} src={card.image} />
         })
       }

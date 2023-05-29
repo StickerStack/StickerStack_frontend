@@ -1,12 +1,12 @@
 import Slider from 'react-slick';
 
 import { ButtonCustom } from '../UI';
-import { settings } from './settings';
+import { StickerList } from '../StickerList/StickerList';
 
+import { settings } from './settings';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import styles from './Preview.module.scss';
-import { StickerList } from '../StickerList/StickerList';
 
 interface IProps {
   onClose: () => void;

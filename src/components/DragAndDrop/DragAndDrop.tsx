@@ -1,10 +1,10 @@
 import { useState } from 'react';
 
-import styles from './DragAndDrop.module.scss';
 import { ImagePick } from '../ImagePick/ImagePick';
 import { ICard } from '../../interfaces';
 import { useAppDispatch } from '../../hooks/hooks';
 import { updatePicture } from '../../store/cardsSlice';
+import styles from './DragAndDrop.module.scss';
 
 interface IProps {
   card: ICard;
