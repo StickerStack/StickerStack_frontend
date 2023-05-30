@@ -104,33 +104,6 @@
   text-align: center;
 }
 
-.input {
-  width: 60px;
-  border: 1px solid $main-text-color;
-  padding: 5px auto;
-  box-sizing: border-box;
-  text-align: center;
-}
-
-.quantity_input {
-  height: 30px;
-  border-radius: 5px;
-}
-
-.size_input {
-  width: 75px;
-  height: 26px;
-  border-radius: 8px;
-  padding: 5px 15px;
-  box-sizing: border-box;
-
-  &::placeholder {
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 14px;
-  }
-}
-
 .options {
   display: flex;
   flex-direction: column;
@@ -138,6 +111,11 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
+}
+
+.option {
+  display: flex;
+  gap: 5px;
 }
 
 .delete {
@@ -151,22 +129,6 @@
 }
 .hidden {
   visibility: hidden;
-}
-
-.size {
-  position: relative;
-}
-
-.error {
-  max-width: 190px;
-  margin-top: 5px;
-  height: 16px;
-  font-family: 'Nunito';
-  font-weight: 400;
-  font-size: 12px;
-  line-height: 16px;
-  letter-spacing: 0.01em;
-  color: $error-text-color;
 }
 
 .color_sample {

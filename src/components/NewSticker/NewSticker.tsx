@@ -3,7 +3,7 @@ import cn from 'classnames';
 import { useSelector } from 'react-redux';
 import { FieldValues, useForm } from 'react-hook-form';
 
-import { ButtonCustom, RadioButton, TooltipCustom } from '../UI';
+import { ButtonCustom, Error, Input, RadioButton, SizeInput, TooltipCustom } from '../UI';
 import { DragAndDrop } from '../';
 import { useAppDispatch } from '../../hooks/hooks';
 import { deleteCard } from '../../store/cardsSlice';
@@ -27,9 +27,15 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
   const [customVisible, setCustomVisible] = useState<boolean>(false);
   const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
   const [amount, setAmount] = useState<number>(card.amount);
+  const [width, setWidth] = useState<number>();
+  const [height, setHeight] = useState<number>();
 
   const handleDelete = () => {
     dispatch(deleteCard(card.id));
+  };
+
+  const handleChange = (e: { target: { value: unknown } }) => {
+    setAmount(Number(e.target.value));
   };
 
   const {
@@ -46,7 +52,6 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
         <div className={styles.image}>
           <DragAndDrop card={card} />
         </div>
-
         <fieldset className={cn(styles.flex, styles.flex_shapes)}>
           <p className={styles.category}>Форма</p>
           <div className={styles.shapes}>
@@ -81,17 +86,18 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
             <p className={styles.category} onClick={() => console.log(errors)}>
               Количество стикеров
             </p>
-            <input
+            <Input
+              name='amount'
+              value={amount}
+              option={registerAmount}
               type='tel'
-              className={cn(styles.input, styles.quantity_input)}
-              {...register('amount', registerAmount)}
-              value={amount || ''}
-              onChange={(e) => setAmount(Number(e.target.value))}
+              register={register}
+              onChange={handleChange}
+              error={errors.amount}
             />
           </div>
-          <div className={styles.error}>{errors.amount && `${errors.amount?.message}`}</div>
+          <Error>{errors.amount && `${errors.amount?.message}`}</Error>
         </div>
-
         <fieldset className={styles.flex}>
           <p className={styles.category}>Размер</p>
           <div className={styles.options}>
@@ -104,39 +110,34 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
               Оптимальный размер
               <TooltipCustom text={tooltipText} />
             </RadioButton>
-            <RadioButton
-              register={register}
-              name='size'
-              value='custom'
-              className={styles.size}
-              onClick={() => setCustomVisible(true)}
-            >
-              Свой размер
+            <div className={styles.option}>
+              <RadioButton
+                register={register}
+                name='size'
+                value='custom'
+                className={styles.size}
+                onClick={() => setCustomVisible(true)}
+              >
+                Свой размер
+              </RadioButton>
               <div className={cn(customVisible ? styles.visible : styles.hidden)}>
-                <div>
-                  <input
-                    placeholder='ширина'
-                    type='tel'
-                    className={cn(styles.input, styles.size_input)}
-                    {...register('width', registerSize)}
-                  />{' '}
-                  x{' '}
-                  <input
-                    className={cn(styles.input, styles.size_input)}
-                    placeholder='высота'
-                    type='tel'
-                    {...register('height', registerSize)}
-                  />
-                  <span className={cn(customVisible ? styles.visible : styles.hidden)}> см</span>
-                </div>
-                <div className={styles.error}>
-                  {(errors.width || errors.height) &&
-                    `${errors.width?.message || errors.height?.message}`}
-                </div>
+                <SizeInput
+                  nameWidth='width'
+                  nameHeight='height'
+                  valueWidth={width}
+                  valueHeight={height}
+                  setWidth={setWidth}
+                  setHeight={setHeight}
+                  register={register}
+                  errorWidth={errors.width}
+                  errorHeight={errors.height}
+                  option={registerSize}
+                />
               </div>
-            </RadioButton>
+            </div>
           </div>
         </fieldset>
+
         <div className={styles.flex}>
           <p className={styles.category}>Цвет фона</p>
           <label className={styles.text}>белый</label>
