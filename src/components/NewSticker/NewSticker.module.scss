@@ -151,3 +151,11 @@
 .hidden {
   visibility: hidden;
 }
+
+.radio {
+  display: none;
+
+  &:checked + label .shape_pic {
+    background: #d9d9d9;
+  }
+}
