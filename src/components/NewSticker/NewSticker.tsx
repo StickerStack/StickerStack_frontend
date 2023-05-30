@@ -130,7 +130,8 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
                   <span className={cn(customVisible ? styles.visible : styles.hidden)}> см</span>
                 </div>
                 <div className={styles.error}>
-                  {(errors.width || errors.height) && `${errors.width?.message}`}
+                  {(errors.width || errors.height) &&
+                    `${errors.width?.message || errors.height?.message}`}
                 </div>
               </div>
             </RadioButton>
