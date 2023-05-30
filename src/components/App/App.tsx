@@ -56,11 +56,7 @@ const App: React.FC = () => {
             <Route path={VERIFY_EMAIL} element={<VerifyEmail />} />
             <Route
               path={VERIFY_FORGOT_PASSWORD}
-              element={
-                <ProtectedRoute redirectPath='/'>
-                  <ChangePassword />
-                </ProtectedRoute>
-              }
+              element={<ChangePassword />}
             />
             <Route
               path={ADD_STICKERS}

@@ -1,10 +1,15 @@
 import { useAppDispatch } from '../../hooks/hooks';
-import { RadioButton, TextUnderline, TitlePage } from '../UI';
+import { useSelector } from 'react-redux';
+
+import { RadioButton, TextUnderline, ButtonWithText, TitlePage } from '../UI';
 import { NewSticker } from '../index';
 import { setPreviewIsOpen } from '../../store/popupSlice';
 import { pages, pagePrice } from '../../utils/constants';
+import { ICardsState } from '../../interfaces';
+import { addCard } from '../../store/cardsSlice';
 
 import styles from './AddStickers.module.scss';
+import { generateRandomNumber } from '../../utils/generateRandomNumber';
 
 const AddStickers: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -12,10 +17,31 @@ const AddStickers: React.FC = () => {
   const fullPrice = pagePrice * pages.length;
   const itemPrice = (pagePrice * pages.length) / (pages.length * 35);
 
+  const cards = useSelector(
+    (state: { cards: ICardsState }) => state.cards.cards
+  );
+
+  const handleAddCard = () => {
+    dispatch(
+      addCard({
+        image: '',
+        shape: 'square',
+        amount: 1,
+        size: { width: 0, height: 0 },
+        id: generateRandomNumber(),
+      })
+    );
+  };
+
   return (
     <div className={styles.container}>
       <TitlePage>Заказать стикеры</TitlePage>
-      <NewSticker />
+      {cards.map((card) => (
+        <NewSticker key={card.id} card={card} />
+      ))}
+      <ButtonWithText theme='transparent' onClick={handleAddCard}>
+        Добавить стикер
+      </ButtonWithText>
       <div className={styles.info}>
         <div className={styles.info_pages}>
           <div className={styles.flex}>

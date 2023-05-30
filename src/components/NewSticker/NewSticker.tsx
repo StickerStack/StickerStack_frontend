@@ -1,9 +1,13 @@
 import { useState } from 'react';
 import cn from 'classnames';
+import { useSelector } from 'react-redux';
 import { FieldValues, useForm } from 'react-hook-form';
 
 import { ButtonCustom, CheckBoxForm, RadioButton, TooltipCustom } from '../UI';
 import { DragAndDrop } from '../';
+import { useAppDispatch } from '../../hooks/hooks';
+import { deleteCard } from '../../store/cardsSlice';
+import { ICard, ICardsState } from '../../interfaces';
 
 import { ReactComponent as RectSvg } from '../../images/icons/rect.svg';
 import { ReactComponent as RectRondedSvg } from '../../images/icons/rect_rounded.svg';
@@ -13,8 +17,18 @@ import { tooltipText } from '../../utils/texts';
 
 import styles from './NewSticker.module.scss';
 
-const NewSticker: React.FC = () => {
+interface IProps {
+  card: ICard;
+}
+
+const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
+  const dispatch = useAppDispatch();
   const [customVisible, setCustomVisible] = useState<boolean>(false);
+  const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
+
+  const handleDelete = () => {
+    dispatch(deleteCard(card.id));
+  };
 
   const {
     register,
@@ -28,7 +42,7 @@ const NewSticker: React.FC = () => {
     <div className={styles.card}>
       <form className={styles.info}>
         <div className={styles.image}>
-          <DragAndDrop />
+          <DragAndDrop card={card} />
         </div>
 
         <fieldset className={cn(styles.flex, styles.flex_shapes)}>
@@ -167,7 +181,14 @@ const NewSticker: React.FC = () => {
           <p className={styles.text}>винил</p>
         </div>
       </form>
-      <ButtonCustom type='delete' className={styles.delete} label='Удалить' />
+      {cards.length > 1 ? (
+        <ButtonCustom
+          type='delete'
+          className={styles.delete}
+          label='Удалить'
+          onClick={handleDelete}
+        />
+      ) : null}
     </div>
   );
 };
