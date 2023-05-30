@@ -8,6 +8,14 @@ import {
 
 const registerEmail = {
   required: 'Введите E-mail',
+  minLength: {
+    value: 6,
+    message: 'Минимум 6 символов',
+  },
+  maxLength: {
+    value: 50,
+    message: 'Максимум 50 символов',
+  },
   pattern: {
     value: REG_EMAIL,
     message: 'E-mail введен некорректно',
