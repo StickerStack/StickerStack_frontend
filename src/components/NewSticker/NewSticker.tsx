@@ -3,7 +3,7 @@ import cn from 'classnames';
 import { useSelector } from 'react-redux';
 import { FieldValues, useForm } from 'react-hook-form';
 
-import { ButtonCustom, CheckBoxForm, RadioButton, TooltipCustom } from '../UI';
+import { ButtonCustom, RadioButton, TooltipCustom } from '../UI';
 import { DragAndDrop } from '../';
 import { useAppDispatch } from '../../hooks/hooks';
 import { deleteCard } from '../../store/cardsSlice';
@@ -26,6 +26,7 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
   const dispatch = useAppDispatch();
   const [customVisible, setCustomVisible] = useState<boolean>(false);
   const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
+  const [amount, setAmount] = useState<number>(card.amount);
 
   const handleDelete = () => {
     dispatch(deleteCard(card.id));
@@ -36,7 +37,7 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
     formState: { errors },
   } = useForm<FieldValues>({
     mode: 'onBlur',
-    defaultValues: { amount: 1, size: 'optimal' },
+    defaultValues: { size: 'optimal' },
   });
 
   return (
@@ -84,6 +85,8 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
               type='tel'
               className={cn(styles.input, styles.quantity_input)}
               {...register('amount', registerAmount)}
+              value={amount || ''}
+              onChange={(e) => setAmount(Number(e.target.value))}
             />
           </div>
           <div className={styles.error}>{errors.amount && `${errors.amount?.message}`}</div>

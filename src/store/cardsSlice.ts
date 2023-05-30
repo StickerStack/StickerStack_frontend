@@ -7,7 +7,7 @@ const initialState: ICardsState = {
     {
       image: '',
       shape: 'square',
-      amount: 0,
+      amount: 1,
       size: { width: 0, height: 0 },
       id: generateRandomNumber(),
     },
@@ -24,16 +24,13 @@ const cardsSlice = createSlice({
     deleteCard(state, action: { payload: number; type: string }) {
       state.cards = state.cards.filter((card) => card.id !== action.payload);
     },
-    updatePicture(
-      state,
-      action: { payload: { id: number; image: string }; type: string }
-    ) {
+    updatePicture(state, action: { payload: { id: number; image: string }; type: string }) {
       state.cards = state.cards.map((card) => {
         if (card.id === action.payload.id) {
           card.image = action.payload.image;
         }
         return card;
-      })
+      });
     },
   },
 });
