@@ -1,7 +1,12 @@
 import {
   PROFILE_INPUT_MAX_LENGTH,
   PROFILE_INPUT_MIN_LENGTH,
+  AMOUNT_INPUT_MIN_LENGTH,
+  AMOUNT_INPUT_MAX_LENGTH,
+  SIZE_INPUT_MIN_LENGTH,
+  SIZE_INPUT_MAX_LENGTH,
   REG_EMAIL,
+  REG_STICKERS,
   PROFILE_ONLY_LETTERS,
   REG_PASS,
 } from './constants';
@@ -53,4 +58,20 @@ const profileName = {
   },
 };
 
-export { registerEmail, registerPassword, profileName };
+const registerAmount = {
+  required: 'Введите количество стикеров',
+  pattern: {
+    value: REG_STICKERS,
+    message: `Укажите корректное количество от ${AMOUNT_INPUT_MIN_LENGTH} до ${AMOUNT_INPUT_MAX_LENGTH}`,
+  },
+};
+
+const registerSize = {
+  required: 'Введите размеры',
+  pattern: {
+    value: REG_STICKERS,
+    message: `Укажите корректные размеры от ${SIZE_INPUT_MIN_LENGTH} до ${SIZE_INPUT_MAX_LENGTH} см`,
+  },
+};
+
+export { registerEmail, registerPassword, profileName, registerAmount, registerSize };

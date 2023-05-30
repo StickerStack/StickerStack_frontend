@@ -158,12 +158,20 @@
 }
 
 .error {
-  position: absolute;
-  bottom: -8px;
+  max-width: 190px;
+  margin-top: 5px;
+  height: 16px;
   font-family: 'Nunito';
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;
   letter-spacing: 0.01em;
   color: $error-text-color;
+}
+
+.color_sample {
+  width: 19px;
+  height: 19px;
+  box-shadow: 1px 1px 3px rgba(45, 56, 68, 0.25);
+  border-radius: 3px;
 }

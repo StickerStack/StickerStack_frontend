@@ -8,6 +8,7 @@ import { DragAndDrop } from '../';
 import { useAppDispatch } from '../../hooks/hooks';
 import { deleteCard } from '../../store/cardsSlice';
 import { ICard, ICardsState } from '../../interfaces';
+import { registerAmount, registerSize } from '../../utils/registersRHF';
 
 import { ReactComponent as RectSvg } from '../../images/icons/rect.svg';
 import { ReactComponent as RectRondedSvg } from '../../images/icons/rect_rounded.svg';
@@ -33,9 +34,9 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
   const {
     register,
     formState: { errors },
-    watch,
   } = useForm<FieldValues>({
     mode: 'onBlur',
+    defaultValues: { amount: 1, size: 'optimal' },
   });
 
   return (
@@ -74,40 +75,34 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
             </div>
           </div>
         </fieldset>
-        <div className={styles.flex}>
-          <p className={styles.category} onClick={() => console.log(errors)}>
-            Количество стикеров
-          </p>
-          <input
-            type='tel'
-            className={cn(styles.input, styles.quantity_input)}
-            {...register('amount', {
-              value: 1,
-              required: 'Введите количество стикеров',
-              min: {
-                value: 1,
-                message: 'Минимальное количество - 1',
-              },
-              max: {
-                value: 100,
-                message: 'Максимальное количество - 100',
-              },
-              pattern: {
-                value: /^[1-9][0-9]?$|^100$/,
-                message: 'Укажите корректное количество',
-              },
-            })}
-          />
-          <span className={styles.error}>{errors.amount && `${errors.amount?.message}`}</span>
+        <div>
+          <div className={styles.flex}>
+            <p className={styles.category} onClick={() => console.log(errors)}>
+              Количество стикеров
+            </p>
+            <input
+              type='tel'
+              className={cn(styles.input, styles.quantity_input)}
+              {...register('amount', registerAmount)}
+            />
+          </div>
+          <div className={styles.error}>{errors.amount && `${errors.amount?.message}`}</div>
         </div>
+
         <fieldset className={styles.flex}>
           <p className={styles.category}>Размер</p>
           <div className={styles.options}>
-            <RadioButton name='size' value='optimal' onClick={() => setCustomVisible(false)}>
+            <RadioButton
+              register={register}
+              name='size'
+              value='optimal'
+              onClick={() => setCustomVisible(false)}
+            >
               Оптимальный размер
               <TooltipCustom text={tooltipText} />
             </RadioButton>
             <RadioButton
+              register={register}
               name='size'
               value='custom'
               className={styles.size}
@@ -115,66 +110,33 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
             >
               Свой размер
               <div className={cn(customVisible ? styles.visible : styles.hidden)}>
-                <input
-                  placeholder='ширина'
-                  type='tel'
-                  className={cn(styles.input, styles.size_input)}
-                  {...register('width', {
-                    required: 'Введите размеры',
-                    min: {
-                      value: 1,
-                      message: 'Минимальный размер - 1 см',
-                    },
-                    max: {
-                      value: 100,
-                      message: 'Максимальный размер - 25 см',
-                    },
-                    pattern: {
-                      value: /^[1-9][0-9]?$|^100$/,
-                      message: 'Укажите корректные размеры',
-                    },
-                  })}
-                />{' '}
-                x{' '}
-                <input
-                  className={cn(styles.input, styles.size_input)}
-                  placeholder='высота'
-                  type='tel'
-                  {...register('height', {
-                    required: 'Введите размеры',
-                    min: {
-                      value: 1,
-                      message: 'Минимальный размер - 1 см',
-                    },
-                    max: {
-                      value: 100,
-                      message: 'Максимальный размер - 25 см',
-                    },
-                    pattern: {
-                      value: /^[1-9][0-9]?$|^100$/,
-                      message: 'Укажите корректные размеры',
-                    },
-                  })}
-                />
-                <span className={cn(customVisible ? styles.visible : styles.hidden)}> см</span>
-                <span className={styles.error}>
+                <div>
+                  <input
+                    placeholder='ширина'
+                    type='tel'
+                    className={cn(styles.input, styles.size_input)}
+                    {...register('width', registerSize)}
+                  />{' '}
+                  x{' '}
+                  <input
+                    className={cn(styles.input, styles.size_input)}
+                    placeholder='высота'
+                    type='tel'
+                    {...register('height', registerSize)}
+                  />
+                  <span className={cn(customVisible ? styles.visible : styles.hidden)}> см</span>
+                </div>
+                <div className={styles.error}>
                   {(errors.width || errors.height) && `${errors.width?.message}`}
-                </span>
+                </div>
               </div>
             </RadioButton>
           </div>
         </fieldset>
         <div className={styles.flex}>
           <p className={styles.category}>Цвет фона</p>
-          <label className={styles.text}>
-            белый
-            <CheckBoxForm
-              name='colorCheckbox'
-              register={register}
-              option={{ required: 'Обязательное поле' }}
-              error={errors?.confirmCheckbox}
-            />
-          </label>
+          <label className={styles.text}>белый</label>
+          <div className={styles.color_sample} />
         </div>
         <div className={styles.flex}>
           <p className={styles.category}>Материал</p>
