@@ -1,7 +1,7 @@
 import sticker_page from '../images/sticker_page.svg';
 // eslint-disable-next-line no-useless-escape
 const REG_EMAIL = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
-const REG_PASS = /(^[A-Za-z0-9])\w+/g;
+const REG_PASS = /(^[A-Za-z0-9~`!?@#$%^&*"№()])+/g;
 /* Только латинские и кириллические буквы и знак - */
 const PROFILE_ONLY_LETTERS = /^[а-яА-ЯёЁa-zA-Z-]+$/;
 // http://api.stickerstack.ru/v1   http://localhost:8000/v1  http://93.95.98.73:7080/v1
