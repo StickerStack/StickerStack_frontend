@@ -1,6 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { ICard, ICardsState } from '../interfaces';
 import { generateRandomNumber } from '../utils/generateRandomNumber';
+import { api } from '../utils/api';
 
 const initialState: ICardsState = {
   cards: [
@@ -13,6 +14,18 @@ const initialState: ICardsState = {
     },
   ],
 };
+
+const removeBackground = createAsyncThunk(
+  'auth/removeBackground',
+  async (data: FormData, { rejectWithValue }) => {
+    try {
+      const response = await api.removeBackground(data);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  }
+);
 
 const cardsSlice = createSlice({
   name: 'cardsSlice',
@@ -41,4 +54,4 @@ const cardsSlice = createSlice({
 const cardsSliceReducer = cardsSlice.reducer;
 const { addCard, deleteCard, updatePicture } = cardsSlice.actions;
 
-export { cardsSliceReducer, addCard, deleteCard, updatePicture };
+export { cardsSliceReducer, addCard, deleteCard, updatePicture, removeBackground };
