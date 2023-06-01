@@ -1,6 +1,6 @@
-import { useState } from 'react';
 import cn from 'classnames';
 import { useSelector } from 'react-redux';
+import { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 
 import { ButtonCustom, Error, Input, RadioButton, SizeInput, TooltipCustom } from '../UI';
@@ -8,6 +8,7 @@ import { DragAndDrop } from '../';
 import { useAppDispatch } from '../../hooks/hooks';
 import { deleteCard } from '../../store/cardsSlice';
 import { ICard, ICardsState } from '../../interfaces';
+import { TCardShape } from '../../interfaces/ICard';
 import { registerAmount, registerSize } from '../../utils/registersRHF';
 
 import { ReactComponent as RectSvg } from '../../images/icons/rect.svg';
@@ -25,6 +26,7 @@ interface IProps {
 const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
   const dispatch = useAppDispatch();
   const [customVisible, setCustomVisible] = useState<boolean>(false);
+  const [cardShape, setCardShape] = useState<TCardShape>('square');
   const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
   const [amount, setAmount] = useState<number>(card.amount);
   const [width, setWidth] = useState<number>();
@@ -46,6 +48,10 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
     defaultValues: { size: 'optimal' },
   });
 
+  const onShapeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCardShape(event.target.value as TCardShape);
+  };
+
   return (
     <div className={styles.card}>
       <form className={styles.info}>
@@ -55,30 +61,77 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
         <fieldset className={cn(styles.flex, styles.flex_shapes)}>
           <p className={styles.category}>Форма</p>
           <div className={styles.shapes}>
-            <div className={styles.shape}>
-              <div className={styles.shape_pic}>
-                <RectSvg />
+            <input
+              className={styles.radio}
+              type='radio'
+              id={`${card.id}-shape-square`}
+              name={`${card.id}-shape`}
+              value='square'
+              checked={cardShape === 'square'}
+              onChange={onShapeChange}
+            />
+            <label className={styles.label} htmlFor={`${card.id}-shape-square`}>
+              <div className={styles.shape}>
+                <div className={styles.shape_pic}>
+                  <RectSvg />
+                </div>
+                <span className={styles.shape_title}>Квадрат</span>
               </div>
-              <span className={styles.shape_title}>Квадрат</span>
-            </div>
-            <div className={styles.shape}>
-              <div className={styles.shape_pic}>
-                <RectRondedSvg />
+            </label>
+
+            <input
+              className={styles.radio}
+              type='radio'
+              id={`${card.id}-shape-rounded-square`}
+              name={`${card.id}-shape`}
+              value='rounded-square'
+              checked={cardShape === 'rounded-square'}
+              onChange={onShapeChange}
+            />
+            <label className={styles.label} htmlFor={`${card.id}-shape-rounded-square`}>
+              <div className={styles.shape}>
+                <div className={styles.shape_pic}>
+                  <RectRondedSvg />
+                </div>
+                <span className={styles.shape_title}>Закругленный квадрат</span>
               </div>
-              <span className={styles.shape_title}>Закругленный квадрат</span>
-            </div>
-            <div className={styles.shape}>
-              <div className={styles.shape_pic}>
-                <CircleSvg />
+            </label>
+
+            <input
+              className={styles.radio}
+              type='radio'
+              id={`${card.id}-shape-circle`}
+              name={`${card.id}-shape`}
+              value='circle'
+              checked={cardShape === 'circle'}
+              onChange={onShapeChange}
+            />
+            <label className={styles.label} htmlFor={`${card.id}-shape-circle`}>
+              <div className={styles.shape}>
+                <div className={styles.shape_pic}>
+                  <CircleSvg />
+                </div>
+                <span className={styles.shape_title}>Круг</span>
               </div>
-              <span className={styles.shape_title}>Круг</span>
-            </div>
-            <div className={styles.shape}>
-              <div className={styles.shape_pic}>
-                <ContourSvg />
+            </label>
+
+            <input
+              className={styles.radio}
+              type='radio'
+              id={`${card.id}-shape-contour`}
+              name={`${card.id}-shape`}
+              value='contour'
+              checked={cardShape === 'contour'}
+              onChange={onShapeChange}
+            />
+            <label className={styles.label} htmlFor={`${card.id}-shape-contour`}>
+              <div className={styles.shape}>
+                <div className={styles.shape_pic}>
+                  <ContourSvg />
+                </div>
+                <span className={styles.shape_title}>По контуру</span>
               </div>
-              <span className={styles.shape_title}>По контуру</span>
-            </div>
+            </label>
           </div>
         </fieldset>
         <div>
