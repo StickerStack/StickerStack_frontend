@@ -1,6 +1,7 @@
+export type TCardShape = 'square' | 'rounded-square' | 'circle' | 'contour';
 export interface ICard {
   image: string;
-  shape: 'square' | 'rounded-square' | 'circle' | 'contour';
+  shape: TCardShape;
   amount: number;
   size: {
     width: number;
