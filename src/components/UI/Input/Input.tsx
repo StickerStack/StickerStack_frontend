@@ -12,6 +12,7 @@ import styles from './Input.module.scss';
 
 interface IProps {
   name: string;
+  id?: string;
   value?: string | number;
   type: string;
   placeholder?: string;
@@ -24,6 +25,7 @@ interface IProps {
 
 const Input: React.FC<IProps> = ({
   name,
+  id,
   value,
   type,
   register,
@@ -35,6 +37,7 @@ const Input: React.FC<IProps> = ({
 }: IProps) => {
   return (
     <input
+      id={id}
       value={value || ''}
       placeholder={placeholder}
       type={type}

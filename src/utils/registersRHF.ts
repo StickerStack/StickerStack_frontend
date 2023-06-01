@@ -62,7 +62,7 @@ const registerAmount = {
   required: 'Введите количество стикеров',
   pattern: {
     value: REG_STICKERS,
-    message: `Укажите корректное количество от ${AMOUNT_INPUT_MIN_LENGTH} до ${AMOUNT_INPUT_MAX_LENGTH}`,
+    message: `Укажите количество от ${AMOUNT_INPUT_MIN_LENGTH} до ${AMOUNT_INPUT_MAX_LENGTH}`,
   },
 };
 
@@ -70,7 +70,7 @@ const registerSize = {
   required: 'Введите размеры',
   pattern: {
     value: REG_STICKERS,
-    message: `Укажите корректные размеры от ${SIZE_INPUT_MIN_LENGTH} до ${SIZE_INPUT_MAX_LENGTH} см`,
+    message: `Укажите размеры от ${SIZE_INPUT_MIN_LENGTH} до ${SIZE_INPUT_MAX_LENGTH} см`,
   },
 };
 

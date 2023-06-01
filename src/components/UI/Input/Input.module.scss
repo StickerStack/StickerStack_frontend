@@ -8,8 +8,28 @@
   padding: 5px auto;
   box-sizing: border-box;
   text-align: center;
+  outline: none;
+  transition: border-color 0.2s ease-in-out;
+
+  &:focus {
+    border-color: #d9d9d9;
+
+    &::placeholder {
+      color: transparent;
+    }
+  }
+  &:hover {
+    border-color: #d9d9d9;
+  }
 
   &_error {
     border-color: $error-text-color;
+
+    &:focus {
+      border-color: $error-text-color;
+    }
+    &:hover {
+      border-color: $error-text-color;
+    }
   }
 }

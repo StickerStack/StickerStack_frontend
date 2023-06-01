@@ -115,7 +115,8 @@
 
 .option {
   display: flex;
-  gap: 5px;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .delete {
@@ -136,4 +137,8 @@
   height: 19px;
   box-shadow: 1px 1px 3px rgba(45, 56, 68, 0.25);
   border-radius: 3px;
+}
+
+.error {
+  max-width: 140px;
 }

@@ -35,7 +35,6 @@ const SizeInput: React.FC<IProps> = ({
   setWidth,
   setHeight,
   register,
-  option,
   errorWidth,
   errorHeight,
 }: IProps) => {

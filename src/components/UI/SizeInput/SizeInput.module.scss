@@ -1,5 +1,12 @@
 @import '../../../utils/scss-variables';
 
+.inputs {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 5px;
+}
+
 .input {
   width: 75px;
   height: 26px;
