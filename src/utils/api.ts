@@ -180,7 +180,7 @@ class Api {
   }
 
   public async removeBackground(formData: FormData) {
-    const data = await fetch(`${this._url}/v1/stickerslogic/rembg-image`, {
+    const data = await fetch(`${this._url}/stickerslogic/rembg-image`, {
       method: 'POST',
       credentials: 'include',
       headers: {

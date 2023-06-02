@@ -17,10 +17,10 @@ const initialState: ICardsState = {
 
 const removeBackground = createAsyncThunk(
   'auth/removeBackground',
-  async (data: FormData, { rejectWithValue }) => {
+  async (data: {data: FormData, id: number}, { rejectWithValue }) => {
     try {
-      const response = await api.removeBackground(data);
-      return response.data;
+      const response = await api.removeBackground(data.data);
+      return {data: response.data, id: data.id};
     } catch (err) {
       return rejectWithValue(err);
     }
@@ -37,6 +37,14 @@ const cardsSlice = createSlice({
     deleteCard(state, action: { payload: number; type: string }) {
       state.cards = state.cards.filter((card) => card.id !== action.payload);
     },
+    updateCard(state, action) {
+      const {id, updatedCard} = action.payload;
+      const indexCard = state.cards.findIndex((card) => card.id === id);
+
+      if(indexCard !== -1) {
+        state.cards[indexCard] = updatedCard;
+      }      
+    },
     updatePicture(
       state,
       action: { payload: { id: number; image: string }; type: string }
@@ -49,9 +57,14 @@ const cardsSlice = createSlice({
       })
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(removeBackground.fulfilled, (state, action) => {
+      console.log('%ccardsSlice.ts line:62 action.payload', 'color: #007acc;', action.payload.data, action.payload.id);
+    });
+  }
 });
 
 const cardsSliceReducer = cardsSlice.reducer;
-const { addCard, deleteCard, updatePicture } = cardsSlice.actions;
+const { addCard, deleteCard, updatePicture, updateCard } = cardsSlice.actions;
 
-export { cardsSliceReducer, addCard, deleteCard, updatePicture, removeBackground };
+export { cardsSliceReducer, addCard, deleteCard, updatePicture, removeBackground, updateCard };
