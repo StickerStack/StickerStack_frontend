@@ -4,6 +4,7 @@ import {
   REG_EMAIL,
   PROFILE_ONLY_LETTERS,
   REG_PASS,
+  PASS_SYMBOLS,
 } from './constants';
 
 const registerEmail = {
@@ -34,7 +35,19 @@ const registerPassword = {
   },
   pattern: {
     value: REG_PASS,
-    message: 'Только латинские буквы',
+    message: `Только латинские буквы, цифры, символы ${PASS_SYMBOLS}`,
+  },
+};
+
+const registerRepeatPassword = {
+  required: 'Введите пароль повторно',
+  minLength: {
+    value: 7,
+    message: 'Минимум 7 символов',
+  },
+  maxLength: {
+    value: 32,
+    message: 'Максимум 32 символа',
   },
 };
 
@@ -53,4 +66,4 @@ const profileName = {
   },
 };
 
-export { registerEmail, registerPassword, profileName };
+export { registerEmail, registerPassword, registerRepeatPassword, profileName };

@@ -43,9 +43,6 @@
       color: #000;
       background-color: transparent;
 
-      &_error {
-      }
-
       &:focus {
         ~ {
           .label {
@@ -78,21 +75,15 @@
     @include font(14px, 17px, 400);
     color: $error-text-color;
     padding: 0 0 0 20px;
-    position: absolute;
-    bottom: -22px;
+    height: 0;
+    opacity: 0;
+    transition: height 0.3s, opacity 0.3s ease-in-out;
+
+    &_shown {
+      height: fit-content;
+      opacity: 1;
+    }
   }
-}
-
-.icon_show {
-  bottom: 8px;
-  width: 23px;
-  height: 16px;
-}
-
-.icon_hidden {
-  bottom: 6px;
-  width: 25px;
-  height: 20px;
 }
 
 input::-ms-reveal {

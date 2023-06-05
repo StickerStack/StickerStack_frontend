@@ -5,7 +5,7 @@ import { setMessageIsOpen } from '../../store/popupSlice';
 import { ButtonWithText, InputForm, TitleForm } from '../UI';
 import { useAppDispatch } from '../../hooks/hooks';
 import { resetPassword } from '../../store/authSlice';
-import { registerPassword } from '../../utils/registersRHF';
+import { registerPassword, registerRepeatPassword } from '../../utils/registersRHF';
 import styles from './ChangePassword.module.scss';
 
 const ChangePassword: React.FC = () => {
@@ -71,13 +71,12 @@ const ChangePassword: React.FC = () => {
         <InputForm
           register={register}
           option={{
-            ...registerPassword,
+            ...registerRepeatPassword,
             validate: (val: string) => {
               if (val !== watch('newPassword')) {
                 return 'Пароли не совпадают';
               }
             },
-            required: 'Введи пароль повторно',
           }}
           error={errors?.newPasswordCheck}
           placeholder='Повторите пароль'

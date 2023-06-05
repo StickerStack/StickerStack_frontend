@@ -7,11 +7,10 @@ import { Signin } from '../';
 import { useAppDispatch } from '../../hooks/hooks';
 import { setMessageIsOpen, switchForm, setIsOpen } from '../../store/popupSlice';
 import { getUser, updateStatus } from '../../store/userSlice';
-import {signUp, signIn, sendVerificationCode} from '../../store/authSlice';
-import { registerEmail, registerPassword } from '../../utils/registersRHF';
+import { signUp, signIn, sendVerificationCode } from '../../store/authSlice';
+import { registerEmail, registerPassword, registerRepeatPassword } from '../../utils/registersRHF';
 import styles from './Signup.module.scss';
 import { ADD_STICKERS } from '../../utils/constants';
-
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
@@ -90,13 +89,12 @@ const Signup: React.FC = () => {
         <InputForm
           register={register}
           option={{
-            ...registerPassword,
+            ...registerRepeatPassword,
             validate: (val: string) => {
               if (val !== watch('password')) {
                 return 'Пароли не совпадают';
               }
             },
-            required: 'Введи пароль повторно',
           }}
           error={errors?.passwordCheck}
           placeholder='Подтвердите пароль'
