@@ -1,7 +1,6 @@
 import sticker_page from '../images/sticker_page.svg';
 // eslint-disable-next-line no-useless-escape
 const REG_EMAIL = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
-const REG_PASS = /(^[A-Za-z0-9])\w+/g;
 // Только цифры от 1 до 100
 const REG_STICKERS = /^[1-9][0-9]?$|^100$/;
 const PASS_SYMBOLS = '~`!?@#$%^&*"№()';
