@@ -4,6 +4,8 @@ const REG_EMAIL = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 const REG_PASS = /(^[A-Za-z0-9])\w+/g;
 // Только цифры от 1 до 100
 const REG_STICKERS = /^[1-9][0-9]?$|^100$/;
+const PASS_SYMBOLS = '~`!?@#$%^&*"№()';
+const REG_PASS = /(^[A-Za-z0-9~`!?@#$%^&*"№()])+/g;
 /* Только латинские и кириллические буквы и знак - */
 const PROFILE_ONLY_LETTERS = /^[а-яА-ЯёЁa-zA-Z-]+$/;
 // http://api.stickerstack.ru/v1   http://localhost:8000/v1  http://93.95.98.73:7080/v1
@@ -33,6 +35,7 @@ export {
   REG_EMAIL,
   REG_PASS,
   REG_STICKERS,
+  PASS_SYMBOLS,
   PROFILE_ONLY_LETTERS,
   PROFILE,
   PAGE_404,
