@@ -8,7 +8,7 @@ const initialState: ICardsState = {
     {
       image: '',
       shape: 'square',
-      amount: 0,
+      amount: 1,
       size: { width: 0, height: 0 },
       id: generateRandomNumber(),
     },
@@ -17,14 +17,14 @@ const initialState: ICardsState = {
 
 const removeBackground = createAsyncThunk(
   'auth/removeBackground',
-  async (data: {data: FormData, id: number}, { rejectWithValue }) => {
+  async (data: { data: FormData; id: number }, { rejectWithValue }) => {
     try {
       const response = await api.removeBackground(data.data);
-      return {data: response.data, id: data.id};
+      return { data: response.data, id: data.id };
     } catch (err) {
       return rejectWithValue(err);
     }
-  }
+  },
 );
 
 const cardsSlice = createSlice({
@@ -38,30 +38,32 @@ const cardsSlice = createSlice({
       state.cards = state.cards.filter((card) => card.id !== action.payload);
     },
     updateCard(state, action) {
-      const {id, updatedCard} = action.payload;
+      const { id, updatedCard } = action.payload;
       const indexCard = state.cards.findIndex((card) => card.id === id);
 
-      if(indexCard !== -1) {
+      if (indexCard !== -1) {
         state.cards[indexCard] = updatedCard;
-      }      
+      }
     },
-    updatePicture(
-      state,
-      action: { payload: { id: number; image: string }; type: string }
-    ) {
+    updatePicture(state, action: { payload: { id: number; image: string }; type: string }) {
       state.cards = state.cards.map((card) => {
         if (card.id === action.payload.id) {
           card.image = action.payload.image;
         }
         return card;
-      })
+      });
     },
   },
   extraReducers: (builder) => {
     builder.addCase(removeBackground.fulfilled, (state, action) => {
-      console.log('%ccardsSlice.ts line:62 action.payload', 'color: #007acc;', action.payload.data, action.payload.id);
+      console.log(
+        '%ccardsSlice.ts line:62 action.payload',
+        'color: #007acc;',
+        action.payload.data,
+        action.payload.id,
+      );
     });
-  }
+  },
 });
 
 const cardsSliceReducer = cardsSlice.reducer;

@@ -1,13 +1,15 @@
 import cn from 'classnames';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
+import { FieldValues, useForm } from 'react-hook-form';
 
-import { ButtonCustom, RadioButton, TooltipCustom } from '../UI';
+import { ButtonCustom, Error, Input, RadioButton, SizeInput, TooltipCustom } from '../UI';
 import { DragAndDrop } from '../';
 import { useAppDispatch } from '../../hooks/hooks';
 import { deleteCard, removeBackground, updateCard } from '../../store/cardsSlice';
 import { ICard, ICardsState } from '../../interfaces';
-import { TCardShape } from "../../interfaces/ICard";
+import { TCardShape } from '../../interfaces/ICard';
+import { registerAmount, registerSize } from '../../utils/registersRHF';
 
 import { ReactComponent as RectSvg } from '../../images/icons/rect.svg';
 import { ReactComponent as RectRondedSvg } from '../../images/icons/rect_rounded.svg';
@@ -26,24 +28,39 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
   const [customVisible, setCustomVisible] = useState<boolean>(false);
   const [cardShape, setCardShape] = useState<TCardShape>('square');
   const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
+  const [amount, setAmount] = useState<number>(card.amount);
+  const [width, setWidth] = useState<number>();
+  const [height, setHeight] = useState<number>();
 
   const handleDelete = () => {
     dispatch(deleteCard(card.id));
   };
 
+  const handleChange = (e: { target: { value: unknown } }) => {
+    setAmount(Number(e.target.value));
+  };
+
+  const {
+    register,
+    formState: { errors },
+  } = useForm<FieldValues>({
+    mode: 'onBlur',
+    defaultValues: { size: 'optimal' },
+  });
+
   const onShapeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCardShape(event.target.value as TCardShape);
-    const copyCard = {...card };
+    const copyCard = { ...card };
     copyCard.shape = event.target.value as TCardShape;
-    
-    if (event.target.value as TCardShape === 'contour') {
+
+    if ((event.target.value as TCardShape) === 'contour') {
       const formData = new FormData();
       formData.append('file', card.image);
-      dispatch(removeBackground({data: formData, id: card.id}));
+      dispatch(removeBackground({ data: formData, id: card.id }));
     }
 
-    dispatch(updateCard({id: card.id, updatedCard: copyCard }));
-  }
+    dispatch(updateCard({ id: card.id, updatedCard: copyCard }));
+  };
 
   return (
     <div className={styles.card}>
@@ -51,17 +68,17 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
         <div className={styles.image}>
           <DragAndDrop card={card} />
         </div>
-
         <fieldset className={cn(styles.flex, styles.flex_shapes)}>
           <p className={styles.category}>Форма</p>
           <div className={styles.shapes}>
-            <input className={styles.radio}
-               type="radio"
-               id={`${card.id}-shape-square`}
-               name={`${card.id}-shape`}
-               value="square"
-               checked={cardShape === "square"}
-               onChange={onShapeChange}
+            <input
+              className={styles.radio}
+              type='radio'
+              id={`${card.id}-shape-square`}
+              name={`${card.id}-shape`}
+              value='square'
+              checked={cardShape === 'square'}
+              onChange={onShapeChange}
             />
             <label className={styles.label} htmlFor={`${card.id}-shape-square`}>
               <div className={styles.shape}>
@@ -72,13 +89,14 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
               </div>
             </label>
 
-            <input className={styles.radio}
-               type="radio"
-               id={`${card.id}-shape-rounded-square`}
-               name={`${card.id}-shape`}
-               value="rounded-square"
-               checked={cardShape === "rounded-square"}
-               onChange={onShapeChange}
+            <input
+              className={styles.radio}
+              type='radio'
+              id={`${card.id}-shape-rounded-square`}
+              name={`${card.id}-shape`}
+              value='rounded-square'
+              checked={cardShape === 'rounded-square'}
+              onChange={onShapeChange}
             />
             <label className={styles.label} htmlFor={`${card.id}-shape-rounded-square`}>
               <div className={styles.shape}>
@@ -89,13 +107,14 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
               </div>
             </label>
 
-            <input className={styles.radio}
-               type="radio"
-               id={`${card.id}-shape-circle`}
-                name={`${card.id}-shape`}
-               value="circle"
-               checked={cardShape === "circle"}
-               onChange={onShapeChange}
+            <input
+              className={styles.radio}
+              type='radio'
+              id={`${card.id}-shape-circle`}
+              name={`${card.id}-shape`}
+              value='circle'
+              checked={cardShape === 'circle'}
+              onChange={onShapeChange}
             />
             <label className={styles.label} htmlFor={`${card.id}-shape-circle`}>
               <div className={styles.shape}>
@@ -106,13 +125,14 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
               </div>
             </label>
 
-            <input className={styles.radio}
-               type="radio"
-               id={`${card.id}-shape-contour`}
-               name={`${card.id}-shape`}
-               value="contour"
-               checked={cardShape === "contour"}
-               onChange={onShapeChange}
+            <input
+              className={styles.radio}
+              type='radio'
+              id={`${card.id}-shape-contour`}
+              name={`${card.id}-shape`}
+              value='contour'
+              checked={cardShape === 'contour'}
+              onChange={onShapeChange}
             />
             <label className={styles.label} htmlFor={`${card.id}-shape-contour`}>
               <div className={styles.shape}>
@@ -124,33 +144,70 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
             </label>
           </div>
         </fieldset>
-        <div className={styles.flex}>
-          <p className={styles.category}>Количество стикеров</p>
-          <input className={cn(styles.input, styles.quantity_input)} />
+        <div>
+          <div className={styles.flex}>
+            <label className={styles.category} htmlFor='amount' onClick={() => console.log(errors)}>
+              Количество стикеров
+            </label>
+            <div>
+              <Input
+                name='amount'
+                id='amount'
+                value={amount}
+                option={registerAmount}
+                type='tel'
+                register={register}
+                onChange={handleChange}
+                error={errors.amount}
+              />
+              <Error className={styles.error}>{errors.amount && `${errors.amount?.message}`}</Error>
+            </div>
+          </div>
         </div>
         <fieldset className={styles.flex}>
           <p className={styles.category}>Размер</p>
           <div className={styles.options}>
-            <RadioButton name='size' value='optimal' onClick={() => setCustomVisible(false)}>
+            <RadioButton
+              register={register}
+              name='size'
+              value='optimal'
+              onClick={() => setCustomVisible(false)}
+            >
               Оптимальный размер
               <TooltipCustom text={tooltipText} />
             </RadioButton>
-            <RadioButton name='size' value='custom' onClick={() => setCustomVisible(true)}>
-              Свой размер
+            <div className={styles.option}>
+              <RadioButton
+                register={register}
+                name='size'
+                value='custom'
+                className={styles.size}
+                onClick={() => setCustomVisible(true)}
+              >
+                Свой размер
+              </RadioButton>
               <div className={cn(customVisible ? styles.visible : styles.hidden)}>
-                <input className={cn(styles.input, styles.size_input)} placeholder='ширина' /> x{' '}
-                <input className={cn(styles.input, styles.size_input)} placeholder='высота' />
-                <span className={cn(customVisible ? styles.visible : styles.hidden)}> см</span>
+                <SizeInput
+                  nameWidth='width'
+                  nameHeight='height'
+                  valueWidth={width}
+                  valueHeight={height}
+                  setWidth={setWidth}
+                  setHeight={setHeight}
+                  register={register}
+                  errorWidth={errors.width}
+                  errorHeight={errors.height}
+                  option={registerSize}
+                />
               </div>
-            </RadioButton>
+            </div>
           </div>
         </fieldset>
+
         <div className={styles.flex}>
           <p className={styles.category}>Цвет фона</p>
-          <label className={styles.text}>
-            белый
-            <input type='checkbox' />
-          </label>
+          <label className={styles.text}>белый</label>
+          <div className={styles.color_sample} />
         </div>
         <div className={styles.flex}>
           <p className={styles.category}>Материал</p>
