@@ -32,9 +32,8 @@ const ResetPassword: React.FC = () => {
       <TitleForm>Восстановление пароля</TitleForm>
       <InputForm
         register={register}
-        option={{...registerEmail, validate: (value: string) => {
-          setValue('email', value.trim());
-          return !!value.trim();
+        option={{...registerEmail, onBlur: (value: React.FocusEvent<HTMLInputElement>) => {
+          setValue('email', value.target.value.trim());
         }}}
         error={errors?.email}
         placeholder='Введите E-mail'

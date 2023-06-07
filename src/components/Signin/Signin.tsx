@@ -67,9 +67,8 @@ const Signin: React.FC = () => {
       <div className={styles.inputs}>
         <InputForm
           register={register}
-          option={{...registerEmail, validate: (value: string) => {
-            setValue('email', value.trim());
-            return !!value.trim();
+          option={{...registerEmail, onBlur: (value: React.FocusEvent<HTMLInputElement>) => {
+            setValue('email', value.target.value.trim());
           }}}
           error={errors?.email}
           placeholder='Введите E-mail'
