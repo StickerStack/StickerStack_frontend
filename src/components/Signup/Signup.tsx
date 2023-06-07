@@ -17,6 +17,7 @@ const Signup: React.FC = () => {
   const dispatch = useAppDispatch();
   const {
     register,
+    setValue,
     getValues,
     formState: { errors, dirtyFields },
     watch,
@@ -66,7 +67,9 @@ const Signup: React.FC = () => {
       <div className={styles.inputs}>
         <InputForm
           register={register}
-          option={registerEmail}
+          option={{...registerEmail, onBlur: (value: React.FocusEvent<HTMLInputElement>) => {
+            setValue('email', value.target.value.trim());
+          }}}
           error={errors?.email}
           placeholder='example@gmail.com'
           name='email'

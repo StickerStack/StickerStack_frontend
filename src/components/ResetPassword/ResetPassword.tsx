@@ -13,6 +13,7 @@ const ResetPassword: React.FC = () => {
   const dispatch = useAppDispatch();
   const {
     register,
+    setValue,
     formState: { errors },
     handleSubmit,
   } = useForm({
@@ -31,7 +32,9 @@ const ResetPassword: React.FC = () => {
       <TitleForm>Восстановление пароля</TitleForm>
       <InputForm
         register={register}
-        option={registerEmail}
+        option={{...registerEmail, onBlur: (value: React.FocusEvent<HTMLInputElement>) => {
+          setValue('email', value.target.value.trim());
+        }}}
         error={errors?.email}
         placeholder='Введите E-mail'
         name='email'
