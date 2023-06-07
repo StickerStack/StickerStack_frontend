@@ -53,6 +53,7 @@
 }
 
 .flex {
+  position: relative;
   padding: 0;
   border: none;
   @include flex(row, start, start);
@@ -103,33 +104,6 @@
   text-align: center;
 }
 
-.input {
-  width: 60px;
-  border: 1px solid $main-text-color;
-  padding: 5px auto;
-  box-sizing: border-box;
-  text-align: center;
-}
-
-.quantity_input {
-  height: 30px;
-  border-radius: 5px;
-}
-
-.size_input {
-  width: 75px;
-  height: 26px;
-  border-radius: 8px;
-  padding: 5px 15px;
-  box-sizing: border-box;
-
-  &::placeholder {
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 14px;
-  }
-}
-
 .options {
   display: flex;
   flex-direction: column;
@@ -137,6 +111,12 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
+}
+
+.option {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .delete {
@@ -150,4 +130,23 @@
 }
 .hidden {
   visibility: hidden;
+}
+
+.radio {
+  display: none;
+
+  &:checked + label .shape_pic {
+    background: #d9d9d9;
+  }
+}
+
+.color_sample {
+  width: 19px;
+  height: 19px;
+  box-shadow: 1px 1px 3px rgba(45, 56, 68, 0.25);
+  border-radius: 3px;
+}
+
+.error {
+  max-width: 140px;
 }

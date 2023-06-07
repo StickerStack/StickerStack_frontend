@@ -90,7 +90,7 @@ class Api {
       body: JSON.stringify({
         email: email,
         first_name: firstName,
-        last_name: lastName
+        last_name: lastName,
       }),
     });
 
@@ -121,7 +121,7 @@ class Api {
       headers: this._headers,
       body: JSON.stringify({
         token: token,
-        password: newPassword
+        password: newPassword,
       }),
     });
 
@@ -136,12 +136,12 @@ class Api {
       credentials: 'include',
       headers: this._headers,
       body: JSON.stringify({
-        token: token
-      })
+        token: token,
+      }),
     });
 
     const response = await this._checkResponse(data);
-        
+
     return response;
   }
 
@@ -161,7 +161,7 @@ class Api {
       method: 'POST',
       credentials: 'include',
       headers: {
-        'Content-Type': 'multipart/form-data'
+        'Content-Type': 'multipart/form-data',
       },
       body: formData,
     });
@@ -173,6 +173,21 @@ class Api {
 
   public async getProfileImage() {
     const data = await fetch(`${this._url}/auth/profileimage`);
+
+    const response = await this._checkResponse(data);
+
+    return response;
+  }
+
+  public async removeBackground(formData: FormData) {
+    const data = await fetch(`${this._url}/stickerslogic/rembg-image`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      body: formData,
+    });
 
     const response = await this._checkResponse(data);
 

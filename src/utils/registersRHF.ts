@@ -1,13 +1,27 @@
 import {
   PROFILE_INPUT_MAX_LENGTH,
   PROFILE_INPUT_MIN_LENGTH,
+  AMOUNT_INPUT_MIN_LENGTH,
+  AMOUNT_INPUT_MAX_LENGTH,
+  SIZE_INPUT_MIN_LENGTH,
+  SIZE_INPUT_MAX_LENGTH,
   REG_EMAIL,
+  REG_STICKERS,
   PROFILE_ONLY_LETTERS,
   REG_PASS,
+  PASS_SYMBOLS,
 } from './constants';
 
 const registerEmail = {
   required: 'Введите E-mail',
+  minLength: {
+    value: 6,
+    message: 'Минимум 6 символов',
+  },
+  maxLength: {
+    value: 50,
+    message: 'Максимум 50 символов',
+  },
   pattern: {
     value: REG_EMAIL,
     message: 'E-mail введен некорректно',
@@ -26,7 +40,19 @@ const registerPassword = {
   },
   pattern: {
     value: REG_PASS,
-    message: 'Только латинские буквы',
+    message: `Только латинские буквы, цифры, символы ${PASS_SYMBOLS}`,
+  },
+};
+
+const registerRepeatPassword = {
+  required: 'Введите пароль повторно',
+  minLength: {
+    value: 7,
+    message: 'Минимум 7 символов',
+  },
+  maxLength: {
+    value: 32,
+    message: 'Максимум 32 символа',
   },
 };
 
@@ -45,4 +71,20 @@ const profileName = {
   },
 };
 
-export { registerEmail, registerPassword, profileName };
+const registerAmount = {
+  required: 'Введите количество стикеров',
+  pattern: {
+    value: REG_STICKERS,
+    message: `Укажите количество от ${AMOUNT_INPUT_MIN_LENGTH} до ${AMOUNT_INPUT_MAX_LENGTH}`,
+  },
+};
+
+const registerSize = {
+  required: 'Введите размеры',
+  pattern: {
+    value: REG_STICKERS,
+    message: `Укажите размеры от ${SIZE_INPUT_MIN_LENGTH} до ${SIZE_INPUT_MAX_LENGTH} см`,
+  },
+};
+
+export { registerEmail, registerPassword, registerRepeatPassword, profileName, registerAmount, registerSize };

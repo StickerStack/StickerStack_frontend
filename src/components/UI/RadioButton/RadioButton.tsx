@@ -1,13 +1,15 @@
+import { FieldValues, UseFormRegister } from 'react-hook-form';
 import cn from 'classnames';
 import styles from './RadioButton.module.scss';
 
 interface IProps {
   children: React.ReactNode;
   className?: string;
-  name?: string;
+  name: string;
   value?: string;
   checked?: boolean;
   onClick?: () => void;
+  register?: UseFormRegister<FieldValues>;
 }
 
 const RadioButton: React.FC<IProps> = ({
@@ -17,6 +19,7 @@ const RadioButton: React.FC<IProps> = ({
   value,
   checked,
   onClick,
+  register,
 }: IProps) => {
   return (
     <label className={styles.label}>
@@ -27,6 +30,7 @@ const RadioButton: React.FC<IProps> = ({
         value={value}
         className={cn(styles.radio, className)}
         onClick={onClick}
+        {...(register && register(name))}
       />
       {children}
     </label>

@@ -7,17 +7,17 @@ import { Signin } from '../';
 import { useAppDispatch } from '../../hooks/hooks';
 import { setMessageIsOpen, switchForm, setIsOpen } from '../../store/popupSlice';
 import { getUser, updateStatus } from '../../store/userSlice';
-import {signUp, signIn, sendVerificationCode} from '../../store/authSlice';
-import { registerEmail, registerPassword } from '../../utils/registersRHF';
+import { signUp, signIn, sendVerificationCode } from '../../store/authSlice';
+import { registerEmail, registerPassword, registerRepeatPassword } from '../../utils/registersRHF';
 import styles from './Signup.module.scss';
 import { ADD_STICKERS } from '../../utils/constants';
-
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const {
     register,
+    setValue,
     getValues,
     formState: { errors, dirtyFields },
     watch,
@@ -67,7 +67,9 @@ const Signup: React.FC = () => {
       <div className={styles.inputs}>
         <InputForm
           register={register}
-          option={registerEmail}
+          option={{...registerEmail, onBlur: (value: React.FocusEvent<HTMLInputElement>) => {
+            setValue('email', value.target.value.trim());
+          }}}
           error={errors?.email}
           placeholder='example@gmail.com'
           name='email'
@@ -90,13 +92,12 @@ const Signup: React.FC = () => {
         <InputForm
           register={register}
           option={{
-            ...registerPassword,
+            ...registerRepeatPassword,
             validate: (val: string) => {
               if (val !== watch('password')) {
                 return 'Пароли не совпадают';
               }
             },
-            required: 'Введи пароль повторно',
           }}
           error={errors?.passwordCheck}
           placeholder='Подтвердите пароль'
