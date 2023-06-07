@@ -4,6 +4,8 @@
   height: 96px;
   margin-top: 32px;
   top: 0;
+  position: sticky;
+  z-index: 2;
 
   &_container {
     @include flex(row, space-between, center);
