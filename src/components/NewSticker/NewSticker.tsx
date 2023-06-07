@@ -6,7 +6,7 @@ import { FieldValues, useForm } from 'react-hook-form';
 import { ButtonCustom, Error, Input, RadioButton, SizeInput, TooltipCustom } from '../UI';
 import { DragAndDrop } from '../';
 import { useAppDispatch } from '../../hooks/hooks';
-import { deleteCard } from '../../store/cardsSlice';
+import { deleteCard, removeBackground, updateCard } from '../../store/cardsSlice';
 import { ICard, ICardsState } from '../../interfaces';
 import { TCardShape } from '../../interfaces/ICard';
 import { registerAmount, registerSize } from '../../utils/registersRHF';
@@ -50,6 +50,16 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
 
   const onShapeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCardShape(event.target.value as TCardShape);
+    const copyCard = { ...card };
+    copyCard.shape = event.target.value as TCardShape;
+
+    if ((event.target.value as TCardShape) === 'contour') {
+      const formData = new FormData();
+      formData.append('file', card.image);
+      dispatch(removeBackground({ data: formData, id: card.id }));
+    }
+
+    dispatch(updateCard({ id: card.id, updatedCard: copyCard }));
   };
 
   return (
