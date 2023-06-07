@@ -17,6 +17,7 @@ const Signin: React.FC = () => {
   const {
     register,
     getValues,
+    setValue,
     formState: { errors, dirtyFields },
     handleSubmit,
     watch,
@@ -66,7 +67,10 @@ const Signin: React.FC = () => {
       <div className={styles.inputs}>
         <InputForm
           register={register}
-          option={registerEmail}
+          option={{...registerEmail, validate: (value: string) => {
+            setValue('email', value.trim());
+            return !!value.trim();
+          }}}
           error={errors?.email}
           placeholder='Введите E-mail'
           name='email'

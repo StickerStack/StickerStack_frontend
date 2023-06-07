@@ -17,6 +17,7 @@ const Signup: React.FC = () => {
   const dispatch = useAppDispatch();
   const {
     register,
+    setValue,
     getValues,
     formState: { errors, dirtyFields },
     watch,
@@ -66,7 +67,10 @@ const Signup: React.FC = () => {
       <div className={styles.inputs}>
         <InputForm
           register={register}
-          option={registerEmail}
+          option={{...registerEmail, validate: (value: string) => {
+            setValue('email', value.trim());
+            return !!value.trim();
+          }}}
           error={errors?.email}
           placeholder='example@gmail.com'
           name='email'
