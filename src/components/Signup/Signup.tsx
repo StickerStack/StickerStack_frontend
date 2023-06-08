@@ -67,20 +67,30 @@ const Signup: React.FC = () => {
       <div className={styles.inputs}>
         <InputForm
           register={register}
-          option={{...registerEmail, onBlur: (value: React.FocusEvent<HTMLInputElement>) => {
-            setValue('email', value.target.value.trim());
-          }}}
+          option={{
+            ...registerEmail,
+            onBlur: (value: React.FocusEvent<HTMLInputElement>) => {
+              setValue('email', value.target.value.trim());
+            },
+          }}
           error={errors?.email}
           placeholder='example@gmail.com'
           name='email'
-          label='E-mail'
+          label='Электронная почта'
           type='email'
         />
         <InputForm
           register={register}
-          option={registerPassword}
+          option={{
+            ...registerPassword,
+            validate: (val: string) => {
+              if (val.indexOf(' ') >= 0) {
+                return '';
+              }
+            },
+          }}
           error={errors?.password}
-          placeholder='Введите пароль'
+          placeholder='Пароль'
           name='password'
           label='Пароль'
           type='password'

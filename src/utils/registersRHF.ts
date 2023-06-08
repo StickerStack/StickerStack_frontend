@@ -9,11 +9,10 @@ import {
   REG_STICKERS,
   PROFILE_ONLY_LETTERS,
   REG_PASS,
-  PASS_SYMBOLS,
 } from './constants';
 
 const registerEmail = {
-  required: 'Введите E-mail',
+  required: 'Введите электронную почту',
   minLength: {
     value: 6,
     message: 'Минимум 6 символов',
@@ -24,7 +23,7 @@ const registerEmail = {
   },
   pattern: {
     value: REG_EMAIL,
-    message: 'E-mail введен некорректно',
+    message: 'Электронная почта введена некорректно',
   },
 };
 
@@ -40,7 +39,7 @@ const registerPassword = {
   },
   pattern: {
     value: REG_PASS,
-    message: `Только латинские буквы, цифры, символы ${PASS_SYMBOLS}`,
+    message: `Только латинские буквы, цифры и символы`,
   },
 };
 
@@ -87,4 +86,11 @@ const registerSize = {
   },
 };
 
-export { registerEmail, registerPassword, registerRepeatPassword, profileName, registerAmount, registerSize };
+export {
+  registerEmail,
+  registerPassword,
+  registerRepeatPassword,
+  profileName,
+  registerAmount,
+  registerSize,
+};
