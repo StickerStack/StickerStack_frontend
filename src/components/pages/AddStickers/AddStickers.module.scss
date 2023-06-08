@@ -1,8 +1,9 @@
-@import '../../utils/_scss-variables.scss';
+@import '../../../utils/_scss-variables.scss';
 
 .container {
+  padding-top: 80px;
+  flex: 1;
   text-align: left;
-  margin: 75px 165px;
   @include flex(column, center, start);
   gap: 30px;
 }

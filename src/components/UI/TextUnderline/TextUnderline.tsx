@@ -23,7 +23,9 @@ const TextUnderline: React.FC<IProps> = ({
     </button>
   ) : type === 'link' ? (
     // TODO: добработать ссылку, когда появится
-    <Link to=''>{children}</Link>
+    <Link to='' className={cn(styles.text, className)}>
+      {children}
+    </Link>
   ) : null;
 };
 

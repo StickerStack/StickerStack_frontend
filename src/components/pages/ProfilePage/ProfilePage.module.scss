@@ -1,12 +1,16 @@
-@import '../../utils/_scss-variables.scss';
+@import '../../../utils/_scss-variables.scss';
 
 .profile {
-  @include flex(column, flex-start, flex-start);
-  gap: 20px;
-  padding: 80px $desktop-padding 0;
+  padding-top: 80px;
+  flex: 1;
+
+  &_container {
+    @include flex(column, flex-start, flex-start);
+    gap: 20px;
+  }
 }
 
-.container {
+.section {
   @include flex(row, flex-start, flex-start);
   gap: 29px;
 }

@@ -12,7 +12,8 @@ import {
   PageNotFound,
   ProfilePage,
   AddStickers,
-  Preloader
+  Preloader,
+  Footer,
 } from '../';
 
 import {
@@ -78,6 +79,7 @@ const App: React.FC = () => {
             <Route path={PAGE_404} element={<PageNotFound />} />
             <Route path='/' element={<MainPage />} />
           </Routes>
+          <Footer />
           <MessagePopup />
           <Popup />
         </div>

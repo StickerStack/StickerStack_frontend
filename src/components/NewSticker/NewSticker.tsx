@@ -63,7 +63,7 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
   };
 
   return (
-    <div className={styles.card}>
+    <section className={styles.card}>
       <form className={styles.info}>
         <div className={styles.image}>
           <DragAndDrop card={card} />
@@ -222,7 +222,7 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
           onClick={handleDelete}
         />
       ) : null}
-    </div>
+    </section>
   );
 };
 

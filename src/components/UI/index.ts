@@ -13,3 +13,4 @@ export { SizeInput } from './SizeInput/SizeInput';
 export { IconButton } from './IconButton/IconButton';
 export { RadioButton } from './RadioButton/RadioButton';
 export { TooltipCustom } from './TooltipCustom/TooltipCustom';
+export { Container } from './Container/Container';

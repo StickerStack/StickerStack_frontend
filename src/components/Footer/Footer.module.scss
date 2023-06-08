@@ -1,0 +1,52 @@
+@import '../../utils/_scss-variables.scss';
+
+.footer {
+  position: relative;
+  min-height: 335px;
+  margin-top: 55px;
+  padding-top: 55px;
+
+  &_container {
+    @include flex(row, space-between, _);
+  }
+
+  .logo {
+    &_image {
+      width: 96px;
+      height: 96px;
+    }
+  }
+}
+
+.main {
+  max-width: 160px;
+  @include flex(column, _, _);
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  @include flex(column, _, _);
+  gap: 20px;
+}
+
+.item {
+  @include flex(row, start, center);
+  gap: 10px;
+  color: $main-text-color;
+  transition: color 0.3s ease-in-out;
+
+  &:hover {
+    color: #929292;
+  }
+}
+
+.title {
+  @include font(16px, 19px, 500);
+}
+
+.text {
+  text-decoration: none;
+  max-width: fit-content;
+  @include font(14px, 16px, 400);
+}

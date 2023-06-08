@@ -1,0 +1,28 @@
+@import '../../../utils/_scss-variables.scss';
+
+.mainPage {
+  padding-top: 80px;
+  flex: 1;
+
+  &_container {
+    @include flex(row, space-between, flex-start);
+    gap: 80px;
+  }
+
+  .title {
+    font-style: normal;
+    @include font(48px, 65px, 700);
+    margin: 0 0 30px;
+  }
+
+  .description {
+    font-style: normal;
+    @include font(20px, 23px, 400);
+    margin: 0 0 60px;
+  }
+
+  .img {
+    width: auto;
+    height: 296px;
+  }
+}
