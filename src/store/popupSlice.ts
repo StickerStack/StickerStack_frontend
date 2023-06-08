@@ -7,9 +7,10 @@ const popupSlice = createSlice({
   initialState: {
     isOpen: false,
     form: Signin,
+    previewIsOpen: false,
     messageIsOpen: false,
     message: '',
-    messageIsError: false
+    messageIsError: false,
   },
   reducers: {
     setMessageIsOpen(state, action) {
@@ -17,8 +18,12 @@ const popupSlice = createSlice({
       state.message = action.payload.message;
       state.messageIsError = action.payload.messageIsError;
     },
+    setPreviewIsOpen(state, action) {
+      state.isOpen = action.payload;
+      state.previewIsOpen = action.payload;
+    },
     setIsOpen(state, action) {
-      if(!state.isOpen) {
+      if (!state.isOpen) {
         state.form = Signin;
       }
       state.isOpen = action.payload;
@@ -30,6 +35,6 @@ const popupSlice = createSlice({
 });
 
 const popupSliceReducer = popupSlice.reducer;
-const { setMessageIsOpen, setIsOpen, switchForm } = popupSlice.actions;
+const { setMessageIsOpen, setIsOpen, switchForm, setPreviewIsOpen } = popupSlice.actions;
 
-export { popupSliceReducer, setMessageIsOpen, setIsOpen, switchForm };
+export { popupSliceReducer, setMessageIsOpen, setIsOpen, switchForm, setPreviewIsOpen };

@@ -9,7 +9,6 @@ import { signIn } from '../../store/authSlice';
 import { registerEmail, registerPassword } from '../../utils/registersRHF';
 import styles from './Signin.module.scss';
 
-
 const Signin: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -17,6 +16,7 @@ const Signin: React.FC = () => {
   const {
     register,
     getValues,
+    setValue,
     formState: { errors, dirtyFields },
     handleSubmit,
     watch,
@@ -66,35 +66,47 @@ const Signin: React.FC = () => {
       <div className={styles.inputs}>
         <InputForm
           register={register}
-          option={registerEmail}
+          option={{
+            ...registerEmail,
+            onBlur: (value: React.FocusEvent<HTMLInputElement>) => {
+              setValue('email', value.target.value.trim());
+            },
+          }}
           error={errors?.email}
-          placeholder='Введите E-mail'
+          placeholder='Электронная почта'
           name='email'
-          label='E-mail'
+          label='Электронная почта'
           type='email'
         />
         <InputForm
           register={register}
-          option={registerPassword}
+          option={{
+            ...registerPassword,
+            validate: (val: string) => {
+              if (val.indexOf(' ') >= 0) {
+                return '';
+              }
+            },
+          }}
           error={errors?.password}
-          placeholder='Введите пароль'
+          placeholder='Пароль'
           name='password'
           label='Пароль'
           type='password'
           optionalButton={
             !location.pathname.startsWith('/api/auth/verifyemail')
               ? {
-                text: 'Забыли пароль?',
-                onClick: () => {
-                  dispatch(switchForm(ResetPassword));
-                },
-              }
+                  text: 'Забыли пароль?',
+                  onClick: () => {
+                    dispatch(switchForm(ResetPassword));
+                  },
+                }
               : {
-                text: '',
-                onClick: () => {
-                  return;
-                },
-              }
+                  text: '',
+                  onClick: () => {
+                    return;
+                  },
+                }
           }
           optionalEyeButton={{
             visible: dirtyFields.password && watch('password') !== '',

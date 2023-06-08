@@ -14,7 +14,7 @@ const PopupForm: React.FC<IProps> = ({ onClose }: IProps) => {
   return (
     <div className={styles.container}>
       <Form />
-      <ButtonCustom className={styles.button} type='close' onClick={onClose} />
+      <ButtonCustom className={styles.button} type='close' label='Закрыть' onClick={onClose} />
     </div>
   );
 };

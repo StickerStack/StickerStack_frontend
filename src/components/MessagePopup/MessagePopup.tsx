@@ -57,7 +57,12 @@ const MessagePopup: React.FC = () => {
             }`}
           >
             {message}
-            <ButtonCustom className={styles.button} type='close' onClick={() => closeMessage()} />
+            <ButtonCustom
+              className={styles.button}
+              type='close'
+              label='Закрыть'
+              onClick={() => closeMessage()}
+            />
           </motion.p>
         </motion.div>
       )}

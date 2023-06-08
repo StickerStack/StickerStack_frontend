@@ -1,3 +1,4 @@
+import cn from 'classnames';
 import React, { forwardRef, useState } from 'react';
 import {
   FieldError,
@@ -8,7 +9,7 @@ import {
   UseFormRegister,
 } from 'react-hook-form';
 
-import {EyeButton, TextUnderline} from '../';
+import { EyeButton, TextUnderline } from '../';
 
 import styles from './InputForm.module.scss';
 
@@ -26,18 +27,8 @@ interface IProps {
 
 const InputForm: React.FC<IProps> = forwardRef<HTMLInputElement, IProps>(
   (
-    {
-      name,
-      label,
-      type,
-      option,
-      register,
-      error,
-      optionalButton,
-      optionalEyeButton,
-      placeholder,
-    },
-    ref
+    { name, label, type, option, register, error, optionalButton, optionalEyeButton, placeholder },
+    ref,
   ) => {
     const [passwordShown, setPasswordShown] = useState<boolean>(false);
     const togglePassword = () => {
@@ -53,11 +44,7 @@ const InputForm: React.FC<IProps> = forwardRef<HTMLInputElement, IProps>(
             </TextUnderline>
           </span>
         )}
-        <div
-          className={
-            error ? `${styles.border} ${styles.border_error}` : styles.border
-          }
-        >
+        <div className={error ? `${styles.border} ${styles.border_error}` : styles.border}>
           <input
             className={styles.field}
             placeholder={placeholder}
@@ -70,18 +57,21 @@ const InputForm: React.FC<IProps> = forwardRef<HTMLInputElement, IProps>(
           <label htmlFor={name} className={styles.label}>
             {label}
           </label>
+          {optionalEyeButton && (
+            <EyeButton
+              onClick={() => togglePassword()}
+              shown={passwordShown}
+              visible={optionalEyeButton.visible}
+            />
+          )}
         </div>
-        {optionalEyeButton && (
-          <EyeButton
-            onClick={() => togglePassword()}
-            shown={passwordShown}
-            visible={optionalEyeButton.visible}
-          />
-        )}
-        <span className={styles.error}>{error && `${error.message}`}</span>
+
+        <span className={cn(styles.error, error && styles.error_shown)}>
+          {error && `${error.message}`}
+        </span>
       </div>
     );
-  }
+  },
 );
 
 export { InputForm };

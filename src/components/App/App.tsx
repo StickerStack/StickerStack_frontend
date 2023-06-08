@@ -13,6 +13,7 @@ import {
   ProfilePage,
   AddStickers,
   Preloader,
+  Footer,
 } from '../';
 
 import {
@@ -56,11 +57,7 @@ const App: React.FC = () => {
             <Route path={VERIFY_EMAIL} element={<VerifyEmail />} />
             <Route
               path={VERIFY_FORGOT_PASSWORD}
-              element={
-                <ProtectedRoute redirectPath='/'>
-                  <ChangePassword />
-                </ProtectedRoute>
-              }
+              element={<ChangePassword />}
             />
             <Route
               path={ADD_STICKERS}
@@ -82,6 +79,7 @@ const App: React.FC = () => {
             <Route path={PAGE_404} element={<PageNotFound />} />
             <Route path='/' element={<MainPage />} />
           </Routes>
+          <Footer />
           <MessagePopup />
           <Popup />
         </div>
