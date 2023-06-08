@@ -59,9 +59,16 @@ const ChangePassword: React.FC = () => {
           <TitleForm>Смена пароля</TitleForm>
           <InputForm
             register={register}
-            option={registerPassword}
+            option={{
+              ...registerPassword,
+              validate: (val: string) => {
+                if (val.indexOf(' ') >= 0) {
+                  return '';
+                }
+              },
+            }}
             error={errors?.newPassword}
-            placeholder='Введите новый пароль'
+            placeholder='Новый пароль'
             name='newPassword'
             label='Новый пароль'
             type='password'

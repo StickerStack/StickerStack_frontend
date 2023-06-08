@@ -1,12 +1,14 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
+
 import { Signin } from '../';
 import { ButtonWithText, InputForm, TitleForm } from '../UI';
 import { useAppDispatch } from '../../hooks/hooks';
 import { forgotPassword } from '../../store/authSlice';
 import { switchForm } from '../../store/popupSlice';
 import { registerEmail } from '../../utils/registersRHF';
+
 import styles from './ResetPassword.module.scss';
 
 const ResetPassword: React.FC = () => {
@@ -22,9 +24,7 @@ const ResetPassword: React.FC = () => {
   const [formSubmit, setFormSubmit] = useState<boolean>(false);
 
   const onSubmit = (data: FieldValues) => {
-    dispatch(forgotPassword({ email: data.email })).then(() =>
-      setFormSubmit(true)
-    );
+    dispatch(forgotPassword({ email: data.email })).then(() => setFormSubmit(true));
   };
 
   return (
@@ -32,13 +32,16 @@ const ResetPassword: React.FC = () => {
       <TitleForm>Восстановление пароля</TitleForm>
       <InputForm
         register={register}
-        option={{...registerEmail, onBlur: (value: React.FocusEvent<HTMLInputElement>) => {
-          setValue('email', value.target.value.trim());
-        }}}
+        option={{
+          ...registerEmail,
+          onBlur: (value: React.FocusEvent<HTMLInputElement>) => {
+            setValue('email', value.target.value.trim());
+          },
+        }}
         error={errors?.email}
-        placeholder='Введите E-mail'
+        placeholder='Электронная почта'
         name='email'
-        label='E-mail'
+        label='Электронная почта'
         type='email'
       />
       {formSubmit && (
@@ -58,10 +61,7 @@ const ResetPassword: React.FC = () => {
         </motion.span>
       )}
       <ButtonWithText type='submit'>Восстановить пароль</ButtonWithText>
-      <button
-        className={styles.button_back}
-        onClick={() => dispatch(switchForm(Signin))}
-      >
+      <button className={styles.button_back} onClick={() => dispatch(switchForm(Signin))}>
         <span className={styles.button_back_text}>Вернуться назад</span>
       </button>
     </form>
