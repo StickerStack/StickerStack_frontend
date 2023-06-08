@@ -2,20 +2,24 @@ import cn from 'classnames';
 
 import { ButtonWithText } from '../UI';
 
+import { ReactComponent as PictureSvg } from '../../images/icons/upload-image.svg';
+import { ReactComponent as BinSvg } from '../../images/icons/bin.svg';
 import styles from './ImagePick.module.scss';
 
 interface IProps {
-  image: string;
+  image?: string | ArrayBuffer | null;
   className?: string;
+  onLoadImage?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  deleteImage?: () => void;
 }
 
-const ImagePick: React.FC<IProps> = ({ image, className }: IProps) => {
+const ImagePick: React.FC<IProps> = ({ image, className, onLoadImage, deleteImage }: IProps) => {
   return (
-    <div className={styles.avatar}>
-      <img className={cn(styles.image, className)} alt='Изображение' src={image} />
-      <form className={styles.overlay}>
+    <div className={cn(styles.avatar, className)}>
+      <img className={styles.image} alt='Изображение' src={`${image}`} />
+      <div className={styles.overlay}>
         <ButtonWithText type='button' theme='no-border' className={styles.button}>
-          <div className={styles.button_img} />
+          <PictureSvg />
           <label htmlFor='myimage' className={styles.label}>
             Загрузить изображение
           </label>
@@ -26,12 +30,18 @@ const ImagePick: React.FC<IProps> = ({ image, className }: IProps) => {
           id='myimage'
           accept='image/*'
           className={styles.input}
+          onChange={onLoadImage}
         ></input>
-        <ButtonWithText type='button' theme='no-border' className={styles.button}>
-          <div className={styles.button_bin} />
+        <ButtonWithText
+          onClick={deleteImage}
+          type='button'
+          theme='no-border'
+          className={styles.button}
+        >
+          <BinSvg />
           Удалить изображение
         </ButtonWithText>
-      </form>
+      </div>
     </div>
   );
 };

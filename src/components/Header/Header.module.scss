@@ -1,18 +1,31 @@
 @import '../../utils/_scss-variables.scss';
 
 .header {
-  height: 70px;
-  padding: 80px $desktop-padding 0;
+  height: 96px;
+  margin-top: 32px;
   top: 0;
-  background-color: $main-bg-color;
-  @include flex(row, space-between, center);
+  position: sticky;
+  z-index: 2;
+
+  &_container {
+    @include flex(row, space-between, center);
+  }
 
   .logo {
-    width: 105px;
-    height: 100px;
-    background-image: url(../../images/logo.svg);
-    background-repeat: no-repeat;
-    background-size: cover;
+    text-decoration: none;
+    color: $main-text-color;
+    font-family: 'Nunito';
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 33px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    &_image {
+      width: 96px;
+      height: 96px;
+    }
   }
 }
 

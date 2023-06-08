@@ -9,8 +9,9 @@ import { setIsOpen } from '../../store/popupSlice';
 import { PAGE_404 } from '../../utils/constants';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 import { ProfileMenu } from '../ProfileMenu/ProfileMenu';
-import { ButtonCustom, ButtonWithText } from '../UI';
+import { ButtonCustom, ButtonWithText, Container } from '../UI';
 
+import logo from '../../images/logo.svg';
 import styles from './Header.module.scss';
 
 const Header: React.FC = () => {
@@ -45,42 +46,52 @@ const Header: React.FC = () => {
 
   return location.pathname !== PAGE_404 ? (
     <header className={styles.header}>
-      <Link to='/' className={styles.logo} />
-      <AnimatePresence>
-        {isMenuShow && (
-          <motion.div
-            className={styles.motion}
-            initial={{
-              opacity: 0,
-            }}
-            animate={{
-              transition: {
-                duration: 0.4,
-              },
-              opacity: 1,
-            }}
-            exit={{
-              opacity: 0,
-              transition: {
-                duration: 0.4,
-              },
-            }}
+      <Container className={styles.header_container}>
+        <Link to='/' className={styles.logo}>
+          <img className={styles.logo_image} src={logo} alt='Логотип StickerStack' />
+          StickerStack
+        </Link>
+        <AnimatePresence>
+          {isMenuShow && (
+            <motion.div
+              className={styles.motion}
+              initial={{
+                opacity: 0,
+              }}
+              animate={{
+                transition: {
+                  duration: 0.4,
+                },
+                opacity: 1,
+              }}
+              exit={{
+                opacity: 0,
+                transition: {
+                  duration: 0.4,
+                },
+              }}
+            >
+              <ProfileMenu ref={ref} />
+            </motion.div>
+          )}
+        </AnimatePresence>
+        {isLogged ? (
+          <ButtonCustom
+            className={styles.profile}
+            type='person'
+            label='Профиль'
+            onClick={() => setIsMenuShow(!isMenuShow)}
+          />
+        ) : (
+          <ButtonWithText
+            type='button'
+            theme='transparent'
+            onClick={() => dispatch(setIsOpen(true))}
           >
-            <ProfileMenu ref={ref} />
-          </motion.div>
+            Войти
+          </ButtonWithText>
         )}
-      </AnimatePresence>
-      {isLogged ? (
-        <ButtonCustom
-          className={styles.profile}
-          type='person'
-          onClick={() => setIsMenuShow(!isMenuShow)}
-        />
-      ) : (
-        <ButtonWithText type='button' theme='transparent' onClick={() => dispatch(setIsOpen(true))}>
-          Войти
-        </ButtonWithText>
-      )}
+      </Container>
     </header>
   ) : null;
 };

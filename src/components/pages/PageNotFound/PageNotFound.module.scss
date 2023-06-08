@@ -1,0 +1,14 @@
+@import '../../../utils/_scss-variables.scss';
+
+.page {
+  width: 100%;
+  height: 90vh;
+  @include flex(column, center, center);
+}
+
+.container {
+  max-width: 310px;
+  text-align: center;
+  @include flex(column, center, center);
+  gap: 30px;
+}

@@ -11,7 +11,7 @@ import {
 import styles from './CheckBoxForm.module.scss';
 
 interface IProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   name: string;
   register?: UseFormRegister<FieldValues>;
   option?: RegisterOptions;
@@ -28,18 +28,15 @@ const CheckBoxForm: React.FC<IProps> = forwardRef<HTMLInputElement, IProps>(
             id={name}
             type='checkbox'
             ref={ref}
-            name={name}    
+            name={name}
             {...(register && register(name, option))}
           />
-          <label
-            className={error ? styles.label_error : styles.label}
-            htmlFor={name}
-          />
+          <label className={error ? styles.label_error : styles.label} htmlFor={name} />
         </div>
         {children}
       </div>
     );
-  }
+  },
 );
 
 export { CheckBoxForm };

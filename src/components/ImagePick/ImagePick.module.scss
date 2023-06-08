@@ -4,6 +4,7 @@
   @include flex(column, center, center);
   position: relative;
   width: 255px;
+  min-width: 255px;
   height: 262px;
   border-radius: 10px;
   overflow: hidden;
@@ -48,19 +49,6 @@
     opacity: 1;
     background: #929292b6;
   }
-}
-
-.button_img {
-  background: url(../../images/upload-image.svg) no-repeat;
-  width: 16px;
-  height: 16px;
-}
-
-.button_bin {
-  background: url(../../images/bin.svg) no-repeat;
-  background-size: contain;
-  width: 16px;
-  height: 16px;
 }
 
 .label {
