@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { ButtonWithText, TitleForm, InputForm, TextUnderline } from '../UI';
+import { ButtonWithText, TitleForm, TextUnderline } from '../UI';
 import { Signup, ResetPassword } from '../';
 import { setIsOpen, setMessageIsOpen, switchForm } from '../../store/popupSlice';
 import { useAppDispatch } from '../../hooks/hooks';
@@ -8,6 +8,7 @@ import { getUser, signInMockUser, updateStatus } from '../../store/userSlice';
 import { signIn } from '../../store/authSlice';
 import { registerEmail, registerPassword } from '../../utils/registersRHF';
 import styles from './Signin.module.scss';
+import { Input } from '../_UI/Input/Input';
 
 const Signin: React.FC = () => {
   const location = useLocation();
@@ -51,7 +52,7 @@ const Signin: React.FC = () => {
               messageIsOpen: true,
               message: 'Неверная почта или пароль',
               messageIsError: true,
-            }),
+            })
           );
         }
       })
@@ -62,10 +63,11 @@ const Signin: React.FC = () => {
 
   return (
     <form className={styles.signin} onSubmit={handleSubmit(onSubmit)}>
-      <TitleForm>Войти в личный кабинет</TitleForm>
+      <TitleForm>Вход</TitleForm>
       <div className={styles.inputs}>
-        <InputForm
+        <Input
           register={register}
+          typeInput='form'
           option={{
             ...registerEmail,
             onBlur: (value: React.FocusEvent<HTMLInputElement>) => {
@@ -78,7 +80,8 @@ const Signin: React.FC = () => {
           label='Электронная почта'
           type='email'
         />
-        <InputForm
+        <Input
+          typeInput='form'
           register={register}
           option={{
             ...registerPassword,
@@ -93,24 +96,8 @@ const Signin: React.FC = () => {
           name='password'
           label='Пароль'
           type='password'
-          optionalButton={
-            !location.pathname.startsWith('/api/auth/verifyemail')
-              ? {
-                  text: 'Забыли пароль?',
-                  onClick: () => {
-                    dispatch(switchForm(ResetPassword));
-                  },
-                }
-              : {
-                  text: '',
-                  onClick: () => {
-                    return;
-                  },
-                }
-          }
-          optionalEyeButton={{
-            visible: dirtyFields.password && watch('password') !== '',
-          }}
+          labelLink={{ text: 'Забыли пароль?', onClick: () => dispatch(switchForm(ResetPassword)) }}
+          showEyeButton={dirtyFields.password && watch('password') !== ''}
         />
       </div>
       <ButtonWithText type='submit'>Войти</ButtonWithText>
