@@ -13,8 +13,8 @@ const InputForm: FC<IInput> = (props) => {
     setPasswordShown(!passwordShown);
   };
 
-  const eyeButton = props.showEyeButton ? (
-    <EyeButton visible={props.showEyeButton} shown={passwordShown} onClick={() => togglePassword()} />
+  const eyeButton = props.showSubButton ? (
+    <EyeButton visible={props.showSubButton} shown={passwordShown} onClick={() => togglePassword()} />
   ) : null;
 
   const labelLink = props.labelLink ? (

@@ -9,7 +9,7 @@ import {
 
 export interface IInput {
   name: string;
-  type: 'email' | 'password';
+  type: 'email' | 'password' | 'text';
   labelLink?: { text: string; onClick: () => void };
   id?: string;
   value?: string | number;
@@ -20,5 +20,6 @@ export interface IInput {
   error?: FieldError | Merge<FieldError, FieldErrorsImpl>;
   className?: string;
   onChange?: (event: React.FormEvent<HTMLInputElement>) => void;
-  showEyeButton?: boolean;
+  showSubButton?: boolean;
+  onClear?: () => void;
 }

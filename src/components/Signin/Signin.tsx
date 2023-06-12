@@ -97,7 +97,7 @@ const Signin: React.FC = () => {
           label='Пароль'
           type='password'
           labelLink={{ text: 'Забыли пароль?', onClick: () => dispatch(switchForm(ResetPassword)) }}
-          showEyeButton={dirtyFields.password && watch('password') !== ''}
+          showSubButton={dirtyFields.password && watch('password') !== ''}
         />
       </div>
       <ButtonWithText type='submit'>Войти</ButtonWithText>

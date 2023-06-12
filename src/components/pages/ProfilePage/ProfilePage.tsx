@@ -12,6 +12,7 @@ import { ButtonWithText, Container, TitlePage } from '../../UI';
 import ProfileInput from '../../UI/ProfileInput/ProfileInput';
 import styles from './ProfilePage.module.scss';
 import { setMessageIsOpen } from '../../../store/popupSlice';
+import { Input } from '../../_UI/Input/Input';
 
 const FIRSTNAME_INPUT_LABEL = 'firstName';
 const LASTNAME_INPUT_LABEL = 'lastName';
@@ -94,13 +95,14 @@ const ProfilePage: React.FC = () => {
           <ImagePick image={EmptyAvatarImage} />
           <div className={styles.profile_data}>
             <form className={styles.inputs} onSubmit={handleSubmit(onSubmit)}>
-              <ProfileInput
+              <Input
+                typeInput='profile'
                 name={FIRSTNAME_INPUT_LABEL}
                 type='text'
                 placeholder='Имя'
                 register={register}
                 option={profileName}
-                iconVisible={watch(FIRSTNAME_INPUT_LABEL)?.length}
+                showSubButton={watch(FIRSTNAME_INPUT_LABEL)?.length}
                 error={errors && errors[FIRSTNAME_INPUT_LABEL]}
                 onClear={() => resetField(FIRSTNAME_INPUT_LABEL)}
               />
