@@ -3,6 +3,7 @@
 .avatar {
   @include flex(column, center, center);
   position: relative;
+  border-radius: 10px;
   width: 255px;
   min-width: 255px;
   height: 262px;
