@@ -37,11 +37,13 @@ const DragAndDrop: React.FC<IProps> = ({ card }: IProps) => {
           urlFilePreview: reader.result,
         };
         setImageFile(file);
-        
-        if(typeof file.urlFilePreview === 'string') {
-          dispatch(updatePicture({ id: card.id, image: file.urlFilePreview}))
+
+        if (typeof file.urlFilePreview === 'string') {
+          dispatch(updatePicture({ id: card.id, image: file.urlFilePreview }));
         }
       };
+
+      console.log(card.shape);
     }
   };
 
@@ -52,16 +54,13 @@ const DragAndDrop: React.FC<IProps> = ({ card }: IProps) => {
           onLoadImage={handleImageChange}
           deleteImage={() => setImageFile(null)}
           image={imageFile.urlFilePreview}
+          shape={card.shape}
         />
       ) : (
         <div className={styles.dnd}>
           <div className={styles.text}>
-            <span className={styles.main}>
-              Перетащите фото или выберите файл
-            </span>
-            <span className={styles.sub}>
-              Допустимые форматы: .jpg, .jpeg, .png
-            </span>
+            <span className={styles.main}>Перетащите фото или выберите файл</span>
+            <span className={styles.sub}>Допустимые форматы: .jpg, .jpeg, .png</span>
           </div>
           <input
             className={styles.input}
