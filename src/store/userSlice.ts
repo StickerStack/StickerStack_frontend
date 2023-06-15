@@ -1,6 +1,6 @@
-import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-import {api} from '../utils/api';
+import { api } from '../utils/api';
 
 const getUser = createAsyncThunk('user/getUser', async () => {
   const response = await api.getUser();
@@ -9,26 +9,26 @@ const getUser = createAsyncThunk('user/getUser', async () => {
 
 const updateUser = createAsyncThunk(
   'user/updateUser',
-  async (data: { email: string; firstName: string; lastName: string }, {rejectWithValue}) => {
+  async (data: { email: string; firstName: string; lastName: string }, { rejectWithValue }) => {
     try {
       const response = await api.updateUser(data.email, data.firstName, data.lastName);
       return response;
     } catch (err) {
       return rejectWithValue(err);
     }
-  }
+  },
 );
 
 const updateProfileImage = createAsyncThunk(
   'user/updateProfileImage',
-  async (data : { formData: FormData }, { rejectWithValue }) => {
+  async (data: FormData, { rejectWithValue }) => {
     try {
-      const response = await api.uploadProfileImage(data.formData);
+      const response = await api.uploadProfileImage(data);
       return response.data;
     } catch (err) {
       return rejectWithValue(err);
     }
-  }
+  },
 );
 
 const getProfileImage = createAsyncThunk(
@@ -40,19 +40,32 @@ const getProfileImage = createAsyncThunk(
     } catch (err) {
       return rejectWithValue(err);
     }
-  }
+  },
+);
+
+const deleteProfileImage = createAsyncThunk(
+  'user/deleteProfileImage',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await api.deleteProfileImage();
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
 );
 
 const userSlice = createSlice({
   name: 'user',
   initialState: {
+    avatar: '',
     email: '',
     firstName: '',
     lastName: '',
     loading: false,
     success: false,
     isLogged: false,
-    isVerified: false
+    isVerified: false,
   },
   reducers: {
     signInMockUser(state, action) {
@@ -66,7 +79,7 @@ const userSlice = createSlice({
 
     updateStatus(state, action) {
       state.isLogged = action.payload;
-    }
+    },
   },
   extraReducers: (builder) => {
     // Получение юзера, если есть token
@@ -89,7 +102,6 @@ const userSlice = createSlice({
       state.isLogged = false;
     });
 
-
     builder.addCase(updateUser.pending, (state) => {
       state.loading = true;
     });
@@ -111,15 +123,15 @@ const userSlice = createSlice({
     builder.addCase(updateProfileImage.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(updateProfileImage.fulfilled, (state) => {
+    builder.addCase(updateProfileImage.fulfilled, (state, action) => {
       state.loading = false;
       state.success = true;
+      state.avatar = action.payload;
     });
     builder.addCase(updateProfileImage.rejected, (state) => {
       state.loading = false;
       state.success = false;
     });
-
 
     // Получение фото профиля
     builder.addCase(getProfileImage.pending, (state) => {
@@ -137,7 +149,7 @@ const userSlice = createSlice({
 });
 
 const userSliceReducer = userSlice.reducer;
-const {signInMockUser, updateStatus} = userSlice.actions;
+const { signInMockUser, updateStatus } = userSlice.actions;
 
 export {
   userSliceReducer,
@@ -146,5 +158,6 @@ export {
   signInMockUser,
   updateStatus,
   updateProfileImage,
-  getProfileImage
+  getProfileImage,
+  deleteProfileImage,
 };

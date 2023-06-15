@@ -1,7 +1,8 @@
 export interface IUserState {
-  email: string,
-  isLogged: boolean,
-  firstName: string,
-  lastName: string,
-  isVerified: boolean
+  avatar: string;
+  email: string;
+  isLogged: boolean;
+  firstName: string;
+  lastName: string;
+  isVerified: boolean;
 }

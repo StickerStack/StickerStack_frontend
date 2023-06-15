@@ -157,7 +157,7 @@ class Api {
   }
 
   public async uploadProfileImage(formData: FormData) {
-    const data = await fetch(`{this._url}/auth/uploadprofileimage`, {
+    const data = await fetch(`${this._url}/user/upload-profile-image`, {
       method: 'POST',
       credentials: 'include',
       headers: {
@@ -172,7 +172,18 @@ class Api {
   }
 
   public async getProfileImage() {
-    const data = await fetch(`${this._url}/auth/profileimage`);
+    const data = await fetch(`${this._url}/user/profile-image`);
+
+    const response = await this._checkResponse(data);
+
+    return response;
+  }
+
+  public async deleteProfileImage() {
+    const data = await fetch(`${this._url}/user/profile-image`, {
+      method: 'DELETE',
+      credentials: 'include',
+    });
 
     const response = await this._checkResponse(data);
 

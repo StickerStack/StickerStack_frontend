@@ -1,17 +1,19 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
+
 import { useAppDispatch } from '../../../hooks/hooks';
-import EmptyAvatarImage from '../../../images/empty-avatar.svg';
 import { IUserState } from '../../../interfaces';
 import { sendVerificationCode } from '../../../store/authSlice';
-import { updateUser } from '../../../store/userSlice';
+import { deleteProfileImage, updateProfileImage, updateUser } from '../../../store/userSlice';
 import { profileName, registerEmail } from '../../../utils/registersRHF';
 import { ImagePick } from '../../ImagePick/ImagePick';
 import { ButtonWithText, Container, TitlePage } from '../../UI';
-import ProfileInput from '../../UI/ProfileInput/ProfileInput';
-import styles from './ProfilePage.module.scss';
 import { setMessageIsOpen } from '../../../store/popupSlice';
+import ProfileInput from '../../UI/ProfileInput/ProfileInput';
+
+import EmptyAvatarImage from '../../../images/empty-avatar.svg';
+import styles from './ProfilePage.module.scss';
 
 const FIRSTNAME_INPUT_LABEL = 'firstName';
 const LASTNAME_INPUT_LABEL = 'lastName';
@@ -19,6 +21,31 @@ const EMAIL_INPUT_LABEL = 'email';
 
 const ProfilePage: React.FC = () => {
   const user = useSelector((state: { user: IUserState }) => state.user);
+  const dispatch = useAppDispatch();
+  const allowedTypeFile = ['image/png', 'image/jpeg', 'image/jpg'];
+  const [image, setImage] = useState<string>('');
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
+    const files = e.target.files;
+
+    if (files && allowedTypeFile.includes(files[0].type)) {
+      const reader = new FileReader();
+      const data = new FormData();
+      reader.readAsDataURL(files[0]);
+
+      reader.onloadend = () => {
+        const file = files[0];
+        data.append('file', file, 'avatar.png');
+        dispatch(updateProfileImage(data));
+        console.log(data);
+        if (reader.result) {
+          setImage(reader.result.toString());
+        }
+      };
+    }
+  };
 
   const {
     register,
@@ -37,9 +64,11 @@ const ProfilePage: React.FC = () => {
     },
   });
 
-  const dispatch = useAppDispatch();
-
   useEffect(() => {
+    if (user.avatar) {
+      setImage(user.avatar);
+    }
+
     if (user.email) {
       setValue(EMAIL_INPUT_LABEL, user.email);
     }
@@ -91,7 +120,14 @@ const ProfilePage: React.FC = () => {
       <Container className={styles.profile_container}>
         <TitlePage>Мои данные</TitlePage>
         <section className={styles.section}>
-          <ImagePick image={EmptyAvatarImage} />
+          <ImagePick
+            onLoadImage={handleImageChange}
+            deleteImage={() => {
+              dispatch(deleteProfileImage());
+              setImage('');
+            }}
+            image={image ? image : EmptyAvatarImage}
+          />
           <div className={styles.profile_data}>
             <form className={styles.inputs} onSubmit={handleSubmit(onSubmit)}>
               <ProfileInput

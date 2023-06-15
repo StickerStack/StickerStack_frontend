@@ -1,3 +1,4 @@
+import { LegacyRef } from 'react';
 import cn from 'classnames';
 
 import { ButtonWithText } from '../UI';
@@ -17,7 +18,7 @@ const ImagePick: React.FC<IProps> = ({ image, className, onLoadImage, deleteImag
   return (
     <div className={cn(styles.avatar, className)}>
       <img className={styles.image} alt='Изображение' src={`${image}`} />
-      <div className={styles.overlay}>
+      <form className={styles.overlay}>
         <ButtonWithText type='button' theme='no-border' className={styles.button}>
           <PictureSvg />
           <label htmlFor='myimage' className={styles.label}>
@@ -41,7 +42,7 @@ const ImagePick: React.FC<IProps> = ({ image, className, onLoadImage, deleteImag
           <BinSvg />
           Удалить изображение
         </ButtonWithText>
-      </div>
+      </form>
     </div>
   );
 };
