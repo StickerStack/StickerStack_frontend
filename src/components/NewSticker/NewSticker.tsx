@@ -1,6 +1,6 @@
 import cn from 'classnames';
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 
 import { ButtonCustom, Error, Input, RadioButton, SizeInput, TooltipCustom } from '../UI';
@@ -10,6 +10,7 @@ import { deleteCard, removeBackground, updateCard } from '../../store/cardsSlice
 import { ICard, ICardsState } from '../../interfaces';
 import { TCardShape } from '../../interfaces/ICard';
 import { registerAmount, registerSize } from '../../utils/registersRHF';
+import { AMOUNT_INPUT_MAX_LENGTH, AMOUNT_INPUT_MIN_LENGTH } from '../../utils/constants';
 
 import { ReactComponent as RectSvg } from '../../images/icons/rect.svg';
 import { ReactComponent as RectRondedSvg } from '../../images/icons/rect_rounded.svg';
@@ -31,13 +32,10 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
   const [amount, setAmount] = useState<number>(card.amount);
   const [width, setWidth] = useState<number>();
   const [height, setHeight] = useState<number>();
+  const copyCard = { ...card };
 
   const handleDelete = () => {
     dispatch(deleteCard(card.id));
-  };
-
-  const handleChange = (e: { target: { value: unknown } }) => {
-    setAmount(Number(e.target.value));
   };
 
   const {
@@ -48,9 +46,18 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
     defaultValues: { size: 'optimal' },
   });
 
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const number = Number(e.target.value);
+    setAmount(number);
+    copyCard.amount = number;
+
+    if (number <= AMOUNT_INPUT_MAX_LENGTH && number >= AMOUNT_INPUT_MIN_LENGTH) {
+      dispatch(updateCard({ id: card.id, updatedCard: copyCard }));
+    }
+  };
+
   const onShapeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCardShape(event.target.value as TCardShape);
-    const copyCard = { ...card };
     copyCard.shape = event.target.value as TCardShape;
 
     if ((event.target.value as TCardShape) === 'contour') {
@@ -58,7 +65,6 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
       formData.append('file', card.image);
       dispatch(removeBackground({ data: formData, id: card.id }));
     }
-
     dispatch(updateCard({ id: card.id, updatedCard: copyCard }));
   };
 
@@ -157,8 +163,8 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
                 option={registerAmount}
                 type='tel'
                 register={register}
-                onChange={handleChange}
                 error={errors.amount}
+                onChange={handleAmountChange}
               />
               <Error className={styles.error}>{errors.amount && `${errors.amount?.message}`}</Error>
             </div>

@@ -20,7 +20,7 @@ interface IProps {
   option?: RegisterOptions;
   error?: FieldError | Merge<FieldError, FieldErrorsImpl>;
   className?: string;
-  onChange?: (e: { target: { value: unknown } }) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Input: React.FC<IProps> = ({
