@@ -39,7 +39,7 @@ const VerifyEmail: React.FC = () => {
 
   return (
     <>
-      {isLoading ? (
+      {/* {isLoading ? (
         <Preloader />
       ) : (
         <div className={styles.verify}>
@@ -49,7 +49,7 @@ const VerifyEmail: React.FC = () => {
             Начать!
           </ButtonWithText>
         </div>
-      )}
+      )} */}
     </>
   );
 };

@@ -11,7 +11,7 @@ export { VerifyEmail } from './VerifyEmail/VerifyEmail';
 export { MessagePopup } from './MessagePopup/MessagePopup';
 export { ResetPassword } from './Popups/ResetPassword/ResetPassword';
 export { ProtectedRoute } from './ProtectedRoute/ProtectedRoute';
-export { ChangePassword } from './pages/ChangePassword/ChangePassword';
+export { ChangePasswordPage } from './pages/ChangePasswordPage/ChangePasswordPage';
 export { ProfilePage } from './pages/ProfilePage/ProfilePage';
 export { AddStickers } from './pages/AddStickers/AddStickers';
 export { PageNotFound } from './pages/PageNotFound/PageNotFound';

@@ -41,6 +41,7 @@ const ChangePassword: React.FC = () => {
             buttonText: 'Начать!',
           }),
         );
+        localStorage.removeItem('change-password-token');
       }
       if (res.meta.requestStatus === 'rejected') {
         dispatch(
@@ -55,7 +56,10 @@ const ChangePassword: React.FC = () => {
   };
 
   useEffect(() => {
-    setToken(location.pathname.replace('/auth/verify-forgot-password/', ''));
+    const localToken = localStorage.getItem('change-password-token');
+    if (localToken) {
+      setToken(localToken);
+    }
 
     // eslint-disable-next-line
   }, []);

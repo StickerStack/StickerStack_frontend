@@ -27,6 +27,9 @@ const Popup: React.FC = () => {
         buttonText: '',
       }),
     );
+    if (localStorage.getItem('change-password-token')) {
+      localStorage.removeItem('change-password-token');
+    }
   };
 
   useEffect(() => {
