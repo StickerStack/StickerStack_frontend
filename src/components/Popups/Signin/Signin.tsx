@@ -37,14 +37,14 @@ const Signin: React.FC = () => {
       dispatch(signInMockUser({ email: 'my@super.user', firstName: 'Иван', lastName: 'Иванов' }));
       dispatch(setFormIsOpen(false));
       navigate('/add-stickers');
-      dispatch(
-        setInfoIsOpen({
-          infoIsOpen: true,
-          title: 'Добро пожаловать',
-          text: 'Рады вас видеть снова. Закажите стикеры своей мечты',
-          buttonText: 'Начать!',
-        }),
-      );
+      // dispatch(
+      //   setInfoIsOpen({
+      //     infoIsOpen: true,
+      //     title: 'Добро пожаловать',
+      //     text: 'Рады вас видеть снова. Закажите стикеры своей мечты',
+      //     buttonText: 'Начать!',
+      //   }),
+      // );
       localStorage.setItem('token', 'moc');
       return;
     }

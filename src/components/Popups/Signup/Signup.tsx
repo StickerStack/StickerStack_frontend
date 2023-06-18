@@ -21,7 +21,6 @@ import {
 } from '../../../utils/registersRHF';
 
 import styles from './Signup.module.scss';
-import { ChangePassword } from '../ChangePassword/ChangePassword';
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
@@ -158,7 +157,7 @@ const Signup: React.FC = () => {
       <ButtonWithText type='submit' disabled={!isValid}>
         Зарегистрироваться
       </ButtonWithText>
-      <span className={styles.link} onClick={() => dispatch(switchForm(ChangePassword))}>
+      <span className={styles.link}>
         Уже есть аккаунт?{' '}
         <TextUnderline type='button' onClick={() => dispatch(switchForm(Signin))}>
           Войти

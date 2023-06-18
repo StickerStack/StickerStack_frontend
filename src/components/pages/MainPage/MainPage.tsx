@@ -6,7 +6,7 @@ import { ButtonWithText, Container } from '../../UI';
 import { useAppDispatch } from '../../../hooks/hooks';
 import MainPageImage from '../../../images/main-page-image.png';
 import { IUserState } from '../../../interfaces';
-import { setFormIsOpen, setInfoIsOpen } from '../../../store/popupSlice';
+import { setFormIsOpen } from '../../../store/popupSlice';
 import styles from './MainPage.module.scss';
 
 const MainPage: React.FC = () => {
@@ -35,20 +35,7 @@ const MainPage: React.FC = () => {
             Попробовать
           </ButtonWithText>
         </section>
-        <img
-          className={styles.img}
-          src={MainPageImage}
-          onClick={() =>
-            dispatch(
-              setInfoIsOpen({
-                infoIsOpen: true,
-                title: 'Пароль',
-                text: 'Пароль',
-                buttonText: 'Пароль',
-              }),
-            )
-          }
-        />
+        <img className={styles.img} src={MainPageImage} />
       </Container>
     </main>
   );
