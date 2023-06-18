@@ -15,17 +15,17 @@
   }
   &_shown {
     composes: button;
-    top: 8px;
-    width: 23px;
-    height: 16px;
+
+    width: 24px;
+    height: 24px;
     background-image: url(../../../images/icons/password-shown.svg);
   }
 
   &_hidden {
     composes: button;
-    top: 6px;
-    width: 25px;
-    height: 20px;
+
+    width: 24px;
+    height: 24px;
     background-image: url(../../../images/icons/password-hidden.svg);
   }
 }

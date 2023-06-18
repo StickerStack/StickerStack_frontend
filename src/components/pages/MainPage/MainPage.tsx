@@ -6,7 +6,7 @@ import { ButtonWithText, Container } from '../../UI';
 import { useAppDispatch } from '../../../hooks/hooks';
 import MainPageImage from '../../../images/main-page-image.png';
 import { IUserState } from '../../../interfaces';
-import { setIsOpen } from '../../../store/popupSlice';
+import { setFormIsOpen, setInfoIsOpen } from '../../../store/popupSlice';
 import styles from './MainPage.module.scss';
 
 const MainPage: React.FC = () => {
@@ -19,7 +19,7 @@ const MainPage: React.FC = () => {
     if (isLogged) {
       navigate('/add-stickers');
     } else {
-      dispatch(setIsOpen(true));
+      dispatch(setFormIsOpen(true));
     }
   };
 
@@ -31,11 +31,24 @@ const MainPage: React.FC = () => {
           <h2 className={styles.description}>
             Быстро и просто: загрузи свои картинки и получи готовые стикеры с доставкой!
           </h2>
-          <ButtonWithText type='button' onClick={() => onClickTry()}>
+          <ButtonWithText type='button' color='contrast' onClick={() => onClickTry()}>
             Попробовать
           </ButtonWithText>
         </section>
-        <img className={styles.img} src={MainPageImage} />
+        <img
+          className={styles.img}
+          src={MainPageImage}
+          onClick={() =>
+            dispatch(
+              setInfoIsOpen({
+                infoIsOpen: true,
+                title: 'Пароль',
+                text: 'Пароль',
+                buttonText: 'Пароль',
+              }),
+            )
+          }
+        />
       </Container>
     </main>
   );

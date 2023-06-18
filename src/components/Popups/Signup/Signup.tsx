@@ -1,16 +1,27 @@
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-import { ButtonWithText, InputForm, CheckBoxForm, TitleForm, TextUnderline } from '../UI';
-import { Signin } from '../';
+import { ButtonWithText, InputForm, CheckBoxForm, TitlePopup, TextUnderline } from '../../UI';
+import { Signin } from '../..';
 
-import { useAppDispatch } from '../../hooks/hooks';
-import { setMessageIsOpen, switchForm, setIsOpen } from '../../store/popupSlice';
-import { getUser, updateStatus } from '../../store/userSlice';
-import { signUp, signIn, sendVerificationCode } from '../../store/authSlice';
-import { registerEmail, registerPassword, registerRepeatPassword } from '../../utils/registersRHF';
+import { ADD_STICKERS } from '../../../utils/constants';
+import { useAppDispatch } from '../../../hooks/hooks';
+import {
+  setMessageIsOpen,
+  switchForm,
+  setFormIsOpen,
+  setInfoIsOpen,
+} from '../../../store/popupSlice';
+import { getUser, updateStatus } from '../../../store/userSlice';
+import { signUp, signIn, sendVerificationCode } from '../../../store/authSlice';
+import {
+  registerEmail,
+  registerPassword,
+  registerRepeatPassword,
+} from '../../../utils/registersRHF';
+
 import styles from './Signup.module.scss';
-import { ADD_STICKERS } from '../../utils/constants';
+import { ChangePassword } from '../ChangePassword/ChangePassword';
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
@@ -19,7 +30,7 @@ const Signup: React.FC = () => {
     register,
     setValue,
     getValues,
-    formState: { errors, dirtyFields },
+    formState: { errors, dirtyFields, isValid },
     watch,
     handleSubmit,
   } = useForm({
@@ -37,13 +48,21 @@ const Signup: React.FC = () => {
           if (res.meta.requestStatus === 'fulfilled') {
             dispatch(getUser());
             dispatch(updateStatus(true));
-            dispatch(setIsOpen(false));
+            dispatch(setFormIsOpen(false));
             navigate(ADD_STICKERS);
+            // dispatch(
+            //   setMessageIsOpen({
+            //     messageIsOpen: true,
+            //     message: 'Подтвердите почту',
+            //     messageIsError: false,
+            //   }),
+            // );
             dispatch(
-              setMessageIsOpen({
-                messageIsOpen: true,
-                message: 'Подтвердите почту',
-                messageIsError: false,
+              setInfoIsOpen({
+                infoIsOpen: true,
+                title: 'Подтвердите вашу почту',
+                text: 'Мы направили ссылку на вашу почту, указанную при регистрации. Пожалуйста, подтвердите почту.',
+                buttonText: 'Понятно!',
               }),
             );
           }
@@ -63,7 +82,7 @@ const Signup: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.signup}>
-      <TitleForm>Регистрация</TitleForm>
+      <TitlePopup>Регистрация</TitlePopup>
       <div className={styles.inputs}>
         <InputForm
           register={register}
@@ -136,8 +155,10 @@ const Signup: React.FC = () => {
           </a>
         </p>
       </CheckBoxForm>
-      <ButtonWithText type='submit'>Зарегистрироваться</ButtonWithText>
-      <span className={styles.link}>
+      <ButtonWithText type='submit' disabled={!isValid}>
+        Зарегистрироваться
+      </ButtonWithText>
+      <span className={styles.link} onClick={() => dispatch(switchForm(ChangePassword))}>
         Уже есть аккаунт?{' '}
         <TextUnderline type='button' onClick={() => dispatch(switchForm(Signin))}>
           Войти

@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { ButtonWithText, TitleForm, TextForm } from '../../UI';
+import { ButtonWithText, TitlePopup, TextForm } from '../../UI';
 
 import styles from './PageNotFound.module.scss';
 
@@ -8,7 +8,7 @@ const PageNotFound: React.FC = () => {
   return (
     <div className={styles.page}>
       <div className={styles.container}>
-        <TitleForm>Упс! Ошибка 404</TitleForm>
+        <TitlePopup>Упс! Ошибка 404</TitlePopup>
         <TextForm>
           Кажется, что-то пошло не так.
           <br />

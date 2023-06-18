@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { setMessageIsOpen } from '../../../store/popupSlice';
-import { ButtonWithText, Container, InputForm, TitleForm } from '../../UI';
+import { ButtonWithText, Container, InputForm, TitlePopup } from '../../UI';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { resetPassword } from '../../../store/authSlice';
 import { registerPassword, registerRepeatPassword } from '../../../utils/registersRHF';
@@ -56,7 +56,7 @@ const ChangePassword: React.FC = () => {
     <section>
       <Container className={styles.container}>
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-          <TitleForm>Смена пароля</TitleForm>
+          <TitlePopup>Смена пароля</TitlePopup>
           <InputForm
             register={register}
             option={{

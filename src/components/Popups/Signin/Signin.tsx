@@ -1,12 +1,17 @@
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { ButtonWithText, TitleForm, InputForm, TextUnderline } from '../UI';
-import { Signup, ResetPassword } from '../';
-import { setIsOpen, setMessageIsOpen, switchForm } from '../../store/popupSlice';
-import { useAppDispatch } from '../../hooks/hooks';
-import { getUser, signInMockUser, updateStatus } from '../../store/userSlice';
-import { signIn } from '../../store/authSlice';
-import { registerEmail, registerPassword } from '../../utils/registersRHF';
+import { ButtonWithText, TitlePopup, InputForm, TextUnderline } from '../../UI';
+import { Signup, ResetPassword } from '../..';
+import {
+  setFormIsOpen,
+  setInfoIsOpen,
+  setMessageIsOpen,
+  switchForm,
+} from '../../../store/popupSlice';
+import { useAppDispatch } from '../../../hooks/hooks';
+import { getUser, signInMockUser, updateStatus } from '../../../store/userSlice';
+import { signIn } from '../../../store/authSlice';
+import { registerEmail, registerPassword } from '../../../utils/registersRHF';
 import styles from './Signin.module.scss';
 
 const Signin: React.FC = () => {
@@ -17,7 +22,7 @@ const Signin: React.FC = () => {
     register,
     getValues,
     setValue,
-    formState: { errors, dirtyFields },
+    formState: { errors, dirtyFields, isValid },
     handleSubmit,
     watch,
   } = useForm({
@@ -30,8 +35,16 @@ const Signin: React.FC = () => {
   const onSubmit = () => {
     if (userEmail === 'my@super.user' && userPassword === 'my@super.user') {
       dispatch(signInMockUser({ email: 'my@super.user', firstName: 'Иван', lastName: 'Иванов' }));
-      dispatch(setIsOpen(false));
+      dispatch(setFormIsOpen(false));
       navigate('/add-stickers');
+      dispatch(
+        setInfoIsOpen({
+          infoIsOpen: true,
+          title: 'Добро пожаловать',
+          text: 'Рады вас видеть снова. Закажите стикеры своей мечты',
+          buttonText: 'Начать!',
+        }),
+      );
       localStorage.setItem('token', 'moc');
       return;
     }
@@ -41,7 +54,7 @@ const Signin: React.FC = () => {
         if (res.meta.requestStatus === 'fulfilled') {
           dispatch(getUser());
           dispatch(updateStatus(true));
-          dispatch(setIsOpen(false));
+          dispatch(setFormIsOpen(false));
           navigate('/add-stickers');
         }
 
@@ -62,7 +75,7 @@ const Signin: React.FC = () => {
 
   return (
     <form className={styles.signin} onSubmit={handleSubmit(onSubmit)}>
-      <TitleForm>Войти в личный кабинет</TitleForm>
+      <TitlePopup>Вход</TitlePopup>
       <div className={styles.inputs}>
         <InputForm
           register={register}
@@ -113,7 +126,9 @@ const Signin: React.FC = () => {
           }}
         />
       </div>
-      <ButtonWithText type='submit'>Войти</ButtonWithText>
+      <ButtonWithText type='submit' className={styles.button} disabled={!isValid}>
+        Войти
+      </ButtonWithText>
       {!location.pathname.startsWith('/api/auth/verifyemail') ? (
         <span className={styles.link}>
           Нет аккаунта?{' '}
