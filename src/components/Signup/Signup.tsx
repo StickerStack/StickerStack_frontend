@@ -1,7 +1,8 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-import { ButtonWithText, InputForm, CheckBoxForm, TitleForm, TextUnderline } from '../UI';
+import { ButtonWithText, CheckBoxForm, TitleForm, TextUnderline, EyeButton, Input } from '../UI';
 import { Signin } from '../';
 
 import { useAppDispatch } from '../../hooks/hooks';
@@ -11,6 +12,10 @@ import { signUp, signIn, sendVerificationCode } from '../../store/authSlice';
 import { registerEmail, registerPassword, registerRepeatPassword } from '../../utils/registersRHF';
 import styles from './Signup.module.scss';
 import { ADD_STICKERS } from '../../utils/constants';
+import { InputWithButton } from '../UI/InputWithButton/InputWithButton';
+import { InputError } from '../UI/InputError/InputError';
+import { InputField } from '../UI/InputField/InputField';
+import { Label } from '../UI/Label';
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
@@ -25,6 +30,9 @@ const Signup: React.FC = () => {
   } = useForm({
     mode: 'onBlur',
   });
+
+  const [statePassword, setStatePasswod] = useState(false);
+  const [stateRepeatPassword, setStateRepeatPassword] = useState(false);
 
   const userEmail = getValues('email');
   const userPassword = getValues('password');
@@ -44,7 +52,7 @@ const Signup: React.FC = () => {
                 messageIsOpen: true,
                 message: 'Подтвердите почту',
                 messageIsError: false,
-              }),
+              })
             );
           }
         });
@@ -55,7 +63,7 @@ const Signup: React.FC = () => {
             messageIsOpen: true,
             message: 'Учётная запись с такой почтой уже существует',
             messageIsError: true,
-          }),
+          })
         );
       }
     });
@@ -65,59 +73,62 @@ const Signup: React.FC = () => {
     <form onSubmit={handleSubmit(onSubmit)} className={styles.signup}>
       <TitleForm>Регистрация</TitleForm>
       <div className={styles.inputs}>
-        <InputForm
-          register={register}
-          option={{
-            ...registerEmail,
-            onBlur: (value: React.FocusEvent<HTMLInputElement>) => {
-              setValue('email', value.target.value.trim());
-            },
-          }}
-          error={errors?.email}
-          placeholder='example@gmail.com'
-          name='email'
-          label='Электронная почта'
-          type='email'
-        />
-        <InputForm
-          register={register}
-          option={{
-            ...registerPassword,
-            validate: (val: string) => {
-              if (val.indexOf(' ') >= 0) {
-                return '';
-              }
-            },
-          }}
-          error={errors?.password}
-          placeholder='Пароль'
-          name='password'
-          label='Пароль'
-          type='password'
-          optionalEyeButton={{
-            visible: dirtyFields.password && watch('password') !== '',
-          }}
-        />
-
-        <InputForm
-          register={register}
-          option={{
-            ...registerRepeatPassword,
-            validate: (val: string) => {
-              if (val !== watch('password')) {
-                return 'Пароли не совпадают';
-              }
-            },
-          }}
-          error={errors?.passwordCheck}
-          placeholder='Подтвердите пароль'
-          name='passwordCheck'
-          label='Подтвердите пароль'
-          type='password'
-          optionalEyeButton={{
-            visible: dirtyFields.passwordCheck && watch('passwordCheck') !== '',
-          }}
-        />
+        <InputField className='email'>
+          <Label htmlFor='email'>Электронная почта</Label>
+          <Input
+            autoComplete='email'
+            register={register}
+            option={registerEmail}
+            name='email'
+            error={errors.email}
+          />
+          <InputError error={errors.email} />
+        </InputField>
+        <InputField className='password'>
+          <Label htmlFor='password'>Пароль</Label>
+          <InputWithButton
+            register={register}
+            option={registerPassword}
+            name='password'
+            type={statePassword ? 'text' : 'password'}
+            autoComplete='current-password'
+            error={errors.password}
+            button={
+              <EyeButton
+                onClick={() => setStatePasswod(!statePassword)}
+                shown={statePassword}
+                visible={dirtyFields?.password && true}
+              />
+            }
+          />
+          <InputError error={errors.password} />
+        </InputField>
+        <InputField className='password'>
+          <Label htmlFor='repeat-password'>Подтвердить пароль</Label>
+          <InputWithButton
+            register={register}
+            option={{
+              ...registerRepeatPassword,
+              validate: (val: string) => {
+                if (val !== watch('password')) {
+                  return 'Пароли не совпадают';
+                }
+              },
+            }}
+            name='repeat-password'
+            type={stateRepeatPassword ? 'text' : 'password'}
+            autoComplete='repeat-password'
+            error={errors['repeat-password']}
+            button={
+              <EyeButton
+                onClick={() => setStateRepeatPassword(!stateRepeatPassword)}
+                shown={stateRepeatPassword}
+                visible={dirtyFields['repeat-password'] && true}
+              />
+            }
+          />
+          <InputError error={errors['repeat-password']} />
+        </InputField>
       </div>
       <CheckBoxForm
         name='confirmCheckbox'

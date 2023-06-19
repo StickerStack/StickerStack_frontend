@@ -1,6 +1,8 @@
+import { useState } from 'react';
+
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { ButtonWithText, TitleForm, TextUnderline } from '../UI';
+import { ButtonWithText, TitleForm, TextUnderline, Input, EyeButton } from '../UI';
 import { Signup, ResetPassword } from '../';
 import { setIsOpen, setMessageIsOpen, switchForm } from '../../store/popupSlice';
 import { useAppDispatch } from '../../hooks/hooks';
@@ -8,7 +10,10 @@ import { getUser, signInMockUser, updateStatus } from '../../store/userSlice';
 import { signIn } from '../../store/authSlice';
 import { registerEmail, registerPassword } from '../../utils/registersRHF';
 import styles from './Signin.module.scss';
-import { Input } from '../_UI/Input/Input';
+import { InputField } from '../UI/InputField/InputField';
+import { Label } from '../UI/Label';
+import { InputError } from '../UI/InputError/InputError';
+import { InputWithButton } from '../UI/InputWithButton/InputWithButton';
 
 const Signin: React.FC = () => {
   const location = useLocation();
@@ -24,6 +29,8 @@ const Signin: React.FC = () => {
   } = useForm({
     mode: 'onBlur',
   });
+
+  const [statePassword, setStatePasswod] = useState(false);
 
   const userEmail = getValues('email');
   const userPassword = getValues('password');
@@ -65,40 +72,41 @@ const Signin: React.FC = () => {
     <form className={styles.signin} onSubmit={handleSubmit(onSubmit)}>
       <TitleForm>Вход</TitleForm>
       <div className={styles.inputs}>
-        <Input
-          register={register}
-          typeInput='form'
-          option={{
-            ...registerEmail,
-            onBlur: (value: React.FocusEvent<HTMLInputElement>) => {
-              setValue('email', value.target.value.trim());
-            },
-          }}
-          error={errors?.email}
-          placeholder='Электронная почта'
-          name='email'
-          label='Электронная почта'
-          type='email'
-        />
-        <Input
-          typeInput='form'
-          register={register}
-          option={{
-            ...registerPassword,
-            validate: (val: string) => {
-              if (val.indexOf(' ') >= 0) {
-                return '';
-              }
-            },
-          }}
-          error={errors?.password}
-          placeholder='Пароль'
-          name='password'
-          label='Пароль'
-          type='password'
-          labelLink={{ text: 'Забыли пароль?', onClick: () => dispatch(switchForm(ResetPassword)) }}
-          showSubButton={dirtyFields.password && watch('password') !== ''}
-        />
+        <InputField className='email'>
+          <Label htmlFor='email'>Электронная почта</Label>
+          <Input
+            placeholder='example@gmail.com'
+            autoComplete='email'
+            register={register}
+            option={registerEmail}
+            name='email'
+            error={errors.email}
+          />
+          <InputError error={errors.email} />
+        </InputField>
+        <InputField className='password'>
+          <Label htmlFor='password'>
+            Пароль
+            <TextUnderline onClick={() => dispatch(switchForm(ResetPassword))}>Забыли пароль?</TextUnderline>
+          </Label>
+          <InputWithButton
+            placeholder='Введите пароль'
+            register={register}
+            option={registerPassword}
+            name='password'
+            type={statePassword ? 'text' : 'password'}
+            autoComplete='current-password'
+            error={errors.password}
+            button={
+              <EyeButton
+                onClick={() => setStatePasswod(!statePassword)}
+                shown={statePassword}
+                visible={dirtyFields?.password && true}
+              />
+            }
+          />
+          <InputError error={errors.password} />
+        </InputField>
       </div>
       <ButtonWithText type='submit'>Войти</ButtonWithText>
       {!location.pathname.startsWith('/api/auth/verifyemail') ? (
