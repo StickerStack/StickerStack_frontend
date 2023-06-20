@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { setMessageIsOpen } from '../../../store/popupSlice';
-import { ButtonWithText, Container, InputForm, TitleForm } from '../../UI';
+import { ButtonWithText, Container, TitleForm } from '../../UI';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { resetPassword } from '../../../store/authSlice';
 import { registerPassword, registerRepeatPassword } from '../../../utils/registersRHF';
@@ -57,44 +57,7 @@ const ChangePassword: React.FC = () => {
       <Container className={styles.container}>
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
           <TitleForm>Смена пароля</TitleForm>
-          <InputForm
-            register={register}
-            option={{
-              ...registerPassword,
-              validate: (val: string) => {
-                if (val.indexOf(' ') >= 0) {
-                  return '';
-                }
-              },
-            }}
-            error={errors?.newPassword}
-            placeholder='Новый пароль'
-            name='newPassword'
-            label='Новый пароль'
-            type='password'
-            optionalEyeButton={{
-              visible: dirtyFields.newPassword && watch('newPassword') !== '',
-            }}
-          />
-          <InputForm
-            register={register}
-            option={{
-              ...registerRepeatPassword,
-              validate: (val: string) => {
-                if (val !== watch('newPassword')) {
-                  return 'Пароли не совпадают';
-                }
-              },
-            }}
-            error={errors?.newPasswordCheck}
-            placeholder='Повторите пароль'
-            name='newPasswordCheck'
-            label='Повторите пароль'
-            type='password'
-            optionalEyeButton={{
-              visible: dirtyFields.newPasswordCheck && watch('newPasswordCheck') !== '',
-            }}
-          />
+          
           <ButtonWithText type='submit'>Изменить пароль</ButtonWithText>
         </form>
       </Container>
