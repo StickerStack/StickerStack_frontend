@@ -150,7 +150,7 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
               Количество стикеров
             </label>
             <div>
-              <Input className='size' register={register} name='amount' />
+              <Input className='amount' register={register} option={registerAmount} name='amount' />
               <Error className={styles.error}>{errors.amount && `${errors.amount?.message}`}</Error>
             </div>
           </div>
