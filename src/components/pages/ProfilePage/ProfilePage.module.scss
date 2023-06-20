@@ -19,6 +19,17 @@
   width: 270px;
 }
 
+.remove { 
+  background-image: url(../../../images/icons/clear-field.svg);
+  width: 18px;
+  height: 18px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  border: none;
+  background-color: transparent;
+}
+
 .button {
   @include font(16px, 22px, 400);
   width: 100%;
