@@ -3,7 +3,7 @@ import { FieldValues, useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { setFormIsOpen, setMessageIsOpen } from '../../../store/popupSlice';
-import { ButtonWithText, Container, InputForm, TitlePopup } from '../../UI';
+import { ButtonWithText, Container, TitlePopup } from '../../UI';
 import { ChangePassword } from '../../Popups/ChangePassword/ChangePassword';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { resetPassword } from '../../../store/authSlice';

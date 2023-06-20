@@ -1,17 +1,22 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-import { ButtonWithText, InputForm, CheckBoxForm, TitlePopup, TextUnderline } from '../../UI';
-import { Signin } from '../..';
-
-import { ADD_STICKERS } from '../../../utils/constants';
-import { useAppDispatch } from '../../../hooks/hooks';
 import {
-  setMessageIsOpen,
-  switchForm,
-  setFormIsOpen,
-  setInfoIsOpen,
-} from '../../../store/popupSlice';
+  ButtonWithText,
+  CheckBoxForm,
+  TitlePopup,
+  TextUnderline,
+  EyeButton,
+  Input,
+} from '../../UI';
+import { Signin } from '../Signin/Signin';
+import { InputWithButton } from '../../UI/InputWithButton/InputWithButton';
+import { InputError } from '../../UI/InputError/InputError';
+import { InputField } from '../../UI/InputField/InputField';
+import { Label } from '../../UI/Label';
+import { useAppDispatch } from '../../../hooks/hooks';
+import { setMessageIsOpen, switchForm, setFormIsOpen } from '../../../store/popupSlice';
 import { getUser, updateStatus } from '../../../store/userSlice';
 import { signUp, signIn, sendVerificationCode } from '../../../store/authSlice';
 import {
@@ -21,6 +26,7 @@ import {
 } from '../../../utils/registersRHF';
 
 import styles from './Signup.module.scss';
+import { ADD_STICKERS } from '../../../utils/constants';
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
@@ -29,12 +35,15 @@ const Signup: React.FC = () => {
     register,
     setValue,
     getValues,
-    formState: { errors, dirtyFields, isValid },
+    formState: { errors, dirtyFields },
     watch,
     handleSubmit,
   } = useForm({
     mode: 'onBlur',
   });
+
+  const [statePassword, setStatePasswod] = useState(false);
+  const [stateRepeatPassword, setStateRepeatPassword] = useState(false);
 
   const userEmail = getValues('email');
   const userPassword = getValues('password');
@@ -49,19 +58,11 @@ const Signup: React.FC = () => {
             dispatch(updateStatus(true));
             dispatch(setFormIsOpen(false));
             navigate(ADD_STICKERS);
-            // dispatch(
-            //   setMessageIsOpen({
-            //     messageIsOpen: true,
-            //     message: 'Подтвердите почту',
-            //     messageIsError: false,
-            //   }),
-            // );
             dispatch(
-              setInfoIsOpen({
-                infoIsOpen: true,
-                title: 'Подтвердите вашу почту',
-                text: 'Мы направили ссылку на вашу почту, указанную при регистрации. Пожалуйста, подтвердите почту.',
-                buttonText: 'Понятно!',
+              setMessageIsOpen({
+                messageIsOpen: true,
+                message: 'Подтвердите почту',
+                messageIsError: false,
               }),
             );
           }
@@ -83,59 +84,65 @@ const Signup: React.FC = () => {
     <form onSubmit={handleSubmit(onSubmit)} className={styles.signup}>
       <TitlePopup>Регистрация</TitlePopup>
       <div className={styles.inputs}>
-        <InputForm
-          register={register}
-          option={{
-            ...registerEmail,
-            onBlur: (value: React.FocusEvent<HTMLInputElement>) => {
-              setValue('email', value.target.value.trim());
-            },
-          }}
-          error={errors?.email}
-          placeholder='example@gmail.com'
-          name='email'
-          label='Электронная почта'
-          type='email'
-        />
-        <InputForm
-          register={register}
-          option={{
-            ...registerPassword,
-            validate: (val: string) => {
-              if (val.indexOf(' ') >= 0) {
-                return '';
-              }
-            },
-          }}
-          error={errors?.password}
-          placeholder='Пароль'
-          name='password'
-          label='Пароль'
-          type='password'
-          optionalEyeButton={{
-            visible: dirtyFields.password && watch('password') !== '',
-          }}
-        />
-
-        <InputForm
-          register={register}
-          option={{
-            ...registerRepeatPassword,
-            validate: (val: string) => {
-              if (val !== watch('password')) {
-                return 'Пароли не совпадают';
-              }
-            },
-          }}
-          error={errors?.passwordCheck}
-          placeholder='Подтвердите пароль'
-          name='passwordCheck'
-          label='Подтвердите пароль'
-          type='password'
-          optionalEyeButton={{
-            visible: dirtyFields.passwordCheck && watch('passwordCheck') !== '',
-          }}
-        />
+        <InputField className='email'>
+          <Label htmlFor='email'>Электронная почта</Label>
+          <Input
+            autoComplete='email'
+            placeholder='example@gmail.com'
+            register={register}
+            option={registerEmail}
+            name='email'
+            error={errors.email}
+          />
+          <InputError error={errors.email} />
+        </InputField>
+        <InputField className='password'>
+          <Label htmlFor='password'>Пароль</Label>
+          <InputWithButton
+            register={register}
+            option={registerPassword}
+            name='password'
+            placeholder='Введите пароль'
+            type={statePassword ? 'text' : 'password'}
+            autoComplete='current-password'
+            error={errors.password}
+            button={
+              <EyeButton
+                onClick={() => setStatePasswod(!statePassword)}
+                shown={statePassword}
+                visible={dirtyFields?.password && true}
+              />
+            }
+          />
+          <InputError error={errors.password} />
+        </InputField>
+        <InputField className='password'>
+          <Label htmlFor='repeat-password'>Подтвердить пароль</Label>
+          <InputWithButton
+            register={register}
+            option={{
+              ...registerRepeatPassword,
+              validate: (val: string) => {
+                if (val !== watch('password')) {
+                  return 'Пароли не совпадают';
+                }
+              },
+            }}
+            placeholder='Введите пароль'
+            name='repeat-password'
+            type={stateRepeatPassword ? 'text' : 'password'}
+            autoComplete='repeat-password'
+            error={errors['repeat-password']}
+            button={
+              <EyeButton
+                onClick={() => setStateRepeatPassword(!stateRepeatPassword)}
+                shown={stateRepeatPassword}
+                visible={dirtyFields['repeat-password'] && true}
+              />
+            }
+          />
+          <InputError error={errors['repeat-password']} />
+        </InputField>
       </div>
       <CheckBoxForm
         name='confirmCheckbox'
@@ -154,9 +161,7 @@ const Signup: React.FC = () => {
           </a>
         </p>
       </CheckBoxForm>
-      <ButtonWithText type='submit' disabled={!isValid}>
-        Зарегистрироваться
-      </ButtonWithText>
+      <ButtonWithText type='submit'>Зарегистрироваться</ButtonWithText>
       <span className={styles.link}>
         Уже есть аккаунт?{' '}
         <TextUnderline type='button' onClick={() => dispatch(switchForm(Signin))}>

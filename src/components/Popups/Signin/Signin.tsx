@@ -1,17 +1,20 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { ButtonWithText, TitlePopup, InputForm, TextUnderline } from '../../UI';
-import { Signup, ResetPassword } from '../..';
-import {
-  setFormIsOpen,
-  setInfoIsOpen,
-  setMessageIsOpen,
-  switchForm,
-} from '../../../store/popupSlice';
+
+import { ButtonWithText, TitlePopup, TextUnderline, Input, EyeButton } from '../../UI';
+import { InputField } from '../../UI/InputField/InputField';
+import { Label } from '../../UI/Label';
+import { InputError } from '../../UI/InputError/InputError';
+import { InputWithButton } from '../../UI/InputWithButton/InputWithButton';
+import { Signup } from '../Signup/Signup';
+import { ResetPassword } from '../ResetPassword/ResetPassword';
+import { setFormIsOpen, setMessageIsOpen, switchForm } from '../../../store/popupSlice';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { getUser, signInMockUser, updateStatus } from '../../../store/userSlice';
 import { signIn } from '../../../store/authSlice';
 import { registerEmail, registerPassword } from '../../../utils/registersRHF';
+
 import styles from './Signin.module.scss';
 
 const Signin: React.FC = () => {
@@ -22,12 +25,14 @@ const Signin: React.FC = () => {
     register,
     getValues,
     setValue,
-    formState: { errors, dirtyFields, isValid },
+    formState: { errors, dirtyFields },
     handleSubmit,
     watch,
   } = useForm({
     mode: 'onBlur',
   });
+
+  const [statePassword, setStatePasswod] = useState(false);
 
   const userEmail = getValues('email');
   const userPassword = getValues('password');
@@ -37,14 +42,6 @@ const Signin: React.FC = () => {
       dispatch(signInMockUser({ email: 'my@super.user', firstName: 'Иван', lastName: 'Иванов' }));
       dispatch(setFormIsOpen(false));
       navigate('/add-stickers');
-      // dispatch(
-      //   setInfoIsOpen({
-      //     infoIsOpen: true,
-      //     title: 'Добро пожаловать',
-      //     text: 'Рады вас видеть снова. Закажите стикеры своей мечты',
-      //     buttonText: 'Начать!',
-      //   }),
-      // );
       localStorage.setItem('token', 'moc');
       return;
     }
@@ -77,58 +74,45 @@ const Signin: React.FC = () => {
     <form className={styles.signin} onSubmit={handleSubmit(onSubmit)}>
       <TitlePopup>Вход</TitlePopup>
       <div className={styles.inputs}>
-        <InputForm
-          register={register}
-          option={{
-            ...registerEmail,
-            onBlur: (value: React.FocusEvent<HTMLInputElement>) => {
-              setValue('email', value.target.value.trim());
-            },
-          }}
-          error={errors?.email}
-          placeholder='Электронная почта'
-          name='email'
-          label='Электронная почта'
-          type='email'
-        />
-        <InputForm
-          register={register}
-          option={{
-            ...registerPassword,
-            validate: (val: string) => {
-              if (val.indexOf(' ') >= 0) {
-                return '';
-              }
-            },
-          }}
-          error={errors?.password}
-          placeholder='Пароль'
-          name='password'
-          label='Пароль'
-          type='password'
-          optionalButton={
-            !location.pathname.startsWith('/api/auth/verifyemail')
-              ? {
-                  text: 'Забыли пароль?',
-                  onClick: () => {
-                    dispatch(switchForm(ResetPassword));
-                  },
-                }
-              : {
-                  text: '',
-                  onClick: () => {
-                    return;
-                  },
-                }
-          }
-          optionalEyeButton={{
-            visible: dirtyFields.password && watch('password') !== '',
-          }}
-        />
+        <InputField className='email'>
+          <Label htmlFor='email'>Электронная почта</Label>
+          <Input
+            placeholder='example@gmail.com'
+            autoComplete='email'
+            register={register}
+            option={registerEmail}
+            name='email'
+            error={errors.email}
+          />
+          <InputError error={errors.email} />
+        </InputField>
+        <InputField className='password'>
+          <Label htmlFor='password'>
+            Пароль
+            <TextUnderline onClick={() => dispatch(switchForm(ResetPassword))}>
+              Забыли пароль?
+            </TextUnderline>
+          </Label>
+          <InputWithButton
+            placeholder='Введите пароль'
+            register={register}
+            option={registerPassword}
+            name='password'
+            type={statePassword ? 'text' : 'password'}
+            autoComplete='current-password'
+            error={errors.password}
+            button={
+              <EyeButton
+                onClick={() => setStatePasswod(!statePassword)}
+                shown={statePassword}
+                visible={dirtyFields?.password && true}
+              />
+            }
+          />
+          <InputError error={errors.password} />
+        </InputField>
       </div>
-      <ButtonWithText type='submit' className={styles.button} disabled={!isValid}>
-        Войти
-      </ButtonWithText>
+      <ButtonWithText type='submit'>Войти</ButtonWithText>
       {!location.pathname.startsWith('/api/auth/verifyemail') ? (
         <span className={styles.link}>
           Нет аккаунта?{' '}

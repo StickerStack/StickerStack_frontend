@@ -7,11 +7,11 @@ import styles from './ResetPasswordInfo.module.scss';
 
 const ResetPasswordInfo: React.FC = () => {
   const dispatch = useAppDispatch();
-
+  const email = localStorage.getItem('email');
   return (
     <div className={styles.resetpassword}>
       <TitlePopup>Восстановление пароля</TitlePopup>
-      <TextForm>Перейдите на почту ivanov@mail.ru чтобы восстановить пароль</TextForm>
+      <TextForm>Перейдите на почту {email}, чтобы восстановить пароль</TextForm>
       <TextUnderline type='button' onClick={() => dispatch(switchForm(ResetPassword))}>
         Ввести другую почту
       </TextUnderline>

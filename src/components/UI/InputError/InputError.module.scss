@@ -1,0 +1,15 @@
+@import '../../../utils/_scss-variables.scss';
+
+.error {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: $error-text-color;
+  padding: 0 5px;
+
+  &.size {
+    position: absolute;
+    padding: 0;
+    bottom: -18px;
+  }
+}

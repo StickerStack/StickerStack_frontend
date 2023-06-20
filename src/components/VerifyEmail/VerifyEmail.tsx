@@ -19,7 +19,7 @@ const VerifyEmail: React.FC = () => {
   useEffect(() => {
     dispatch(verifyEmail({ token: location.pathname.replace('/auth/verifyemail/', '') }))
       .then((res) => {
-        if (res.meta.requestStatus === 'fulfilled') navigate('/');
+        if (res.meta.requestStatus === 'fulfilled') navigate('/profile');
         dispatch(
           setInfoIsOpen({
             infoIsOpen: true,

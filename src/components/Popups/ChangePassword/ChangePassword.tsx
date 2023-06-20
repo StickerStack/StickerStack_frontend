@@ -1,11 +1,17 @@
 import { useEffect, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
+
+import { InputWithButton } from '../../UI/InputWithButton/InputWithButton';
+import { InputError } from '../../UI/InputError/InputError';
+import { InputField } from '../../UI/InputField/InputField';
+import { Label } from '../../UI/Label';
 import { setInfoIsOpen, setMessageIsOpen } from '../../../store/popupSlice';
-import { ButtonWithText, InputForm, TitlePopup } from '../../UI';
+import { ButtonWithText, TitlePopup, EyeButton } from '../../UI';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { resetPassword } from '../../../store/authSlice';
 import { registerPassword, registerRepeatPassword } from '../../../utils/registersRHF';
+
 import styles from './ChangePassword.module.scss';
 
 const ChangePassword: React.FC = () => {
@@ -21,6 +27,9 @@ const ChangePassword: React.FC = () => {
   const navigate = useNavigate();
   const [token, setToken] = useState<string>('');
   const dispatch = useAppDispatch();
+
+  const [statePassword, setStatePasswod] = useState(false);
+  const [stateRepeatPassword, setStateRepeatPassword] = useState(false);
 
   const onSubmit = (data: FieldValues) => {
     dispatch(resetPassword({ token: token, password: data.newPassword })).then((res) => {
@@ -67,44 +76,53 @@ const ChangePassword: React.FC = () => {
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
       <TitlePopup>Смена пароля</TitlePopup>
-      <InputForm
-        register={register}
-        option={{
-          ...registerPassword,
-          validate: (val: string) => {
-            if (val.indexOf(' ') >= 0) {
-              return '';
-            }
-          },
-        }}
-        error={errors?.newPassword}
-        placeholder='Новый пароль'
-        name='newPassword'
-        label='Новый пароль'
-        type='password'
-        optionalEyeButton={{
-          visible: dirtyFields.newPassword && watch('newPassword') !== '',
-        }}
-      />
-      <InputForm
-        register={register}
-        option={{
-          ...registerRepeatPassword,
-          validate: (val: string) => {
-            if (val !== watch('newPassword')) {
-              return 'Пароли не совпадают';
-            }
-          },
-        }}
-        error={errors?.newPasswordCheck}
-        placeholder='Повторите пароль'
-        name='newPasswordCheck'
-        label='Повторите пароль'
-        type='password'
-        optionalEyeButton={{
-          visible: dirtyFields.newPasswordCheck && watch('newPasswordCheck') !== '',
-        }}
-      />
+      <InputField className='password'>
+        <Label htmlFor='password'>Новый пароль</Label>
+        <InputWithButton
+          register={register}
+          placeholder='Введите пароль'
+          option={registerPassword}
+          name='password'
+          type={statePassword ? 'text' : 'password'}
+          autoComplete='current-password'
+          error={errors.password}
+          button={
+            <EyeButton
+              onClick={() => setStatePasswod(!statePassword)}
+              shown={statePassword}
+              visible={dirtyFields?.password && true}
+            />
+          }
+        />
+        <InputError error={errors.password} />
+      </InputField>
+      <InputField className='password'>
+        <Label htmlFor='repeat-password'>Повторите пароль</Label>
+        <InputWithButton
+          register={register}
+          placeholder='Введите пароль'
+          option={{
+            ...registerRepeatPassword,
+            validate: (val: string) => {
+              if (val !== watch('password')) {
+                return 'Пароли не совпадают';
+              }
+            },
+          }}
+          name='repeat-password'
+          type={stateRepeatPassword ? 'text' : 'password'}
+          autoComplete='repeat-password'
+          error={errors['repeat-password']}
+          button={
+            <EyeButton
+              onClick={() => setStateRepeatPassword(!stateRepeatPassword)}
+              shown={stateRepeatPassword}
+              visible={dirtyFields['repeat-password'] && true}
+            />
+          }
+        />
+        <InputError error={errors['repeat-password']} />
+      </InputField>
       <ButtonWithText type='submit' className={styles.button} disabled={!isValid}>
         Изменить пароль
       </ButtonWithText>

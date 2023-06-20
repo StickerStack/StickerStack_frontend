@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { Signin } from '../components/Popups/Signin/Signin';
+import { ChangePassword } from '../components/Popups/ChangePassword/ChangePassword';
 
 const popupSlice = createSlice({
   name: 'popupSlice',
@@ -30,6 +31,9 @@ const popupSlice = createSlice({
     setFormIsOpen(state, action) {
       if (!state.isOpen) {
         state.form = Signin;
+      }
+      if (action.payload === ChangePassword) {
+        state.form = ChangePassword;
       }
       state.isOpen = action.payload;
       state.formIsOpen = action.payload;

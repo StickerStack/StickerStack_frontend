@@ -1,8 +1,10 @@
-import { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 
 import { Signin, Signup } from '../..';
-import { ButtonWithText, InputForm, TextForm, TextUnderline, TitlePopup } from '../../UI';
+import { ButtonWithText, TextForm, TextUnderline, TitlePopup, Input } from '../../UI';
+import { InputField } from '../../UI/InputField/InputField';
+import { Label } from '../../UI/Label';
+import { InputError } from '../../UI/InputError/InputError';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { forgotPassword } from '../../../store/authSlice';
 import { switchForm } from '../../../store/popupSlice';
@@ -15,17 +17,15 @@ const ResetPassword: React.FC = () => {
   const dispatch = useAppDispatch();
   const {
     register,
-    setValue,
     formState: { errors, isValid },
     handleSubmit,
   } = useForm({
     mode: 'onBlur',
   });
-  const [formSubmit, setFormSubmit] = useState<boolean>(false);
 
   const onSubmit = (data: FieldValues) => {
     dispatch(forgotPassword({ email: data.email })).then(() => {
-      setFormSubmit(true);
+      localStorage.setItem('email', data.email);
       dispatch(switchForm(ResetPasswordInfo));
     });
   };
@@ -33,20 +33,18 @@ const ResetPassword: React.FC = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.resetpassword}>
       <TitlePopup>Восстановление пароля</TitlePopup>
-      <InputForm
-        register={register}
-        option={{
-          ...registerEmail,
-          onBlur: (value: React.FocusEvent<HTMLInputElement>) => {
-            setValue('email', value.target.value.trim());
-          },
-        }}
-        error={errors?.email}
-        placeholder='Электронная почта'
-        name='email'
-        label='Электронная почта'
-        type='email'
-      />
+      <InputField className='email'>
+        <Label>Электронная почта</Label>
+        <Input
+          autoComplete='email'
+          placeholder='example@gmail.com'
+          register={register}
+          option={registerEmail}
+          name='email'
+          error={errors.email}
+        />
+        <InputError error={errors.email} />
+      </InputField>
       <TextForm>На эту почту мы отправим ссылку для восстановления пароля</TextForm>
       <ButtonWithText type='submit' className={styles.button} disabled={!isValid}>
         Восстановить пароль
