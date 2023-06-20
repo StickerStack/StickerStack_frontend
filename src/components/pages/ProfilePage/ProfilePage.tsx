@@ -10,7 +10,9 @@ import { profileName, registerEmail } from '../../../utils/registersRHF';
 import { ImagePick } from '../../ImagePick/ImagePick';
 import { ButtonWithText, Container, TitlePage } from '../../UI';
 import { setMessageIsOpen } from '../../../store/popupSlice';
-import ProfileInput from '../../UI/ProfileInput/ProfileInput';
+import { InputWithButton } from '../../UI/InputWithButton/InputWithButton';
+import { InputField } from '../../UI/InputField/InputField';
+import { InputError } from '../../UI/InputError/InputError';
 
 import EmptyAvatarImage from '../../../images/empty-avatar.svg';
 import styles from './ProfilePage.module.scss';
@@ -94,7 +96,7 @@ const ProfilePage: React.FC = () => {
         email: email,
         firstName: firstname,
         lastName: lastname,
-      }),
+      })
     ).then((res) => {
       if (res.meta.requestStatus === 'fulfilled') {
         dispatch(setMessageIsOpen({ message: 'Успешно изменено', messageIsOpen: true }));
@@ -109,7 +111,7 @@ const ProfilePage: React.FC = () => {
             message: 'Ошибка. Информация профиля не изменана',
             messageIsOpen: true,
             messageIsError: true,
-          }),
+          })
         );
       }
     });
@@ -130,47 +132,67 @@ const ProfilePage: React.FC = () => {
           />
           <div className={styles.profile_data}>
             <form className={styles.inputs} onSubmit={handleSubmit(onSubmit)}>
-              <ProfileInput
-                name={FIRSTNAME_INPUT_LABEL}
-                type='text'
-                placeholder='Имя'
-                register={register}
-                option={profileName}
-                iconVisible={watch(FIRSTNAME_INPUT_LABEL)?.length}
-                error={errors && errors[FIRSTNAME_INPUT_LABEL]}
-                onClear={() => resetField(FIRSTNAME_INPUT_LABEL)}
-              />
+              <InputField>
+                <InputWithButton
+                  register={register}
+                  option={profileName}
+                  name={FIRSTNAME_INPUT_LABEL}
+                  error={errors[FIRSTNAME_INPUT_LABEL]}
+                  placeholder='Имя'
+                  className='profile'
+                  button={
+                    <button
+                      type='button'
+                      onClick={() => setValue(FIRSTNAME_INPUT_LABEL, '')}
+                      className={styles.remove}
+                    />
+                  }
+                />
+                <InputError error={errors[FIRSTNAME_INPUT_LABEL]} />
+              </InputField>
+              <InputField>
+                <InputWithButton
+                  register={register}
+                  option={profileName}
+                  name={LASTNAME_INPUT_LABEL}
+                  placeholder='Фамилия'
+                  className='profile'
+                  error={errors[LASTNAME_INPUT_LABEL]}
+                  button={
+                    <button
+                      type='button'
+                      onClick={() => setValue(LASTNAME_INPUT_LABEL, '')}
+                      className={styles.remove}
+                    />
+                  }
+                />
+                <InputError error={errors[LASTNAME_INPUT_LABEL]} />
+              </InputField>
+              <InputField>
+                <InputWithButton
+                  register={register}
+                  option={registerEmail}
+                  error={errors[EMAIL_INPUT_LABEL]}
+                  name={EMAIL_INPUT_LABEL}
+                  placeholder='Email'
+                  className='profile'
+                  button={
+                    <button
+                      type='button'
+                      onClick={() => setValue(EMAIL_INPUT_LABEL, '')}
+                      className={styles.remove}
+                    />
+                  }
+                />
+                <InputError error={errors[EMAIL_INPUT_LABEL]} />
+              </InputField>
 
-              <ProfileInput
-                name={LASTNAME_INPUT_LABEL}
-                type='text'
-                placeholder='Фамилия'
-                register={register}
-                option={profileName}
-                iconVisible={watch(LASTNAME_INPUT_LABEL)?.length}
-                error={errors && errors[LASTNAME_INPUT_LABEL]}
-                onClear={() => resetField(LASTNAME_INPUT_LABEL)}
-              />
-
-              <ProfileInput
-                name={EMAIL_INPUT_LABEL}
-                type='email'
-                placeholder='Email'
-                register={register}
-                option={registerEmail}
-                iconVisible={watch(EMAIL_INPUT_LABEL)?.length}
-                error={errors && errors[EMAIL_INPUT_LABEL]}
-                onClear={() => resetField(EMAIL_INPUT_LABEL)}
-              />
               <ButtonWithText
                 className={styles.button}
                 type='submit'
                 disabled={
-                  !(
-                    user.firstName !== firstname ||
-                    user.lastName !== lastname ||
-                    user.email !== email
-                  ) || !isValid
+                  !(user.firstName !== firstname || user.lastName !== lastname || user.email !== email) ||
+                  !isValid
                 }
               >
                 Сохранить

@@ -3,19 +3,21 @@ import { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 
 import { Signin } from '../';
-import { ButtonWithText, InputForm, TitleForm } from '../UI';
+import { ButtonWithText, Input, TitleForm } from '../UI';
 import { useAppDispatch } from '../../hooks/hooks';
 import { forgotPassword } from '../../store/authSlice';
 import { switchForm } from '../../store/popupSlice';
 import { registerEmail } from '../../utils/registersRHF';
 
 import styles from './ResetPassword.module.scss';
+import { InputField } from '../UI/InputField/InputField';
+import { Label } from '../UI/Label';
+import { InputError } from '../UI/InputError/InputError';
 
 const ResetPassword: React.FC = () => {
   const dispatch = useAppDispatch();
   const {
     register,
-    setValue,
     formState: { errors },
     handleSubmit,
   } = useForm({
@@ -30,20 +32,17 @@ const ResetPassword: React.FC = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.resetpassword}>
       <TitleForm>Восстановление пароля</TitleForm>
-      <InputForm
-        register={register}
-        option={{
-          ...registerEmail,
-          onBlur: (value: React.FocusEvent<HTMLInputElement>) => {
-            setValue('email', value.target.value.trim());
-          },
-        }}
-        error={errors?.email}
-        placeholder='Электронная почта'
-        name='email'
-        label='Электронная почта'
-        type='email'
-      />
+      <InputField className='email'>
+        <Label>Электронная почта</Label>
+        <Input
+          autoComplete='email'
+          register={register}
+          option={registerEmail}
+          name='email'
+          error={errors.email}
+        />
+        <InputError error={errors.email} />
+      </InputField>
       {formSubmit && (
         <motion.span
           style={{ position: 'absolute', width: '310px', top: '125px' }}
