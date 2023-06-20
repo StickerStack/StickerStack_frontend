@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 
-import { ButtonCustom, Error, Input, RadioButton, SizeInput, TooltipCustom } from '../UI';
+import { ButtonCustom, Error, Input, RadioButton, TooltipCustom, InputField, InputError } from '../UI';
 import { Shape } from '../Shape/Shape';
 import { DragAndDrop } from '../';
 import { useAppDispatch } from '../../hooks/hooks';
@@ -104,16 +104,7 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
               Количество стикеров
             </label>
             <div>
-              <Input
-                name='amount'
-                id='amount'
-                value={amount}
-                option={registerAmount}
-                type='tel'
-                register={register}
-                onChange={handleChange}
-                error={errors.amount}
-              />
+              <Input className='amount' register={register} option={registerAmount} name='amount' />
               <Error className={styles.error}>{errors.amount && `${errors.amount?.message}`}</Error>
             </div>
           </div>
@@ -141,18 +132,29 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
                 Свой размер
               </RadioButton>
               <div className={cn(customVisible ? styles.visible : styles.hidden)}>
-                <SizeInput
-                  nameWidth='width'
-                  nameHeight='height'
-                  valueWidth={width}
-                  valueHeight={height}
-                  setWidth={setWidth}
-                  setHeight={setHeight}
-                  register={register}
-                  errorWidth={errors.width}
-                  errorHeight={errors.height}
-                  option={registerSize}
-                />
+                <InputField className='size'>
+                    <Input
+                      type='tel'
+                      className='size'
+                      register={register}
+                      option={registerSize}
+                      name='width'
+                      placeholder='ширина'
+                      error={errors.width}
+                    />
+                  x
+                    <Input
+                      type='tel'
+                      className='size'
+                      register={register}
+                      option={registerSize}
+                      name='height'
+                      placeholder='высота'
+                      error={errors.height}
+                    />
+                    см
+                  <InputError className='size' error={errors.width || errors.height} />
+                </InputField>
               </div>
             </div>
           </div>
@@ -169,12 +171,7 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
         </div>
       </form>
       {cards.length > 1 ? (
-        <ButtonCustom
-          type='delete'
-          className={styles.delete}
-          label='Удалить'
-          onClick={handleDelete}
-        />
+        <ButtonCustom type='delete' className={styles.delete} label='Удалить' onClick={handleDelete} />
       ) : null}
     </section>
   );

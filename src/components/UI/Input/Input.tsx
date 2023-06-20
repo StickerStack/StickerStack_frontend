@@ -1,49 +1,17 @@
+import { FC } from 'react';
 import cn from 'classnames';
-import {
-  FieldError,
-  FieldErrorsImpl,
-  FieldValues,
-  Merge,
-  RegisterOptions,
-  UseFormRegister,
-} from 'react-hook-form';
 
+import { TInput } from '../../../types/TInput';
 import styles from './Input.module.scss';
 
-interface IProps {
-  name: string;
-  id?: string;
-  value?: string | number;
-  type: string;
-  placeholder?: string;
-  register: UseFormRegister<FieldValues>;
-  option?: RegisterOptions;
-  error?: FieldError | Merge<FieldError, FieldErrorsImpl>;
-  className?: string;
-  onChange?: (e: { target: { value: unknown } }) => void;
-}
-
-const Input: React.FC<IProps> = ({
-  name,
-  id,
-  value,
-  type,
-  register,
-  option,
-  placeholder,
-  error,
-  className,
-  onChange,
-}: IProps) => {
+const Input: FC<TInput> = ({ className = '', error, register, option, name = '', ...rest }) => {
   return (
     <input
-      id={id}
-      value={value || ''}
-      placeholder={placeholder}
-      type={type}
-      className={cn(styles.input, error && styles.input_error, className)}
+      className={cn(styles.input, styles[className], error && styles.error)}
       {...(register && register(name, option))}
-      onChange={onChange}
+      name={name}
+      id={name}
+      {...rest}
     />
   );
 };
