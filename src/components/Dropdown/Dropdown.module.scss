@@ -1,0 +1,35 @@
+@import '../../utils/_scss-variables.scss';
+
+.item {
+  border-bottom: 1px solid $secondary-bg-color;
+}
+
+.heading {
+  @include flex(row, space-between, center);
+  padding: 17px 0;
+  box-sizing: border-box;
+}
+
+.question {
+  margin: 0;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.answer {
+  // transition: height 0.3s;
+  // &_inactive {
+  //   height: 0;
+  // }
+  // &_active {
+  //   height: fit-content;
+  // }
+}
+
+.button {
+  transition: transform 0.3s ease-in-out;
+  &_up {
+    transform: rotate(180deg);
+  }
+}

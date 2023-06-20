@@ -39,3 +39,13 @@
   height: 24px;
   background-image: url(../../../images/icons/bin.svg);
 }
+
+.button_arrow {
+  width: 32px;
+  height: 32px;
+  background-color: $secondary-bg-color;
+  border-radius: 50%;
+  background-image: url(../../../images/icons/arrow-small.svg);
+  background-size: auto;
+  transform: rotate(1deg);
+}

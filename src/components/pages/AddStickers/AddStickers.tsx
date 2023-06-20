@@ -34,7 +34,7 @@ const AddStickers: React.FC = () => {
   return (
     <main>
       <Container className={styles.container}>
-        <TitlePage>Заказать стикеры</TitlePage>
+        <TitlePage type='main-title'>Заказать стикеры</TitlePage>
         {cards.map((card) => (
           <NewSticker key={card.id} card={card} />
         ))}

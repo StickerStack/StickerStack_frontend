@@ -3,8 +3,10 @@
 .mainPage {
   padding-top: 80px;
   flex: 1;
+  @include flex(column, _, flex-start);
+  gap: 80px;
 
-  &_container {
+  .container {
     @include flex(row, space-between, flex-start);
     gap: 80px;
   }
@@ -13,6 +15,10 @@
     font-style: normal;
     @include font(48px, 65px, 700);
     margin: 0 0 30px;
+
+    &_section {
+      margin: 0 0 35px;
+    }
   }
 
   .description {
