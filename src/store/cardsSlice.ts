@@ -11,6 +11,7 @@ const initialState: ICardsState = {
       amount: 1,
       size: { width: 0, height: 0 },
       id: generateRandomNumber(),
+      active: true,
     },
   ],
 };
@@ -33,6 +34,14 @@ const cardsSlice = createSlice({
   reducers: {
     addCard(state, action: { payload: ICard; type: string }) {
       state.cards.push({ ...action.payload });
+    },
+    setActive(state, action: { payload: number; type: string }) {
+      state.cards = state.cards.map((card) => {
+        if (card.id !== action.payload) {
+          card.active = false;
+        } else card.active = true;
+        return card;
+      });
     },
     deleteCard(state, action: { payload: number; type: string }) {
       state.cards = state.cards.filter((card) => card.id !== action.payload);
@@ -67,6 +76,14 @@ const cardsSlice = createSlice({
 });
 
 const cardsSliceReducer = cardsSlice.reducer;
-const { addCard, deleteCard, updatePicture, updateCard } = cardsSlice.actions;
+const { addCard, setActive, deleteCard, updatePicture, updateCard } = cardsSlice.actions;
 
-export { cardsSliceReducer, addCard, deleteCard, updatePicture, removeBackground, updateCard };
+export {
+  cardsSliceReducer,
+  addCard,
+  setActive,
+  deleteCard,
+  updatePicture,
+  removeBackground,
+  updateCard,
+};

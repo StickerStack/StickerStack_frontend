@@ -1,10 +1,11 @@
 import { useAppDispatch } from '../../../hooks/hooks';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { RadioButton, TextUnderline, ButtonWithText, TitlePage, Container } from '../../UI';
 import { NewSticker } from '../../index';
 import { setPreviewIsOpen } from '../../../store/popupSlice';
-import { pages, pagePrice } from '../../../utils/constants';
+import { pages, pagePrice, CART } from '../../../utils/constants';
 import { ICardsState } from '../../../interfaces';
 import { addCard } from '../../../store/cardsSlice';
 import { generateRandomNumber } from '../../../utils/generateRandomNumber';
@@ -13,6 +14,7 @@ import styles from './AddStickers.module.scss';
 
 const AddStickers: React.FC = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const fullPrice = pagePrice * pages.length;
   const itemPrice = (pagePrice * pages.length) / (pages.length * 35);
@@ -27,6 +29,7 @@ const AddStickers: React.FC = () => {
         amount: 1,
         size: { width: 0, height: 0 },
         id: generateRandomNumber(),
+        active: false,
       }),
     );
   };
@@ -35,9 +38,12 @@ const AddStickers: React.FC = () => {
     <main>
       <Container className={styles.container}>
         <TitlePage>Заказать стикеры</TitlePage>
-        {cards.map((card) => (
-          <NewSticker key={card.id} card={card} />
-        ))}
+        <div className={styles.cards}>
+          {cards.map((card) => (
+            <NewSticker key={card.id} card={card} />
+          ))}
+        </div>
+
         <ButtonWithText theme='transparent' onClick={handleAddCard}>
           Добавить стикер
         </ButtonWithText>
@@ -71,6 +77,9 @@ const AddStickers: React.FC = () => {
             </RadioButton>
           </div>
         </section>
+        <ButtonWithText theme='filled' onClick={() => navigate(CART)}>
+          Перейти в корзину
+        </ButtonWithText>
       </Container>
     </main>
   );

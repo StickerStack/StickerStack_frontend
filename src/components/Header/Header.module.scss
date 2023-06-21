@@ -27,6 +27,12 @@
       height: 96px;
     }
   }
+
+  .buttons {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+  }
 }
 
 .motion {

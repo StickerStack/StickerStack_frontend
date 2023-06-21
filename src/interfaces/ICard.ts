@@ -8,4 +8,5 @@ export interface ICard {
     height: number;
   };
   id: number;
+  active?: boolean;
 }

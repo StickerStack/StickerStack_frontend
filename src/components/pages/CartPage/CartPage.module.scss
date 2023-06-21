@@ -1,0 +1,18 @@
+@import '../../../utils/_scss-variables.scss';
+
+.container {
+  padding-top: 80px;
+  flex: 1;
+  text-align: left;
+  @include flex(column, center, start);
+  gap: 30px;
+}
+
+.cards {
+  max-width: 635px;
+  padding: 25px 0;
+  box-shadow: 3px 3px 10px rgba(26, 50, 99, 0.2);
+  border-radius: 10px;
+  @include flex(column, center, start);
+  gap: 25px;
+}

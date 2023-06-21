@@ -14,6 +14,7 @@ const API_URL = 'https://api.stickerstack.ru/v1';
 const PROFILE = '/profile';
 const PAGE_404 = '/page-not-found';
 const ADD_STICKERS = '/add-stickers';
+const CART = '/cart';
 const VERIFY_FORGOT_PASSWORD = '/auth/verify-forgot-password/:token';
 const VERIFY_EMAIL = '/auth/verifyemail/:token';
 
@@ -38,6 +39,7 @@ export {
   PROFILE,
   PAGE_404,
   ADD_STICKERS,
+  CART,
   VERIFY_FORGOT_PASSWORD,
   VERIFY_EMAIL,
   PROFILE_INPUT_MIN_LENGTH,

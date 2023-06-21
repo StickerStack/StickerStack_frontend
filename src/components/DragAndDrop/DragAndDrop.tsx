@@ -8,9 +8,10 @@ import styles from './DragAndDrop.module.scss';
 
 interface IProps {
   card: ICard;
+  onLoad?: () => void;
 }
 
-const DragAndDrop: React.FC<IProps> = ({ card }: IProps) => {
+const DragAndDrop: React.FC<IProps> = ({ card, onLoad }: IProps) => {
   type TFile = {
     file: File;
     urlFilePreview: string | ArrayBuffer | null;
@@ -37,17 +38,26 @@ const DragAndDrop: React.FC<IProps> = ({ card }: IProps) => {
           urlFilePreview: reader.result,
         };
         setImageFile(file);
-        
-        if(typeof file.urlFilePreview === 'string') {
-          dispatch(updatePicture({ id: card.id, image: file.urlFilePreview}))
+
+        if (typeof file.urlFilePreview === 'string') {
+          dispatch(updatePicture({ id: card.id, image: file.urlFilePreview }));
         }
       };
+    }
+    if (onLoad) {
+      onLoad();
     }
   };
 
   return (
     <div className={styles.container}>
-      {imageFile ? (
+      {card.image ? (
+        <ImagePick
+          onLoadImage={handleImageChange}
+          deleteImage={() => setImageFile(null)}
+          image={card.image}
+        />
+      ) : imageFile ? (
         <ImagePick
           onLoadImage={handleImageChange}
           deleteImage={() => setImageFile(null)}
@@ -56,12 +66,8 @@ const DragAndDrop: React.FC<IProps> = ({ card }: IProps) => {
       ) : (
         <div className={styles.dnd}>
           <div className={styles.text}>
-            <span className={styles.main}>
-              Перетащите фото или выберите файл
-            </span>
-            <span className={styles.sub}>
-              Допустимые форматы: .jpg, .jpeg, .png
-            </span>
+            <span className={styles.main}>Перетащите фото или выберите файл</span>
+            <span className={styles.sub}>Допустимые форматы: .jpg, .jpeg, .png</span>
           </div>
           <input
             className={styles.input}

@@ -15,11 +15,12 @@ import {
   Preloader,
   Footer,
 } from '../';
-
+import { CartPage } from '../pages/CartPage/CartPage';
 import {
   PROFILE,
   PAGE_404,
   ADD_STICKERS,
+  CART,
   VERIFY_EMAIL,
   VERIFY_FORGOT_PASSWORD,
 } from '../../utils/constants';
@@ -55,15 +56,20 @@ const App: React.FC = () => {
           <Header />
           <Routes>
             <Route path={VERIFY_EMAIL} element={<VerifyEmail />} />
-            <Route
-              path={VERIFY_FORGOT_PASSWORD}
-              element={<ChangePassword />}
-            />
+            <Route path={VERIFY_FORGOT_PASSWORD} element={<ChangePassword />} />
             <Route
               path={ADD_STICKERS}
               element={
                 <ProtectedRoute redirectPath='/'>
                   <AddStickers />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path={CART}
+              element={
+                <ProtectedRoute redirectPath='/'>
+                  <CartPage />
                 </ProtectedRoute>
               }
             />

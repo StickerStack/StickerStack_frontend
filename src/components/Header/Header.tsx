@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAppDispatch } from '../../hooks/hooks';
 import { IUserState } from '../../interfaces';
 import { setIsOpen } from '../../store/popupSlice';
-import { PAGE_404 } from '../../utils/constants';
+import { CART, PAGE_404 } from '../../utils/constants';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 import { ProfileMenu } from '../ProfileMenu/ProfileMenu';
 import { ButtonCustom, ButtonWithText, Container } from '../UI';
@@ -17,6 +17,7 @@ import styles from './Header.module.scss';
 const Header: React.FC = () => {
   const isLogged = useSelector((state: { user: IUserState }) => state.user.isLogged);
   const location = useLocation();
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [isMenuShow, setIsMenuShow] = useState(false);
 
@@ -76,12 +77,20 @@ const Header: React.FC = () => {
           )}
         </AnimatePresence>
         {isLogged ? (
-          <ButtonCustom
-            className={styles.profile}
-            type='person'
-            label='Профиль'
-            onClick={() => setIsMenuShow(!isMenuShow)}
-          />
+          <div className={styles.buttons}>
+            <ButtonCustom
+              className={styles.profile}
+              type='cart'
+              label='Перейти в корзину'
+              onClick={() => navigate(CART)}
+            />
+            <ButtonCustom
+              className={styles.profile}
+              type='person'
+              label={!isMenuShow ? 'Показать меню' : 'Скрыть меню'}
+              onClick={() => setIsMenuShow(!isMenuShow)}
+            />
+          </div>
         ) : (
           <ButtonWithText
             type='button'

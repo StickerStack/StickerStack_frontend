@@ -3,7 +3,7 @@
 .card {
   position: relative;
   width: 100%;
-  max-width: 1076px;
+  max-width: 1110px;
   box-sizing: border-box;
   padding: 40px 50px 40px 30px;
   box-shadow: 3px 3px 10px rgba(45, 56, 68, 0.25);
@@ -123,6 +123,21 @@
   position: absolute;
   right: 30px;
   top: 40px;
+}
+
+.add {
+  position: absolute;
+  right: 30px;
+  bottom: 30px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  padding: 6px 12px;
+  height: 40px;
+}
+
+.motion {
+  width: 100%;
 }
 
 .visible {

@@ -29,9 +29,15 @@
 }
 
 .button_person {
-  width: 32px;
-  height: 32px;
+  width: 26px;
+  height: 26px;
   background-image: url(../../../images/icons/profile-icon.svg);
+}
+
+.button_cart {
+  width: 26px;
+  height: 26px;
+  background-image: url(../../../images/icons/cart.svg);
 }
 
 .button_delete {

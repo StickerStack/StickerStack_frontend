@@ -8,6 +8,13 @@
   gap: 30px;
 }
 
+.cards {
+  width: 100%;
+  max-width: 1110px;
+  @include flex(column, center, start);
+  gap: 30px;
+}
+
 .info {
   margin-top: 26px;
   @include flex(row, start, start);

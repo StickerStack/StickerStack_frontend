@@ -1,0 +1,116 @@
+@import '../../utils/_scss-variables.scss';
+
+.card {
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+
+  &_add {
+    padding: 20px 30px;
+    box-shadow: 3px 3px 10px rgba(45, 56, 68, 0.25);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: box-shadow 0.2s ease-in-out;
+    &:hover {
+      box-shadow: 3px 3px 10px rgba(45, 56, 68, 0.45);
+    }
+  }
+
+  &_cart {
+    padding: 0 40px 0 20px;
+  }
+}
+
+.category {
+  margin: 0;
+  max-width: 80px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.text {
+  margin: 0;
+  @include flex(row, start, center);
+  gap: 10px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.element {
+  min-width: 48px;
+  padding: 5px 8px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  background: #f1f1f1;
+}
+
+.info {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  grid-template-columns: 255px minmax(100px, 188px) 1fr;
+  grid-template-rows: repeat(3, min-content);
+  row-gap: 20px;
+  column-gap: 30px;
+  @media screen and (max-width: 1010px) {
+    grid-template-columns: 255px repeat(1, 1fr);
+    grid-template-rows: repeat(4, max-content);
+  }
+  @media screen and (max-width: 845px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  &_cart {
+    grid-template-columns: 140px minmax(100px, 188px) 1fr;
+  }
+}
+
+.image {
+  width: 140px;
+  height: 140px;
+  border-radius: 10px;
+  box-sizing: border-box;
+  background-color: #d9d9d9;
+  grid-row: 1/4;
+  justify-self: center;
+
+  @media screen and (max-width: 1010px) {
+    grid-row: 1/1;
+  }
+  @media screen and (max-width: 845px) {
+    grid-column: 1/3;
+  }
+}
+
+.flex {
+  position: relative;
+  padding: 0;
+  border: none;
+  @include flex(row, start, center);
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.flex_shapes {
+  grid-column: 2/4;
+  @media screen and (max-width: 1010px) {
+    grid-column: 2/3;
+  }
+  @media screen and (max-width: 845px) {
+    grid-column: 1/3;
+  }
+}
+
+.color_sample {
+  width: 19px;
+  height: 19px;
+  box-shadow: 1px 1px 3px rgba(45, 56, 68, 0.25);
+  border-radius: 3px;
+}
+
+.delete {
+  position: absolute;
+  top: 0;
+  right: 15px;
+}
