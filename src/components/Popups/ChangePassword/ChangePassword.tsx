@@ -51,8 +51,15 @@ const ChangePassword: React.FC = () => {
           }),
         );
         localStorage.removeItem('change-password-token');
-      }
-      if (res.meta.requestStatus === 'rejected') {
+      } else if (res.meta.requestStatus === 'rejected' && res.payload === 422) {
+        dispatch(
+          setMessageIsOpen({
+            messageIsOpen: true,
+            message: 'Новый пароль не должен совпадать со старым',
+            messageIsError: true,
+          }),
+        );
+      } else if (res.meta.requestStatus === 'rejected') {
         dispatch(
           setMessageIsOpen({
             messageIsOpen: true,

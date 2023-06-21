@@ -29,6 +29,10 @@
   border: none;
   background-color: transparent;
   cursor: pointer;
+
+  &_none {
+    visibility: hidden;
+  }
 }
 
 .button {

@@ -44,6 +44,17 @@
     border: none;
   }
 
+  &.profile {
+    border: none;
+    border-bottom: 2px solid #929292;
+    border-radius: 0;
+    padding: 4px 5px;
+
+    &.error {
+      border-color: $error-text-color;
+    }
+  }
+
   &.input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 50px #fff inset;
     -webkit-text-fill-color: #333;

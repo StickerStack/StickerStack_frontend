@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import cn from 'classnames';
 import { FieldValues, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../../hooks/hooks';
@@ -8,7 +9,7 @@ import { sendVerificationCode } from '../../../store/authSlice';
 import { updateUser } from '../../../store/userSlice';
 import { profileName, registerEmail } from '../../../utils/registersRHF';
 import { ImagePick } from '../../ImagePick/ImagePick';
-import { ButtonWithText, Container, TitlePage } from '../../UI';
+import { ButtonWithText, Container, Input, TitlePage } from '../../UI';
 import styles from './ProfilePage.module.scss';
 import { setMessageIsOpen } from '../../../store/popupSlice';
 import { InputWithButton } from '../../UI/InputWithButton/InputWithButton';
@@ -34,7 +35,6 @@ const ProfilePage: React.FC = () => {
     defaultValues: {
       firstName: '',
       lastName: '',
-      email: '',
     },
   });
 
@@ -51,6 +51,9 @@ const ProfilePage: React.FC = () => {
 
     if (user.lastName) {
       setValue(LASTNAME_INPUT_LABEL, user.lastName);
+    }
+    if (email === '') {
+      setValue(EMAIL_INPUT_LABEL, email);
     }
     // eslint-disable-next-line
   }, [user.email]);
@@ -107,7 +110,7 @@ const ProfilePage: React.FC = () => {
                     <button
                       type='button'
                       onClick={() => setValue(FIRSTNAME_INPUT_LABEL, '')}
-                      className={styles.remove}
+                      className={cn(styles.remove, !firstname && styles.remove_none)}
                     />
                   }
                 />
@@ -125,14 +128,14 @@ const ProfilePage: React.FC = () => {
                     <button
                       type='button'
                       onClick={() => setValue(LASTNAME_INPUT_LABEL, '')}
-                      className={styles.remove}
+                      className={cn(styles.remove, !lastname && styles.remove_none)}
                     />
                   }
                 />
                 <InputError error={errors[LASTNAME_INPUT_LABEL]} />
               </InputField>
               <InputField>
-                <InputWithButton
+                <Input
                   register={register}
                   option={{
                     ...registerEmail,
@@ -144,13 +147,6 @@ const ProfilePage: React.FC = () => {
                   name={EMAIL_INPUT_LABEL}
                   placeholder='Электронная почта'
                   className='profile'
-                  button={
-                    <button
-                      type='button'
-                      onClick={() => setValue(EMAIL_INPUT_LABEL, '')}
-                      className={styles.remove}
-                    />
-                  }
                 />
                 <InputError error={errors[EMAIL_INPUT_LABEL]} />
               </InputField>
