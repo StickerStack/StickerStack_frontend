@@ -90,7 +90,12 @@ const Signup: React.FC = () => {
             autoComplete='email'
             placeholder='example@gmail.com'
             register={register}
-            option={registerEmail}
+            option={{
+              ...registerEmail,
+              onBlur: (value: React.FocusEvent<HTMLInputElement>) => {
+                setValue('email', value.target.value.trim());
+              },
+            }}
             name='email'
             error={errors.email}
           />

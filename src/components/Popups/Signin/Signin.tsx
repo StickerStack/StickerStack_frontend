@@ -80,7 +80,12 @@ const Signin: React.FC = () => {
             placeholder='example@gmail.com'
             autoComplete='email'
             register={register}
-            option={registerEmail}
+            option={{
+              ...registerEmail,
+              onBlur: (value: React.FocusEvent<HTMLInputElement>) => {
+                setValue('email', value.target.value.trim());
+              },
+            }}
             name='email'
             error={errors.email}
           />
@@ -89,7 +94,10 @@ const Signin: React.FC = () => {
         <InputField className='password'>
           <Label htmlFor='password'>
             Пароль
-            <TextUnderline onClick={() => dispatch(switchForm(ResetPassword))}>
+            <TextUnderline
+              onClick={() => dispatch(switchForm(ResetPassword))}
+              className={styles.reset}
+            >
               Забыли пароль?
             </TextUnderline>
           </Label>

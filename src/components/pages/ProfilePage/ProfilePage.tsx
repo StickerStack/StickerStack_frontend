@@ -55,9 +55,9 @@ const ProfilePage: React.FC = () => {
     // eslint-disable-next-line
   }, [user.email]);
 
-  const firstname = getValues(FIRSTNAME_INPUT_LABEL);
-  const lastname = getValues(LASTNAME_INPUT_LABEL);
-  const email = getValues(EMAIL_INPUT_LABEL);
+  const firstname = watch(FIRSTNAME_INPUT_LABEL);
+  const lastname = watch(LASTNAME_INPUT_LABEL);
+  const email = watch(EMAIL_INPUT_LABEL);
 
   const onSubmit = () => {
     const emailChanged = user.email !== email;
@@ -134,7 +134,12 @@ const ProfilePage: React.FC = () => {
               <InputField>
                 <InputWithButton
                   register={register}
-                  option={registerEmail}
+                  option={{
+                    ...registerEmail,
+                    onBlur: (value: React.FocusEvent<HTMLInputElement>) => {
+                      setValue('email', value.target.value.trim());
+                    },
+                  }}
                   error={errors[EMAIL_INPUT_LABEL]}
                   name={EMAIL_INPUT_LABEL}
                   placeholder='Электронная почта'
@@ -154,11 +159,11 @@ const ProfilePage: React.FC = () => {
                 className={styles.button}
                 type='submit'
                 disabled={
-                  !(
-                    user.firstName !== firstname ||
-                    user.lastName !== lastname ||
-                    user.email !== email
-                  ) || !isValid
+                  (user.firstName === firstname &&
+                    user.lastName === lastname &&
+                    user.email === email &&
+                    (isValid || !isValid)) ||
+                  !isValid
                 }
               >
                 Сохранить

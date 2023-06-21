@@ -15,7 +15,7 @@ const PageNotFound: React.FC = () => {
           Страница не найдена.
         </TextForm>
         <ButtonWithText type='button' onClick={() => navigate('/')}>
-          Вернуться на главную
+          На главную
         </ButtonWithText>
       </div>
     </div>

@@ -9,6 +9,13 @@
     gap: 40px;
   }
 
+  .reset {
+    margin: 0;
+    &::after {
+      margin-top: 0;
+    }
+  }
+
   .link {
     color: $span-text-color;
     text-align: center;
