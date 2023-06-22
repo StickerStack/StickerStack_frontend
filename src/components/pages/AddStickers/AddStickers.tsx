@@ -2,12 +2,14 @@ import { useAppDispatch } from '../../../hooks/hooks';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import { AnimatePresence, motion } from 'framer-motion';
+import { Sticker } from '../../Sticker/Sticker';
 import { RadioButton, TextUnderline, ButtonWithText, TitlePage, Container } from '../../UI';
 import { NewSticker } from '../../index';
 import { setPreviewIsOpen } from '../../../store/popupSlice';
 import { pages, pagePrice, CART } from '../../../utils/constants';
 import { ICardsState } from '../../../interfaces';
-import { addCard } from '../../../store/cardsSlice';
+import { addCard, setActive } from '../../../store/cardsSlice';
 import { generateRandomNumber } from '../../../utils/generateRandomNumber';
 
 import styles from './AddStickers.module.scss';
@@ -29,7 +31,7 @@ const AddStickers: React.FC = () => {
         amount: 1,
         size: { width: 0, height: 0 },
         id: generateRandomNumber(),
-        active: false,
+        active: true,
       }),
     );
   };
@@ -40,7 +42,61 @@ const AddStickers: React.FC = () => {
         <TitlePage>Заказать стикеры</TitlePage>
         <div className={styles.cards}>
           {cards.map((card) => (
-            <NewSticker key={card.id} card={card} />
+            <AnimatePresence key={card.id}>
+              {card.active ? (
+                <motion.div
+                  className={styles.motion}
+                  initial={{
+                    opacity: 0.4,
+                    height: 0,
+                  }}
+                  animate={{
+                    transition: {
+                      height: { duration: 0.4 },
+                      opacity: { duration: 0.25, delay: 0.15 },
+                    },
+                    opacity: 1,
+                    height: 'auto',
+                  }}
+                  exit={{
+                    opacity: 0,
+                    height: 0,
+                    transition: {
+                      height: { duration: 0.4 },
+                      opacity: { duration: 0.25 },
+                    },
+                  }}
+                >
+                  <NewSticker key={card.id} card={card} />
+                </motion.div>
+              ) : (
+                <motion.div
+                  className={styles.motion}
+                  initial={{
+                    opacity: 0.4,
+                    height: 0,
+                  }}
+                  animate={{
+                    transition: {
+                      height: { duration: 0.4 },
+                      opacity: { duration: 0.25, delay: 0.15 },
+                    },
+                    opacity: 1,
+                    height: 'auto',
+                  }}
+                  exit={{
+                    opacity: 0,
+                    height: 0,
+                    transition: {
+                      height: { duration: 0.4 },
+                      opacity: { duration: 0.25 },
+                    },
+                  }}
+                >
+                  <Sticker card={card} onClick={() => dispatch(setActive(card.id))} />
+                </motion.div>
+              )}
+            </AnimatePresence>
           ))}
         </div>
 

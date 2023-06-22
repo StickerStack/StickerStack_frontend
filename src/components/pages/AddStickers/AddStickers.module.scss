@@ -15,6 +15,10 @@
   gap: 30px;
 }
 
+.motion {
+  width: 100%;
+}
+
 .info {
   margin-top: 26px;
   @include flex(row, start, start);
