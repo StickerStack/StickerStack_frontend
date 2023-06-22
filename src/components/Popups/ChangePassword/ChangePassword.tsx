@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { InputWithButton } from '../../UI/InputWithButton/InputWithButton';
 import { InputError } from '../../UI/InputError/InputError';
@@ -23,7 +23,7 @@ const ChangePassword: React.FC = () => {
   } = useForm({
     mode: 'onBlur',
   });
-  const location = useLocation();
+
   const navigate = useNavigate();
   const [token, setToken] = useState<string>('');
   const dispatch = useAppDispatch();

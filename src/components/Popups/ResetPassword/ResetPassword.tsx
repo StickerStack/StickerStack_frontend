@@ -2,6 +2,7 @@ import { FieldValues, useForm } from 'react-hook-form';
 
 import { Signin, Signup } from '../..';
 import { ButtonWithText, TextForm, TextUnderline, TitlePopup, Input } from '../../UI';
+import { ResetPasswordInfo } from '../ResetPasswordInfo/ResetPasswordInfo';
 import { InputField } from '../../UI/InputField/InputField';
 import { Label } from '../../UI/Label';
 import { InputError } from '../../UI/InputError/InputError';
@@ -11,7 +12,6 @@ import { switchForm } from '../../../store/popupSlice';
 import { registerEmail } from '../../../utils/registersRHF';
 
 import styles from './ResetPassword.module.scss';
-import { ResetPasswordInfo } from '../ResetPasswordInfo/ResetPasswordInfo';
 
 const ResetPassword: React.FC = () => {
   const dispatch = useAppDispatch();

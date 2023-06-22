@@ -1,20 +1,22 @@
 import { useEffect } from 'react';
-import cn from 'classnames';
 import { FieldValues, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
+import cn from 'classnames';
+
 import { useAppDispatch } from '../../../hooks/hooks';
-import EmptyAvatarImage from '../../../images/empty-avatar.svg';
 import { IUserState } from '../../../interfaces';
 import { sendVerificationCode } from '../../../store/authSlice';
 import { updateUser } from '../../../store/userSlice';
 import { profileName, registerEmail } from '../../../utils/registersRHF';
 import { ImagePick } from '../../ImagePick/ImagePick';
 import { ButtonWithText, Container, Input, TitlePage } from '../../UI';
-import styles from './ProfilePage.module.scss';
 import { setMessageIsOpen } from '../../../store/popupSlice';
 import { InputWithButton } from '../../UI/InputWithButton/InputWithButton';
 import { InputField } from '../../UI/InputField/InputField';
 import { InputError } from '../../UI/InputError/InputError';
+
+import EmptyAvatarImage from '../../../images/empty-avatar.svg';
+import styles from './ProfilePage.module.scss';
 
 const FIRSTNAME_INPUT_LABEL = 'firstName';
 const LASTNAME_INPUT_LABEL = 'lastName';
@@ -25,7 +27,6 @@ const ProfilePage: React.FC = () => {
 
   const {
     register,
-    getValues,
     setValue,
     formState: { errors, isValid },
     handleSubmit,
@@ -61,6 +62,10 @@ const ProfilePage: React.FC = () => {
   const firstname = watch(FIRSTNAME_INPUT_LABEL);
   const lastname = watch(LASTNAME_INPUT_LABEL);
   const email = watch(EMAIL_INPUT_LABEL);
+
+  const fieldsUnchanged =
+    user.firstName === firstname && user.lastName === lastname && user.email === email;
+  const validOrInvalid = isValid || !isValid;
 
   const onSubmit = () => {
     const emailChanged = user.email !== email;
@@ -135,7 +140,7 @@ const ProfilePage: React.FC = () => {
                 <InputError error={errors[LASTNAME_INPUT_LABEL]} />
               </InputField>
               <InputField>
-                <Input
+                <InputWithButton
                   register={register}
                   option={{
                     ...registerEmail,
@@ -144,6 +149,13 @@ const ProfilePage: React.FC = () => {
                     },
                   }}
                   error={errors[EMAIL_INPUT_LABEL]}
+                  button={
+                    <button
+                      type='button'
+                      onClick={() => setValue(EMAIL_INPUT_LABEL, '')}
+                      className={cn(styles.remove, !email && styles.remove_none)}
+                    />
+                  }
                   name={EMAIL_INPUT_LABEL}
                   placeholder='Электронная почта'
                   className='profile'
@@ -154,13 +166,7 @@ const ProfilePage: React.FC = () => {
               <ButtonWithText
                 className={styles.button}
                 type='submit'
-                disabled={
-                  (user.firstName === firstname &&
-                    user.lastName === lastname &&
-                    user.email === email &&
-                    (isValid || !isValid)) ||
-                  !isValid
-                }
+                disabled={(fieldsUnchanged && validOrInvalid) || !isValid}
               >
                 Сохранить
               </ButtonWithText>

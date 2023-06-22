@@ -101,7 +101,7 @@ const Popup: React.FC = () => {
           >
             <div className={styles.container}>
               {popup.previewIsOpen ? (
-                <PopupPreview onClose={onClose} />
+                <PopupPreview />
               ) : popup.formIsOpen ? (
                 <PopupForm />
               ) : popup.infoIsOpen ? (
