@@ -1,25 +1,27 @@
-import { useSelector } from 'react-redux';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { ICard, ICardsState } from '../interfaces';
+import { ICard } from '../interfaces';
 import { generateRandomNumber } from '../utils/generateRandomNumber';
-import { api } from '../utils/api';
+import { CartState } from '../interfaces/CartState';
 
-const initialState: { items: ICard[] } = {
+const initialState: CartState = {
   items: [
-    // {
-    //   image: '',
-    //   shape: 'rounded-square',
-    //   amount: 5,
-    //   size: { width: 5, height: 5 },
-    //   id: generateRandomNumber(),
-    // },
+    {
+      image: '',
+      shape: 'rounded-square',
+      amount: 5,
+      size: { width: 5, height: 5 },
+      id: generateRandomNumber(),
+    },
   ],
 };
 
-const cardsSlice = createSlice({
-  name: 'cardsSlice',
+const cartSlice = createSlice({
+  name: 'cartSlice',
   initialState,
   reducers: {
+    addItems(state, action: { payload: ICard; type: string }) {
+      state.items.push({ ...action.payload });
+    },
     addItem(state, action: { payload: ICard; type: string }) {
       state.items.push({ ...action.payload });
     },
@@ -33,7 +35,7 @@ const cardsSlice = createSlice({
   },
 });
 
-const cardsSliceReducer = cardsSlice.reducer;
-const { addItem, deleteItem, updateItem } = cardsSlice.actions;
+const cartSliceReducer = cartSlice.reducer;
+const { addItem, deleteItem, updateItem } = cartSlice.actions;
 
-export { cardsSliceReducer, addItem, deleteItem, updateItem };
+export { cartSliceReducer, addItem, deleteItem, updateItem };

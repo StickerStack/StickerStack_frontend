@@ -134,7 +134,7 @@ const AddStickers: React.FC = () => {
           </div>
         </section>
         <ButtonWithText theme='filled' onClick={() => navigate(CART)}>
-          Перейти в корзину
+          Добавить в корзину
         </ButtonWithText>
       </Container>
     </main>

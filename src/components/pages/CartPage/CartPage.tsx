@@ -13,25 +13,27 @@ import {
 import { NewSticker } from '../../index';
 import { setPreviewIsOpen } from '../../../store/popupSlice';
 import { pages, pagePrice, CART } from '../../../utils/constants';
+import { Sticker } from '../../Sticker/Sticker';
+import { CartState } from '../../../interfaces/CartState';
 import { ICard, ICardsState } from '../../../interfaces';
 import { addCard } from '../../../store/cardsSlice';
 import { generateRandomNumber } from '../../../utils/generateRandomNumber';
 
 import styles from './CartPage.module.scss';
-import { Sticker } from '../../Sticker/Sticker';
 
 const CartPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
+  const items = useSelector((state: { items: CartState }) => state.items.items);
 
   return (
     <main>
       <Container className={styles.container}>
         <TitlePage>Корзина</TitlePage>
         <div className={styles.cards}>
-          {cards.length === 0 ? (
+          {items.length === 0 ? (
             <TextForm>Ваша корзина пуста</TextForm>
           ) : (
             cards.map((card) => <Sticker key={card.id} card={card} />)
