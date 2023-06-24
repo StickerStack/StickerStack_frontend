@@ -13,15 +13,9 @@
     &:checked + .label {
       background-image: url(../../../images/icons/checker-icon.svg);
       background-position: center;
-      background-size: 15px 9px;
+      background-size: 16px 16px;
       background-repeat: no-repeat;
-    }
-
-    &:checked + .label_error {
-      background-image: url(../../../images/icons/checker-icon.svg);
-      background-position: center;
-      background-size: 15px 9px;
-      background-repeat: no-repeat;
+      background-color: $secondary-bg-color;
     }
   }
 
@@ -29,8 +23,8 @@
     display: inline-block;
     width: 20px;
     height: 20px;
-    border: 1px solid #000;
-    border-radius: 5px;
+    border: 1px solid $main-text-color;
+    border-radius: 3px;
     content: '';
   }
 
@@ -39,7 +33,7 @@
     width: 20px;
     height: 20px;
     border: 1px solid $error-text-color;
-    border-radius: 5px;
+    border-radius: 3px;
     content: '';
   }
 }

@@ -3,20 +3,36 @@ import { useSelector } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import { PopupForm } from '../';
-import { Preview } from '../Preview/Preview';
+import { PopupInfo } from '../Popups/PopupInfo/PopupInfo';
+import { PopupPreview } from '../Popups/PopupPreview/PopupPreview';
+import { ButtonCustom } from '../UI';
 import { IPopupState } from '../../interfaces/IPopupState';
 import { useAppDispatch } from '../../hooks/hooks';
-import { setIsOpen } from '../../store/popupSlice';
+import { setFormIsOpen, setInfoIsOpen, setPreviewIsOpen } from '../../store/popupSlice';
 import styles from './Popup.module.scss';
 
 const Popup: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  const isOpen = useSelector((state: { popup: IPopupState }) => state.popup.isOpen);
-  const previewIsOpen = useSelector((state: { popup: IPopupState }) => state.popup.previewIsOpen);
+  const popup = useSelector((state: { popup: IPopupState }) => state.popup);
 
   const onClose = () => {
-    dispatch(setIsOpen(false));
+    dispatch(setFormIsOpen(false));
+    dispatch(setPreviewIsOpen(false));
+    dispatch(
+      setInfoIsOpen({
+        infoIsOpen: false,
+        title: '',
+        text: '',
+        buttonText: '',
+      }),
+    );
+    if (localStorage.getItem('change-password-token')) {
+      localStorage.removeItem('change-password-token');
+    }
+    if (localStorage.getItem('email')) {
+      localStorage.removeItem('email');
+    }
   };
 
   useEffect(() => {
@@ -29,13 +45,11 @@ const Popup: React.FC = () => {
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-
-    // eslint-disable-next-line
   }, []);
 
   return (
     <AnimatePresence>
-      {isOpen && (
+      {popup.isOpen && (
         <motion.div
           initial={{
             opacity: 0,
@@ -85,7 +99,21 @@ const Popup: React.FC = () => {
             }}
             className={styles.popup}
           >
-            {previewIsOpen ? <Preview onClose={onClose} /> : <PopupForm onClose={onClose} />}
+            <div className={styles.container}>
+              {popup.previewIsOpen ? (
+                <PopupPreview />
+              ) : popup.formIsOpen ? (
+                <PopupForm />
+              ) : popup.infoIsOpen ? (
+                <PopupInfo onClick={onClose} />
+              ) : null}
+              <ButtonCustom
+                className={styles.button}
+                type='close'
+                label='Закрыть'
+                onClick={onClose}
+              />
+            </div>
           </motion.div>
         </motion.div>
       )}

@@ -1,19 +1,21 @@
 import { useState } from 'react';
-
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { ButtonWithText, TitleForm, TextUnderline, Input, EyeButton } from '../UI';
-import { Signup, ResetPassword } from '../';
-import { setIsOpen, setMessageIsOpen, switchForm } from '../../store/popupSlice';
-import { useAppDispatch } from '../../hooks/hooks';
-import { getUser, signInMockUser, updateStatus } from '../../store/userSlice';
-import { signIn } from '../../store/authSlice';
-import { registerEmail, registerPassword } from '../../utils/registersRHF';
+
+import { ButtonWithText, TitlePopup, TextUnderline, Input, EyeButton } from '../../UI';
+import { InputField } from '../../UI/InputField/InputField';
+import { Label } from '../../UI/Label';
+import { InputError } from '../../UI/InputError/InputError';
+import { InputWithButton } from '../../UI/InputWithButton/InputWithButton';
+import { Signup } from '../Signup/Signup';
+import { ResetPassword } from '../ResetPassword/ResetPassword';
+import { setFormIsOpen, setMessageIsOpen, switchForm } from '../../../store/popupSlice';
+import { useAppDispatch } from '../../../hooks/hooks';
+import { getUser, signInMockUser, updateStatus } from '../../../store/userSlice';
+import { signIn } from '../../../store/authSlice';
+import { registerEmail, registerPassword } from '../../../utils/registersRHF';
+
 import styles from './Signin.module.scss';
-import { InputField } from '../UI/InputField/InputField';
-import { Label } from '../UI/Label';
-import { InputError } from '../UI/InputError/InputError';
-import { InputWithButton } from '../UI/InputWithButton/InputWithButton';
 
 const Signin: React.FC = () => {
   const location = useLocation();
@@ -38,7 +40,7 @@ const Signin: React.FC = () => {
   const onSubmit = () => {
     if (userEmail === 'my@super.user' && userPassword === 'my@super.user') {
       dispatch(signInMockUser({ email: 'my@super.user', firstName: 'Иван', lastName: 'Иванов' }));
-      dispatch(setIsOpen(false));
+      dispatch(setFormIsOpen(false));
       navigate('/add-stickers');
       localStorage.setItem('token', 'moc');
       return;
@@ -49,7 +51,7 @@ const Signin: React.FC = () => {
         if (res.meta.requestStatus === 'fulfilled') {
           dispatch(getUser());
           dispatch(updateStatus(true));
-          dispatch(setIsOpen(false));
+          dispatch(setFormIsOpen(false));
           navigate('/add-stickers');
         }
 
@@ -59,7 +61,7 @@ const Signin: React.FC = () => {
               messageIsOpen: true,
               message: 'Неверная почта или пароль',
               messageIsError: true,
-            })
+            }),
           );
         }
       })
@@ -70,7 +72,7 @@ const Signin: React.FC = () => {
 
   return (
     <form className={styles.signin} onSubmit={handleSubmit(onSubmit)}>
-      <TitleForm>Вход</TitleForm>
+      <TitlePopup>Вход</TitlePopup>
       <div className={styles.inputs}>
         <InputField className='email'>
           <Label htmlFor='email'>Электронная почта</Label>
@@ -78,7 +80,12 @@ const Signin: React.FC = () => {
             placeholder='example@gmail.com'
             autoComplete='email'
             register={register}
-            option={registerEmail}
+            option={{
+              ...registerEmail,
+              onBlur: (value: React.FocusEvent<HTMLInputElement>) => {
+                setValue('email', value.target.value.trim());
+              },
+            }}
             name='email'
             error={errors.email}
           />
@@ -87,7 +94,12 @@ const Signin: React.FC = () => {
         <InputField className='password'>
           <Label htmlFor='password'>
             Пароль
-            <TextUnderline onClick={() => dispatch(switchForm(ResetPassword))}>Забыли пароль?</TextUnderline>
+            <TextUnderline
+              onClick={() => dispatch(switchForm(ResetPassword))}
+              className={styles.reset}
+            >
+              Забыли пароль?
+            </TextUnderline>
           </Label>
           <InputWithButton
             placeholder='Введите пароль'

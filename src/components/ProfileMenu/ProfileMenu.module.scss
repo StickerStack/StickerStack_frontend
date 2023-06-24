@@ -17,6 +17,7 @@
   .profile {
     display: flex;
     align-items: center;
+    text-decoration: none;
   }
 
   .avatar {
@@ -26,23 +27,17 @@
     border-radius: 32px;
   }
 
-  .prfile_link {
-    text-decoration: none !important;
-  }
-
   .name {
     padding-left: 15px;
     color: #333333;
   }
 
-  .button_container {
-    padding-top: 25px;
-  }
-
   .button {
+    margin-top: 25px;
     font-weight: 400;
-    font-size: 16px;
-    line-height: 22px;
+    font-size: 18px;
+    line-height: 21px;
+    padding: 14px 17px;
   }
 
   .list {
@@ -64,11 +59,6 @@
     padding-bottom: 20px;
     padding-left: 10px;
     cursor: pointer;
-  }
-
-  .list li:hover {
-    color: #000;
-    font-weight: 600;
   }
 
   .list :last-child {

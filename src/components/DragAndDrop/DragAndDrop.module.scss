@@ -5,7 +5,7 @@
   min-width: 255px;
   height: 262px;
   border-radius: 10px;
-  background-color: $secondary-bg-color;
+  background-color: $element-active-color;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -59,7 +59,7 @@
   flex-direction: column;
   gap: 15px;
   width: 201px;
-  
+
   .main {
     font-weight: 400;
     font-size: 14px;

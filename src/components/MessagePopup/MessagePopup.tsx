@@ -19,12 +19,12 @@ const MessagePopup: React.FC = () => {
   const closeMessage = () => {
     setTimeout(() => {
       dispatch(setMessageIsOpen([false, '']));
-    }, 10);
+    }, 100);
   };
 
   useEffect(() => {
     if (messageIsOpen) {
-      setTimeout(() => closeMessage(), 3000);
+      setTimeout(() => closeMessage(), 2650);
     }
 
     // eslint-disable-next-line

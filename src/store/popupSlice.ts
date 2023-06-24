@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { Signin } from '../components/Signin/Signin';
+import { Signin } from '../components/Popups/Signin/Signin';
+import { ChangePassword } from '../components/Popups/ChangePassword/ChangePassword';
 
 const popupSlice = createSlice({
   name: 'popupSlice',
@@ -8,6 +9,11 @@ const popupSlice = createSlice({
     isOpen: false,
     form: Signin,
     previewIsOpen: false,
+    formIsOpen: false,
+    infoIsOpen: false,
+    infoTitle: '',
+    infoText: '',
+    infoButtonText: '',
     messageIsOpen: false,
     message: '',
     messageIsError: false,
@@ -22,11 +28,25 @@ const popupSlice = createSlice({
       state.isOpen = action.payload;
       state.previewIsOpen = action.payload;
     },
-    setIsOpen(state, action) {
+    setFormIsOpen(state, action) {
       if (!state.isOpen) {
         state.form = Signin;
       }
+      if (action.payload === ChangePassword) {
+        state.form = ChangePassword;
+      }
       state.isOpen = action.payload;
+      state.formIsOpen = action.payload;
+    },
+    setInfoIsOpen(
+      state,
+      action: { payload: { infoIsOpen: boolean; title: string; text: string; buttonText: string } },
+    ) {
+      state.isOpen = action.payload.infoIsOpen;
+      state.infoIsOpen = action.payload.infoIsOpen;
+      state.infoTitle = action.payload.title;
+      state.infoText = action.payload.text;
+      state.infoButtonText = action.payload.buttonText;
     },
     switchForm(state, action) {
       state.form = action.payload;
@@ -35,6 +55,14 @@ const popupSlice = createSlice({
 });
 
 const popupSliceReducer = popupSlice.reducer;
-const { setMessageIsOpen, setIsOpen, switchForm, setPreviewIsOpen } = popupSlice.actions;
+const { setMessageIsOpen, setFormIsOpen, setInfoIsOpen, switchForm, setPreviewIsOpen } =
+  popupSlice.actions;
 
-export { popupSliceReducer, setMessageIsOpen, setIsOpen, switchForm, setPreviewIsOpen };
+export {
+  popupSliceReducer,
+  setMessageIsOpen,
+  setFormIsOpen,
+  setInfoIsOpen,
+  switchForm,
+  setPreviewIsOpen,
+};
