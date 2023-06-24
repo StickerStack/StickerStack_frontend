@@ -6,19 +6,26 @@ on:
       - build
 
 jobs:
-  copy_compose: 
+  copy_compose:
     name: Copy build
-    runs-on: ubuntu-latest 
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master 
-      - name: copy file via ssh password 
-        uses: appleboy/scp-action@master 
+      - uses: actions/checkout@master
+      - name: Remove old build files via SSH
+        uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.HOST }} 
-          username: ${{ secrets.USER }} 
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
           key: ${{ secrets.SSH_KEY }}
-          source: "build/" 
-          target: "."
+          script: "rm -rf /home/stickerstack/frontend/build/*"
+      - name: copy file via ssh password
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_KEY }}
+          source: "build/"
+          target: "/home/stickerstack/frontend/build"
           strip_components: 1
       - name: Execute remote script via SSH
         uses: appleboy/ssh-action@master
@@ -27,3 +34,4 @@ jobs:
           username: ${{ secrets.USER }}
           key: ${{ secrets.SSH_KEY }}
           script: "/home/stickerstack/nginx/update.sh"
+
