@@ -24,7 +24,7 @@ const removeBackground = createAsyncThunk(
     } catch (err) {
       return rejectWithValue(err);
     }
-  },
+  }
 );
 
 const cardsSlice = createSlice({
@@ -45,10 +45,17 @@ const cardsSlice = createSlice({
         state.cards[indexCard] = updatedCard;
       }
     },
-    updatePicture(state, action: { payload: { id: number; image: string }; type: string }) {
+    updatePicture(
+      state,
+      action: {
+        payload: { id: number; image: string; size: { width: number; height: number } };
+        type: string;
+      }
+    ) {
       state.cards = state.cards.map((card) => {
         if (card.id === action.payload.id) {
           card.image = action.payload.image;
+          card.size = action.payload.size;
         }
         return card;
       });
@@ -60,7 +67,7 @@ const cardsSlice = createSlice({
         '%ccardsSlice.ts line:62 action.payload',
         'color: #007acc;',
         action.payload.data,
-        action.payload.id,
+        action.payload.id
       );
     });
   },
