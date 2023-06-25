@@ -37,9 +37,21 @@ const DragAndDrop: React.FC<IProps> = ({ card }: IProps) => {
           urlFilePreview: reader.result,
         };
         setImageFile(file);
-
-        if (typeof file.urlFilePreview === 'string') {
-          dispatch(updatePicture({ id: card.id, image: file.urlFilePreview }));
+        
+        if (typeof reader.result === 'string') {
+          const image = new Image();
+          image.src = reader.result;
+          image.onload = () => {
+            if (typeof file.urlFilePreview === 'string') {
+              dispatch(
+                updatePicture({
+                  id: card.id,
+                  image: file.urlFilePreview,
+                  size: { width: image.naturalWidth, height: image.naturalHeight },
+                })
+              );
+            }
+          };
         }
       };
 

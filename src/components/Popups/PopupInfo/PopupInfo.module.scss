@@ -1,0 +1,15 @@
+@import '../../../utils/_scss-variables.scss';
+
+.container {
+  @include flex(column, _, _);
+  width: 330px;
+  gap: 25px;
+}
+
+.image {
+  width: 100%;
+  height: 221px;
+  background-color: $secondary-bg-color;
+  border-radius: 20px;
+  margin-bottom: 25px;
+}

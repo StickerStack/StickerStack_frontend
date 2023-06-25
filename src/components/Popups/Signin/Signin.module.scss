@@ -1,19 +1,27 @@
-@import '../../utils/_scss-variables.scss';
+@import '../../../utils/_scss-variables.scss';
 
 .signin {
   @include flex(column, _, _);
-  gap: 35px;
-  width: 310px;
+  gap: 25px;
 
   .inputs {
     @include flex(column, flex-start, flex-start);
     gap: 40px;
   }
 
+  .reset {
+    margin: 0;
+    &::after {
+      margin-top: 0;
+    }
+  }
+
   .link {
-    @include font(16px, 19px, 400);
     color: $span-text-color;
     text-align: center;
-    margin-top: -30px;
+  }
+
+  .button {
+    margin-top: 20px;
   }
 }

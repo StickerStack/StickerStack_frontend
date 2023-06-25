@@ -4,7 +4,8 @@
   width: 255px;
   min-width: 255px;
   height: 262px;
-
+  border-radius: 10px;
+  background-color: $element-active-color;
   display: flex;
   justify-content: center;
   align-items: center;
