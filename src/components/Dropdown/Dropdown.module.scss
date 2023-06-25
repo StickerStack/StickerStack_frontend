@@ -1,14 +1,13 @@
 @import '../../utils/_scss-variables.scss';
 
 .item {
-  border-bottom: 1px solid $element-color;
+  border-bottom: 1px solid $element-active-color;
 }
 
 .heading {
   @include flex(row, space-between, center);
   padding: 17px 0;
   box-sizing: border-box;
-  color: $element-color;
 }
 
 .question {
@@ -16,17 +15,6 @@
   font-weight: 500;
   font-size: 20px;
   line-height: 24px;
-  color: $main-text-color;
-}
-
-.answer {
-  // transition: height 0.3s;
-  // &_inactive {
-  //   height: 0;
-  // }
-  // &_active {
-  //   height: fit-content;
-  // }
 }
 
 .button {
