@@ -5,7 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAppDispatch } from '../../hooks/hooks';
 import { IUserState } from '../../interfaces';
-import { setIsOpen } from '../../store/popupSlice';
+import { setFormIsOpen } from '../../store/popupSlice';
 import { PAGE_404 } from '../../utils/constants';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 import { ProfileMenu } from '../ProfileMenu/ProfileMenu';
@@ -86,7 +86,7 @@ const Header: React.FC = () => {
           <ButtonWithText
             type='button'
             theme='transparent'
-            onClick={() => dispatch(setIsOpen(true))}
+            onClick={() => dispatch(setFormIsOpen(true))}
           >
             Войти
           </ButtonWithText>
