@@ -3,6 +3,9 @@
 .container {
   box-sizing: border-box;
   border: 1px solid $element-active-color;
+}
+
+.images {
   display: flex;
   flex-wrap: wrap;
   align-items: center;

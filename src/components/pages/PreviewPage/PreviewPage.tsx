@@ -2,7 +2,7 @@ import cn from 'classnames';
 import image from '../../../images/logo.svg';
 import styles from './PreviewPage.module.scss';
 
-const pageSize = { height: 1127, width: 797, padding: 16, gap: 12 };
+const pageSize = { height: 1127, width: 797, padding: 16, gap: 8 };
 
 const cards = [
   {
@@ -75,32 +75,38 @@ const PreviewPage: React.FC = () => {
         width: pageSize.width,
         height: pageSize.height,
         padding: pageSize.padding,
-        gap: pageSize.gap,
       }}
     >
-      {cards.map((card) => {
-        return (
-          <div
-            key={card.id}
-            style={{ width: card.size.width, height: card.size.height }}
-            className={cn(
-              card.white_border && styles.border,
-              styles[`border_${card.white_border?.width}`],
-              styles[`border_${card.shape}`],
-            )}
-          >
-            <img
-              className={cn(styles.image, styles[`image_${card.shape}`])}
-              src={image}
-              style={
-                card.white_border
-                  ? { width: '100%', height: '100%' }
-                  : { width: card.size.width, height: card.size.height }
-              }
-            />
-          </div>
-        );
-      })}
+      <div
+        className={styles.images}
+        style={{
+          gap: pageSize.gap,
+        }}
+      >
+        {cards.map((card) => {
+          return (
+            <div
+              key={card.id}
+              style={{ width: card.size.width, height: card.size.height }}
+              className={cn(
+                card.white_border && styles.border,
+                styles[`border_${card.white_border?.width}`],
+                styles[`border_${card.shape}`],
+              )}
+            >
+              <img
+                className={cn(styles.image, styles[`image_${card.shape}`])}
+                src={image}
+                style={
+                  card.white_border
+                    ? { width: '100%', height: '100%' }
+                    : { width: card.size.width, height: card.size.height }
+                }
+              />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
