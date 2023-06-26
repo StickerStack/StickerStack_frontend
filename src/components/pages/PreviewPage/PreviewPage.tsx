@@ -2,7 +2,7 @@ import cn from 'classnames';
 import image from '../../../images/logo.svg';
 import styles from './PreviewPage.module.scss';
 
-const pageSize = { height: 1127, width: 797, padding: 16, gap: 8 };
+const pageSize = { height: 1451, width: 1011, padding: 16, gap: 12 };
 
 const cards = [
   {
@@ -16,7 +16,7 @@ const cards = [
     id: 10,
     size: { width: 100, height: 100 },
     shape: 'rounded-square',
-    white_border: { width: 5 },
+    white_border: { width: 3 },
   },
   {
     image: image,
@@ -30,9 +30,11 @@ const cards = [
     id: 12,
     size: { width: 130, height: 130 },
     shape: 'square',
-    white_border: { width: 5 },
+    white_border: { width: 3 },
   },
   { image: image, id: 6, size: { width: 130, height: 130 }, shape: 'rounded-square' },
+  { image: image, id: 18, size: { width: 130, height: 130 }, shape: 'rounded-square' },
+  { image: image, id: 17, size: { width: 130, height: 130 }, shape: 'square' },
   {
     image: image,
     id: 1,
@@ -53,6 +55,13 @@ const cards = [
   { image: image, id: 7, size: { width: 250, height: 250 }, shape: 'circle' },
   {
     image: image,
+    id: 3,
+    size: { width: 250, height: 250 },
+    shape: 'rounded-square',
+    white_border: { width: 5 },
+  },
+  {
+    image: image,
     id: 5,
     size: { width: 350, height: 350 },
     shape: 'rounded-square',
@@ -60,7 +69,7 @@ const cards = [
   },
   {
     image: image,
-    id: 5,
+    id: 16,
     size: { width: 350, height: 350 },
     shape: 'circle',
     white_border: { width: 10 },
