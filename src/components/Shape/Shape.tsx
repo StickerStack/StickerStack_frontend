@@ -1,6 +1,4 @@
-import cn from 'classnames';
-
-import { ICard, ICardsState } from '../../interfaces';
+import { ICard } from '../../interfaces';
 import { TCardShape } from '../../interfaces/ICard';
 
 import { ReactComponent as RectSvg } from '../../images/icons/rect.svg';
@@ -23,16 +21,12 @@ const Shape: React.FC<IProps> = ({ card, shape, shapeTitle, cardShape, onShapeCh
     switch (shape) {
       case 'square':
         return <RectSvg />;
-        break;
       case 'rounded-square':
         return <RectRondedSvg />;
-        break;
       case 'circle':
         return <CircleSvg />;
-        break;
       case 'contour':
         return <ContourSvg />;
-        break;
     }
   };
 

@@ -3,7 +3,6 @@
 .avatar {
   @include flex(column, center, center);
   position: relative;
-  border-radius: 10px;
   width: 255px;
   min-width: 255px;
   height: 262px;
@@ -11,6 +10,7 @@
   background-color: transparent;
 
   &:hover .overlay {
+    border-radius: 0 0 10px 10px;
     height: 74px;
     padding: 14px;
     opacity: 1;
