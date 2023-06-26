@@ -15,9 +15,10 @@ import {
   Preloader,
   Footer,
 } from '../';
-
+import { PreviewPage } from '../pages/PreviewPage/PreviewPage';
 import {
   PROFILE,
+  PREVIEW_STICKERS,
   PAGE_404,
   ADD_STICKERS,
   VERIFY_EMAIL,
@@ -61,6 +62,14 @@ const App: React.FC = () => {
               element={
                 <ProtectedRoute redirectPath='/'>
                   <AddStickers />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path={PREVIEW_STICKERS}
+              element={
+                <ProtectedRoute redirectPath='/'>
+                  <PreviewPage />
                 </ProtectedRoute>
               }
             />

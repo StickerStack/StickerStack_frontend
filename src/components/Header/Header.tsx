@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useAppDispatch } from '../../hooks/hooks';
 import { IUserState } from '../../interfaces';
 import { setFormIsOpen } from '../../store/popupSlice';
-import { PAGE_404 } from '../../utils/constants';
+import { PAGE_404, PREVIEW_STICKERS } from '../../utils/constants';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 import { ProfileMenu } from '../ProfileMenu/ProfileMenu';
 import { ButtonCustom, ButtonWithText, Container } from '../UI';
@@ -44,7 +44,7 @@ const Header: React.FC = () => {
     }, []),
   );
 
-  return location.pathname !== PAGE_404 ? (
+  return location.pathname !== PAGE_404 && location.pathname !== PREVIEW_STICKERS ? (
     <header className={styles.header}>
       <Container className={styles.header_container}>
         <Link to='/' className={styles.logo}>

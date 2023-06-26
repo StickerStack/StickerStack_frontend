@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import cn from 'classnames';
 
-import { PAGE_404 } from '../../utils/constants';
+import { PAGE_404, PREVIEW_STICKERS } from '../../utils/constants';
 import { Container, TextUnderline } from '../UI';
 
 import logo from '../../images/logo.svg';
@@ -16,7 +16,7 @@ const Footer: React.FC = () => {
   const phone = '+7 900 123 45 67';
   const email = 'legendsneverdie@mail.ru';
 
-  return location.pathname !== PAGE_404 ? (
+  return location.pathname !== PAGE_404 && location.pathname !== PREVIEW_STICKERS ? (
     <footer className={styles.footer}>
       <Container className={styles.footer_container}>
         <div className={styles.main}>

@@ -1,0 +1,47 @@
+@import '../../../utils/_scss-variables.scss';
+
+.container {
+  box-sizing: border-box;
+  border: 1px solid $element-active-color;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.image {
+  background-color: $secondary-bg-color;
+
+  &_rounded-square {
+    border-radius: 15px;
+  }
+
+  &_circle {
+    border-radius: 50%;
+  }
+}
+
+.border {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  outline: 1px solid $contrast-color;
+  box-sizing: border-box;
+
+  &_rounded-square {
+    border-radius: 15px;
+  }
+
+  &_circle {
+    border-radius: 50%;
+  }
+
+  &_5 {
+    padding: 19px;
+  }
+
+  &_10 {
+    padding: 38px;
+  }
+}

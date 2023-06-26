@@ -14,6 +14,7 @@ const API_URL = 'https://api.stickerstack.ru/v1';
 const PROFILE = '/profile';
 const PAGE_404 = '/page-not-found';
 const ADD_STICKERS = '/add-stickers';
+const PREVIEW_STICKERS = '/preview';
 const VERIFY_FORGOT_PASSWORD = '/auth/verify-forgot-password/:token';
 const VERIFY_EMAIL = '/auth/verifyemail/:token';
 
@@ -35,6 +36,7 @@ export {
   REG_PASS,
   REG_STICKERS,
   PROFILE_ONLY_LETTERS,
+  PREVIEW_STICKERS,
   PROFILE,
   PAGE_404,
   ADD_STICKERS,
