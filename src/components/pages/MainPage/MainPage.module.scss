@@ -1,14 +1,19 @@
 @import '../../../utils/_scss-variables.scss';
 
 .mainPage {
-  padding-top: 80px;
+  padding-top: calc(100vh / 6);
+  box-sizing: border-box;
   flex: 1;
+  min-height: calc(100vh - 115px);
+  background-color: $main-bg-color;
 
   &_container {
-    @include flex(row, space-between, flex-start);
-    gap: 80px;
+    @include flex(row, _, _);
+    gap: 50px;
   }
-
+  .section {
+    margin-top: 70px;
+  }
   .title {
     font-style: normal;
     @include font(48px, 65px, 700);
@@ -23,8 +28,13 @@
     color: $secondary-text-color;
   }
 
-  .img {
-    width: auto;
-    height: 450px;
+  .images {
+    min-width: 520px;
+    height: 520px;
+    position: relative;
+  }
+
+  .image {
+    position: absolute;
   }
 }

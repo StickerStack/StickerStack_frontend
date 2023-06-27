@@ -13,6 +13,7 @@
   &:hover {
     opacity: 0.9;
   }
+
   &:hover:disabled {
     opacity: 0.7;
   }
@@ -26,6 +27,9 @@
   background-color: $regular-button-bg-color;
   color: $regular-button-text-color;
   border: none;
+  :focus {
+    background-color: $clicked-button-color;
+  }
 }
 .button_contrast {
   background-color: $contrast-color;
@@ -36,6 +40,10 @@
   background-color: $other-button-bg-color;
   color: $other-button-text-color;
   border: 1px solid $other-button-text-color;
+
+  :focus {
+    border-color: $clicked-button-color;
+  }
 }
 
 .button_no-border {

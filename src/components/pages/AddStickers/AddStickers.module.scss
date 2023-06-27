@@ -2,6 +2,8 @@
 
 .container {
   padding-top: 80px;
+  padding-bottom: 60px;
+  background-color: $main-bg-color;
   flex: 1;
   text-align: left;
   @include flex(column, center, start);
@@ -50,7 +52,7 @@
 .price_small {
   font-size: 10px;
   line-height: 12px;
-  color: #929292;
+  color: $placeholder-text-color;
 }
 
 .preview {

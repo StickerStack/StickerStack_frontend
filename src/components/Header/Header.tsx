@@ -60,7 +60,7 @@ const Header: React.FC = () => {
               }}
               animate={{
                 transition: {
-                  duration: 0.4,
+                  duration: 0.3,
                 },
                 opacity: 1,
               }}

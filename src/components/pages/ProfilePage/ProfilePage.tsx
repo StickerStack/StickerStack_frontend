@@ -9,7 +9,7 @@ import { sendVerificationCode } from '../../../store/authSlice';
 import { updateUser } from '../../../store/userSlice';
 import { profileName, registerEmail } from '../../../utils/registersRHF';
 import { ImagePick } from '../../ImagePick/ImagePick';
-import { ButtonWithText, Container, Input, TitlePage } from '../../UI';
+import { ButtonWithText, Container, TextUnderline, TitlePage } from '../../UI';
 import { setMessageIsOpen } from '../../../store/popupSlice';
 import { InputWithButton } from '../../UI/InputWithButton/InputWithButton';
 import { InputField } from '../../UI/InputField/InputField';
@@ -96,8 +96,8 @@ const ProfilePage: React.FC = () => {
   };
 
   return (
-    <main className={styles.profile}>
-      <Container className={styles.profile_container}>
+    <main className={styles.main}>
+      <Container className={styles.main_container}>
         <TitlePage>Мои данные</TitlePage>
         <section className={styles.section}>
           <ImagePick image={EmptyAvatarImage} />
@@ -173,14 +173,13 @@ const ProfilePage: React.FC = () => {
             </form>
             {!user.isVerified && (
               <>
-                <p>Не пришло письмо подтверждения электронной почты? Жми кнопку!</p>
-                <ButtonWithText
-                  className={styles.button}
-                  theme='transparent'
+                <p>Не пришло письмо подтверждения электронной почты?</p>
+                <TextUnderline
+                  className={styles.underline}
                   onClick={() => dispatch(sendVerificationCode())}
                 >
                   Выслать повторно
-                </ButtonWithText>
+                </TextUnderline>
               </>
             )}
           </div>

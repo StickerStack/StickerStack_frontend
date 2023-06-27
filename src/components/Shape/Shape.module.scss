@@ -8,14 +8,14 @@
   cursor: pointer;
 
   &:hover .shape_pic {
-    background: #d9d9d9;
+    background: $element-active-color;
   }
 }
 
 .shape_pic {
   width: 56px;
   height: 56px;
-  background: #f1f1f1;
+  background: $element-color;
   color: $main-text-color;
   border-radius: 10px;
   @include flex(row, center, center);
@@ -33,6 +33,6 @@
   display: none;
 
   &:checked + label .shape_pic {
-    background: #d9d9d9;
+    background: $element-active-color;
   }
 }

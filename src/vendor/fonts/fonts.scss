@@ -1,26 +1,45 @@
-$nunito-path: "./Nunito";
-$play-path: "./Play";
+$nunito-path: './Nunito';
+$play-path: './Play';
+$gilroy-path: './Gilroy';
 
 @font-face {
-  font-family: "Nunito";
+  font-family: 'Nunito';
   font-weight: 400;
-  src: url("#{$nunito-path}/Nunito-Regular.ttf") format('truetype');
+  src: url('#{$nunito-path}/Nunito-Regular.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: "Nunito";
+  font-family: 'Nunito';
   font-weight: 700;
-  src: url("#{$nunito-path}/Nunito-Bold.ttf") format('truetype');
+  src: url('#{$nunito-path}/Nunito-Bold.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: "Play";
+  font-family: 'Play';
   font-weight: 400;
-  src: url("#{$play-path}/Play-Regular.ttf") format('truetype');
+  src: url('#{$play-path}/Play-Regular.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: "Play";
+  font-family: 'Play';
   font-weight: 700;
-  src: url("#{$play-path}/Play-Bold.ttf") format('truetype');
+  src: url('#{$play-path}/Play-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  font-weight: 400;
+  src: url('#{$gilroy-path}/Gilroy-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  font-weight: 500;
+  src: url('#{$gilroy-path}/Gilroy-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  font-weight: 600;
+  src: url('#{$gilroy-path}/Gilroy-SemiBold.ttf') format('truetype');
 }

@@ -103,14 +103,6 @@
   visibility: hidden;
 }
 
-.radio {
-  display: none;
-
-  &:checked + label .shape_pic {
-    background: $element-active-color;
-  }
-}
-
 .color_sample {
   width: 19px;
   height: 19px;

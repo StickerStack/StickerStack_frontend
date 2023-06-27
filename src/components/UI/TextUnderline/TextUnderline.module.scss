@@ -27,6 +27,13 @@
     transition: width 0.3s;
   }
 
+  &_contrast {
+    color: $contrast-text-color;
+
+    &::after {
+      background: $contrast-text-color;
+    }
+  }
   &:hover::after {
     width: 100%;
   }
