@@ -31,8 +31,10 @@
     border: none;
     outline: none;
     width: 90%;
+    background-color: transparent;
+
     &.input:-webkit-autofill {
-      -webkit-box-shadow: 0 0 0 50px $main-bg-color inset;
+      -webkit-box-shadow: 0 0 0 50px $popup-bg-color inset;
       -webkit-text-fill-color: $main-text-color;
     }
     &::placeholder {
