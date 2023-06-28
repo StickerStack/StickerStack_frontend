@@ -43,11 +43,32 @@ const PrevArrow = (props: {
 
 const settings = {
   className: `${styles.slider}`,
-  speed: 500,
   slidesToShow: 4,
   slidesToScroll: 1,
-  autoplay: false,
+  autoplay: true,
+  speed: 500,
+  autoplaySpeed: 6000,
   infinite: true,
+  responsive: [
+    {
+      breakpoint: 1400,
+      settings: {
+        slidesToShow: 3,
+      },
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
+      },
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+      },
+    },
+  ],
   nextArrow: <NextArrow className={''} style={{}} onClick={() => {}} />,
   prevArrow: <PrevArrow className={''} style={{}} onClick={() => {}} />,
 };

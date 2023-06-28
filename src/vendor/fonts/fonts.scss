@@ -1,6 +1,5 @@
 $nunito-path: './Nunito';
-$play-path: './Play';
-$gilroy-path: './Gilroy';
+$montserrat-path: './Montserrat';
 
 @font-face {
   font-family: 'Nunito';
@@ -15,31 +14,19 @@ $gilroy-path: './Gilroy';
 }
 
 @font-face {
-  font-family: 'Play';
+  font-family: 'Montserrat';
   font-weight: 400;
-  src: url('#{$play-path}/Play-Regular.ttf') format('truetype');
+  src: url('#{$montserrat-path}/Montserrat-Regular.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: 'Play';
-  font-weight: 700;
-  src: url('#{$play-path}/Play-Bold.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Gilroy';
-  font-weight: 400;
-  src: url('#{$gilroy-path}/Gilroy-Regular.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Gilroy';
+  font-family: 'Montserrat';
   font-weight: 500;
-  src: url('#{$gilroy-path}/Gilroy-Medium.ttf') format('truetype');
+  src: url('#{$montserrat-path}/Montserrat-Medium.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: 'Gilroy';
+  font-family: 'Montserrat';
   font-weight: 600;
-  src: url('#{$gilroy-path}/Gilroy-SemiBold.ttf') format('truetype');
+  src: url('#{$montserrat-path}/Montserrat-SemiBold.ttf') format('truetype');
 }

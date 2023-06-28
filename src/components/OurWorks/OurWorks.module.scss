@@ -9,7 +9,7 @@
 
 .text {
   margin: 0;
-  max-width: 740px;
+  max-width: 730px;
   text-align: center;
   font-size: 16px;
 }
@@ -30,7 +30,10 @@
 }
 
 .prev_arrow {
-  transform: translate(1780%, 550%);
+  transform: translate(1740%, 550%);
+  @media screen and (max-width: 1400px) {
+    transform: translate(1400%, 550%);
+  }
   &::before {
     background: url(../../images/icons/arrow-simple.svg) no-repeat center;
     transform: rotate(180deg);
@@ -64,9 +67,12 @@
 
 .slider {
   margin-top: 30px;
-  width: 1120px;
+  max-width: 1120px;
   height: 313px;
-  position: relative;
+
+  @media screen and (max-width: 1400px) {
+    max-width: 920px;
+  }
 
   & :global(:focus) {
     outline: none;
