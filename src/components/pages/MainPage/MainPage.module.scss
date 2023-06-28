@@ -1,40 +1,6 @@
 @import '../../../utils/_scss-variables.scss';
 
 .mainPage {
-  padding-top: calc(100vh / 6);
-  box-sizing: border-box;
   flex: 1;
-  min-height: calc(100vh - 115px);
   background-color: $main-bg-color;
-
-  &_container {
-    @include flex(row, _, _);
-    gap: 50px;
-  }
-  .section {
-    margin-top: 70px;
-  }
-  .title {
-    font-style: normal;
-    @include font(48px, 65px, 700);
-    margin: 0 0 30px;
-    color: $secondary-text-color;
-  }
-
-  .description {
-    font-style: normal;
-    @include font(20px, 23px, 400);
-    margin: 0 0 60px;
-    color: $secondary-text-color;
-  }
-
-  .images {
-    min-width: 520px;
-    height: 520px;
-    position: relative;
-  }
-
-  .image {
-    position: absolute;
-  }
 }

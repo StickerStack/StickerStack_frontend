@@ -2,6 +2,7 @@
 
 .main {
   padding-top: 80px;
+  padding-bottom: calc(100vh / 9);
   background-color: $main-bg-color;
   flex: 1;
 
