@@ -1,111 +1,53 @@
 import cn from 'classnames';
-import image from '../../../images/logo.svg';
+import { cards } from './sample-array';
+
 import styles from './PreviewPage.module.scss';
 
-const pageSize = { height: 1451, width: 1011, padding: 16, gap: 12 };
+// В сантиметрах - высота и ширина листа, отступы листа, ширина белой рамки стикера
+const pageInitialSize = { height: 382.4, width: 266.49, padding: 5.0, border: 2.5 };
+const pxInMm = 3.794;
 
-const cards = [
-  {
-    image: image,
-    id: 9,
-    size: { width: 100, height: 100 },
-    shape: 'rounded-square',
-  },
-  {
-    image: image,
-    id: 10,
-    size: { width: 100, height: 100 },
-    shape: 'rounded-square',
-    white_border: { width: 3 },
-  },
-  {
-    image: image,
-    id: 11,
-    size: { width: 130, height: 130 },
-    shape: 'rounded-square',
-    white_border: { width: 5 },
-  },
-  {
-    image: image,
-    id: 12,
-    size: { width: 130, height: 130 },
-    shape: 'square',
-    white_border: { width: 3 },
-  },
-  { image: image, id: 6, size: { width: 130, height: 130 }, shape: 'rounded-square' },
-  { image: image, id: 18, size: { width: 130, height: 130 }, shape: 'rounded-square' },
-  { image: image, id: 17, size: { width: 130, height: 130 }, shape: 'square' },
-  {
-    image: image,
-    id: 1,
-    size: { width: 200, height: 200 },
-    shape: 'square',
-    white_border: { width: 5 },
-  },
-  { image: image, id: 2, size: { width: 200, height: 200 }, shape: 'circle' },
-  { image: image, id: 4, size: { width: 200, height: 200 }, shape: 'rounded-square' },
-  {
-    image: image,
-    id: 3,
-    size: { width: 240, height: 240 },
-    shape: 'rounded-square',
-    white_border: { width: 10 },
-  },
-  { image: image, id: 8, size: { width: 240, height: 240 }, shape: 'rounded-square' },
-  { image: image, id: 7, size: { width: 250, height: 250 }, shape: 'circle' },
-  {
-    image: image,
-    id: 3,
-    size: { width: 250, height: 250 },
-    shape: 'rounded-square',
-    white_border: { width: 5 },
-  },
-  {
-    image: image,
-    id: 5,
-    size: { width: 350, height: 350 },
-    shape: 'rounded-square',
-    white_border: { width: 10 },
-  },
-  {
-    image: image,
-    id: 16,
-    size: { width: 350, height: 350 },
-    shape: 'circle',
-    white_border: { width: 10 },
-  },
-];
+// В пикселях
+const pageSize = {
+  height: pageInitialSize.height * pxInMm,
+  width: pageInitialSize.width * pxInMm,
+  border: pageInitialSize.border * pxInMm,
+  padding: pageInitialSize.padding * pxInMm,
+};
 
 const PreviewPage: React.FC = () => {
   return (
     <div
       className={styles.container}
       style={{
-        width: pageSize.width,
-        height: pageSize.height,
+        width: pageSize.width + pageSize.padding * 2,
+        height: pageSize.height + pageSize.padding * 2,
         padding: pageSize.padding,
       }}
     >
       <div
         className={styles.images}
         style={{
-          gap: pageSize.gap,
+          gridTemplateColumns: `repeat(${Math.floor(pageSize.width / 10)}, 10px)`,
+          gridTemplateRows: `repeat(${Math.floor(pageSize.height / 10)}, 10px)`,
         }}
       >
         {cards.map((card) => {
           return (
             <div
               key={card.id}
-              style={{ width: card.size.width, height: card.size.height }}
-              className={cn(
-                card.white_border && styles.border,
-                styles[`border_${card.white_border?.width}`],
-                styles[`border_${card.shape}`],
-              )}
+              style={{
+                padding: pageSize.border,
+                width: card.size.width,
+                height: card.size.height,
+                gridRow: `span ${Math.ceil(card.size.height / 10) + 1}`,
+                gridColumn: `span ${Math.ceil(card.size.width / 10) + 1}`,
+              }}
+              className={cn(card.white_border && styles.border, styles[`border_${card.shape}`])}
             >
               <img
                 className={cn(styles.image, styles[`image_${card.shape}`])}
-                src={image}
+                src={card.image}
                 style={
                   card.white_border
                     ? { width: '100%', height: '100%' }

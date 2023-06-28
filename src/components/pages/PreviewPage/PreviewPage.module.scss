@@ -6,10 +6,9 @@
 }
 
 .images {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  grid-auto-flow: row dense;
+  gap: 0;
 }
 
 .image {
@@ -28,7 +27,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
   outline: 1px solid $contrast-color;
   box-sizing: border-box;
 
@@ -38,17 +36,5 @@
 
   &_circle {
     border-radius: 50%;
-  }
-
-  &_3 {
-    padding: 11px;
-  }
-
-  &_5 {
-    padding: 19px;
-  }
-
-  &_10 {
-    padding: 38px;
   }
 }
