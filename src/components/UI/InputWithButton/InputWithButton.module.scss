@@ -1,3 +1,5 @@
+@import '../../../utils/_scss-variables.scss';
+
 .field {
   background-color: transparent;
   border: 1px solid #929292;
@@ -23,31 +25,29 @@
     padding: 4px 5px;
 
     &.error {
-      border-color: #d94917;
-     }
+      border-color: $error-text-color;
+    }
   }
-
 
   .input {
     border: none;
     outline: none;
     width: 90%;
     &.input:-webkit-autofill {
-      -webkit-box-shadow:0 0 0 50px #fff inset;
+      -webkit-box-shadow: 0 0 0 50px #fff inset;
       -webkit-text-fill-color: #333;
     }
   }
 
   &:hover {
-    border-color: #D9D9D9;
+    border-color: $element-active-color;
   }
 
   &:focus {
-    border-color: #D9D9D9
+    border-color: $element-active-color;
   }
-  
-  .error {
-    border-color: #d94917;
-   }
 
+  &.error {
+    border-color: $error-text-color;
+  }
 }

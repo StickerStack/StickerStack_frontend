@@ -2,20 +2,31 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-import { ButtonWithText, CheckBoxForm, TitleForm, TextUnderline, EyeButton, Input } from '../UI';
-import { Signin } from '../';
+import {
+  ButtonWithText,
+  CheckBoxForm,
+  TitlePopup,
+  TextUnderline,
+  EyeButton,
+  Input,
+} from '../../UI';
+import { Signin } from '../Signin/Signin';
+import { InputWithButton } from '../../UI/InputWithButton/InputWithButton';
+import { InputError } from '../../UI/InputError/InputError';
+import { InputField } from '../../UI/InputField/InputField';
+import { Label } from '../../UI/Label';
+import { useAppDispatch } from '../../../hooks/hooks';
+import { setMessageIsOpen, switchForm, setFormIsOpen } from '../../../store/popupSlice';
+import { getUser, updateStatus } from '../../../store/userSlice';
+import { signUp, signIn, sendVerificationCode } from '../../../store/authSlice';
+import {
+  registerEmail,
+  registerPassword,
+  registerRepeatPassword,
+} from '../../../utils/registersRHF';
 
-import { useAppDispatch } from '../../hooks/hooks';
-import { setMessageIsOpen, switchForm, setIsOpen } from '../../store/popupSlice';
-import { getUser, updateStatus } from '../../store/userSlice';
-import { signUp, signIn, sendVerificationCode } from '../../store/authSlice';
-import { registerEmail, registerPassword, registerRepeatPassword } from '../../utils/registersRHF';
 import styles from './Signup.module.scss';
-import { ADD_STICKERS } from '../../utils/constants';
-import { InputWithButton } from '../UI/InputWithButton/InputWithButton';
-import { InputError } from '../UI/InputError/InputError';
-import { InputField } from '../UI/InputField/InputField';
-import { Label } from '../UI/Label';
+import { ADD_STICKERS } from '../../../utils/constants';
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
@@ -45,14 +56,14 @@ const Signup: React.FC = () => {
           if (res.meta.requestStatus === 'fulfilled') {
             dispatch(getUser());
             dispatch(updateStatus(true));
-            dispatch(setIsOpen(false));
+            dispatch(setFormIsOpen(false));
             navigate(ADD_STICKERS);
             dispatch(
               setMessageIsOpen({
                 messageIsOpen: true,
                 message: 'Подтвердите почту',
                 messageIsError: false,
-              })
+              }),
             );
           }
         });
@@ -63,7 +74,7 @@ const Signup: React.FC = () => {
             messageIsOpen: true,
             message: 'Учётная запись с такой почтой уже существует',
             messageIsError: true,
-          })
+          }),
         );
       }
     });
@@ -71,14 +82,20 @@ const Signup: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.signup}>
-      <TitleForm>Регистрация</TitleForm>
+      <TitlePopup>Регистрация</TitlePopup>
       <div className={styles.inputs}>
         <InputField className='email'>
           <Label htmlFor='email'>Электронная почта</Label>
           <Input
             autoComplete='email'
+            placeholder='example@gmail.com'
             register={register}
-            option={registerEmail}
+            option={{
+              ...registerEmail,
+              onBlur: (value: React.FocusEvent<HTMLInputElement>) => {
+                setValue('email', value.target.value.trim());
+              },
+            }}
             name='email'
             error={errors.email}
           />
@@ -90,6 +107,7 @@ const Signup: React.FC = () => {
             register={register}
             option={registerPassword}
             name='password'
+            placeholder='Введите пароль'
             type={statePassword ? 'text' : 'password'}
             autoComplete='current-password'
             error={errors.password}
@@ -115,6 +133,7 @@ const Signup: React.FC = () => {
                 }
               },
             }}
+            placeholder='Введите пароль'
             name='repeat-password'
             type={stateRepeatPassword ? 'text' : 'password'}
             autoComplete='repeat-password'

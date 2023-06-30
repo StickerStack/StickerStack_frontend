@@ -2,11 +2,11 @@
 import { MouseEventHandler } from 'react';
 import cn from 'classnames';
 
-import { pages } from '../../utils/constants';
+import { pages } from '../../../utils/constants';
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import styles from './Preview.module.scss';
+import styles from './PopupPreview.module.scss';
 
 const NextArrow = (props: {
   className: string;
