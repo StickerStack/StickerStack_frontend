@@ -28,7 +28,6 @@ class AuthApi extends Api {
   }
   
   public async signIn(email: string, password: string) {
-    console.log(email, password)
     const data = await fetch(`${this.url}/auth/login`, {
       method: 'POST',
       credentials: 'include',

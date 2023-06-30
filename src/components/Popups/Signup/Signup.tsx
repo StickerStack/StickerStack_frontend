@@ -16,7 +16,7 @@ import { InputError } from '../../UI/InputError/InputError';
 import { InputField } from '../../UI/InputField/InputField';
 import { Label } from '../../UI/Label';
 import { useAppDispatch } from '../../../hooks/hooks';
-import { setMessageIsOpen, switchForm, setFormIsOpen } from '../../../store/popupSlice';
+import { openMessage, openPopup, closePopup } from '../../../store/popupSlice';
 import { getUser, updateStatus } from '../../../store/userSlice';
 import { signUp, signIn, sendVerificationCode } from '../../../store/authSlice';
 import {
@@ -56,13 +56,12 @@ const Signup: React.FC = () => {
           if (res.meta.requestStatus === 'fulfilled') {
             dispatch(getUser());
             dispatch(updateStatus(true));
-            dispatch(setFormIsOpen(false));
+            dispatch(closePopup());
             navigate(ADD_STICKERS);
             dispatch(
-              setMessageIsOpen({
-                messageIsOpen: true,
-                message: 'Подтвердите почту',
-                messageIsError: false,
+              openMessage({
+                text: 'Подтвердите почту',
+                isError: false,
               }),
             );
           }
@@ -70,10 +69,9 @@ const Signup: React.FC = () => {
       }
       if (res.meta.requestStatus === 'rejected' && res.payload === '400') {
         dispatch(
-          setMessageIsOpen({
-            messageIsOpen: true,
-            message: 'Учётная запись с такой почтой уже существует',
-            messageIsError: true,
+          openMessage({
+            text: 'Учётная запись с такой почтой уже существует',
+            isError: true,
           }),
         );
       }
@@ -169,7 +167,7 @@ const Signup: React.FC = () => {
       <ButtonWithText type='submit'>Зарегистрироваться</ButtonWithText>
       <span className={styles.link}>
         Уже есть аккаунт?{' '}
-        <TextUnderline type='button' onClick={() => dispatch(switchForm(Signin))}>
+        <TextUnderline type='button' onClick={() => dispatch(openPopup(Signin))}>
           Войти
         </TextUnderline>
       </span>

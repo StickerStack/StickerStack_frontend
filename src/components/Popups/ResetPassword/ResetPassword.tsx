@@ -8,7 +8,7 @@ import { Label } from '../../UI/Label';
 import { InputError } from '../../UI/InputError/InputError';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { forgotPassword } from '../../../store/authSlice';
-import { switchForm } from '../../../store/popupSlice';
+import { openPopup } from '../../../store/popupSlice';
 import { registerEmail } from '../../../utils/registersRHF';
 
 import styles from './ResetPassword.module.scss';
@@ -27,7 +27,7 @@ const ResetPassword: React.FC = () => {
   const onSubmit = (data: FieldValues) => {
     dispatch(forgotPassword({ email: data.email })).then(() => {
       localStorage.setItem('email', data.email);
-      dispatch(switchForm(ResetPasswordInfo));
+      dispatch(openPopup(ResetPasswordInfo));
     });
   };
 
@@ -58,10 +58,10 @@ const ResetPassword: React.FC = () => {
         Восстановить пароль
       </ButtonWithText>
       <div className={styles.buttons}>
-        <TextUnderline type='button' onClick={() => dispatch(switchForm(Signin))}>
+        <TextUnderline type='button' onClick={() => dispatch(openPopup(Signin))}>
           Войти
         </TextUnderline>
-        <TextUnderline type='button' onClick={() => dispatch(switchForm(Signup))}>
+        <TextUnderline type='button' onClick={() => dispatch(openPopup(Signup))}>
           Зарегистрироваться
         </TextUnderline>
       </div>

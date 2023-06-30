@@ -6,7 +6,7 @@ import { InputWithButton } from '../../UI/InputWithButton/InputWithButton';
 import { InputError } from '../../UI/InputError/InputError';
 import { InputField } from '../../UI/InputField/InputField';
 import { Label } from '../../UI/Label';
-import { setInfoIsOpen, setMessageIsOpen } from '../../../store/popupSlice';
+import { closePopup, openInfo, openMessage } from '../../../store/popupSlice';
 import { ButtonWithText, TitlePopup, EyeButton } from '../../UI';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { resetPassword } from '../../../store/authSlice';
@@ -32,7 +32,7 @@ const ChangePassword: React.FC = () => {
   const [stateRepeatPassword, setStateRepeatPassword] = useState(false);
 
   const onSubmit = (data: FieldValues) => {
-    dispatch(resetPassword({ token: token, password: data.newPassword })).then((res) => {
+    dispatch(resetPassword({ token: token, password: data.password })).then((res) => {
       if (res.meta.requestStatus === 'fulfilled') {
         navigate('/');
         // dispatch(
@@ -42,30 +42,29 @@ const ChangePassword: React.FC = () => {
         //     messageIsError: false,
         //   }),
         // );
+
+        dispatch(closePopup());
         dispatch(
-          setInfoIsOpen({
-            infoIsOpen: true,
+          openInfo({
             title: 'Пароль изменён',
             text: 'Сделай свои вещи уникальными с помощью стикеров на виниловой пленке. ',
             buttonText: 'Начать!',
-          }),
+          })
         );
         localStorage.removeItem('change-password-token');
       } else if (res.meta.requestStatus === 'rejected' && res.payload === 422) {
         dispatch(
-          setMessageIsOpen({
-            messageIsOpen: true,
-            message: 'Новый пароль не должен совпадать со старым',
-            messageIsError: true,
-          }),
+          openMessage({
+            text: 'Новый пароль не должен совпадать со старым',
+            isError: true,
+          })
         );
       } else if (res.meta.requestStatus === 'rejected') {
         dispatch(
-          setMessageIsOpen({
-            messageIsOpen: true,
-            message: 'Ошибка при попытке сменить пароль',
-            messageIsError: true,
-          }),
+          openMessage({
+            text: 'Ошибка при попытке сменить пароль',
+            isError: true,
+          })
         );
       }
     });

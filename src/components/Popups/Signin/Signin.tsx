@@ -9,7 +9,7 @@ import { InputError } from '../../UI/InputError/InputError';
 import { InputWithButton } from '../../UI/InputWithButton/InputWithButton';
 import { Signup } from '../Signup/Signup';
 import { ResetPassword } from '../ResetPassword/ResetPassword';
-import { setFormIsOpen, setMessageIsOpen, switchForm } from '../../../store/popupSlice';
+import { closePopup, openPopup, openMessage } from '../../../store/popupSlice';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { getUser, signInMockUser, updateStatus } from '../../../store/userSlice';
 import { signIn } from '../../../store/authSlice';
@@ -27,40 +27,38 @@ const Signin: React.FC = () => {
     setValue,
     formState: { errors, dirtyFields },
     handleSubmit,
-    watch,
   } = useForm({
     mode: 'onBlur',
   });
 
   const [statePassword, setStatePasswod] = useState(false);
 
-  const userEmail = getValues('email');
-  const userPassword = getValues('password');
-
   const onSubmit = () => {
+    const userEmail = getValues('email');
+    const userPassword = getValues('password');
+
     if (userEmail === 'my@super.user' && userPassword === 'my@super.user') {
       dispatch(signInMockUser({ email: 'my@super.user', firstName: 'Иван', lastName: 'Иванов' }));
-      dispatch(setFormIsOpen(false));
+      dispatch(closePopup());
       navigate('/add-stickers');
       localStorage.setItem('token', 'moc');
       return;
     }
-
+    
     dispatch(signIn({ email: userEmail, password: userPassword }))
       .then((res) => {
         if (res.meta.requestStatus === 'fulfilled') {
           dispatch(getUser());
           dispatch(updateStatus(true));
-          dispatch(setFormIsOpen(false));
+          dispatch(closePopup());
           navigate('/add-stickers');
         }
 
-        if (res.meta.requestStatus === 'rejected' && res.payload === '400') {
+        if (res.meta.requestStatus === 'rejected') {
           dispatch(
-            setMessageIsOpen({
-              messageIsOpen: true,
-              message: 'Неверная почта или пароль',
-              messageIsError: true,
+            openMessage({
+              text: 'Неверная почта или пароль',
+              isError: true,
             }),
           );
         }
@@ -95,7 +93,7 @@ const Signin: React.FC = () => {
           <Label htmlFor='password'>
             Пароль
             <TextUnderline
-              onClick={() => dispatch(switchForm(ResetPassword))}
+              onClick={() => dispatch(openPopup(ResetPassword))}
               className={styles.reset}
             >
               Забыли пароль?
@@ -124,7 +122,7 @@ const Signin: React.FC = () => {
       {!location.pathname.startsWith('/api/auth/verifyemail') ? (
         <span className={styles.link}>
           Нет аккаунта?{' '}
-          <TextUnderline onClick={() => dispatch(switchForm(Signup))} type='button'>
+          <TextUnderline onClick={() => dispatch(openPopup(Signup))} type='button'>
             Зарегистрироваться
           </TextUnderline>
         </span>

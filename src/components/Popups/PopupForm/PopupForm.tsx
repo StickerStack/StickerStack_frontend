@@ -5,11 +5,11 @@ import { IPopupState } from '../../../interfaces/IPopupState';
 import styles from './PopupForm.module.scss';
 
 const PopupForm: React.FC = () => {
-  const Form = useSelector((state: { popup: IPopupState }) => state.popup.form);
+  const { popup } = useSelector((state: { popup: IPopupState }) => state.popup);
 
   return (
     <div className={styles.container}>
-      <Form />
+      {popup.element && <popup.element />}
     </div>
   );
 };
