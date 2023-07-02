@@ -1,6 +1,6 @@
 import cn from 'classnames';
 import { useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 
 import {
@@ -15,11 +15,15 @@ import {
 import { Shape } from '../Shape/Shape';
 import { DragAndDrop } from '../';
 import { useAppDispatch } from '../../hooks/hooks';
-import { deleteCard, removeBackground, updateCard } from '../../store/cardsSlice';
+import { deleteCard, removeBackground, updateAmount, updateShape } from '../../store/cardsSlice';
 import { ICard, ICardsState } from '../../interfaces';
 import { TCardShape } from '../../interfaces/ICard';
 import { registerAmount, registerSize } from '../../utils/registersRHF';
-import { AMOUNT_INPUT_MAX_LENGTH, AMOUNT_INPUT_MIN_LENGTH } from '../../utils/constants';
+import {
+  AMOUNT_INPUT_MAX_LENGTH,
+  AMOUNT_INPUT_MIN_LENGTH,
+  REG_STICKERS,
+} from '../../utils/constants';
 
 import { tooltipText } from '../../utils/texts';
 
@@ -32,10 +36,8 @@ interface IProps {
 const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
   const dispatch = useAppDispatch();
   const [customVisible, setCustomVisible] = useState<boolean>(false);
-  const [cardShape, setCardShape] = useState<TCardShape>('square');
+
   const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
-  const [amount, setAmount] = useState<number>(card.amount);
-  const copyCard = { ...card };
 
   const handleDelete = () => {
     dispatch(deleteCard(card.id));
@@ -46,29 +48,30 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
     formState: { errors },
   } = useForm<FieldValues>({
     mode: 'onBlur',
-    defaultValues: { size: 'optimal' },
+    defaultValues: { shape: card.shape, amount: card.amount, size: 'optimal' },
   });
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const number = Number(e.target.value);
-    setAmount(number);
-    copyCard.amount = number;
 
-    if (number <= AMOUNT_INPUT_MAX_LENGTH && number >= AMOUNT_INPUT_MIN_LENGTH) {
-      dispatch(updateCard({ id: card.id, updatedCard: copyCard }));
+    if (
+      REG_STICKERS.test(number.toString()) &&
+      number <= AMOUNT_INPUT_MAX_LENGTH &&
+      number >= AMOUNT_INPUT_MIN_LENGTH
+    ) {
+      dispatch(updateAmount({ id: card.id, amount: number }));
     }
   };
 
   const onShapeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCardShape(event.target.value as TCardShape);
-    copyCard.shape = event.target.value as TCardShape;
+    const shape = event.target.value as TCardShape;
 
-    if ((event.target.value as TCardShape) === 'contour') {
+    if ((shape as TCardShape) === 'contour') {
       const formData = new FormData();
       formData.append('file', card.image);
       dispatch(removeBackground({ data: formData, id: card.id }));
     }
-    dispatch(updateCard({ id: card.id, updatedCard: copyCard }));
+    dispatch(updateShape({ id: card.id, shape: shape }));
   };
 
   return (
@@ -81,32 +84,32 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
           <p className={styles.category}>Форма</p>
           <div className={styles.shapes}>
             <Shape
+              register={register}
+              name='shape'
               card={card}
-              shape='square'
-              shapeTitle='Квадрат'
+              value='square'
               onShapeChange={onShapeChange}
-              cardShape={cardShape}
             />
             <Shape
+              register={register}
+              name='shape'
               card={card}
-              shape='rounded-square'
-              shapeTitle='Закругленный квадрат'
+              value='rounded-square'
               onShapeChange={onShapeChange}
-              cardShape={cardShape}
             />
             <Shape
+              register={register}
+              name='shape'
               card={card}
-              shape='circle'
-              shapeTitle='Круг'
+              value='circle'
               onShapeChange={onShapeChange}
-              cardShape={cardShape}
             />
             <Shape
+              register={register}
+              name='shape'
               card={card}
-              shape='contour'
-              shapeTitle='По контуру'
+              value='contour'
               onShapeChange={onShapeChange}
-              cardShape={cardShape}
             />
           </div>
         </fieldset>

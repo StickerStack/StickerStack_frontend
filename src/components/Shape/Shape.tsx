@@ -1,3 +1,4 @@
+import { UseFormRegister, FieldValues } from 'react-hook-form';
 import { ICard } from '../../interfaces';
 import { TCardShape } from '../../interfaces/ICard';
 
@@ -9,16 +10,23 @@ import { ReactComponent as ContourSvg } from '../../images/icons/contour.svg';
 import styles from './Shape.module.scss';
 
 interface IProps {
+  register?: UseFormRegister<FieldValues>;
+  name: string;
   card: ICard;
-  shape: TCardShape;
-  shapeTitle: string;
-  cardShape: TCardShape;
+  value: TCardShape;
   onShapeChange: React.ChangeEventHandler<HTMLInputElement>;
 }
 
-const Shape: React.FC<IProps> = ({ card, shape, shapeTitle, cardShape, onShapeChange }: IProps) => {
+const Shape: React.FC<IProps> = ({
+  register,
+  name,
+  card,
+  value,
+
+  onShapeChange,
+}: IProps) => {
   const chooseShape = () => {
-    switch (shape) {
+    switch (value) {
       case 'square':
         return <RectSvg />;
       case 'rounded-square':
@@ -30,21 +38,34 @@ const Shape: React.FC<IProps> = ({ card, shape, shapeTitle, cardShape, onShapeCh
     }
   };
 
+  const translateShape = () => {
+    switch (value) {
+      case 'square':
+        return 'Квадрат';
+      case 'rounded-square':
+        return 'Закругленный вадрат';
+      case 'circle':
+        return 'Круг';
+      case 'contour':
+        return 'По контуру';
+    }
+  };
+
   return (
     <>
       <input
+        {...(register && register(name))}
         className={styles.radio}
         type='radio'
-        id={`${card.id}-shape-${shape}`}
-        name={`${card.id}-shape`}
-        value={shape}
-        checked={cardShape === shape}
+        id={`${card.id}-shape-${value}`}
+        name={name}
+        value={value}
         onChange={onShapeChange}
       />
-      <label className={styles.label} htmlFor={`${card.id}-shape-${shape}`}>
+      <label className={styles.label} htmlFor={`${card.id}-shape-${value}`}>
         <div className={styles.shape}>
           <div className={styles.shape_pic}>{chooseShape()}</div>
-          <span className={styles.shape_title}>{shapeTitle}</span>
+          <span className={styles.shape_title}>{translateShape()}</span>
         </div>
       </label>
     </>
