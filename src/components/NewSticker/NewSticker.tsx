@@ -7,10 +7,11 @@ import { ButtonCustom, Error, Input, RadioButton, TooltipCustom, InputField, Inp
 import { Shape } from '../Shape/Shape';
 import { DragAndDrop } from '../';
 import { useAppDispatch } from '../../hooks/hooks';
-import { deleteCard, removeBackground, updateCard } from '../../store/cardsSlice';
+import { deleteCard, removeBackground, updateCard, updateSize } from '../../store/cardsSlice';
 import { ICard, ICardsState } from '../../interfaces';
 import { TCardShape } from '../../interfaces/ICard';
 import { registerAmount, registerSize } from '../../utils/registersRHF';
+import { REG_STICKERS, SIZE_INPUT_MAX_LENGTH, SIZE_INPUT_MIN_LENGTH } from "../../utils/constants";
 
 import { tooltipText } from '../../utils/texts';
 
@@ -20,14 +21,18 @@ interface IProps {
   card: ICard;
 }
 
+const sizeValidate = (value: string): boolean => {
+  return REG_STICKERS.test(value) &&
+      Number(value) >= SIZE_INPUT_MIN_LENGTH &&
+      Number(value) <= SIZE_INPUT_MAX_LENGTH;
+}
+
 const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
   const dispatch = useAppDispatch();
   const [customVisible, setCustomVisible] = useState<boolean>(false);
   const [cardShape, setCardShape] = useState<TCardShape>('square');
   const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
   const [amount, setAmount] = useState<number>(card.amount);
-  const [width, setWidth] = useState<number>();
-  const [height, setHeight] = useState<number>();
 
   const handleDelete = () => {
     dispatch(deleteCard(card.id));
@@ -57,6 +62,20 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
     }
 
     dispatch(updateCard({ id: card.id, updatedCard: copyCard }));
+  };
+
+  const onWidthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    if (sizeValidate(value)) {
+      dispatch(updateSize({ id: card.id, width: Number(value), height: card.size.height}))
+    }
+  };
+
+  const onHeightChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    if (sizeValidate(value)) {
+      dispatch(updateSize({ id: card.id, height: Number(value), width: card.size.width}))
+    }
   };
 
   return (
@@ -137,7 +156,10 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
                       type='tel'
                       className='size'
                       register={register}
-                      option={registerSize}
+                      option={{
+                        ...registerSize,
+                        onChange: onWidthChange
+                      }}
                       name='width'
                       placeholder='ширина'
                       error={errors.width}
@@ -147,7 +169,10 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
                       type='tel'
                       className='size'
                       register={register}
-                      option={registerSize}
+                      option={{
+                        ...registerSize,
+                        onChange: onHeightChange
+                      }}
                       name='height'
                       placeholder='высота'
                       error={errors.height}

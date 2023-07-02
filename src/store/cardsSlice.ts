@@ -60,6 +60,15 @@ const cardsSlice = createSlice({
         return card;
       });
     },
+    updateSize(state, action: { payload: { id: number; width: number; height: number }; type: string;}) {
+      const { id, width, height } = action.payload;
+      const foundedCard = state.cards.find((card) => card.id === id);
+
+      if (foundedCard) {
+        foundedCard.size.width = width;
+        foundedCard.size.height = height;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(removeBackground.fulfilled, (state, action) => {
@@ -74,6 +83,6 @@ const cardsSlice = createSlice({
 });
 
 const cardsSliceReducer = cardsSlice.reducer;
-const { addCard, deleteCard, updatePicture, updateCard } = cardsSlice.actions;
+const { addCard, deleteCard, updatePicture, updateCard, updateSize } = cardsSlice.actions;
 
-export { cardsSliceReducer, addCard, deleteCard, updatePicture, removeBackground, updateCard };
+export { cardsSliceReducer, addCard, deleteCard, updatePicture, removeBackground, updateCard, updateSize };
