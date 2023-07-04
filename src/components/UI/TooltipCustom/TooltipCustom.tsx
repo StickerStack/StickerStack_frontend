@@ -2,8 +2,6 @@ import cn from 'classnames';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 
-import { IconButton } from '../IconButton/IconButton';
-
 import styles from './TooltipCustom.module.scss';
 
 interface IProps {
