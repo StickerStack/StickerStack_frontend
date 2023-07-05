@@ -5,7 +5,7 @@
   min-height: 335px;
   margin-top: 55px;
   padding-top: 55px;
-
+  box-sizing: border-box;
   &_container {
     @include flex(row, space-between, _);
   }
@@ -31,7 +31,7 @@
 }
 
 .item {
-  @include flex(row, start, center);
+  @include flex(row, flex-start, center);
   gap: 10px;
   color: $main-text-color;
   transition: color 0.3s ease-in-out;

@@ -2,19 +2,24 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { ButtonWithText, TitlePopup, TextUnderline, Input, EyeButton } from '../../UI';
-import { InputField } from '../../UI/InputField/InputField';
-import { Label } from '../../UI/Label';
-import { InputError } from '../../UI/InputError/InputError';
-import { InputWithButton } from '../../UI/InputWithButton/InputWithButton';
-import { Signup } from '../Signup/Signup';
-import { ResetPassword } from '../ResetPassword/ResetPassword';
-import { setFormIsOpen, setMessageIsOpen, switchForm } from '../../../store/popupSlice';
+import {
+  ButtonWithText,
+  TitlePopup,
+  TextUnderline,
+  Input,
+  EyeButton,
+  Label,
+  InputField,
+  InputError,
+  InputWithButton,
+} from '../../UI';
+import { Signup, ResetPassword } from '../..';
+
+import { closePopup, openPopup, openMessage } from '../../../store/popupSlice';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { getUser, signInMockUser, updateStatus } from '../../../store/userSlice';
 import { signIn } from '../../../store/authSlice';
 import { registerEmail, registerPassword } from '../../../utils/registersRHF';
-
 import styles from './Signin.module.scss';
 
 const Signin: React.FC = () => {
@@ -27,20 +32,19 @@ const Signin: React.FC = () => {
     setValue,
     formState: { errors, dirtyFields },
     handleSubmit,
-    watch,
   } = useForm({
     mode: 'onBlur',
   });
 
   const [statePassword, setStatePasswod] = useState(false);
 
-  const userEmail = getValues('email');
-  const userPassword = getValues('password');
-
   const onSubmit = () => {
+    const userEmail = getValues('email');
+    const userPassword = getValues('password');
+
     if (userEmail === 'my@super.user' && userPassword === 'my@super.user') {
       dispatch(signInMockUser({ email: 'my@super.user', firstName: 'Иван', lastName: 'Иванов' }));
-      dispatch(setFormIsOpen(false));
+      dispatch(closePopup());
       navigate('/add-stickers');
       localStorage.setItem('token', 'moc');
       return;
@@ -51,17 +55,16 @@ const Signin: React.FC = () => {
         if (res.meta.requestStatus === 'fulfilled') {
           dispatch(getUser());
           dispatch(updateStatus(true));
-          dispatch(setFormIsOpen(false));
+          dispatch(closePopup());
           navigate('/add-stickers');
         }
 
-        if (res.meta.requestStatus === 'rejected' && res.payload === '400') {
+        if (res.meta.requestStatus === 'rejected') {
           dispatch(
-            setMessageIsOpen({
-              messageIsOpen: true,
-              message: 'Неверная почта или пароль',
-              messageIsError: true,
-            }),
+            openMessage({
+              text: 'Неверная почта или пароль',
+              isError: true,
+            })
           );
         }
       })
@@ -94,10 +97,7 @@ const Signin: React.FC = () => {
         <InputField className='password'>
           <Label htmlFor='password'>
             Пароль
-            <TextUnderline
-              onClick={() => dispatch(switchForm(ResetPassword))}
-              className={styles.reset}
-            >
+            <TextUnderline onClick={() => dispatch(openPopup(ResetPassword))} className={styles.reset}>
               Забыли пароль?
             </TextUnderline>
           </Label>
@@ -124,7 +124,7 @@ const Signin: React.FC = () => {
       {!location.pathname.startsWith('/api/auth/verifyemail') ? (
         <span className={styles.link}>
           Нет аккаунта?{' '}
-          <TextUnderline onClick={() => dispatch(switchForm(Signup))} type='button'>
+          <TextUnderline onClick={() => dispatch(openPopup(Signup))} type='button'>
             Зарегистрироваться
           </TextUnderline>
         </span>

@@ -2,13 +2,14 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import { ButtonWithText, Container, TitlePage } from '../../UI';
-
 import { useAppDispatch } from '../../../hooks/hooks';
 import MainPageImage from '../../../images/main-page-image.png';
 import { IUserState } from '../../../interfaces';
-import { setFormIsOpen } from '../../../store/popupSlice';
-import styles from './MainPage.module.scss';
+import { openPopup } from '../../../store/popupSlice';
 import { FAQ } from '../../FAQ/FAQ';
+import { Signin } from '../../Popups/Signin/Signin';
+
+import styles from './MainPage.module.scss';
 
 const MainPage: React.FC = () => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const MainPage: React.FC = () => {
     if (isLogged) {
       navigate('/add-stickers');
     } else {
-      dispatch(setFormIsOpen(true));
+      dispatch(openPopup(Signin));
     }
   };
 

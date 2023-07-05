@@ -37,7 +37,7 @@ const DragAndDrop: React.FC<IProps> = ({ card }: IProps) => {
           urlFilePreview: reader.result,
         };
         setImageFile(file);
-        
+
         if (typeof reader.result === 'string') {
           const image = new Image();
           image.src = reader.result;
@@ -48,7 +48,7 @@ const DragAndDrop: React.FC<IProps> = ({ card }: IProps) => {
                   id: card.id,
                   image: file.urlFilePreview,
                   size: { width: image.naturalWidth, height: image.naturalHeight },
-                })
+                }),
               );
             }
           };
@@ -64,6 +64,7 @@ const DragAndDrop: React.FC<IProps> = ({ card }: IProps) => {
           onLoadImage={handleImageChange}
           deleteImage={() => setImageFile(null)}
           image={imageFile.urlFilePreview}
+          shape={card.shape}
         />
       ) : (
         <div className={styles.dnd}>
