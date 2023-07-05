@@ -5,7 +5,8 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { ButtonWithText, Container } from '../UI';
 import { useAppDispatch } from '../../hooks/hooks';
 import { IUserState } from '../../interfaces';
-import { setFormIsOpen } from '../../store/popupSlice';
+import { openPopup } from '../../store/popupSlice';
+import { Signin } from '../Popups/Signin/Signin';
 
 import cocktail from '../../images/main-page/cocktail.png';
 import ufo from '../../images/main-page/ufo.png';
@@ -23,7 +24,7 @@ const MainHero: React.FC = () => {
     if (isLogged) {
       navigate('/add-stickers');
     } else {
-      dispatch(setFormIsOpen(true));
+      dispatch(openPopup(Signin));
     }
   };
   return (
