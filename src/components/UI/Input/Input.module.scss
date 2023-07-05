@@ -2,7 +2,7 @@
 
 .input {
   background-color: transparent;
-  border: 1px solid #929292;
+  border: 1px solid $regular-field-color;
   border-radius: 15px;
   padding: 11px 15px;
   box-sizing: border-box;
@@ -10,34 +10,27 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 19px;
-  color: #333;
+  color: $main-text-color;
+  transition: border-color 0.2s ease-in-out;
 
-  &.size {
+  &.size,
+  &.amount {
     padding: 5px 0;
     width: 76px;
     text-align: center;
     border-radius: 8px;
-    border: 1px solid #333;
     font-size: 14px;
     line-height: 16px;
     position: relative;
-    color: #929292;
   }
 
   &.amount {
-    padding: 5px 0;
     width: 60px;
-    text-align: center;
-    border-radius: 8px;
-    border: 1px solid #333;
-    font-size: 14px;
-    line-height: 16px;
-    position: relative;
-    color: #929292;
   }
 
   &::placeholder {
-    color: #929292;
+    color: $placeholder-text-color;
+    transition: color 0.1s ease-in;
   }
 
   &.password {
@@ -46,7 +39,7 @@
 
   &.profile {
     border: none;
-    border-bottom: 2px solid #929292;
+    border-bottom: 2px solid $regular-field-color;
     border-radius: 0;
     padding: 4px 5px;
 
@@ -56,16 +49,20 @@
   }
 
   &.input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 50px #fff inset;
-    -webkit-text-fill-color: #333;
+    -webkit-box-shadow: 0 0 0 50px $popup-bg-color inset;
+    -webkit-text-fill-color: $main-text-color;
   }
 
   &:hover {
-    border-color: $element-active-color;
+    border-color: $active-field-color;
   }
 
   &:focus {
-    border-color: $element-active-color;
+    border-color: $active-field-color;
+
+    &::placeholder {
+      color: transparent;
+    }
   }
 
   &.error {

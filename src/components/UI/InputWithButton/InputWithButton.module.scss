@@ -2,7 +2,7 @@
 
 .field {
   background-color: transparent;
-  border: 1px solid #929292;
+  border: 1px solid $regular-field-color;
   border-radius: 15px;
   padding: 11px 15px;
   box-sizing: border-box;
@@ -13,19 +13,17 @@
   font-size: 16px;
   line-height: 19px;
   width: 100%;
-
-  &::placeholder {
-    color: #929292;
-  }
+  transition: border-color 0.2s ease-in-out;
 
   &.profile {
     border: none;
-    border-bottom: 2px solid #929292;
+    border-bottom: 2px solid $regular-field-color;
     border-radius: 0;
     padding: 4px 5px;
 
-    &.error {
-      border-color: $error-text-color;
+    &:hover > button {
+      opacity: 1;
+      cursor: pointer;
     }
   }
 
@@ -33,18 +31,33 @@
     border: none;
     outline: none;
     width: 90%;
+    background-color: transparent;
+
     &.input:-webkit-autofill {
-      -webkit-box-shadow: 0 0 0 50px #fff inset;
-      -webkit-text-fill-color: #333;
+      -webkit-box-shadow: 0 0 0 50px $popup-bg-color inset;
+      -webkit-text-fill-color: $main-text-color;
+    }
+    &::placeholder {
+      color: $placeholder-text-color;
+      transition: color 0.1s ease-in;
+    }
+    &:focus {
+      border-color: $active-field-color;
+
+      &::placeholder {
+        color: transparent;
+      }
+    }
+    &.profile {
+      &:focus > button {
+        opacity: 1;
+        cursor: pointer;
+      }
     }
   }
 
   &:hover {
-    border-color: $element-active-color;
-  }
-
-  &:focus {
-    border-color: $element-active-color;
+    border-color: $active-field-color;
   }
 
   &.error {

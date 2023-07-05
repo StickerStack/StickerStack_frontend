@@ -1,13 +1,12 @@
 @import '../../../utils/_scss-variables.scss';
 
-.profile {
+.profile_container {
   padding-top: 80px;
+  padding-bottom: calc(100vh / 3);
+  background-color: $main-bg-color;
   flex: 1;
-
-  &_container {
-    @include flex(column, flex-start, flex-start);
-    gap: 20px;
-  }
+  @include flex(column, flex-start, flex-start);
+  gap: 20px;
 }
 
 .section {
@@ -28,10 +27,11 @@
   background-size: contain;
   border: none;
   background-color: transparent;
-  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
 
   &_none {
-    visibility: hidden;
+    display: none;
   }
 }
 
