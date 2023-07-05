@@ -95,9 +95,9 @@ const ProfilePage: React.FC = () => {
   };
 
   return (
-    <main className={styles.main}>
-      <Container className={styles.main_container}>
-        <TitlePage>Мои данные</TitlePage>
+    <main className={styles.profile}>
+      <Container className={styles.profile_container}>
+        <TitlePage type='main-title'>Мои данные</TitlePage>
         <section className={styles.section}>
           <ImagePick image={EmptyAvatarImage} />
           <div className={styles.profile_data}>

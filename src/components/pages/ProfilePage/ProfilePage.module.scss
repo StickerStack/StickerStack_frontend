@@ -1,15 +1,12 @@
 @import '../../../utils/_scss-variables.scss';
 
-.main {
+.profile_container {
   padding-top: 80px;
-  padding-bottom: calc(100vh / 9);
+  padding-bottom: calc(100vh / 3);
   background-color: $main-bg-color;
   flex: 1;
-
-  &_container {
-    @include flex(column, flex-start, flex-start);
-    gap: 20px;
-  }
+  @include flex(column, flex-start, flex-start);
+  gap: 20px;
 }
 
 .section {

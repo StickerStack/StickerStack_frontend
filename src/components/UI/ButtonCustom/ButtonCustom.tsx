@@ -1,7 +1,7 @@
 import cn from 'classnames';
 import styles from './ButtonCustom.module.scss';
 
-type ButtonType = 'close' | 'person' | 'cart' | 'delete';
+type ButtonType = 'close' | 'person' | 'cart' | 'delete' | 'arrow';
 
 interface IProps {
   type: ButtonType;

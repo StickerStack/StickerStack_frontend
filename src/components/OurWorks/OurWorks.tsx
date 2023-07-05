@@ -19,7 +19,9 @@ const images = [
 const OurWorks: React.FC = () => {
   return (
     <Container className={styles.container}>
-      <TitlePage className={styles.title}>Примеры работ</TitlePage>
+      <TitlePage type='section-title' className={styles.title}>
+        Примеры работ
+      </TitlePage>
       <p className={styles.text}>
         На странице можно увидеть наши работы и почувствовать настоящую волну вдохновения. Мы делаем
         стикеры на разные темы, включая музыку, спорт, животных, еду и многое другое. Посмотрите на

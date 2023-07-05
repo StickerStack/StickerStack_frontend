@@ -19,3 +19,5 @@ export { ImagePick } from './ImagePick/ImagePick';
 export { NewSticker } from './NewSticker/NewSticker';
 export { Preloader } from './Preloader/Preloader';
 export { DragAndDrop } from './DragAndDrop/DragAndDrop';
+export { FAQ } from './FAQ/FAQ';
+export { Dropdown } from './Dropdown/Dropdown';
