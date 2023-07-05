@@ -2,12 +2,17 @@ import { useEffect, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-import { InputWithButton } from '../../UI/InputWithButton/InputWithButton';
-import { InputError } from '../../UI/InputError/InputError';
-import { InputField } from '../../UI/InputField/InputField';
-import { Label } from '../../UI/Label';
+import {
+  ButtonWithText,
+  TitlePopup,
+  EyeButton,
+  Label,
+  InputError,
+  InputWithButton,
+  InputField,
+} from '../../UI';
+
 import { closePopup, openInfo, openMessage } from '../../../store/popupSlice';
-import { ButtonWithText, TitlePopup, EyeButton } from '../../UI';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { resetPassword } from '../../../store/authSlice';
 import { registerPassword, registerRepeatPassword } from '../../../utils/registersRHF';
@@ -31,17 +36,10 @@ const ChangePassword: React.FC = () => {
   const [statePassword, setStatePasswod] = useState(false);
   const [stateRepeatPassword, setStateRepeatPassword] = useState(false);
 
-  const onSubmit = (data: FieldValues) => {
-    dispatch(resetPassword({ token: token, password: data.password })).then((res) => {
+  const onSubmit = (formData: FieldValues) => {
+    dispatch(resetPassword({ token: token, password: formData.password })).then((res) => {
       if (res.meta.requestStatus === 'fulfilled') {
         navigate('/');
-        // dispatch(
-        //   setMessageIsOpen({
-        //     messageIsOpen: true,
-        //     message: 'Пароль успешно изменен',
-        //     messageIsError: false,
-        //   }),
-        // );
 
         dispatch(closePopup());
         dispatch(

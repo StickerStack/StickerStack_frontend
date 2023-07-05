@@ -9,12 +9,13 @@ import {
   TextUnderline,
   EyeButton,
   Input,
+  Label,
+  InputField,
+  InputError,
+  InputWithButton
 } from '../../UI';
 import { Signin } from '../Signin/Signin';
-import { InputWithButton } from '../../UI/InputWithButton/InputWithButton';
-import { InputError } from '../../UI/InputError/InputError';
-import { InputField } from '../../UI/InputField/InputField';
-import { Label } from '../../UI/Label';
+
 import { useAppDispatch } from '../../../hooks/hooks';
 import { openMessage, openPopup, closePopup } from '../../../store/popupSlice';
 import { getUser, updateStatus } from '../../../store/userSlice';

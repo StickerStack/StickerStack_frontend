@@ -1,7 +1,7 @@
 export interface IPopupState {
   isOpen: boolean;
 
-  popup: {
+  form: {
     isOpen: boolean;
     element: React.FC;
   };

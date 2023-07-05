@@ -2,11 +2,11 @@ import { useSelector } from 'react-redux';
 
 import { IPopupState } from '../../../interfaces/IPopupState';
 import { ButtonWithText, TextForm, TitlePopup } from '../../UI';
+import { closePopup } from '../../../store/popupSlice';
 
 import { useAppDispatch } from '../../../hooks/hooks';
 import logo from '../../../images/logo-decoration.svg';
 import styles from './PopupInfo.module.scss';
-import { closePopup } from '../../../store/popupSlice';
 
 
 const PopupInfo: React.FC = () => {

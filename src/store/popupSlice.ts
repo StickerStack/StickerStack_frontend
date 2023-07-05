@@ -5,7 +5,7 @@ import { IPopupState } from '../interfaces';
 
 const initialState: IPopupState = {
   isOpen: false,
-  popup: {
+  form: {
     isOpen: false,
     element: Signin,
   },
@@ -31,8 +31,8 @@ const popupSlice = createSlice({
   reducers: {
     openPopup(state, action: { payload: React.FC; type: string }) {
       state.isOpen = true;
-      state.popup.isOpen = true;
-      state.popup.element = action.payload;
+      state.form.isOpen = true;
+      state.form.element = action.payload;
     },
 
     openPreview(state) {
@@ -49,7 +49,7 @@ const popupSlice = createSlice({
     },
 
     closePopup(state) {
-      state.popup.isOpen = false;
+      state.form.isOpen = false;
 
       state.info.isOpen = false;
       state.info.title = '';

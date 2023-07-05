@@ -2,19 +2,24 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { ButtonWithText, TitlePopup, TextUnderline, Input, EyeButton } from '../../UI';
-import { InputField } from '../../UI/InputField/InputField';
-import { Label } from '../../UI/Label';
-import { InputError } from '../../UI/InputError/InputError';
-import { InputWithButton } from '../../UI/InputWithButton/InputWithButton';
-import { Signup } from '../Signup/Signup';
-import { ResetPassword } from '../ResetPassword/ResetPassword';
+import {
+  ButtonWithText,
+  TitlePopup,
+  TextUnderline,
+  Input,
+  EyeButton,
+  Label,
+  InputField,
+  InputError,
+  InputWithButton,
+} from '../../UI';
+import { Signup, ResetPassword } from '../..';
+
 import { closePopup, openPopup, openMessage } from '../../../store/popupSlice';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { getUser, signInMockUser, updateStatus } from '../../../store/userSlice';
 import { signIn } from '../../../store/authSlice';
 import { registerEmail, registerPassword } from '../../../utils/registersRHF';
-
 import styles from './Signin.module.scss';
 
 const Signin: React.FC = () => {
@@ -44,7 +49,7 @@ const Signin: React.FC = () => {
       localStorage.setItem('token', 'moc');
       return;
     }
-    
+
     dispatch(signIn({ email: userEmail, password: userPassword }))
       .then((res) => {
         if (res.meta.requestStatus === 'fulfilled') {
@@ -59,7 +64,7 @@ const Signin: React.FC = () => {
             openMessage({
               text: 'Неверная почта или пароль',
               isError: true,
-            }),
+            })
           );
         }
       })
@@ -92,10 +97,7 @@ const Signin: React.FC = () => {
         <InputField className='password'>
           <Label htmlFor='password'>
             Пароль
-            <TextUnderline
-              onClick={() => dispatch(openPopup(ResetPassword))}
-              className={styles.reset}
-            >
+            <TextUnderline onClick={() => dispatch(openPopup(ResetPassword))} className={styles.reset}>
               Забыли пароль?
             </TextUnderline>
           </Label>

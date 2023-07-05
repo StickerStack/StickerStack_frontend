@@ -6,11 +6,11 @@ import { ResetPasswordInfo } from '../ResetPasswordInfo/ResetPasswordInfo';
 import { InputField } from '../../UI/InputField/InputField';
 import { Label } from '../../UI/Label';
 import { InputError } from '../../UI/InputError/InputError';
+
 import { useAppDispatch } from '../../../hooks/hooks';
 import { forgotPassword } from '../../../store/authSlice';
 import { openPopup } from '../../../store/popupSlice';
 import { registerEmail } from '../../../utils/registersRHF';
-
 import styles from './ResetPassword.module.scss';
 
 const ResetPassword: React.FC = () => {

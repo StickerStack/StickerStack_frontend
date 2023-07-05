@@ -14,7 +14,7 @@ import styles from './Popup.module.scss';
 const Popup: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  const { popup, preview, info, isOpen } = useSelector((state: { popup: IPopupState }) => state.popup);
+  const { form, preview, info, isOpen } = useSelector((state: { popup: IPopupState }) => state.popup);
   
   useEffect(() => {
     const handleKeyDown = (evn: KeyboardEvent) => {
@@ -82,7 +82,7 @@ const Popup: React.FC = () => {
           >
             <div className={styles.container}>
               {
-                popup.isOpen ? <PopupForm /> :
+                form.isOpen ? <PopupForm /> :
                 preview.isOpen ? <PopupPreview /> :
                 info.isOpen ? <PopupInfo /> :
                 null

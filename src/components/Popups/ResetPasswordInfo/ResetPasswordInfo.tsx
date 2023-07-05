@@ -1,8 +1,8 @@
 import { ResetPassword } from '../..';
 import { TextUnderline, TextForm, TitlePopup } from '../../UI';
-import { useAppDispatch } from '../../../hooks/hooks';
 import { openPopup } from '../../../store/popupSlice';
 
+import { useAppDispatch } from '../../../hooks/hooks';
 import styles from './ResetPasswordInfo.module.scss';
 
 const ResetPasswordInfo: React.FC = () => {
