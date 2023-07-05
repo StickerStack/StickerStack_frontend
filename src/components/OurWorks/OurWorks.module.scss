@@ -1,0 +1,80 @@
+@import '../../utils/_scss-variables.scss';
+
+.container {
+  padding-bottom: calc(100vh / 9);
+  box-sizing: border-box;
+  @include flex(column, center, center);
+  gap: 25px;
+}
+
+.text {
+  margin: 0;
+  max-width: 730px;
+  text-align: center;
+  font-size: 16px;
+}
+
+.image {
+  width: 255px;
+  height: 212px;
+  border-radius: 15px;
+  margin: 0 auto;
+  object-fit: cover;
+  box-shadow: 3px 3px 10px 0px rgba(26, 50, 99, 0.2);
+
+  &_container {
+    width: 260px;
+    height: 226px;
+    margin: 0;
+  }
+}
+
+.prev_arrow {
+  transform: translate(1740%, 550%);
+  @media screen and (max-width: 1400px) {
+    transform: translate(1400%, 550%);
+  }
+  &::before {
+    background: url(../../images/icons/arrow-simple.svg) no-repeat center;
+    transform: rotate(180deg);
+  }
+}
+.next_arrow {
+  transform: translate(-65%, 550%);
+  &::before {
+    background: url(../../images/icons/arrow-simple.svg) no-repeat center;
+  }
+}
+
+.next_arrow,
+.prev_arrow {
+  width: 56px;
+  height: 24px;
+
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 56px;
+    height: 24px;
+    background-color: transparent;
+    opacity: 1;
+  }
+  &:hover::before {
+    opacity: 0.7;
+  }
+}
+
+.slider {
+  margin-top: 30px;
+  max-width: 1120px;
+  height: 313px;
+
+  @media screen and (max-width: 1400px) {
+    max-width: 920px;
+  }
+
+  & :global(:focus) {
+    outline: none;
+  }
+}

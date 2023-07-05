@@ -1,7 +1,9 @@
 @import '../../../utils/_scss-variables.scss';
 
-.profile {
+.main {
   padding-top: 80px;
+  padding-bottom: calc(100vh / 9);
+  background-color: $main-bg-color;
   flex: 1;
 
   &_container {
@@ -28,10 +30,11 @@
   background-size: contain;
   border: none;
   background-color: transparent;
-  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
 
   &_none {
-    visibility: hidden;
+    display: none;
   }
 }
 

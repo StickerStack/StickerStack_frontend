@@ -40,7 +40,7 @@ const Footer: React.FC = () => {
                 {email}
               </a>
             </li>
-            <li className={styles.item}>
+            <li className={styles.items}>
               <a href='#' className={styles.item}>
                 <InstSvg />
               </a>
@@ -54,10 +54,14 @@ const Footer: React.FC = () => {
           <h3 className={styles.title}>Правовая информация</h3>
           <ul className={styles.list}>
             <li className={styles.text}>
-              <TextUnderline type='link'>Публичная оферта</TextUnderline>
+              <TextUnderline theme='contrast' type='link'>
+                Публичная оферта
+              </TextUnderline>
             </li>
             <li className={styles.text}>
-              <TextUnderline type='link'>Пользовательское соглашение</TextUnderline>
+              <TextUnderline theme='contrast' type='link'>
+                Пользовательское соглашение
+              </TextUnderline>
             </li>
           </ul>
         </div>
