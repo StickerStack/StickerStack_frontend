@@ -8,48 +8,29 @@ import { PopupPreview } from '../Popups/PopupPreview/PopupPreview';
 import { ButtonCustom } from '../UI';
 import { IPopupState } from '../../interfaces/IPopupState';
 import { useAppDispatch } from '../../hooks/hooks';
-import { setFormIsOpen, setInfoIsOpen, setPreviewIsOpen } from '../../store/popupSlice';
+import { closePopup } from '../../store/popupSlice';
 import styles from './Popup.module.scss';
 
 const Popup: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  const popup = useSelector((state: { popup: IPopupState }) => state.popup);
-
-  const onClose = () => {
-    dispatch(setFormIsOpen(false));
-    dispatch(setPreviewIsOpen(false));
-    dispatch(
-      setInfoIsOpen({
-        infoIsOpen: false,
-        title: '',
-        text: '',
-        buttonText: '',
-      }),
-    );
-    if (localStorage.getItem('change-password-token')) {
-      localStorage.removeItem('change-password-token');
-    }
-    if (localStorage.getItem('email')) {
-      localStorage.removeItem('email');
-    }
-  };
-
+  const { form, preview, info, isOpen } = useSelector((state: { popup: IPopupState }) => state.popup);
+  
   useEffect(() => {
     const handleKeyDown = (evn: KeyboardEvent) => {
       if (evn.code === 'Escape') {
-        onClose();
+        dispatch(closePopup());
       }
     };
     document.addEventListener('keydown', handleKeyDown);
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-  }, []);
+  }, [dispatch]);
 
   return (
     <AnimatePresence>
-      {popup.isOpen && (
+      { isOpen && (
         <motion.div
           initial={{
             opacity: 0,
@@ -85,7 +66,7 @@ const Popup: React.FC = () => {
               },
             }}
             className={styles.background}
-            onClick={onClose}
+            onClick={() => dispatch(closePopup())}
           ></motion.div>
           <motion.div
             initial={{
@@ -100,18 +81,17 @@ const Popup: React.FC = () => {
             className={styles.popup}
           >
             <div className={styles.container}>
-              {popup.previewIsOpen ? (
-                <PopupPreview />
-              ) : popup.formIsOpen ? (
-                <PopupForm />
-              ) : popup.infoIsOpen ? (
-                <PopupInfo onClick={onClose} />
-              ) : null}
+              {
+                form.isOpen ? <PopupForm /> :
+                preview.isOpen ? <PopupPreview /> :
+                info.isOpen ? <PopupInfo /> :
+                null
+              }
               <ButtonCustom
                 className={styles.button}
                 type='close'
                 label='Закрыть'
-                onClick={onClose}
+                onClick={() => dispatch(closePopup())}
               />
             </div>
           </motion.div>

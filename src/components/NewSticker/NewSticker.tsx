@@ -3,14 +3,27 @@ import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 
-import { ButtonCustom, Error, Input, RadioButton, TooltipCustom, InputField, InputError } from '../UI';
+import {
+  ButtonCustom,
+  Error,
+  Input,
+  RadioButton,
+  TooltipCustom,
+  InputField,
+  InputError,
+} from '../UI';
 import { Shape } from '../Shape/Shape';
 import { DragAndDrop } from '../';
 import { useAppDispatch } from '../../hooks/hooks';
-import { deleteCard, removeBackground, updateCard } from '../../store/cardsSlice';
+import { deleteCard, removeBackground, updateAmount, updateShape } from '../../store/cardsSlice';
 import { ICard, ICardsState } from '../../interfaces';
 import { TCardShape } from '../../interfaces/ICard';
 import { registerAmount, registerSize } from '../../utils/registersRHF';
+import {
+  AMOUNT_INPUT_MAX_LENGTH,
+  AMOUNT_INPUT_MIN_LENGTH,
+  REG_STICKERS,
+} from '../../utils/constants';
 
 import { tooltipText } from '../../utils/texts';
 
@@ -23,18 +36,11 @@ interface IProps {
 const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
   const dispatch = useAppDispatch();
   const [customVisible, setCustomVisible] = useState<boolean>(false);
-  const [cardShape, setCardShape] = useState<TCardShape>('square');
+
   const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
-  const [amount, setAmount] = useState<number>(card.amount);
-  const [width, setWidth] = useState<number>();
-  const [height, setHeight] = useState<number>();
 
   const handleDelete = () => {
     dispatch(deleteCard(card.id));
-  };
-
-  const handleChange = (e: { target: { value: unknown } }) => {
-    setAmount(Number(e.target.value));
   };
 
   const {
@@ -42,21 +48,30 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
     formState: { errors },
   } = useForm<FieldValues>({
     mode: 'onBlur',
-    defaultValues: { size: 'optimal' },
+    defaultValues: { shape: card.shape, amount: card.amount, size: 'optimal' },
   });
 
-  const onShapeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCardShape(event.target.value as TCardShape);
-    const copyCard = { ...card };
-    copyCard.shape = event.target.value as TCardShape;
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const number = Number(e.target.value);
 
-    if ((event.target.value as TCardShape) === 'contour') {
+    if (
+      REG_STICKERS.test(number.toString()) &&
+      number <= AMOUNT_INPUT_MAX_LENGTH &&
+      number >= AMOUNT_INPUT_MIN_LENGTH
+    ) {
+      dispatch(updateAmount({ id: card.id, amount: number }));
+    }
+  };
+
+  const onShapeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const shape = event.target.value as TCardShape;
+
+    if ((shape as TCardShape) === 'contour') {
       const formData = new FormData();
       formData.append('file', card.image);
       dispatch(removeBackground({ data: formData, id: card.id }));
     }
-
-    dispatch(updateCard({ id: card.id, updatedCard: copyCard }));
+    dispatch(updateShape({ id: card.id, shape: shape }));
   };
 
   return (
@@ -69,32 +84,32 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
           <p className={styles.category}>Форма</p>
           <div className={styles.shapes}>
             <Shape
+              register={register}
+              name='shape'
               card={card}
-              shape='square'
-              shapeTitle='Квадрат'
+              value='square'
               onShapeChange={onShapeChange}
-              cardShape={cardShape}
             />
             <Shape
+              register={register}
+              name='shape'
               card={card}
-              shape='rounded-square'
-              shapeTitle='Закругленный квадрат'
+              value='rounded-square'
               onShapeChange={onShapeChange}
-              cardShape={cardShape}
             />
             <Shape
+              register={register}
+              name='shape'
               card={card}
-              shape='circle'
-              shapeTitle='Круг'
+              value='circle'
               onShapeChange={onShapeChange}
-              cardShape={cardShape}
             />
             <Shape
+              register={register}
+              name='shape'
               card={card}
-              shape='contour'
-              shapeTitle='По контуру'
+              value='contour'
               onShapeChange={onShapeChange}
-              cardShape={cardShape}
             />
           </div>
         </fieldset>
@@ -104,7 +119,17 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
               Количество стикеров
             </label>
             <div>
-              <Input className='amount' register={register} option={registerAmount} name='amount' />
+              <Input
+                className='amount'
+                register={register}
+                option={{
+                  ...registerAmount,
+                  onChange: (e) => {
+                    handleAmountChange(e);
+                  },
+                }}
+                name='amount'
+              />
               <Error className={styles.error}>{errors.amount && `${errors.amount?.message}`}</Error>
             </div>
           </div>
@@ -133,26 +158,26 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
               </RadioButton>
               <div className={cn(customVisible ? styles.visible : styles.hidden)}>
                 <InputField className='size'>
-                    <Input
-                      type='tel'
-                      className='size'
-                      register={register}
-                      option={registerSize}
-                      name='width'
-                      placeholder='ширина'
-                      error={errors.width}
-                    />
+                  <Input
+                    type='tel'
+                    className='size'
+                    register={register}
+                    option={registerSize}
+                    name='width'
+                    placeholder='ширина'
+                    error={errors.width}
+                  />
                   x
-                    <Input
-                      type='tel'
-                      className='size'
-                      register={register}
-                      option={registerSize}
-                      name='height'
-                      placeholder='высота'
-                      error={errors.height}
-                    />
-                    см
+                  <Input
+                    type='tel'
+                    className='size'
+                    register={register}
+                    option={registerSize}
+                    name='height'
+                    placeholder='высота'
+                    error={errors.height}
+                  />
+                  см
                   <InputError className='size' error={errors.width || errors.height} />
                 </InputField>
               </div>
@@ -171,7 +196,12 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
         </div>
       </form>
       {cards.length > 1 ? (
-        <ButtonCustom type='delete' className={styles.delete} label='Удалить' onClick={handleDelete} />
+        <ButtonCustom
+          type='delete'
+          className={styles.delete}
+          label='Удалить'
+          onClick={handleDelete}
+        />
       ) : null}
     </section>
   );

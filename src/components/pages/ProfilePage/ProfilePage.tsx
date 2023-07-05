@@ -9,8 +9,7 @@ import { sendVerificationCode } from '../../../store/authSlice';
 import { updateUser } from '../../../store/userSlice';
 import { profileName, registerEmail } from '../../../utils/registersRHF';
 import { ImagePick } from '../../ImagePick/ImagePick';
-import { ButtonWithText, Container, TextUnderline, TitlePage } from '../../UI';
-import { setMessageIsOpen } from '../../../store/popupSlice';
+import { ButtonWithText, Container, TitlePage } from '../../UI';
 import { InputWithButton } from '../../UI/InputWithButton/InputWithButton';
 import { InputField } from '../../UI/InputField/InputField';
 import { InputError } from '../../UI/InputError/InputError';
@@ -63,8 +62,7 @@ const ProfilePage: React.FC = () => {
   const lastname = watch(LASTNAME_INPUT_LABEL);
   const email = watch(EMAIL_INPUT_LABEL);
 
-  const fieldsUnchanged =
-    user.firstName === firstname && user.lastName === lastname && user.email === email;
+  const fieldsUnchanged = user.firstName === firstname && user.lastName === lastname && user.email === email;
   const validOrInvalid = isValid || !isValid;
 
   const onSubmit = () => {
@@ -74,10 +72,10 @@ const ProfilePage: React.FC = () => {
         email: email,
         firstName: firstname,
         lastName: lastname,
-      }),
+      })
     ).then((res) => {
       if (res.meta.requestStatus === 'fulfilled') {
-        dispatch(setMessageIsOpen({ message: 'Успешно изменено', messageIsOpen: true }));
+        dispatch(openMessage({ text: 'Успешно изменено', isError: false }));
         if (emailChanged) {
           dispatch(sendVerificationCode());
         }
@@ -85,11 +83,10 @@ const ProfilePage: React.FC = () => {
 
       if (res.meta.requestStatus === 'rejected') {
         dispatch(
-          setMessageIsOpen({
-            message: 'Ошибка. Информация профиля не изменана',
-            messageIsOpen: true,
-            messageIsError: true,
-          }),
+          openMessage({
+            text: 'Ошибка. Информация профиля не изменана',
+            isError: true,
+          })
         );
       }
     });

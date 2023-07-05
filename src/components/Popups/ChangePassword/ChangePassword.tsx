@@ -2,12 +2,17 @@ import { useEffect, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-import { InputWithButton } from '../../UI/InputWithButton/InputWithButton';
-import { InputError } from '../../UI/InputError/InputError';
-import { InputField } from '../../UI/InputField/InputField';
-import { Label } from '../../UI/Label';
-import { setInfoIsOpen, setMessageIsOpen } from '../../../store/popupSlice';
-import { ButtonWithText, TitlePopup, EyeButton } from '../../UI';
+import {
+  ButtonWithText,
+  TitlePopup,
+  EyeButton,
+  Label,
+  InputError,
+  InputWithButton,
+  InputField,
+} from '../../UI';
+
+import { closePopup, openInfo, openMessage } from '../../../store/popupSlice';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { resetPassword } from '../../../store/authSlice';
 import { registerPassword, registerRepeatPassword } from '../../../utils/registersRHF';
@@ -31,41 +36,33 @@ const ChangePassword: React.FC = () => {
   const [statePassword, setStatePasswod] = useState(false);
   const [stateRepeatPassword, setStateRepeatPassword] = useState(false);
 
-  const onSubmit = (data: FieldValues) => {
-    dispatch(resetPassword({ token: token, password: data.newPassword })).then((res) => {
+  const onSubmit = (formData: FieldValues) => {
+    dispatch(resetPassword({ token: token, password: formData.password })).then((res) => {
       if (res.meta.requestStatus === 'fulfilled') {
         navigate('/');
-        // dispatch(
-        //   setMessageIsOpen({
-        //     messageIsOpen: true,
-        //     message: 'Пароль успешно изменен',
-        //     messageIsError: false,
-        //   }),
-        // );
+
+        dispatch(closePopup());
         dispatch(
-          setInfoIsOpen({
-            infoIsOpen: true,
+          openInfo({
             title: 'Пароль изменён',
             text: 'Сделай свои вещи уникальными с помощью стикеров на виниловой пленке. ',
             buttonText: 'Начать!',
-          }),
+          })
         );
         localStorage.removeItem('change-password-token');
       } else if (res.meta.requestStatus === 'rejected' && res.payload === 422) {
         dispatch(
-          setMessageIsOpen({
-            messageIsOpen: true,
-            message: 'Новый пароль не должен совпадать со старым',
-            messageIsError: true,
-          }),
+          openMessage({
+            text: 'Новый пароль не должен совпадать со старым',
+            isError: true,
+          })
         );
       } else if (res.meta.requestStatus === 'rejected') {
         dispatch(
-          setMessageIsOpen({
-            messageIsOpen: true,
-            message: 'Ошибка при попытке сменить пароль',
-            messageIsError: true,
-          }),
+          openMessage({
+            text: 'Ошибка при попытке сменить пароль',
+            isError: true,
+          })
         );
       }
     });

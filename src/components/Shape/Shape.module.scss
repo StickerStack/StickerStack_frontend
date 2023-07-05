@@ -3,7 +3,7 @@
 .shape {
   width: 65px;
   height: 89px;
-  @include flex(column, start, center);
+  @include flex(column, flex-start, center);
   gap: 5px;
   cursor: pointer;
 

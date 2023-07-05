@@ -38,7 +38,7 @@
 }
 
 .item {
-  @include flex(row, start, center);
+  @include flex(row, flex-start, center);
   gap: 10px;
   color: $contrast-text-color;
   transition: color 0.3s, opacity 0.3s ease-in-out;

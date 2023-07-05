@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 
 import { useAppDispatch } from '../../../hooks/hooks';
 import { verifyEmail } from '../../../store/authSlice';
-import { setInfoIsOpen } from '../../../store/popupSlice';
+import { openInfo } from '../../../store/popupSlice';
 
 const VerifyEmail: React.FC = () => {
   const navigate = useNavigate();
@@ -16,8 +16,7 @@ const VerifyEmail: React.FC = () => {
         if (res.meta.requestStatus === 'fulfilled') {
           navigate('/profile');
           dispatch(
-            setInfoIsOpen({
-              infoIsOpen: true,
+            openInfo({
               title: 'Почта подтверждена',
               text: 'Сделай свои вещи уникальными с помощью стикеров на виниловой пленке. ',
               buttonText: 'Начать!',
