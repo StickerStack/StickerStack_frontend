@@ -21,10 +21,15 @@ const MessagePopup: React.FC = () => {
   };
 
   useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+
     if (message.isOpen) {
-      setTimeout(() => handleCloseMessage(), 2650);
+      timeoutId = setTimeout(() => handleCloseMessage(), 2650);
     }
 
+    return () => {
+      clearTimeout(timeoutId);
+    }
     // eslint-disable-next-line
   }, [message.isOpen]);
 
