@@ -6,8 +6,9 @@ import { ButtonWithText, Container } from '../../UI';
 import { useAppDispatch } from '../../../hooks/hooks';
 import MainPageImage from '../../../images/main-page-image.png';
 import { IUserState } from '../../../interfaces';
-import { setFormIsOpen } from '../../../store/popupSlice';
+import { openPopup } from '../../../store/popupSlice';
 import styles from './MainPage.module.scss';
+import { Signin } from '../../Popups/Signin/Signin';
 
 const MainPage: React.FC = () => {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ const MainPage: React.FC = () => {
     if (isLogged) {
       navigate('/add-stickers');
     } else {
-      dispatch(setFormIsOpen(true));
+      dispatch(openPopup(Signin));
     }
   };
 

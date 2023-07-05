@@ -20,7 +20,7 @@
 
 .text {
   margin: 0;
-  @include flex(row, start, center);
+  @include flex(row, flex-start, center);
   gap: 10px;
   font-weight: 400;
   font-size: 14px;
@@ -56,7 +56,7 @@
   position: relative;
   padding: 0;
   border: none;
-  @include flex(row, start, start);
+  @include flex(row, flex-start, flex-start);
   flex-wrap: wrap;
   gap: 20px;
 }
