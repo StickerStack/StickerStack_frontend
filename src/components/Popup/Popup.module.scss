@@ -22,3 +22,18 @@
     z-index: 4;
   }
 }
+
+.container {
+  padding: 70px 50px 50px;
+  box-sizing: border-box;
+  background-color: $popup-bg-color;
+  border-radius: 25px;
+
+  .button {
+    position: absolute;
+    right: 25px;
+    top: 25px;
+    width: 24px;
+    height: 24px;
+  }
+}

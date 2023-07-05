@@ -5,7 +5,7 @@ import {
   Header,
   MessagePopup,
   Popup,
-  ChangePassword,
+  ChangePasswordPage,
   MainPage,
   VerifyEmail,
   ProtectedRoute,
@@ -55,10 +55,7 @@ const App: React.FC = () => {
           <Header />
           <Routes>
             <Route path={VERIFY_EMAIL} element={<VerifyEmail />} />
-            <Route
-              path={VERIFY_FORGOT_PASSWORD}
-              element={<ChangePassword />}
-            />
+            <Route path={VERIFY_FORGOT_PASSWORD} element={<ChangePasswordPage />} />
             <Route
               path={ADD_STICKERS}
               element={

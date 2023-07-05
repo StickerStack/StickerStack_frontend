@@ -5,7 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAppDispatch } from '../../hooks/hooks';
 import { IUserState } from '../../interfaces';
-import { setIsOpen } from '../../store/popupSlice';
+import { openPopup } from '../../store/popupSlice';
 import { PAGE_404 } from '../../utils/constants';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 import { ProfileMenu } from '../ProfileMenu/ProfileMenu';
@@ -13,6 +13,7 @@ import { ButtonCustom, ButtonWithText, Container } from '../UI';
 
 import logo from '../../images/logo.svg';
 import styles from './Header.module.scss';
+import { Signin } from '../Popups/Signin/Signin';
 
 const Header: React.FC = () => {
   const isLogged = useSelector((state: { user: IUserState }) => state.user.isLogged);
@@ -86,7 +87,7 @@ const Header: React.FC = () => {
           <ButtonWithText
             type='button'
             theme='transparent'
-            onClick={() => dispatch(setIsOpen(true))}
+            onClick={() => dispatch(openPopup(Signin))}
           >
             Войти
           </ButtonWithText>

@@ -1,9 +1,0 @@
-@import '../../../utils/_scss-variables.scss';
-
-.title {
-  margin: 0;
-  padding: 0;
-  @include font(26px, 35px, 400);
-  text-align: center;
-  color: $main-text-color;
-}

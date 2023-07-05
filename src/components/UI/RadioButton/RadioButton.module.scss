@@ -3,7 +3,7 @@
 .label {
   margin: 0;
   min-width: max-content;
-  @include flex(row, start, start);
+  @include flex(row, flex-start, flex-start);
   gap: 10px;
   font-weight: 400;
   font-size: 14px;

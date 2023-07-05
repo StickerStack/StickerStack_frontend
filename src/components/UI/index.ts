@@ -4,7 +4,7 @@ export { TextUnderline } from './TextUnderline/TextUnderline';
 export { CheckBoxForm } from './CheckBoxForm/CheckBoxForm';
 export { EyeButton } from './EyeButton/EyeButton';
 export { TextForm } from './TextForm/TextForm';
-export { TitleForm } from './TitleForm/TitleForm';
+export { TitlePopup } from './TitlePopup/TitlePopup';
 export { TitlePage } from './TitlePage/TitlePage';
 export { Error } from './Error/Error';
 export { Input } from './Input/Input';

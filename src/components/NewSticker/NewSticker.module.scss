@@ -20,7 +20,7 @@
 
 .text {
   margin: 0;
-  @include flex(row, start, center);
+  @include flex(row, flex-start, center);
   gap: 10px;
   font-weight: 400;
   font-size: 14px;
@@ -56,7 +56,7 @@
   position: relative;
   padding: 0;
   border: none;
-  @include flex(row, start, start);
+  @include flex(row, flex-start, flex-start);
   flex-wrap: wrap;
   gap: 20px;
 }
@@ -73,35 +73,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: 23px;
-}
-
-.shape {
-  width: 65px;
-  height: 89px;
-  @include flex(column, start, center);
-  gap: 5px;
-  cursor: pointer;
-
-  &:hover .shape_pic {
-    background: #d9d9d9;
-  }
-}
-
-.shape_pic {
-  width: 56px;
-  height: 56px;
-  background: #f1f1f1;
-  color: $main-text-color;
-  border-radius: 10px;
-  @include flex(row, center, center);
-  transition: background-color 0.2s ease-in-out;
-}
-
-.shape_title {
-  display: block;
-  font-size: 12px;
-  line-height: 14px;
-  text-align: center;
 }
 
 .options {
@@ -136,7 +107,7 @@
   display: none;
 
   &:checked + label .shape_pic {
-    background: #d9d9d9;
+    background: $element-active-color;
   }
 }
 

@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { TCardShape } from '../interfaces/ICard';
 import { ICard, ICardsState } from '../interfaces';
 import { generateRandomNumber } from '../utils/generateRandomNumber';
-import { api } from '../utils/api';
+import { api } from '../utils/api/Api';
 
 const initialState: ICardsState = {
   cards: [
@@ -45,10 +46,33 @@ const cardsSlice = createSlice({
         state.cards[indexCard] = updatedCard;
       }
     },
-    updatePicture(state, action: { payload: { id: number; image: string }; type: string }) {
+    updateShape(state, action: { payload: { id: number; shape: TCardShape }; type: string }) {
+      const { id, shape } = action.payload;
+      const indexCard = state.cards.find((card) => card.id === id);
+
+      if (indexCard) {
+        indexCard.shape = shape;
+      }
+    },
+    updateAmount(state, action: { payload: { id: number; amount: number }; type: string }) {
+      const { id, amount } = action.payload;
+      const indexCard = state.cards.find((card) => card.id === id);
+
+      if (indexCard) {
+        indexCard.amount = amount;
+      }
+    },
+    updatePicture(
+      state,
+      action: {
+        payload: { id: number; image: string; size: { width: number; height: number } };
+        type: string;
+      },
+    ) {
       state.cards = state.cards.map((card) => {
         if (card.id === action.payload.id) {
           card.image = action.payload.image;
+          card.size = action.payload.size;
         }
         return card;
       });
@@ -67,6 +91,16 @@ const cardsSlice = createSlice({
 });
 
 const cardsSliceReducer = cardsSlice.reducer;
-const { addCard, deleteCard, updatePicture, updateCard } = cardsSlice.actions;
+const { addCard, deleteCard, updatePicture, updateCard, updateShape, updateAmount } =
+  cardsSlice.actions;
 
-export { cardsSliceReducer, addCard, deleteCard, updatePicture, removeBackground, updateCard };
+export {
+  cardsSliceReducer,
+  addCard,
+  deleteCard,
+  updatePicture,
+  updateShape,
+  updateAmount,
+  removeBackground,
+  updateCard,
+};

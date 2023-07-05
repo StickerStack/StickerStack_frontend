@@ -3,39 +3,34 @@ import { useSelector } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import { PopupForm } from '../';
-import { Preview } from '../Preview/Preview';
+import { PopupInfo } from '../Popups/PopupInfo/PopupInfo';
+import { PopupPreview } from '../Popups/PopupPreview/PopupPreview';
+import { ButtonCustom } from '../UI';
 import { IPopupState } from '../../interfaces/IPopupState';
 import { useAppDispatch } from '../../hooks/hooks';
-import { setIsOpen } from '../../store/popupSlice';
+import { closePopup } from '../../store/popupSlice';
 import styles from './Popup.module.scss';
 
 const Popup: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  const isOpen = useSelector((state: { popup: IPopupState }) => state.popup.isOpen);
-  const previewIsOpen = useSelector((state: { popup: IPopupState }) => state.popup.previewIsOpen);
-
-  const onClose = () => {
-    dispatch(setIsOpen(false));
-  };
-
+  const { form, preview, info, isOpen } = useSelector((state: { popup: IPopupState }) => state.popup);
+  
   useEffect(() => {
     const handleKeyDown = (evn: KeyboardEvent) => {
       if (evn.code === 'Escape') {
-        onClose();
+        dispatch(closePopup());
       }
     };
     document.addEventListener('keydown', handleKeyDown);
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-
-    // eslint-disable-next-line
-  }, []);
+  }, [dispatch]);
 
   return (
     <AnimatePresence>
-      {isOpen && (
+      { isOpen && (
         <motion.div
           initial={{
             opacity: 0,
@@ -71,7 +66,7 @@ const Popup: React.FC = () => {
               },
             }}
             className={styles.background}
-            onClick={onClose}
+            onClick={() => dispatch(closePopup())}
           ></motion.div>
           <motion.div
             initial={{
@@ -85,7 +80,20 @@ const Popup: React.FC = () => {
             }}
             className={styles.popup}
           >
-            {previewIsOpen ? <Preview onClose={onClose} /> : <PopupForm onClose={onClose} />}
+            <div className={styles.container}>
+              {
+                form.isOpen ? <PopupForm /> :
+                preview.isOpen ? <PopupPreview /> :
+                info.isOpen ? <PopupInfo /> :
+                null
+              }
+              <ButtonCustom
+                className={styles.button}
+                type='close'
+                label='Закрыть'
+                onClick={() => dispatch(closePopup())}
+              />
+            </div>
           </motion.div>
         </motion.div>
       )}

@@ -8,6 +8,7 @@ interface IProps {
   className?: string;
   theme?: ButtonTheme;
   type?: 'submit' | 'reset' | 'button';
+  color?: 'regular' | 'contrast';
   disabled?: boolean;
   onClick?: () => void;
 }
@@ -15,6 +16,7 @@ interface IProps {
 const ButtonWithText: React.FC<IProps> = ({
   children,
   theme = 'filled',
+  color = 'regular',
   className,
   type,
   disabled,
@@ -22,7 +24,7 @@ const ButtonWithText: React.FC<IProps> = ({
 }: IProps) => {
   return (
     <button
-      className={cn(styles.button, styles[`button_${theme}`], className)}
+      className={cn(styles.button, styles[`button_${theme}`], styles[`button_${color}`], className)}
       onClick={onClick}
       type={type}
       disabled={disabled}
