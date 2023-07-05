@@ -18,7 +18,10 @@ const PopupInfo: React.FC = () => {
       <img className={styles.image} src={logo} alt='Декоративное изображение' />
       <TitlePopup>{info.title}</TitlePopup>
       <TextForm>{info.text}</TextForm>
-      <ButtonWithText onClick={() => dispatch(closePopup())}>{info.buttonText}</ButtonWithText>
+      <ButtonWithText onClick={() => dispatch(() => {
+        localStorage.removeItem('email');
+        closePopup();
+        })}>{info.buttonText}</ButtonWithText>
     </div>
   );
 };

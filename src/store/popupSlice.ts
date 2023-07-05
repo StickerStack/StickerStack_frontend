@@ -56,13 +56,6 @@ const popupSlice = createSlice({
       state.info.text = '';
       state.info.buttonText = '';
 
-      if (localStorage.getItem('change-password-token')) {
-        localStorage.removeItem('change-password-token');
-      }
-      if (localStorage.getItem('email')) {
-        localStorage.removeItem('email');
-      }
-
       state.isOpen = false;
     },
 
