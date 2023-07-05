@@ -1,16 +1,12 @@
-import { useState } from 'react';
 import cn from 'classnames';
 
-import { ButtonWithText, TitlePage } from '../UI';
-
-import styles from './FAQ.module.scss';
+import { Container, TitlePage } from '../UI';
 import { Dropdown } from '../Dropdown/Dropdown';
 
+import styles from './FAQ.module.scss';
+
 interface IProps {
-  image?: string | ArrayBuffer | null;
   className?: string;
-  onLoadImage?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  deleteImage?: () => void;
 }
 
 const questions = [
@@ -51,15 +47,20 @@ const questions = [
   },
 ];
 
-const FAQ: React.FC<IProps> = ({ image, className, onLoadImage, deleteImage }: IProps) => {
+const FAQ: React.FC<IProps> = ({ className }: IProps) => {
   return (
-    <ul className={cn(styles.container, className)}>
-      {questions.map((item) => (
-        <li key={item.id}>
-          <Dropdown heading={item.question} content={item.answer} id={item.id} />
-        </li>
-      ))}
-    </ul>
+    <Container className={styles.container}>
+      <TitlePage type='section-title' className={styles.title}>
+        Часто задаваемые вопросы
+      </TitlePage>
+      <ul className={styles.list}>
+        {questions.map((item) => (
+          <li key={item.id}>
+            <Dropdown heading={item.question} content={item.answer} id={item.id} />
+          </li>
+        ))}
+      </ul>
+    </Container>
   );
 };
 

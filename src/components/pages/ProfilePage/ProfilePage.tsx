@@ -6,11 +6,11 @@ import cn from 'classnames';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { IUserState } from '../../../interfaces';
 import { sendVerificationCode } from '../../../store/authSlice';
+import { openMessage } from '../../../store/popupSlice';
 import { updateUser } from '../../../store/userSlice';
 import { profileName, registerEmail } from '../../../utils/registersRHF';
 import { ImagePick } from '../../ImagePick/ImagePick';
-import { ButtonWithText, Container, TitlePage } from '../../UI';
-import { openMessage } from '../../../store/popupSlice';
+import { ButtonWithText, Container, TextUnderline, TitlePage } from '../../UI';
 import { InputWithButton } from '../../UI/InputWithButton/InputWithButton';
 import { InputField } from '../../UI/InputField/InputField';
 import { InputError } from '../../UI/InputError/InputError';
@@ -63,7 +63,8 @@ const ProfilePage: React.FC = () => {
   const lastname = watch(LASTNAME_INPUT_LABEL);
   const email = watch(EMAIL_INPUT_LABEL);
 
-  const fieldsUnchanged = user.firstName === firstname && user.lastName === lastname && user.email === email;
+  const fieldsUnchanged =
+    user.firstName === firstname && user.lastName === lastname && user.email === email;
   const validOrInvalid = isValid || !isValid;
 
   const onSubmit = () => {
@@ -73,7 +74,7 @@ const ProfilePage: React.FC = () => {
         email: email,
         firstName: firstname,
         lastName: lastname,
-      })
+      }),
     ).then((res) => {
       if (res.meta.requestStatus === 'fulfilled') {
         dispatch(openMessage({ text: 'Успешно изменено', isError: false }));
@@ -87,7 +88,7 @@ const ProfilePage: React.FC = () => {
           openMessage({
             text: 'Ошибка. Информация профиля не изменана',
             isError: true,
-          })
+          }),
         );
       }
     });
@@ -171,14 +172,13 @@ const ProfilePage: React.FC = () => {
             </form>
             {!user.isVerified && (
               <>
-                <p>Не пришло письмо подтверждения электронной почты? Жми кнопку!</p>
-                <ButtonWithText
-                  className={styles.button}
-                  theme='transparent'
+                <p>Не пришло письмо подтверждения электронной почты?</p>
+                <TextUnderline
+                  className={styles.underline}
                   onClick={() => dispatch(sendVerificationCode())}
                 >
                   Выслать повторно
-                </ButtonWithText>
+                </TextUnderline>
               </>
             )}
           </div>
