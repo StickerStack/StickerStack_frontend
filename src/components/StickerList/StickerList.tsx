@@ -16,11 +16,31 @@ const StickerList: React.FC = () => {
           if (card.amount > 1) {
             const elements: JSX.Element[] = [];
             for (let i = 1; i <= card.amount; i++) {
-              elements.push(<img className={cn(styles.image, styles[`image_${card.shape}`])} key={card.id + i} src={card.image} />);
+              elements.push(
+                <img
+                  className={cn(styles.image, styles[`image_${card.shape}`])}
+                  style={{
+                    width: `${card.size.width}px`,
+                    height: `${card.size.height}px`
+                  }}
+                  key={card.id + i}
+                  src={card.image}
+                />
+              );
             }
             return elements;
           }
-        return <img className={cn(styles.image, styles[`image_${card.shape}`])} key={card.id} src={card.image} />;
+        return (
+          <img
+            className={cn(styles.image, styles[`image_${card.shape}`])}
+            key={card.id}
+            src={card.image}
+            style={{
+              width: `${card.size.width}px`,
+              height: `${card.size.height}px`
+            }}
+          />
+        );
       })}
     </div>
   );

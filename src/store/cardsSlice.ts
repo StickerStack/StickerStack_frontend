@@ -100,7 +100,7 @@ const cardsSlice = createSlice({
 });
 
 const cardsSliceReducer = cardsSlice.reducer;
-const { addCard, deleteCard, updatePicture, updateCard, updateShape, updateAmount } =
+const { addCard, deleteCard, updatePicture, updateCard, updateShape, updateAmount, updateSize } =
   cardsSlice.actions;
 
 export {
@@ -112,4 +112,5 @@ export {
   updateAmount,
   removeBackground,
   updateCard,
+  updateSize,
 };
