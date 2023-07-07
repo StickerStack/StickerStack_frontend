@@ -58,7 +58,7 @@ const AddStickers: React.FC = () => {
               type='button'
               className={styles.preview}
               onClick={() => {
-                calculateStickerOnList(cards);
+                console.log(calculateStickerOnList(cards));
               }}
             >
               Рассчитать стоимость
@@ -79,8 +79,6 @@ const AddStickers: React.FC = () => {
               Вырезать стикеры по контуру
             </RadioButton>
           </div>
-
-          <div className='preview'></div>
         </section>
       </Container>
     </main>

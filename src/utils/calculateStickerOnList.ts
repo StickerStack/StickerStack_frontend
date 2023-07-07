@@ -67,11 +67,9 @@ export const calculateStickerOnList = (arr: ICard[]): ICard[] => {
         document.body.removeChild(document.body.querySelector('.listCalculate') as HTMLDivElement);
 
         if (sortedArray.length === 1) {
-          console.log([objCopy])
           return [objCopy];
         }
 
-        console.log([objCopy, ...sortedArray.slice(i + 1, sortedArray.length)])
         return [objCopy, ...sortedArray.slice(i + 1, sortedArray.length)];
       }
 
