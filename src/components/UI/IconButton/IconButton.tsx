@@ -1,6 +1,6 @@
 import cn from 'classnames';
 
-import { TIconFileNames, TIconFiles } from "../../../types/TIcon";
+import { TIconFileNames, TIconFiles } from '../../../types/TIcon';
 
 import clearIcon from '../../../images/icons/clear-field.svg';
 import passwordHidden from '../../../images/icons/password-hidden.svg';
@@ -14,7 +14,7 @@ const icons: TIconFiles = {
   'password-hidden.svg': passwordHidden,
   'password-shown.svg': passwordShown,
   'tooltip-icon.svg': tooltipIcon,
-}
+};
 
 interface IProps {
   visible: boolean;
@@ -24,13 +24,19 @@ interface IProps {
   onMouseEnter?: () => void;
 }
 
-const IconButton: React.FC<IProps> = ({ onClick, onMouseEnter, visible, icon, className }: IProps) => {
+const IconButton: React.FC<IProps> = ({
+  onClick,
+  onMouseEnter,
+  visible,
+  icon,
+  className,
+}: IProps) => {
   return (
     <button
       type='button'
-      className={ cn( styles.button, { [styles.hidden]: !visible}, className ) }
+      className={cn(styles.button, { [styles.hidden]: !visible }, className)}
       style={{
-        backgroundImage: `url(${icons[icon]})`
+        backgroundImage: `url(${icons[icon]})`,
       }}
       onClick={onClick}
       onMouseEnter={onMouseEnter}

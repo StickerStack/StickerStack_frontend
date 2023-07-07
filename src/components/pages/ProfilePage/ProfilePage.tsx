@@ -6,11 +6,11 @@ import cn from 'classnames';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { IUserState } from '../../../interfaces';
 import { sendVerificationCode } from '../../../store/authSlice';
+import { openMessage } from '../../../store/popupSlice';
 import { updateUser } from '../../../store/userSlice';
 import { profileName, registerEmail } from '../../../utils/registersRHF';
 import { ImagePick } from '../../ImagePick/ImagePick';
-import { ButtonWithText, Container, Input, TitlePage } from '../../UI';
-import { setMessageIsOpen } from '../../../store/popupSlice';
+import { ButtonWithText, Container, TextUnderline, TitlePage } from '../../UI';
 import { InputWithButton } from '../../UI/InputWithButton/InputWithButton';
 import { InputField } from '../../UI/InputField/InputField';
 import { InputError } from '../../UI/InputError/InputError';
@@ -77,7 +77,7 @@ const ProfilePage: React.FC = () => {
       }),
     ).then((res) => {
       if (res.meta.requestStatus === 'fulfilled') {
-        dispatch(setMessageIsOpen({ message: 'Успешно изменено', messageIsOpen: true }));
+        dispatch(openMessage({ text: 'Успешно изменено', isError: false }));
         if (emailChanged) {
           dispatch(sendVerificationCode());
         }
@@ -85,10 +85,9 @@ const ProfilePage: React.FC = () => {
 
       if (res.meta.requestStatus === 'rejected') {
         dispatch(
-          setMessageIsOpen({
-            message: 'Ошибка. Информация профиля не изменана',
-            messageIsOpen: true,
-            messageIsError: true,
+          openMessage({
+            text: 'Ошибка. Информация профиля не изменана',
+            isError: true,
           }),
         );
       }
@@ -98,7 +97,7 @@ const ProfilePage: React.FC = () => {
   return (
     <main className={styles.profile}>
       <Container className={styles.profile_container}>
-        <TitlePage>Мои данные</TitlePage>
+        <TitlePage type='main-title'>Мои данные</TitlePage>
         <section className={styles.section}>
           <ImagePick image={EmptyAvatarImage} />
           <div className={styles.profile_data}>
@@ -173,14 +172,13 @@ const ProfilePage: React.FC = () => {
             </form>
             {!user.isVerified && (
               <>
-                <p>Не пришло письмо подтверждения электронной почты? Жми кнопку!</p>
-                <ButtonWithText
-                  className={styles.button}
-                  theme='transparent'
+                <p>Не пришло письмо подтверждения электронной почты?</p>
+                <TextUnderline
+                  className={styles.underline}
                   onClick={() => dispatch(sendVerificationCode())}
                 >
                   Выслать повторно
-                </ButtonWithText>
+                </TextUnderline>
               </>
             )}
           </div>

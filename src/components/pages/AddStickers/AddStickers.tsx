@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import { RadioButton, TextUnderline, ButtonWithText, TitlePage, Container } from '../../UI';
 import { NewSticker } from '../../index';
-import { setPreviewIsOpen } from '../../../store/popupSlice';
+import { openPreview } from '../../../store/popupSlice';
 import { pages, pagePrice } from '../../../utils/constants';
 import { ICardsState } from '../../../interfaces';
 import { addCard } from '../../../store/cardsSlice';
@@ -34,7 +34,7 @@ const AddStickers: React.FC = () => {
   return (
     <main>
       <Container className={styles.container}>
-        <TitlePage>Заказать стикеры</TitlePage>
+        <TitlePage type='main-title'>Заказать стикеры</TitlePage>
         {cards.map((card) => (
           <NewSticker key={card.id} card={card} />
         ))}
@@ -50,7 +50,7 @@ const AddStickers: React.FC = () => {
             <TextUnderline
               type='button'
               className={styles.preview}
-              onClick={() => dispatch(setPreviewIsOpen(true))}
+              onClick={() => dispatch(openPreview())}
             >
               Предпросмотр страницы
             </TextUnderline>

@@ -2,22 +2,24 @@
 
 .container {
   padding-top: 80px;
+  padding-bottom: 60px;
+  background-color: $main-bg-color;
   flex: 1;
   text-align: left;
-  @include flex(column, center, start);
+  @include flex(column, center, flex-start);
   gap: 30px;
 }
 
 .info {
   margin-top: 26px;
-  @include flex(row, start, start);
+  @include flex(row, flex-start, flex-start);
   column-gap: 132px;
   row-gap: 35px;
   flex-wrap: wrap;
 }
 
 .flex {
-  @include flex(row, center, start);
+  @include flex(row, center, flex-start);
   gap: 25px;
 }
 
@@ -50,7 +52,7 @@
 .price_small {
   font-size: 10px;
   line-height: 12px;
-  color: #929292;
+  color: $placeholder-text-color;
 }
 
 .preview {
@@ -61,6 +63,6 @@
 }
 
 .options {
-  @include flex(column, center, start);
+  @include flex(column, center, flex-start);
   gap: 17px;
 }

@@ -1,8 +1,8 @@
 import Slider from 'react-slick';
 
 import { StickerList } from '../../StickerList/StickerList';
-import { settings } from './settings';
 
+import { settings } from './settings';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import styles from './PopupPreview.module.scss';
