@@ -3,7 +3,6 @@ import { ICard } from "../interfaces";
 
 const sortArrayICard = (arr: Array<ICard>): Array<ICard> => {
   return [...arr].sort((card1, card2) => {
-    console.log(card1, card2)
     const card1Area = card1.size.width * card1.size.height;
     const card2Area = card2.size.width * card2.size.height;
 
