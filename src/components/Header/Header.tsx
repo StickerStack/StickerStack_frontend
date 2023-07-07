@@ -4,8 +4,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAppDispatch } from '../../hooks/hooks';
-import { IUserState } from '../../interfaces';
-import { setIsOpen } from '../../store/popupSlice';
+import { ICardsState, IUserState } from '../../interfaces';
+import { openPopup } from '../../store/popupSlice';
 import { CART, PAGE_404 } from '../../utils/constants';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 import { ProfileMenu } from '../ProfileMenu/ProfileMenu';
@@ -13,6 +13,7 @@ import { ButtonCustom, ButtonWithText, Container } from '../UI';
 
 import logo from '../../images/logo.svg';
 import styles from './Header.module.scss';
+import { Signin } from '../Popups/Signin/Signin';
 
 const Header: React.FC = () => {
   const isLogged = useSelector((state: { user: IUserState }) => state.user.isLogged);
@@ -20,6 +21,7 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [isMenuShow, setIsMenuShow] = useState(false);
+  const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
 
   useEffect(() => {
     setIsMenuShow(false);
@@ -61,7 +63,7 @@ const Header: React.FC = () => {
               }}
               animate={{
                 transition: {
-                  duration: 0.4,
+                  duration: 0.3,
                 },
                 opacity: 1,
               }}
@@ -78,12 +80,11 @@ const Header: React.FC = () => {
         </AnimatePresence>
         {isLogged ? (
           <div className={styles.buttons}>
-            <ButtonCustom
-              className={styles.profile}
-              type='cart'
-              label='Перейти в корзину'
-              onClick={() => navigate(CART)}
-            />
+            <div className={styles.cart} onClick={() => navigate(CART)}>
+              {cards.length > 0 && <div className={styles.badge}>{cards.length}</div>}
+              <ButtonCustom type='cart' label='Перейти в корзину' onClick={() => navigate(CART)} />
+            </div>
+
             <ButtonCustom
               className={styles.profile}
               type='person'
@@ -95,7 +96,7 @@ const Header: React.FC = () => {
           <ButtonWithText
             type='button'
             theme='transparent'
-            onClick={() => dispatch(setIsOpen(true))}
+            onClick={() => dispatch(openPopup(Signin))}
           >
             Войти
           </ButtonWithText>

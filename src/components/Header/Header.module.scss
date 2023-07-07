@@ -1,19 +1,19 @@
 @import '../../utils/_scss-variables.scss';
 
 .header {
-  height: 96px;
-  margin-top: 32px;
+  height: 114px;
   top: 0;
   position: sticky;
-  z-index: 2;
+  z-index: 4;
 
   &_container {
     @include flex(row, space-between, center);
+    position: relative;
   }
 
   .logo {
     text-decoration: none;
-    color: $main-text-color;
+    color: $secondary-text-color;
     font-family: 'Nunito';
     font-weight: 700;
     font-size: 24px;
@@ -30,8 +30,29 @@
 
   .buttons {
     display: flex;
-    align-items: center;
     gap: 25px;
+  }
+
+  .cart {
+    position: relative;
+    height: fit-content;
+    cursor: pointer;
+  }
+
+  .badge {
+    position: absolute;
+    background-color: $contrast-color;
+    bottom: 4px;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    font-size: 13px;
+    text-align: center;
+    font-weight: 500;
+    line-height: 128.7%;
+    color: $contrast-text-color;
+    z-index: 6;
   }
 }
 

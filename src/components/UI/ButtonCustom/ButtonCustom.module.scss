@@ -29,14 +29,14 @@
 }
 
 .button_person {
-  width: 26px;
-  height: 26px;
+  width: 32px;
+  height: 32px;
   background-image: url(../../../images/icons/profile-icon.svg);
 }
 
 .button_cart {
-  width: 26px;
-  height: 26px;
+  width: 32px;
+  height: 32px;
   background-image: url(../../../images/icons/cart.svg);
 }
 
@@ -44,4 +44,14 @@
   width: 24px;
   height: 24px;
   background-image: url(../../../images/icons/bin.svg);
+}
+
+.button_arrow {
+  width: 32px;
+  height: 32px;
+  background-color: $element-active-color;
+  border-radius: 50%;
+  background-image: url(../../../images/icons/arrow-small.svg);
+  background-size: auto;
+  transform: rotate(1deg);
 }

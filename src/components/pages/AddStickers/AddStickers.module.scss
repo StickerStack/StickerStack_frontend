@@ -1,11 +1,16 @@
 @import '../../../utils/_scss-variables.scss';
 
-.container {
-  padding-top: 80px;
+.add {
   flex: 1;
-  text-align: left;
-  @include flex(column, center, start);
-  gap: 30px;
+
+  &_container {
+    padding-top: 80px;
+    padding-bottom: calc(100vh / 7);
+    background-color: $main-bg-color;
+    text-align: left;
+    @include flex(column, center, flex-start);
+    gap: 30px;
+  }
 }
 
 .cards {
@@ -21,14 +26,14 @@
 
 .info {
   margin-top: 26px;
-  @include flex(row, start, start);
+  @include flex(row, flex-start, flex-start);
   column-gap: 132px;
   row-gap: 35px;
   flex-wrap: wrap;
 }
 
 .flex {
-  @include flex(row, center, start);
+  @include flex(row, center, flex-start);
   gap: 25px;
 }
 
@@ -42,7 +47,7 @@
 .amount {
   padding: 8px 25px;
   box-sizing: border-box;
-  background: #f1f1f1;
+  background: $element-color;
   border-radius: 10px;
   text-align: center;
 }
@@ -61,7 +66,7 @@
 .price_small {
   font-size: 10px;
   line-height: 12px;
-  color: #929292;
+  color: $placeholder-text-color;
 }
 
 .preview {
@@ -72,6 +77,10 @@
 }
 
 .options {
-  @include flex(column, center, start);
+  @include flex(column, center, flex-start);
   gap: 17px;
+}
+
+.button {
+  margin: 0 auto;
 }

@@ -2,6 +2,7 @@
 .tooltip {
   position: relative;
   display: inline-flex;
+  z-index: 2;
 }
 
 .container {
@@ -28,4 +29,14 @@
 .icon {
   width: 19px;
   height: 19px;
+  border-radius: 50%;
+  padding: 2px;
+  box-sizing: border-box;
+  font-size: 11px;
+  color: $main-text-color;
+  text-align: center;
+  background-color: $element-color;
+  &:hover {
+    background-color: $element-active-color;
+  }
 }

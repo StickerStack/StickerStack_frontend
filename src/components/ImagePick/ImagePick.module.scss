@@ -6,11 +6,11 @@
   width: 255px;
   min-width: 255px;
   height: 262px;
-  border-radius: 10px;
   overflow: hidden;
-  background-color: #f1f1f1;
+  background-color: transparent;
 
   &:hover .overlay {
+    border-radius: 0 0 10px 10px;
     height: 74px;
     padding: 14px;
     opacity: 1;
@@ -21,6 +21,14 @@
   object-fit: cover;
   width: 100%;
   height: 100%;
+
+  &_rounded-square {
+    border-radius: 10px;
+  }
+
+  &_circle {
+    border-radius: 50%;
+  }
 }
 
 .overlay {
@@ -40,6 +48,7 @@
   width: 245px;
   height: 32px;
   padding: 8px 10px;
+  font-size: 14px;
   box-sizing: border-box;
   color: white;
   gap: 15px;

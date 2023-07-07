@@ -4,6 +4,8 @@ import { ImagePick } from '../ImagePick/ImagePick';
 import { ICard } from '../../interfaces';
 import { useAppDispatch } from '../../hooks/hooks';
 import { updatePicture } from '../../store/cardsSlice';
+import { converter } from '../../utils/converter';
+
 import styles from './DragAndDrop.module.scss';
 
 interface IProps {
@@ -39,8 +41,23 @@ const DragAndDrop: React.FC<IProps> = ({ card, onLoad }: IProps) => {
         };
         setImageFile(file);
 
-        if (typeof file.urlFilePreview === 'string') {
-          dispatch(updatePicture({ id: card.id, image: file.urlFilePreview }));
+        if (typeof reader.result === 'string') {
+          const image = new Image();
+          image.src = reader.result;
+          image.onload = () => {
+            if (typeof file.urlFilePreview === 'string') {
+              dispatch(
+                updatePicture({
+                  id: card.id,
+                  image: file.urlFilePreview,
+                  size: {
+                    width: +converter.pxToCm(image.naturalWidth).toFixed(1),
+                    height: +converter.pxToCm(image.naturalHeight).toFixed(1),
+                  },
+                }),
+              );
+            }
+          };
         }
       };
     }
@@ -56,12 +73,14 @@ const DragAndDrop: React.FC<IProps> = ({ card, onLoad }: IProps) => {
           onLoadImage={handleImageChange}
           deleteImage={() => setImageFile(null)}
           image={card.image}
+          shape={card.shape}
         />
       ) : imageFile ? (
         <ImagePick
           onLoadImage={handleImageChange}
           deleteImage={() => setImageFile(null)}
           image={imageFile.urlFilePreview}
+          shape={card.shape}
         />
       ) : (
         <div className={styles.dnd}>

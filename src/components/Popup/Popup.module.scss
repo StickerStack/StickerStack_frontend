@@ -5,7 +5,7 @@
   top: 0;
   left: 0;
   @include flex(column, center, center);
-  z-index: 3;
+  z-index: 4;
   width: 100vw;
   height: 100vh;
 
@@ -20,5 +20,20 @@
   .popup {
     position: relative;
     z-index: 4;
+  }
+}
+
+.container {
+  padding: 70px 50px 50px;
+  box-sizing: border-box;
+  background-color: $popup-bg-color;
+  border-radius: 25px;
+
+  .button {
+    position: absolute;
+    right: 25px;
+    top: 25px;
+    width: 24px;
+    height: 24px;
   }
 }

@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Sticker } from '../../Sticker/Sticker';
 import { RadioButton, TextUnderline, ButtonWithText, TitlePage, Container } from '../../UI';
 import { NewSticker } from '../../index';
-import { setPreviewIsOpen } from '../../../store/popupSlice';
+import { openPreview } from '../../../store/popupSlice';
 import { pages, pagePrice, CART } from '../../../utils/constants';
 import { ICardsState } from '../../../interfaces';
 import { addCard, setActive } from '../../../store/cardsSlice';
@@ -37,9 +37,9 @@ const AddStickers: React.FC = () => {
   };
 
   return (
-    <main>
-      <Container className={styles.container}>
-        <TitlePage>Заказать стикеры</TitlePage>
+    <main className={styles.add}>
+      <Container className={styles.add_container}>
+        <TitlePage type='main-title'>Заказать стикеры</TitlePage>
         <div className={styles.cards}>
           {cards.map((card) => (
             <AnimatePresence key={card.id}>
@@ -106,13 +106,13 @@ const AddStickers: React.FC = () => {
         <section className={styles.info}>
           <div className={styles.info_pages}>
             <div className={styles.flex}>
-              <span className={styles.text}>Количество листов А4</span>
+              <span className={styles.text}>Количество листов</span>
               <span className={styles.amount}>{pages.length}</span>
             </div>
             <TextUnderline
               type='button'
               className={styles.preview}
-              onClick={() => dispatch(setPreviewIsOpen(true))}
+              onClick={() => dispatch(openPreview())}
             >
               Предпросмотр страницы
             </TextUnderline>
@@ -133,8 +133,8 @@ const AddStickers: React.FC = () => {
             </RadioButton>
           </div>
         </section>
-        <ButtonWithText theme='filled' onClick={() => navigate(CART)}>
-          Добавить в корзину
+        <ButtonWithText theme='filled' className={styles.button} onClick={() => navigate(CART)}>
+          Перейти в корзину
         </ButtonWithText>
       </Container>
     </main>

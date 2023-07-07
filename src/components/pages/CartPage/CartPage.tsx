@@ -1,23 +1,12 @@
+import cn from 'classnames';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import {
-  RadioButton,
-  TextUnderline,
-  ButtonWithText,
-  TitlePage,
-  Container,
-  TextForm,
-} from '../../UI';
-import { NewSticker } from '../../index';
-import { setPreviewIsOpen } from '../../../store/popupSlice';
-import { pages, pagePrice, CART } from '../../../utils/constants';
+import { TitlePage, Container, ButtonWithText, TextUnderline } from '../../UI';
+import { ADD_STICKERS } from '../../../utils/constants';
 import { Sticker } from '../../Sticker/Sticker';
-import { CartState } from '../../../interfaces/CartState';
-import { ICard, ICardsState } from '../../../interfaces';
-import { addCard } from '../../../store/cardsSlice';
-import { generateRandomNumber } from '../../../utils/generateRandomNumber';
+import { ICardsState, CartState } from '../../../interfaces';
 
 import styles from './CartPage.module.scss';
 
@@ -26,19 +15,34 @@ const CartPage: React.FC = () => {
   const navigate = useNavigate();
 
   const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
-  const items = useSelector((state: { items: CartState }) => state.items.items);
+  // const items = useSelector((state: { items: CartState }) => state.items.items);
 
   return (
-    <main>
-      <Container className={styles.container}>
-        <TitlePage>Корзина</TitlePage>
-        <div className={styles.cards}>
-          {items.length === 0 ? (
-            <TextForm>Ваша корзина пуста</TextForm>
-          ) : (
-            cards.map((card) => <Sticker key={card.id} card={card} />)
-          )}
-        </div>
+    <main className={styles.cart}>
+      <Container className={styles.cart_container}>
+        <TitlePage type='main-title'>Корзина</TitlePage>
+        {cards.length === 0 ? (
+          <div className={styles.box}>
+            <span className={styles.text}>Ваша корзина пуста</span>
+            <ButtonWithText color='contrast' onClick={() => navigate(ADD_STICKERS)}>
+              Заказать стикеры
+            </ButtonWithText>
+          </div>
+        ) : (
+          <div className={styles.flex}>
+            <div className={cn(styles.banner, styles.cards)}>
+              {cards.map((card) => (
+                <Sticker key={card.id} card={card} />
+              ))}
+            </div>
+            <div className={cn(styles.banner, styles.info)}>
+              <TextUnderline onClick={() => navigate(ADD_STICKERS)}>
+                Вернуться к заказу
+              </TextUnderline>
+              <ButtonWithText>Оплатить заказ</ButtonWithText>
+            </div>
+          </div>
+        )}
       </Container>
     </main>
   );

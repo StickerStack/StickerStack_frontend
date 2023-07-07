@@ -1,26 +1,17 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { ICard } from '../interfaces';
-import { generateRandomNumber } from '../utils/generateRandomNumber';
+import { createSlice } from '@reduxjs/toolkit';
 import { CartState } from '../interfaces/CartState';
+import { ICard } from '../interfaces';
 
 const initialState: CartState = {
-  items: [
-    {
-      image: '',
-      shape: 'rounded-square',
-      amount: 5,
-      size: { width: 5, height: 5 },
-      id: generateRandomNumber(),
-    },
-  ],
+  items: [],
 };
 
 const cartSlice = createSlice({
   name: 'cartSlice',
   initialState,
   reducers: {
-    addItems(state, action: { payload: ICard; type: string }) {
-      state.items.push({ ...action.payload });
+    addItems(state, action: { payload: Array<ICard>; type: string }) {
+      state.items.push(...action.payload);
     },
     addItem(state, action: { payload: ICard; type: string }) {
       state.items.push({ ...action.payload });

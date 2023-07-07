@@ -1,5 +1,5 @@
-import { ICard } from './';
+import { CartItem } from './';
 
 export interface CartState {
-  items: Array<ICard>;
+  items: Array<CartItem>;
 }

@@ -1,11 +1,13 @@
 @import '../../../utils/_scss-variables.scss';
 
 .button {
+  width: fit-content;
+  margin: 0 auto;
   background-color: transparent;
   padding: 0;
   border: none;
   color: $main-text-color;
-  @include font(16px, 19px, 400);
+  @include font(16px, 19px, 500);
   cursor: pointer;
 }
 
@@ -25,6 +27,13 @@
     transition: width 0.3s;
   }
 
+  &_contrast {
+    color: $contrast-text-color;
+
+    &::after {
+      background: $contrast-text-color;
+    }
+  }
   &:hover::after {
     width: 100%;
   }

@@ -1,8 +1,25 @@
 export interface IPopupState {
-  message: '';
-  messageIsOpen: boolean;
-  messageIsError: boolean;
   isOpen: boolean;
-  previewIsOpen: boolean;
-  form: React.FC;
+
+  form: {
+    isOpen: boolean;
+    element: React.FC;
+  };
+
+  preview: {
+    isOpen: boolean;
+  };
+
+  info: {
+    isOpen: boolean;
+    title: string;
+    text: string;
+    buttonText: string;
+  };
+
+  message: {
+    isOpen: boolean;
+    isError: boolean;
+    text: string;
+  };
 }

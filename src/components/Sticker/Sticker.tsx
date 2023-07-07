@@ -31,16 +31,15 @@ const Sticker: React.FC<IProps> = ({ card, onClick }: IProps) => {
     switch (card.shape) {
       case 'square':
         return 'квадрат';
-        break;
+
       case 'rounded-square':
         return 'закругленный квадрат';
-        break;
+
       case 'circle':
         return 'круг';
-        break;
+
       case 'contour':
         return 'по контуру';
-        break;
     }
   };
 
@@ -54,7 +53,15 @@ const Sticker: React.FC<IProps> = ({ card, onClick }: IProps) => {
       onClick={onClick}
     >
       <ul className={cn(styles.info, location.pathname === CART && styles.info_cart)}>
-        <img className={styles.image} src={card.image} alt='Изображение стикера' />
+        {card.image ? (
+          <img
+            className={cn(styles.image, styles[`image_${card.shape}`])}
+            src={card.image}
+            alt='Изображение стикера'
+          />
+        ) : (
+          <div className={cn(styles.image, styles.image_empty)} />
+        )}
 
         <li className={cn(styles.flex, styles.flex_shapes)}>
           <p className={styles.category}>Форма</p>

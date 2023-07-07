@@ -4,6 +4,7 @@
   position: relative;
   width: 100%;
   box-sizing: border-box;
+  background-color: $popup-bg-color;
 
   &_add {
     padding: 20px 30px;
@@ -43,7 +44,7 @@
   padding: 5px 8px;
   box-sizing: border-box;
   border-radius: 10px;
-  background: #f1f1f1;
+  background: $element-color;
 }
 
 .info {
@@ -70,9 +71,8 @@
 .image {
   width: 140px;
   height: 140px;
-  border-radius: 10px;
+  object-fit: cover;
   box-sizing: border-box;
-  background-color: #d9d9d9;
   grid-row: 1/4;
   justify-self: center;
 
@@ -81,6 +81,19 @@
   }
   @media screen and (max-width: 845px) {
     grid-column: 1/3;
+  }
+
+  &_empty {
+    background-color: $element-active-color;
+    border-radius: 10px;
+  }
+
+  &_rounded-square {
+    border-radius: 10px;
+  }
+
+  &_circle {
+    border-radius: 50%;
   }
 }
 

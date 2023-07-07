@@ -1,18 +1,45 @@
 @import '../../../utils/_scss-variables.scss';
 
-.container {
-  padding-top: 80px;
+.cart {
   flex: 1;
-  text-align: left;
-  @include flex(column, center, start);
+
+  &_container {
+    padding-top: 80px;
+    padding-bottom: calc(100vh / 7);
+    text-align: left;
+    @include flex(column, center, start);
+    gap: 30px;
+  }
+}
+
+.box {
+  @include flex(column, center, center);
   gap: 30px;
+  width: 100%;
+}
+
+.flex {
+  @include flex(row, start, start);
+  flex-wrap: wrap;
+  gap: 30px;
+  width: 100%;
+}
+
+.banner {
+  background-color: $popup-bg-color;
+  box-shadow: 3px 3px 10px rgba(26, 50, 99, 0.2);
+  border-radius: 10px;
+  box-sizing: border-box;
+  @include flex(column, center, start);
+  gap: 25px;
 }
 
 .cards {
+  padding: 25px 0;
   max-width: 635px;
   padding: 25px 0;
-  box-shadow: 3px 3px 10px rgba(26, 50, 99, 0.2);
-  border-radius: 10px;
-  @include flex(column, center, start);
-  gap: 25px;
+}
+
+.info {
+  padding: 40px 30px;
 }
