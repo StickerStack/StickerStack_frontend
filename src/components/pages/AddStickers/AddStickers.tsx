@@ -8,7 +8,7 @@ import { pages, pagePrice } from '../../../utils/constants';
 import { ICardsState } from '../../../interfaces';
 import { addCard } from '../../../store/cardsSlice';
 import { generateRandomNumber } from '../../../utils/generateRandomNumber';
-
+import { calculateStickerOnList } from '../../../utils/calculateStickerOnList';
 import styles from './AddStickers.module.scss';
 
 const AddStickers: React.FC = () => {
@@ -54,6 +54,15 @@ const AddStickers: React.FC = () => {
             >
               Предпросмотр страницы
             </TextUnderline>
+            <TextUnderline
+              type='button'
+              className={styles.preview}
+              onClick={() => {
+                calculateStickerOnList(cards);
+              }}
+            >
+              Рассчитать стоимость
+            </TextUnderline>
           </div>
           <div className={styles.flex}>
             <span className={styles.text}>Стоимость</span>
@@ -70,6 +79,8 @@ const AddStickers: React.FC = () => {
               Вырезать стикеры по контуру
             </RadioButton>
           </div>
+
+          <div className='preview'></div>
         </section>
       </Container>
     </main>
