@@ -9,6 +9,6 @@ export type TInput = {
   placeholder?: string;
   type?: 'email' | 'password' | 'text' | 'tel';
   error?: FieldError | Merge<FieldError, FieldErrorsImpl>;
-  onChange?: (event: React.FormEvent<HTMLInputElement>) => void;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
   autoComplete?: string;
 };
