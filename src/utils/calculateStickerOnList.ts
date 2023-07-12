@@ -1,5 +1,17 @@
-import { ICard } from "../interfaces";
+import { ICard } from '../interfaces';
 
+interface IOptions {
+  widthPage: number;
+  heightPage: number;
+  paddingList: {
+    top: number;
+    right: number;
+    bottom: number;
+    left: number;
+  };
+  gapX: number;
+  gapY: number;
+}
 
 const sortArrayICard = (arr: Array<ICard>): Array<ICard> => {
   return [...arr].sort((card1, card2) => {
@@ -14,25 +26,25 @@ const sortArrayICard = (arr: Array<ICard>): Array<ICard> => {
       return 0;
     }
   });
-}
+};
 
 // Принимает массив с ICard и возвращает обновленный массив с ICard amount
 // Если стикеры все уместились возвращается пустой массив
-export const calculateStickerOnList = (arr: ICard[]): ICard[] => {
+export const calculateStickerOnList = (arr: ICard[], options: IOptions): ICard[] => {
   const element = document.createElement('div');
   element.className = 'listCalculate';
   document.body.appendChild(element);
   element.innerHTML = '';
   element.style.cssText = `
     background-color: gray;
-    padding: 40px 40px;
+    padding: ${options.paddingList.top}px ${options.paddingList.right}px ${options.paddingList.bottom}px ${options.paddingList.left}px;
     border: 1px solid black;
     display: flex; 
     flex-wrap: wrap; 
-    width: 2480px; 
-    height: 3508px; 
+    width: ${options.widthPage}px; 
+    height: ${options.heightPage}px; 
     box-sizing: border-box;
-    gap: 20px 22px;
+    gap: ${options.gapX}px ${options.gapY}px;
     align-content: flex-start;
     justify-content: center;
     overflow: hidden;
@@ -77,4 +89,4 @@ export const calculateStickerOnList = (arr: ICard[]): ICard[] => {
   }
   document.body.removeChild(document.body.querySelector('.listCalculate') as HTMLDivElement);
   return [];
-}
+};
