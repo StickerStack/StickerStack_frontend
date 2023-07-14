@@ -96,50 +96,67 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
   const onWidthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     setValue('width', value.trim());
+    if (card.shape === 'circle') {
+      setValue('height', value.trim());
+    }
     if (sizeValidate(value)) {
       dispatch(
         updateSize({
           id: card.id,
           width: converter.cmToPx(Number(value)),
-          height: card.size.height,
+          height: card.shape === 'circle' ? converter.cmToPx(Number(value)) : card.size.height,
         }),
       );
-    }
-
-    if (card.shape === 'circle') {
-      setValue('height', value.trim());
     }
   };
 
   const onHeightChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     setValue('height', value.trim());
+    if (card.shape === 'circle') {
+      setValue('width', value.trim());
+    }
     if (sizeValidate(value)) {
       dispatch(
         updateSize({
           id: card.id,
           height: converter.cmToPx(Number(value)),
-          width: card.size.width,
+          width: card.shape === 'circle' ? converter.cmToPx(Number(value)) : card.size.width,
         }),
       );
     }
-    if (card.shape === 'circle') {
-      setValue('width', value.trim());
-    }
   };
 
-  const widthValue = getValues('width');
-  const heightValue = getValues('height');
   useEffect(() => {
-    if (card.shape === 'circle') {
+    const widthValue = getValues('width');
+    const heightValue = getValues('height');
+    if (card.shape === 'circle' && customVisible) {
       if (heightValue > widthValue) {
         setValue('height', widthValue);
+        if (sizeValidate(widthValue)) {
+          dispatch(
+            updateSize({
+              id: card.id,
+              height: converter.cmToPx(Number(widthValue)),
+              width: converter.cmToPx(Number(widthValue)),
+            }),
+          );
+        }
       }
       if (widthValue > heightValue) {
         setValue('width', heightValue);
+        if (sizeValidate(heightValue)) {
+          dispatch(
+            updateSize({
+              id: card.id,
+              height: converter.cmToPx(Number(heightValue)),
+              width: converter.cmToPx(Number(heightValue)),
+            }),
+          );
+        }
       }
     }
-  }, [card.shape, widthValue, heightValue, setValue]);
+  }, [card.id, card.shape, dispatch, getValues, setValue, customVisible]);
 
   const onChangeSizeType = (showCustomSize: boolean) => {
     if (showCustomSize) {

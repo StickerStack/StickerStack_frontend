@@ -77,7 +77,10 @@ const cardsSlice = createSlice({
         return card;
       });
     },
-    updateSize(state, action: { payload: { id: number; width: number; height: number }; type: string;}) {
+    updateSize(
+      state,
+      action: { payload: { id: number; width: number; height: number }; type: string },
+    ) {
       const { id, width, height } = action.payload;
       const foundedCard = state.cards.find((card) => card.id === id);
 
