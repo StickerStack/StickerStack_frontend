@@ -11,7 +11,7 @@ import { pages, pagePrice, CART } from '../../../utils/constants';
 import { ICardsState } from '../../../interfaces';
 import { addCard, setActive } from '../../../store/cardsSlice';
 import { generateRandomNumber } from '../../../utils/generateRandomNumber';
-
+import { calculateStickerOnList } from '../../../utils/calculateStickerOnList';
 import styles from './AddStickers.module.scss';
 
 const AddStickers: React.FC = () => {
@@ -109,12 +109,25 @@ const AddStickers: React.FC = () => {
               <span className={styles.text}>Количество листов</span>
               <span className={styles.amount}>{pages.length}</span>
             </div>
+            <TextUnderline type='button' className={styles.preview} onClick={() => dispatch(openPreview())}>
+              Предпросмотр страницы
+            </TextUnderline>
             <TextUnderline
               type='button'
               className={styles.preview}
-              onClick={() => dispatch(openPreview())}
+              onClick={() => {
+                console.log(
+                  calculateStickerOnList(cards, {
+                    paddingList: { top: 40, right: 40, bottom: 40, left: 40 },
+                    gapX: 20,
+                    gapY: 22,
+                    widthPage: 2480,
+                    heightPage: 3508,
+                  })
+                );
+              }}
             >
-              Предпросмотр страницы
+              Рассчитать стоимость
             </TextUnderline>
           </div>
           <div className={styles.flex}>

@@ -21,6 +21,7 @@ import {
   setActive,
   updateAmount,
   updateShape,
+  updateSize,
 } from '../../store/cardsSlice';
 import { ICard, ICardsState } from '../../interfaces';
 import { TCardShape } from '../../interfaces/ICard';
@@ -35,10 +36,19 @@ import {
   AMOUNT_INPUT_MAX_LENGTH,
   AMOUNT_INPUT_MIN_LENGTH,
   REG_STICKERS,
+  SIZE_INPUT_MAX_LENGTH,
+  SIZE_INPUT_MIN_LENGTH,
 } from '../../utils/constants';
+import { converter } from "../../utils/converter";
 
 interface IProps {
   card: ICard;
+}
+
+const sizeValidate = (value: string): boolean => {
+  return REG_STICKERS.test(value) &&
+      Number(value) >= SIZE_INPUT_MIN_LENGTH &&
+      Number(value) <= SIZE_INPUT_MAX_LENGTH;
 }
 
 const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
@@ -60,6 +70,7 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
   const {
     register,
     formState: { errors },
+    setValue,
   } = useForm<FieldValues>({
     mode: 'onBlur',
     defaultValues: { shape: card.shape, amount: card.amount, size: 'optimal' },
@@ -87,6 +98,28 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
     }
     dispatch(updateShape({ id: card.id, shape: shape }));
   };
+
+  const onWidthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    if (sizeValidate(value)) {
+      dispatch(updateSize({ id: card.id, width: converter.cmToPx(Number(value)), height: card.size.height}))
+    }
+  };
+
+  const onHeightChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    if (sizeValidate(value)) {
+      dispatch(updateSize({ id: card.id, height: converter.cmToPx(Number(value)), width: card.size.width}))
+    }
+  };
+
+  const onChangeSizeType = (showCustomSize: boolean) => {
+    if (showCustomSize) {
+      card.size.width && setValue('width', Math.round(converter.pxToCm(card.size.width)));
+      card.size.height && setValue('height', Math.round(converter.pxToCm(card.size.height)));
+    }
+    setCustomVisible(showCustomSize);
+  }
 
   return (
     <section className={styles.card}>
@@ -168,7 +201,7 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
               register={register}
               name='size'
               value='optimal'
-              onClick={() => setCustomVisible(false)}
+              onClick={() => onChangeSizeType(false)}
             >
               Оптимальный размер
               <TooltipCustom text={tooltipText} />
@@ -179,7 +212,7 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
                 name='size'
                 value='custom'
                 className={styles.size}
-                onClick={() => setCustomVisible(true)}
+                onClick={() => onChangeSizeType(true)}
               >
                 Свой размер
               </RadioButton>
@@ -189,7 +222,10 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
                     type='tel'
                     className='size'
                     register={register}
-                    option={registerSize}
+                    option={{
+                      ...registerSize,
+                      onChange: onWidthChange
+                    }}
                     name='width'
                     placeholder='ширина'
                     error={errors.width}
@@ -199,12 +235,15 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
                     type='tel'
                     className='size'
                     register={register}
-                    option={registerSize}
+                    option={{
+                      ...registerSize,
+                      onChange: onHeightChange
+                    }}
                     name='height'
                     placeholder='высота'
                     error={errors.height}
                   />
-                  см
+                    см
                   <InputError className='size' error={errors.width || errors.height} />
                 </InputField>
               </div>
