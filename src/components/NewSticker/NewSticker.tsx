@@ -67,7 +67,11 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
     getValues,
   } = useForm<FieldValues>({
     mode: 'onBlur',
-    defaultValues: { shape: card.shape, amount: card.amount, size: 'optimal' },
+    defaultValues: {
+      shape: card.shape,
+      amount: card.amount,
+      size: 'optimal',
+    },
   });
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -158,11 +162,25 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
     }
   }, [card.id, card.shape, dispatch, getValues, setValue, customVisible]);
 
+  useEffect(() => {
+    if (!customVisible) {
+      console.log(card.optimalSize.height);
+      dispatch(
+        updateSize({
+          id: card.id,
+          height: card.optimalSize.height,
+          width: card.optimalSize.width,
+        }),
+      );
+    }
+  }, [customVisible]);
+
   const onChangeSizeType = (showCustomSize: boolean) => {
     if (showCustomSize) {
-      card.size.width && setValue('width', Math.round(converter.pxToCm(card.size.width)));
-      card.size.height && setValue('height', Math.round(converter.pxToCm(card.size.height)));
+      card.size.width && setValue('width', Math.round(converter.pxToCm(card.optimalSize.width)));
+      card.size.height && setValue('height', Math.round(converter.pxToCm(card.optimalSize.height)));
     }
+
     setCustomVisible(showCustomSize);
   };
 

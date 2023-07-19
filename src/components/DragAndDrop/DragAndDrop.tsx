@@ -48,6 +48,7 @@ const DragAndDrop: React.FC<IProps> = ({ card }: IProps) => {
                   id: card.id,
                   image: file.urlFilePreview,
                   size: { width: image.naturalWidth, height: image.naturalHeight },
+                  optimalSize: { width: image.naturalWidth, height: image.naturalHeight },
                 }),
               );
             }

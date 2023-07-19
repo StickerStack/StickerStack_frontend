@@ -11,6 +11,7 @@ const initialState: ICardsState = {
       shape: 'square',
       amount: 1,
       size: { width: 0, height: 0 },
+      optimalSize: { width: 0, height: 0 },
       id: generateRandomNumber(),
     },
   ],
@@ -65,7 +66,12 @@ const cardsSlice = createSlice({
     updatePicture(
       state,
       action: {
-        payload: { id: number; image: string; size: { width: number; height: number } };
+        payload: {
+          id: number;
+          image: string;
+          size: { width: number; height: number };
+          optimalSize: { width: number; height: number };
+        };
         type: string;
       },
     ) {
@@ -73,6 +79,7 @@ const cardsSlice = createSlice({
         if (card.id === action.payload.id) {
           card.image = action.payload.image;
           card.size = action.payload.size;
+          card.optimalSize = action.payload.optimalSize;
         }
         return card;
       });
@@ -82,11 +89,11 @@ const cardsSlice = createSlice({
       action: { payload: { id: number; width: number; height: number }; type: string },
     ) {
       const { id, width, height } = action.payload;
-      const foundedCard = state.cards.find((card) => card.id === id);
+      const foundCard = state.cards.find((card) => card.id === id);
 
-      if (foundedCard) {
-        foundedCard.size.width = width;
-        foundedCard.size.height = height;
+      if (foundCard) {
+        foundCard.size.width = width;
+        foundCard.size.height = height;
       }
     },
   },

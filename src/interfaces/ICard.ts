@@ -7,5 +7,9 @@ export interface ICard {
     width: number;
     height: number;
   };
+  optimalSize: {
+    width: number;
+    height: number;
+  };
   id: number;
 }
