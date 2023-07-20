@@ -30,6 +30,10 @@
   column-gap: 132px;
   row-gap: 35px;
   flex-wrap: wrap;
+
+  &_pages {
+    @include flex(column, start, flex-start);
+  }
 }
 
 .flex {
@@ -40,7 +44,7 @@
 .text {
   max-width: 80px;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 16px;
 }
 
@@ -59,12 +63,12 @@
 .price {
   font-family: 'Nunito';
   font-weight: 600;
-  font-size: 18px;
+  font-size: 20px;
   line-height: 25px;
 }
 
 .price_small {
-  font-size: 10px;
+  font-size: 14px;
   line-height: 12px;
   color: $placeholder-text-color;
 }
@@ -72,7 +76,7 @@
 .preview {
   margin-top: 25px;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 16px;
 }
 

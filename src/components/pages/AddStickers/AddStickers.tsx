@@ -1,17 +1,21 @@
 import { useAppDispatch } from '../../../hooks/hooks';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useForm, FieldValues } from 'react-hook-form';
 
 import { AnimatePresence, motion } from 'framer-motion';
 import { Sticker } from '../../Sticker/Sticker';
 import { RadioButton, TextUnderline, ButtonWithText, TitlePage, Container } from '../../UI';
 import { NewSticker } from '../../index';
+import { InfoBox } from '../../InfoBox/InfoBox';
 import { openPreview } from '../../../store/popupSlice';
 import { pages, pagePrice, CART } from '../../../utils/constants';
-import { ICardsState } from '../../../interfaces';
+import { CartState, ICardsState } from '../../../interfaces';
 import { addCard, setActive } from '../../../store/cardsSlice';
+import { updateCropping } from '../../../store/cartSlice';
 import { generateRandomNumber } from '../../../utils/generateRandomNumber';
 import { calculateStickerOnList } from '../../../utils/calculateStickerOnList';
+
 import styles from './AddStickers.module.scss';
 
 const AddStickers: React.FC = () => {
@@ -22,6 +26,8 @@ const AddStickers: React.FC = () => {
   const itemPrice = (pagePrice * pages.length) / (pages.length * 35);
 
   const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
+  const validation = useSelector((state: { cards: ICardsState }) => state.cards.valid);
+  const settings = useSelector((state: CartState) => state);
 
   const handleAddCard = () => {
     dispatch(
@@ -29,12 +35,24 @@ const AddStickers: React.FC = () => {
         image: '',
         shape: 'square',
         amount: 1,
-        size: { width: 0, height: 0 },
+        size: { width: 2, height: 2 },
         id: generateRandomNumber(),
         active: true,
+        valid: false,
       }),
     );
   };
+
+  const cropping = () => {
+    if (settings.cropping) {
+      return 'true';
+    } else return 'false';
+  };
+
+  const { register } = useForm<FieldValues>({
+    mode: 'onBlur',
+    defaultValues: { cut: cropping() },
+  });
 
   return (
     <main className={styles.add}>
@@ -105,11 +123,14 @@ const AddStickers: React.FC = () => {
         </ButtonWithText>
         <section className={styles.info}>
           <div className={styles.info_pages}>
-            <div className={styles.flex}>
-              <span className={styles.text}>Количество листов</span>
-              <span className={styles.amount}>{pages.length}</span>
-            </div>
-            <TextUnderline type='button' className={styles.preview} onClick={() => dispatch(openPreview())}>
+            <InfoBox type='number' description='Количество листов'>
+              {pages.length}
+            </InfoBox>
+            <TextUnderline
+              type='button'
+              className={styles.preview}
+              onClick={() => dispatch(openPreview())}
+            >
               Предпросмотр страницы
             </TextUnderline>
             <TextUnderline
@@ -123,7 +144,7 @@ const AddStickers: React.FC = () => {
                     gapY: 22,
                     widthPage: 2480,
                     heightPage: 3508,
-                  })
+                  }),
                 );
               }}
             >
@@ -137,16 +158,31 @@ const AddStickers: React.FC = () => {
               <span className={styles.price_small}>{itemPrice}₽/ за шт</span>
             </div>
           </div>
-          <div className={styles.options}>
-            <RadioButton name='cut-stickers' value='false'>
+          <form className={styles.options}>
+            <RadioButton
+              name='cut'
+              value='false'
+              register={register}
+              onClick={() => dispatch(updateCropping(false))}
+            >
               Оставить стикеры на листе
             </RadioButton>
-            <RadioButton name='cut-stickers' value='true'>
+            <RadioButton
+              name='cut'
+              value='true'
+              register={register}
+              onClick={() => dispatch(updateCropping(true))}
+            >
               Вырезать стикеры по контуру
             </RadioButton>
-          </div>
+          </form>
         </section>
-        <ButtonWithText theme='filled' className={styles.button} onClick={() => navigate(CART)}>
+        <ButtonWithText
+          theme='filled'
+          className={styles.button}
+          onClick={() => navigate(CART)}
+          disabled={!validation}
+        >
           Перейти в корзину
         </ButtonWithText>
       </Container>

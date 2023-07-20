@@ -8,50 +8,25 @@
 
   &_add {
     padding: 20px 30px;
-    box-shadow: 3px 3px 10px rgba(45, 56, 68, 0.25);
+    box-shadow: 3px 3px 10px rgba(32, 62, 124, 0.2);
     border-radius: 10px;
     cursor: pointer;
     transition: box-shadow 0.2s ease-in-out;
     &:hover {
-      box-shadow: 3px 3px 10px rgba(45, 56, 68, 0.45);
+      box-shadow: 3px 3px 10px rgba(32, 62, 124, 0.4);
     }
   }
 
   &_cart {
-    padding: 0 40px 0 20px;
+    padding: 0 50px 0 20px;
   }
-}
-
-.category {
-  margin: 0;
-  max-width: 80px;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 16px;
-}
-
-.text {
-  margin: 0;
-  @include flex(row, start, center);
-  gap: 10px;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 16px;
-}
-
-.element {
-  min-width: 48px;
-  padding: 5px 8px;
-  box-sizing: border-box;
-  border-radius: 10px;
-  background: $element-color;
 }
 
 .info {
   display: grid;
   margin: 0;
   padding: 0;
-  grid-template-columns: 255px minmax(100px, 188px) 1fr;
+  grid-template-columns: 255px minmax(100px, 200px) 1fr;
   grid-template-rows: repeat(3, min-content);
   row-gap: 20px;
   column-gap: 30px;
@@ -64,7 +39,7 @@
   }
 
   &_cart {
-    grid-template-columns: 140px minmax(100px, 188px) 1fr;
+    grid-template-columns: 140px minmax(100px, 200px) 1fr;
   }
 }
 
@@ -84,7 +59,7 @@
   }
 
   &_empty {
-    background-color: $element-active-color;
+    background-color: $element-color;
     border-radius: 10px;
   }
 
@@ -98,12 +73,10 @@
 }
 
 .flex {
-  position: relative;
+  list-style: none;
   padding: 0;
-  border: none;
   @include flex(row, start, center);
-  flex-wrap: wrap;
-  gap: 20px;
+  gap: 13px;
 }
 .flex_shapes {
   grid-column: 2/4;

@@ -6,6 +6,11 @@
   position: sticky;
   z-index: 4;
 
+  &_border {
+    border-bottom: 1px solid $element-color;
+    box-shadow: 2px 1px 7px 0px rgba(32, 62, 124, 0.15);
+  }
+
   &_container {
     @include flex(row, space-between, center);
     position: relative;

@@ -6,16 +6,16 @@
   max-width: 1110px;
   box-sizing: border-box;
   background-color: $popup-bg-color;
-  padding: 40px 50px 40px 30px;
-  box-shadow: 3px 3px 10px rgba(45, 56, 68, 0.25);
+  padding: 40px 40px 40px 30px;
+  box-shadow: 3px 3px 10px rgba(32, 62, 124, 0.2);
   border-radius: 10px;
 }
 
 .category {
   margin: 0;
-  max-width: 80px;
+  max-width: 100px;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 16px;
 }
 
@@ -24,13 +24,13 @@
   @include flex(row, flex-start, center);
   gap: 10px;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 16px;
 }
 
 .info {
   display: grid;
-  grid-template-columns: 255px minmax(160px, 255px) 1fr;
+  grid-template-columns: 255px minmax(160px, 265px) 1fr;
   grid-template-rows: repeat(3, min-content);
   row-gap: 35px;
   column-gap: 25px;
@@ -61,6 +61,13 @@
   flex-wrap: wrap;
   gap: 20px;
 }
+
+.flexible {
+  @include flex(row, flex-start, center);
+  flex-wrap: wrap;
+  gap: 13px;
+}
+
 .flex_shapes {
   grid-column: 2/4;
   @media screen and (max-width: 1010px) {

@@ -9,4 +9,5 @@ export interface ICard {
   };
   id: number;
   active?: boolean;
+  valid: boolean;
 }

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import cn from 'classnames';
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAppDispatch } from '../../hooks/hooks';
@@ -48,7 +49,7 @@ const Header: React.FC = () => {
   );
 
   return location.pathname !== PAGE_404 ? (
-    <header className={styles.header}>
+    <header className={cn(styles.header, location.pathname !== '/' && styles.header_border)}>
       <Container className={styles.header_container}>
         <Link to='/' className={styles.logo}>
           <img className={styles.logo_image} src={logo} alt='Логотип StickerStack' />

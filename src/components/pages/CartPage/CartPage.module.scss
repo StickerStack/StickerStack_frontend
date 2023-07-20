@@ -26,6 +26,7 @@
 }
 
 .banner {
+  max-width: 445px;
   background-color: $popup-bg-color;
   box-shadow: 3px 3px 10px rgba(26, 50, 99, 0.2);
   border-radius: 10px;
@@ -42,4 +43,27 @@
 
 .info {
   padding: 40px 30px;
+}
+
+.description {
+  max-width: 200px;
+}
+
+.address {
+  max-width: 230px;
+
+  &_box {
+    align-items: flex-start;
+  }
+}
+
+.number {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.buttons {
+  @include flex(column, center, center);
+  gap: 10px;
+  margin: 0 auto;
 }

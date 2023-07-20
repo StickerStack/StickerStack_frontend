@@ -1,11 +1,12 @@
 @import '../../utils/_scss-variables.scss';
 
 .item {
-  border-bottom: 1px solid $element-active-color;
+  border-bottom: 1px solid $element-color;
 }
 
 .heading {
   @include flex(row, space-between, center);
+  gap: 10px;
   padding: 17px 0;
   box-sizing: border-box;
 }

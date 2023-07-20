@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { UseFormRegister, FieldValues, RegisterOptions } from 'react-hook-form';
 
 import { ImagePick } from '../ImagePick/ImagePick';
 import { ICard } from '../../interfaces';
@@ -10,10 +11,13 @@ import styles from './DragAndDrop.module.scss';
 
 interface IProps {
   card: ICard;
+  name: string;
+  option?: RegisterOptions;
+  register?: UseFormRegister<FieldValues>;
   onLoad?: () => void;
 }
 
-const DragAndDrop: React.FC<IProps> = ({ card, onLoad }: IProps) => {
+const DragAndDrop: React.FC<IProps> = ({ card, name, option, register, onLoad }: IProps) => {
   type TFile = {
     file: File;
     urlFilePreview: string | ArrayBuffer | null;
@@ -88,14 +92,15 @@ const DragAndDrop: React.FC<IProps> = ({ card, onLoad }: IProps) => {
             <span className={styles.main}>Перетащите фото или выберите файл</span>
             <span className={styles.sub}>Допустимые форматы: .jpg, .jpeg, .png</span>
           </div>
-          <input
-            className={styles.input}
-            type='file'
-            onChange={handleImageChange}
-            accept='.jpg, .jpeg, .png'
-          />
         </div>
       )}
+      <input
+        {...(register && register(name, option))}
+        className={styles.input}
+        type='file'
+        onChange={handleImageChange}
+        accept='.jpg, .jpeg, .png'
+      />
     </div>
   );
 };

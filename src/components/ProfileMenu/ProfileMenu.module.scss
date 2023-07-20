@@ -7,7 +7,7 @@
   align-items: flex-start;
   padding: 25px 40px 45px;
   background: $popup-bg-color;
-  box-shadow: 3px 3px 10px rgba(65, 65, 65, 0.15);
+  box-shadow: 3px 3px 10px rgba(32, 62, 124, 0.2);
   border-radius: 10px;
   position: absolute;
   top: 90px;
@@ -21,7 +21,7 @@
   }
 
   .avatar {
-    background-color: $element-active-color;
+    background-color: $element-color;
     width: 64px;
     height: 64px;
     border-radius: 32px;

@@ -1,16 +1,15 @@
 import cn from 'classnames';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { useState } from 'react';
 
 import { ButtonCustom } from '../UI';
-
 import { useAppDispatch } from '../../hooks/hooks';
 import { deleteCard } from '../../store/cardsSlice';
 import { ICard, ICardsState } from '../../interfaces';
 import { ADD_STICKERS, CART } from '../../utils/constants';
 
 import styles from './Sticker.module.scss';
+import { InfoBox } from '../InfoBox/InfoBox';
 
 interface IProps {
   card: ICard;
@@ -64,31 +63,35 @@ const Sticker: React.FC<IProps> = ({ card, onClick }: IProps) => {
         )}
 
         <li className={cn(styles.flex, styles.flex_shapes)}>
-          <p className={styles.category}>Форма</p>
-          <span className={styles.text}>{translateShape()}</span>
+          <InfoBox type='simple' description='Форма'>
+            {translateShape()}
+          </InfoBox>
+        </li>
+        <li className={styles.flex}>
+          <InfoBox type='amount' description='Количество стикеров'>
+            {card.amount}
+          </InfoBox>
         </li>
 
         <li className={styles.flex}>
-          <p className={styles.category}>Количество стикеров</p>
-          <span className={cn(styles.text, styles.element)}>{card.amount} шт</span>
+          <InfoBox type='size' description='Размер'>
+            {card.size.width}*{card.size.height}
+          </InfoBox>
         </li>
 
-        <div className={styles.flex}>
-          <p className={styles.category}>Размер</p>
-          <span className={cn(styles.text, styles.element)}>
-            {card.size.width}*{card.size.height} см
-          </span>
-        </div>
-
-        <div className={styles.flex}>
-          <p className={styles.category}>Цвет фона</p>
-          <p className={styles.text}>белый</p>
-          <div className={styles.color_sample} />
-        </div>
-        <div className={styles.flex}>
-          <p className={styles.category}>Материал</p>
-          <p className={styles.text}>винил</p>
-        </div>
+        <li className={styles.flex}>
+          <InfoBox type='simple' description='Цвет фона'>
+            <div className={styles.flex}>
+              белый
+              <div className={styles.color_sample} />
+            </div>
+          </InfoBox>
+        </li>
+        <li className={styles.flex}>
+          <InfoBox type='simple' description='Материал'>
+            винил
+          </InfoBox>
+        </li>
       </ul>
       {location.pathname === CART ? (
         <ButtonCustom

@@ -6,7 +6,7 @@
   @include flex(row, flex-start, flex-start);
   gap: 10px;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 16px;
   cursor: pointer;
 }
@@ -26,5 +26,5 @@
 }
 
 .radio:checked {
-  border: 3px solid #1d91fe;
+  border: 3px solid $contrast-color;
 }

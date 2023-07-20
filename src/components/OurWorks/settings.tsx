@@ -55,13 +55,13 @@ const settings = {
       },
     },
     {
-      breakpoint: 600,
+      breakpoint: 950,
       settings: {
         slidesToShow: 2,
       },
     },
     {
-      breakpoint: 480,
+      breakpoint: 600,
       settings: {
         slidesToShow: 1,
       },

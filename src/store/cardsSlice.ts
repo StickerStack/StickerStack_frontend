@@ -10,11 +10,13 @@ const initialState: ICardsState = {
       image: '',
       shape: 'square',
       amount: 1,
-      size: { width: 0, height: 0 },
+      size: { width: 2, height: 2 },
       id: generateRandomNumber(),
       active: true,
+      valid: false,
     },
   ],
+  valid: false,
 };
 
 const removeBackground = createAsyncThunk(
@@ -43,6 +45,23 @@ const cardsSlice = createSlice({
         } else card.active = true;
         return card;
       });
+    },
+    setValid(state, action: { payload: { id: number; valid: boolean }; type: string }) {
+      const { id, valid } = action.payload;
+      const indexCard = state.cards.find((card) => card.id === id);
+
+      if (valid === true && indexCard) {
+        indexCard.valid = true;
+      } else if (valid === false && indexCard) {
+        indexCard.valid = false;
+      }
+    },
+    checkValidation(state) {
+      const indexCard = state.cards.find((card) => card.valid === false);
+
+      if (indexCard) {
+        state.valid = false;
+      } else state.valid = true;
     },
     deleteCard(state, action: { payload: number; type: string }) {
       state.cards = state.cards.filter((card) => card.id !== action.payload);
@@ -86,13 +105,16 @@ const cardsSlice = createSlice({
         return card;
       });
     },
-    updateSize(state, action: { payload: { id: number; width: number; height: number }; type: string;}) {
+    updateSize(
+      state,
+      action: { payload: { id: number; width: number; height: number }; type: string },
+    ) {
       const { id, width, height } = action.payload;
-      const foundedCard = state.cards.find((card) => card.id === id);
+      const foundCard = state.cards.find((card) => card.id === id);
 
-      if (foundedCard) {
-        foundedCard.size.width = width;
-        foundedCard.size.height = height;
+      if (foundCard) {
+        foundCard.size.width = width;
+        foundCard.size.height = height;
       }
     },
   },
@@ -109,14 +131,26 @@ const cardsSlice = createSlice({
 });
 
 const cardsSliceReducer = cardsSlice.reducer;
-const { addCard, deleteCard, setActive, updatePicture, updateCard, updateShape, updateAmount, updateSize } =
-  cardsSlice.actions;
+const {
+  addCard,
+  deleteCard,
+  setActive,
+  setValid,
+  checkValidation,
+  updatePicture,
+  updateCard,
+  updateShape,
+  updateAmount,
+  updateSize,
+} = cardsSlice.actions;
 
 export {
   cardsSliceReducer,
   addCard,
   deleteCard,
   setActive,
+  setValid,
+  checkValidation,
   updatePicture,
   updateShape,
   updateAmount,
