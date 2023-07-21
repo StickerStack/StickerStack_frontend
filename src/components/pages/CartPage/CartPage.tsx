@@ -10,6 +10,7 @@ import { ICardsState, CartState } from '../../../interfaces';
 
 import styles from './CartPage.module.scss';
 import { InfoBox } from '../../InfoBox/InfoBox';
+import { uploadOrder } from '../../../store/cartSlice';
 
 const CartPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -17,6 +18,25 @@ const CartPage: React.FC = () => {
 
   const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
   const settings = useSelector((state: CartState) => state);
+
+  // Пример запроса на оформление заказа
+
+  const postOrder = () => {
+    dispatch(
+      uploadOrder({
+        cost: 1500,
+        address: 'qwe',
+        number: 100,
+        cropping: false,
+        stickers: [
+          { image: cards[0].image, shape: 'square', amount: 5, size: '15' },
+          { image: cards[0].image, shape: 'square', amount: 5, size: '15' },
+        ],
+      }),
+    );
+  };
+
+  // ...
 
   return (
     <main className={styles.cart}>
@@ -68,7 +88,9 @@ const CartPage: React.FC = () => {
                 <TextUnderline onClick={() => navigate(ADD_STICKERS)}>
                   Редактировать заказ
                 </TextUnderline>
-                <ButtonWithText className={styles.button}>Оформить заказ</ButtonWithText>
+                <ButtonWithText className={styles.button} onClick={postOrder}>
+                  Оформить заказ
+                </ButtonWithText>
               </div>
             </div>
           </div>

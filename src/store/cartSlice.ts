@@ -1,7 +1,9 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { CartState } from '../interfaces/CartState';
 import { CartItem } from '../interfaces';
 import { generateRandomNumber } from '../utils/generateRandomNumber';
+import { api } from '../utils/api/Api';
+import { OrderItem } from '../interfaces/OrderItem';
 
 const initialState: CartState = {
   cost: 0,
@@ -18,6 +20,33 @@ const initialState: CartState = {
     },
   ],
 };
+
+const uploadOrder = createAsyncThunk(
+  'orders/add_order',
+  async (
+    data: {
+      cost: number;
+      address: string;
+      number: number;
+      cropping: boolean;
+      stickers: Array<OrderItem>;
+    },
+    { rejectWithValue },
+  ) => {
+    try {
+      const response = await api.uploadOrder(
+        data.cost,
+        data.address,
+        data.number,
+        data.cropping,
+        data.stickers,
+      );
+      return { data: response.data };
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
 
 const cartSlice = createSlice({
   name: 'cartSlice',
@@ -40,9 +69,14 @@ const cartSlice = createSlice({
       state.cropping = action.payload;
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(uploadOrder.fulfilled, (state, action) => {
+      console.log(action.payload.data);
+    });
+  },
 });
 
 const cartSliceReducer = cartSlice.reducer;
 const { addItem, deleteItem, updateItem, updateCropping } = cartSlice.actions;
 
-export { cartSliceReducer, addItem, deleteItem, updateItem, updateCropping };
+export { cartSliceReducer, addItem, deleteItem, updateItem, updateCropping, uploadOrder };
