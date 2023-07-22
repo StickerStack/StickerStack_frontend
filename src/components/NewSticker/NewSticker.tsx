@@ -164,7 +164,6 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
 
   useEffect(() => {
     if (!customVisible) {
-      console.log(card.optimalSize.height);
       dispatch(
         updateSize({
           id: card.id,
