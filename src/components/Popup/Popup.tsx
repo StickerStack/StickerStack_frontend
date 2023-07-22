@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { PopupForm } from '../';
 import { PopupInfo } from '../Popups/PopupInfo/PopupInfo';
 import { PopupPreview } from '../Popups/PopupPreview/PopupPreview';
+import { OrderDetails } from '../Popups/OrderDetails/OrderDetails';
 import { ButtonCustom } from '../UI';
 import { IPopupState } from '../../interfaces/IPopupState';
 import { useAppDispatch } from '../../hooks/hooks';
@@ -14,8 +15,10 @@ import styles from './Popup.module.scss';
 const Popup: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  const { form, preview, info, isOpen } = useSelector((state: { popup: IPopupState }) => state.popup);
-  
+  const { form, preview, order, info, isOpen } = useSelector(
+    (state: { popup: IPopupState }) => state.popup,
+  );
+
   useEffect(() => {
     const handleKeyDown = (evn: KeyboardEvent) => {
       if (evn.code === 'Escape') {
@@ -30,7 +33,7 @@ const Popup: React.FC = () => {
 
   return (
     <AnimatePresence>
-      { isOpen && (
+      {isOpen && (
         <motion.div
           initial={{
             opacity: 0,
@@ -81,12 +84,15 @@ const Popup: React.FC = () => {
             className={styles.popup}
           >
             <div className={styles.container}>
-              {
-                form.isOpen ? <PopupForm /> :
-                preview.isOpen ? <PopupPreview /> :
-                info.isOpen ? <PopupInfo /> :
-                null
-              }
+              {form.isOpen ? (
+                <PopupForm />
+              ) : order.isOpen ? (
+                <OrderDetails id={order.id} />
+              ) : preview.isOpen ? (
+                <PopupPreview />
+              ) : info.isOpen ? (
+                <PopupInfo />
+              ) : null}
               <ButtonCustom
                 className={styles.button}
                 type='close'

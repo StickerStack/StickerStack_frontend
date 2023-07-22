@@ -22,4 +22,9 @@ export interface IPopupState {
     isError: boolean;
     text: string;
   };
+
+  order: {
+    isOpen: boolean;
+    id: number;
+  };
 }

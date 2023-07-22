@@ -5,6 +5,8 @@ import { useAppDispatch } from '../../hooks/hooks';
 import { IUserState } from '../../interfaces';
 import { logOut } from '../../store/authSlice';
 import { ButtonWithText, TextUnderline } from '../UI';
+import { ADD_STICKERS, ORDERS, PROFILE } from '../../utils/constants';
+
 import styles from './ProfileMenu.module.scss';
 
 // eslint-disable-next-line react/prop-types
@@ -26,20 +28,21 @@ const ProfileMenu = forwardRef<HTMLHeadingElement>((props, ref) => {
 
   return (
     <div className={styles.menu} ref={ref}>
-      <Link to='/profile' className={styles.profile}>
+      <Link to={PROFILE} className={styles.profile}>
         <div className={styles.avatar}></div>
         <div className={styles.name}>
           {lastName || firstName ? `${lastName} ${firstName}` : email}
         </div>
       </Link>
 
-      <ButtonWithText className={styles.button} onClick={() => navigate('/add-stickers')}>
+      <ButtonWithText className={styles.button} onClick={() => navigate(ADD_STICKERS)}>
         Заказать стикеры
       </ButtonWithText>
 
       <ul className={styles.list}>
-        {/* <li>Заказы</li> */}
-        {/* <li>Служба поддержки</li> */}
+        <li>
+          <TextUnderline onClick={() => navigate(ORDERS)}>Заказы</TextUnderline>
+        </li>
         <li>
           <TextUnderline onClick={() => onLogOut()}>Выход</TextUnderline>
         </li>

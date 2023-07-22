@@ -1,0 +1,56 @@
+@import '../../utils/_scss-variables.scss';
+
+.order {
+  min-width: 205px;
+  max-width: 255px;
+  @include flex(column, _, _);
+  gap: 25px;
+  cursor: pointer;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: calc(100% + 10px);
+    border-radius: 20px;
+    background-color: $active-field-color;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  &:hover::after {
+    opacity: 0.3;
+  }
+}
+
+.carousel {
+  width: 100%;
+  height: 250px;
+  background-color: $element-color;
+  border-radius: 20px;
+}
+
+.info {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 15px;
+  padding-left: 8px;
+}
+
+.cost {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.amount {
+  justify-self: center;
+}
+
+.status {
+  grid-column: 1/4;
+}
+
+.button {
+  justify-self: flex-end;
+}

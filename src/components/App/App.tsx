@@ -22,10 +22,12 @@ import {
   ADD_STICKERS,
   VERIFY_EMAIL,
   VERIFY_FORGOT_PASSWORD,
+  ORDERS,
 } from '../../utils/constants';
 import { useAppDispatch } from '../../hooks/hooks';
 import { getUser, signInMockUser } from '../../store/userSlice';
 import styles from './App.module.scss';
+import { OrdersPage } from '../pages/OrdersPage/OrdersPage';
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -69,6 +71,14 @@ const App: React.FC = () => {
               element={
                 <ProtectedRoute redirectPath='/'>
                   <ProfilePage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path={ORDERS}
+              element={
+                <ProtectedRoute redirectPath='/'>
+                  <OrdersPage />
                 </ProtectedRoute>
               }
             />

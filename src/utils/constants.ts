@@ -14,6 +14,7 @@ const API_URL = 'https://api.stickerstack.ru/v1';
 const PROFILE = '/profile';
 const PAGE_404 = '/page-not-found';
 const ADD_STICKERS = '/add-stickers';
+const ORDERS = '/orders';
 const VERIFY_FORGOT_PASSWORD = '/auth/verify-forgot-password/:token';
 const VERIFY_EMAIL = '/auth/verifyemail/:token';
 
@@ -69,6 +70,56 @@ const questions = [
   },
 ];
 
+const orders = [
+  {
+    id: 1,
+    delivery: { status: 'Оформлен', statuses: [{ id: 1, status: 'Оформлен', date: '5 апреля' }] },
+    cost: 2000,
+    amount: 50,
+    number_of_sheets: 3,
+    stickers: 1,
+  },
+  {
+    id: 2,
+    delivery: { status: 'Оформлен', statuses: [{ id: 1, status: 'Оформлен', date: '5 апреля' }] },
+    cost: 1000,
+    amount: 30,
+    number_of_sheets: 2,
+    stickers: 1,
+  },
+  {
+    id: 3,
+    delivery: { status: 'Оформлен', statuses: [{ id: 1, status: 'Оформлен', date: '5 апреля' }] },
+    cost: 1000,
+    amount: 50,
+    number_of_sheets: 2,
+    stickers: 1,
+  },
+  {
+    id: 4,
+    delivery: {
+      status: 'Отправлен',
+      statuses: [
+        { id: 1, status: 'Оформлен', date: '5 апреля' },
+        { id: 2, status: 'Оплачен', date: '5 апреля' },
+        { id: 3, status: 'Отправлен', date: '5 апреля' },
+      ],
+    },
+    cost: 1000,
+    amount: 40,
+    number_of_sheets: 2,
+    stickers: 1,
+  },
+  {
+    id: 5,
+    delivery: { status: 'Оформлен', statuses: [{ id: 1, status: 'Оформлен', date: '5 апреля' }] },
+    cost: 500,
+    amount: 20,
+    number_of_sheets: 1,
+    stickers: 1,
+  },
+];
+
 export {
   API_URL,
   REG_EMAIL,
@@ -76,6 +127,7 @@ export {
   REG_STICKERS,
   PROFILE_ONLY_LETTERS,
   PROFILE,
+  ORDERS,
   PAGE_404,
   ADD_STICKERS,
   VERIFY_FORGOT_PASSWORD,
@@ -87,6 +139,7 @@ export {
   SIZE_INPUT_MIN_LENGTH,
   SIZE_INPUT_MAX_LENGTH,
   pages,
+  orders,
   questions,
   pagePrice,
 };

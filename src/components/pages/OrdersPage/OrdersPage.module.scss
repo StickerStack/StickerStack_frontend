@@ -1,0 +1,22 @@
+@import '../../../utils/_scss-variables.scss';
+
+.orders {
+  flex: 1;
+
+  &_container {
+    padding-top: 80px;
+    padding-bottom: calc(100vh / 4);
+    background-color: $main-bg-color;
+
+    text-align: left;
+    @include flex(column, center, flex-start);
+    gap: 30px;
+  }
+}
+
+.grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(205px, 1fr));
+  gap: 30px;
+}
