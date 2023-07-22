@@ -26,8 +26,9 @@ const AddStickers: React.FC = () => {
         shape: 'square',
         amount: 1,
         size: { width: 0, height: 0 },
+        optimalSize: { width: 0, height: 0 },
         id: generateRandomNumber(),
-      })
+      }),
     );
   };
 
@@ -47,7 +48,11 @@ const AddStickers: React.FC = () => {
               <span className={styles.text}>Количество листов А4</span>
               <span className={styles.amount}>{pages.length}</span>
             </div>
-            <TextUnderline type='button' className={styles.preview} onClick={() => dispatch(openPreview())}>
+            <TextUnderline
+              type='button'
+              className={styles.preview}
+              onClick={() => dispatch(openPreview())}
+            >
               Предпросмотр страницы
             </TextUnderline>
             <TextUnderline
@@ -61,7 +66,7 @@ const AddStickers: React.FC = () => {
                     gapY: 22,
                     widthPage: 2480,
                     heightPage: 3508,
-                  })
+                  }),
                 );
               }}
             >
