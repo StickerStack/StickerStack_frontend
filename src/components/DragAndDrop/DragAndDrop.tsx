@@ -54,10 +54,8 @@ const DragAndDrop: React.FC<IProps> = ({ card, name, option, register, onLoad }:
                 updatePicture({
                   id: card.id,
                   image: file.urlFilePreview,
-                  size: {
-                    width: +converter.pxToCm(image.naturalWidth).toFixed(1),
-                    height: +converter.pxToCm(image.naturalHeight).toFixed(1),
-                  },
+                  size: { width: image.naturalWidth, height: image.naturalHeight },
+                  optimalSize: { width: image.naturalWidth, height: image.naturalHeight },
                 }),
               );
             }

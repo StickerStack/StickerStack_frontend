@@ -14,6 +14,7 @@ import {
 } from '../UI';
 import { Shape } from '../Shape/Shape';
 import { DragAndDrop } from '../';
+import { InfoBox } from '../InfoBox/InfoBox';
 import { useAppDispatch } from '../../hooks/hooks';
 import {
   checkValidation,
@@ -38,7 +39,7 @@ import {
   SIZE_INPUT_MIN_LENGTH,
 } from '../../utils/constants';
 import { converter } from '../../utils/converter';
-import { InfoBox } from '../InfoBox/InfoBox';
+
 import { tooltipText } from '../../utils/texts';
 
 import styles from './NewSticker.module.scss';
@@ -75,9 +76,14 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
     register,
     formState: { errors, isValid },
     setValue,
+    getValues,
   } = useForm<FieldValues>({
     mode: 'onBlur',
-    defaultValues: { shape: card.shape, amount: card.amount, size: 'optimal' },
+    defaultValues: {
+      shape: card.shape,
+      amount: card.amount,
+      size: 'optimal',
+    },
   });
 
   useEffect(() => {
@@ -113,12 +119,16 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
 
   const onWidthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
+    setValue('width', value.trim());
+    if (card.shape === 'circle') {
+      setValue('height', value.trim());
+    }
     if (sizeValidate(value)) {
       dispatch(
         updateSize({
           id: card.id,
           width: converter.cmToPx(Number(value)),
-          height: card.size.height,
+          height: card.shape === 'circle' ? converter.cmToPx(Number(value)) : card.size.height,
         }),
       );
     }
@@ -126,22 +136,70 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
 
   const onHeightChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
+    setValue('height', value.trim());
+    if (card.shape === 'circle') {
+      setValue('width', value.trim());
+    }
     if (sizeValidate(value)) {
       dispatch(
         updateSize({
           id: card.id,
           height: converter.cmToPx(Number(value)),
-          width: card.size.width,
+          width: card.shape === 'circle' ? converter.cmToPx(Number(value)) : card.size.width,
         }),
       );
     }
   };
 
+  useEffect(() => {
+    const widthValue = getValues('width');
+    const heightValue = getValues('height');
+    if (card.shape === 'circle' && customVisible) {
+      if (heightValue > widthValue) {
+        setValue('height', widthValue);
+        if (sizeValidate(widthValue)) {
+          dispatch(
+            updateSize({
+              id: card.id,
+              height: converter.cmToPx(Number(widthValue)),
+              width: converter.cmToPx(Number(widthValue)),
+            }),
+          );
+        }
+      }
+      if (widthValue > heightValue) {
+        setValue('width', heightValue);
+        if (sizeValidate(heightValue)) {
+          dispatch(
+            updateSize({
+              id: card.id,
+              height: converter.cmToPx(Number(heightValue)),
+              width: converter.cmToPx(Number(heightValue)),
+            }),
+          );
+        }
+      }
+    }
+  }, [card.id, card.shape, dispatch, getValues, setValue, customVisible]);
+
+  useEffect(() => {
+    if (!customVisible) {
+      dispatch(
+        updateSize({
+          id: card.id,
+          height: card.optimalSize.height,
+          width: card.optimalSize.width,
+        }),
+      );
+    }
+  }, [customVisible]);
+
   const onChangeSizeType = (showCustomSize: boolean) => {
     if (showCustomSize) {
-      card.size.width && setValue('width', Math.round(converter.pxToCm(card.size.width)));
-      card.size.height && setValue('height', Math.round(converter.pxToCm(card.size.height)));
+      card.size.width && setValue('width', Math.round(converter.pxToCm(card.optimalSize.width)));
+      card.size.height && setValue('height', Math.round(converter.pxToCm(card.optimalSize.height)));
     }
+
     setCustomVisible(showCustomSize);
   };
 

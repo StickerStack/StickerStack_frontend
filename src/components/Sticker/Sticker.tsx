@@ -7,9 +7,10 @@ import { useAppDispatch } from '../../hooks/hooks';
 import { deleteCard } from '../../store/cardsSlice';
 import { ICard, ICardsState } from '../../interfaces';
 import { ADD_STICKERS, CART } from '../../utils/constants';
+import { InfoBox } from '../InfoBox/InfoBox';
+import { converter } from '../../utils/converter';
 
 import styles from './Sticker.module.scss';
-import { InfoBox } from '../InfoBox/InfoBox';
 
 interface IProps {
   card: ICard;
@@ -75,7 +76,8 @@ const Sticker: React.FC<IProps> = ({ card, onClick }: IProps) => {
 
         <li className={styles.flex}>
           <InfoBox type='size' description='Размер'>
-            {card.size.width}*{card.size.height}
+            {Math.round(converter.pxToCm(card.size.width))}*
+            {Math.round(converter.pxToCm(card.size.height))}
           </InfoBox>
         </li>
 
