@@ -23,10 +23,28 @@ const Header: React.FC = () => {
   const dispatch = useAppDispatch();
   const [isMenuShow, setIsMenuShow] = useState(false);
   const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
+  const [y, setY] = useState(window.scrollY);
+  const [visibleBorder, setVisibleBorder] = useState(false);
+
+  const handleNavigation = useCallback(() => {
+    if (window.scrollY > 120) {
+      setVisibleBorder(true);
+    } else setVisibleBorder(false);
+    setY(window.scrollY);
+  }, [y]);
+
+  useEffect(() => {
+    setY(window.scrollY);
+    window.addEventListener('scroll', handleNavigation);
+
+    return () => {
+      window.removeEventListener('scroll', handleNavigation);
+    };
+  }, [handleNavigation]);
 
   useEffect(() => {
     setIsMenuShow(false);
-  }, [location]);
+  }, [location, window.scrollY]);
 
   useEffect(() => {
     const handleKeyDown = (evn: KeyboardEvent) => {
@@ -49,7 +67,12 @@ const Header: React.FC = () => {
   );
 
   return location.pathname !== PAGE_404 ? (
-    <header className={cn(styles.header, location.pathname !== '/' && styles.header_border)}>
+    <header
+      className={cn(
+        styles.header,
+        location.pathname !== '/' || (visibleBorder && styles.header_border),
+      )}
+    >
       <Container className={styles.header_container}>
         <Link to='/' className={styles.logo}>
           <img className={styles.logo_image} src={logo} alt='Логотип StickerStack' />
