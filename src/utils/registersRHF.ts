@@ -71,7 +71,7 @@ const profileName = {
 };
 
 const registerAmount = {
-  required: 'Введите количество стикеров',
+  required: 'Введите количество',
   pattern: {
     value: REG_STICKERS,
     message: `Укажите количество от ${AMOUNT_INPUT_MIN_LENGTH} до ${AMOUNT_INPUT_MAX_LENGTH}`,

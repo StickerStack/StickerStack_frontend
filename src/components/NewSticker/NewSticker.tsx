@@ -262,11 +262,11 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
             /> */}
           </div>
         </fieldset>
-        <div className={styles.flex}>
+        <fieldset className={styles.flex}>
           <label className={styles.category} htmlFor='amount'>
             Количество стикеров
           </label>
-          <div>
+          <InputField className='amount'>
             <Input
               className='amount'
               register={register}
@@ -277,10 +277,11 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
                 },
               }}
               name='amount'
+              error={errors.amount}
             />
-            <Error className={styles.error}>{errors.amount && `${errors.amount?.message}`}</Error>
-          </div>
-        </div>
+            <InputError className='amount' error={errors.amount} />
+          </InputField>
+        </fieldset>
 
         <fieldset className={styles.flex}>
           <p className={styles.category}>Размер</p>
