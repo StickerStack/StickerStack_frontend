@@ -2,7 +2,7 @@ import { useState } from 'react';
 import cn from 'classnames';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import { ButtonCustom, ButtonWithText, TitlePage } from '../UI';
+import { ButtonCustom } from '../UI';
 
 import styles from './Dropdown.module.scss';
 
@@ -17,13 +17,12 @@ const Dropdown: React.FC<IProps> = ({ heading, content, id }: IProps) => {
   const [active, setActive] = useState(false);
 
   return (
-    <div className={styles.item}>
+    <div className={styles.item} onClick={() => setActive(!active)}>
       <div className={styles.heading}>
         <p className={styles.question}>{heading}</p>
         <ButtonCustom
           type='arrow'
           label={active ? 'Скрыть ответ' : 'Показать ответ'}
-          onClick={() => setActive(!active)}
           className={cn(styles.button, active && styles.button_up)}
         />
       </div>

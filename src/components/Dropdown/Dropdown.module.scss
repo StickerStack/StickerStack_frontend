@@ -2,6 +2,11 @@
 
 .item {
   border-bottom: 1px solid $element-color;
+  cursor: pointer;
+
+  &:hover .button {
+    opacity: 0.7;
+  }
 }
 
 .heading {
@@ -19,7 +24,7 @@
 }
 
 .button {
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s, opacity 0.2 ease-in-out;
   &_up {
     transform: rotate(180deg);
   }

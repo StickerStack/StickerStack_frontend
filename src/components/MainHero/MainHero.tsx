@@ -31,9 +31,7 @@ const MainHero: React.FC = () => {
     <Container className={styles.container}>
       <section className={styles.section}>
         <h1 className={styles.title}>StickerStack</h1>
-        <h2 className={styles.description}>
-          Быстро и просто: загрузи свои картинки и получи готовые стикеры с доставкой!
-        </h2>
+        <h2 className={styles.description}>Кастомные стикеры: создавай и заказывай онлайн!</h2>
         <ButtonWithText type='button' color='contrast' onClick={() => onClickTry()}>
           {isLogged ? 'Заказать' : 'Попробовать'}
         </ButtonWithText>
