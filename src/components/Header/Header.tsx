@@ -27,7 +27,7 @@ const Header: React.FC = () => {
   const [visibleBorder, setVisibleBorder] = useState(false);
 
   const handleNavigation = useCallback(() => {
-    if (window.scrollY > 120) {
+    if (window.scrollY > 20) {
       setVisibleBorder(true);
     } else setVisibleBorder(false);
     setY(window.scrollY);
@@ -40,7 +40,7 @@ const Header: React.FC = () => {
     return () => {
       window.removeEventListener('scroll', handleNavigation);
     };
-  }, [handleNavigation]);
+  }, [handleNavigation, location]);
 
   useEffect(() => {
     setIsMenuShow(false);
@@ -70,9 +70,25 @@ const Header: React.FC = () => {
     <header
       className={cn(
         styles.header,
-        location.pathname !== '/' || (visibleBorder && styles.header_border),
+        (location.pathname !== '/' || visibleBorder) && styles.header_border,
       )}
     >
+      <div
+        className={styles.header_bar}
+        style={
+          location.pathname === '/' && visibleBorder
+            ? {
+                opacity: 0.6,
+                width:
+                  ((scrollY +
+                    window.innerHeight *
+                      ((scrollY + window.innerHeight) / document.body.clientHeight)) /
+                    document.body.clientHeight) *
+                  document.body.clientWidth,
+              }
+            : {}
+        }
+      />
       <Container className={styles.header_container}>
         <Link to='/' className={styles.logo}>
           <img className={styles.logo_image} src={logo} alt='Логотип StickerStack' />

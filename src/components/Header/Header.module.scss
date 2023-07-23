@@ -10,6 +10,16 @@
     box-shadow: 2px 1px 7px 0px rgba(32, 62, 124, 0.15);
   }
 
+  &_bar {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    background-color: $contrast-color;
+    opacity: 0;
+    z-index: 5;
+  }
+
   &_container {
     @include flex(row, space-between, center);
     position: relative;

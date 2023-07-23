@@ -3,4 +3,5 @@
 .app {
   min-height: 100vh;
   @include flex(column, _, _);
+  overflow: hidden;
 }
