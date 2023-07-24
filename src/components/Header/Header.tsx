@@ -68,7 +68,7 @@ const Header: React.FC = () => {
               exit={{
                 opacity: 0,
                 transition: {
-                  duration: 0.4,
+                  duration: 0.2,
                 },
               }}
             >

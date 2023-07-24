@@ -41,10 +41,18 @@ const ProfileMenu = forwardRef<HTMLHeadingElement>((props, ref) => {
 
       <ul className={styles.list}>
         <li>
-          <TextUnderline onClick={() => navigate(ORDERS)}>Заказы</TextUnderline>
+          <ButtonWithText
+            theme='no-border'
+            className={styles.link}
+            onClick={() => navigate(ORDERS)}
+          >
+            Заказы
+          </ButtonWithText>
         </li>
         <li>
-          <TextUnderline onClick={() => onLogOut()}>Выход</TextUnderline>
+          <ButtonWithText theme='no-border' className={styles.link} onClick={() => onLogOut()}>
+            Выход
+          </ButtonWithText>
         </li>
       </ul>
     </div>

@@ -46,14 +46,14 @@
 .button {
   @include flex(row, flex-start, center);
   width: 245px;
-  height: 32px;
-  padding: 8px 10px;
-  font-size: 14px;
-  box-sizing: border-box;
-  color: white;
+  height: 32px !important;
+  padding: 8px 10px !important;
+  font-size: 14px !important;
+  box-sizing: border-box !important;
+  color: white !important;
   gap: 15px;
   border-radius: 10px;
-  transition: background-color 0.3s ease-in-out;
+  transition: background-color 0.3s ease-in-out !important;
   &:hover {
     opacity: 1;
     background: #929292b6;

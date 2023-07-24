@@ -1,0 +1,17 @@
+@import '../../utils/_scss-variables.scss';
+
+.options {
+  width: max-content;
+  padding: 20px;
+  background-color: $popup-bg-color;
+  box-shadow: 3px 3px 10px 0px rgba(26, 50, 99, 0.2);
+  border-radius: 15px;
+  @include flex(column, flex-start, flex-start);
+  gap: 10px;
+
+  z-index: 3;
+}
+
+.button {
+  margin: 0;
+}

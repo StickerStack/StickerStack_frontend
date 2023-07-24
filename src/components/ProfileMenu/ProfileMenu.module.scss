@@ -18,6 +18,10 @@
     display: flex;
     align-items: center;
     text-decoration: none;
+
+    &:hover .name {
+      color: #929292;
+    }
   }
 
   .avatar {
@@ -29,7 +33,8 @@
 
   .name {
     padding-left: 15px;
-    color: #333333;
+    color: $secondary-text-color;
+    transition: color 0.2s ease-in-out;
   }
 
   .button {
@@ -49,13 +54,6 @@
   .list li {
     list-style-type: none;
     height: 19px;
-    font-family: 'Nunito';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 19px;
-    letter-spacing: -0.01em;
-    color: #333333;
     padding-bottom: 20px;
     padding-left: 10px;
     cursor: pointer;
