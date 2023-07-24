@@ -1,6 +1,7 @@
+import { sortArrayICard } from './sortArrayICard';
 import { ICard } from '../interfaces';
 
-interface IOptions {
+export interface IOptions {
   widthPage: number;
   heightPage: number;
   paddingList: {
@@ -12,21 +13,6 @@ interface IOptions {
   gapX: number;
   gapY: number;
 }
-
-const sortArrayICard = (arr: Array<ICard>): Array<ICard> => {
-  return [...arr].sort((card1, card2) => {
-    const card1Area = card1.size.width * card1.size.height;
-    const card2Area = card2.size.width * card2.size.height;
-
-    if (card1Area < card2Area) {
-      return -1;
-    } else if (card1Area > card2Area) {
-      return 1;
-    } else {
-      return 0;
-    }
-  });
-};
 
 // Принимает массив с ICard и возвращает обновленный массив с ICard amount
 // Если стикеры все уместились возвращается пустой массив
@@ -55,10 +41,8 @@ export const calculateStickerOnList = (arr: ICard[], options: IOptions): ICard[]
     opacity: 0;
   `;
 
-  const sortedArray = sortArrayICard(arr);
-
-  for (let i = 0; i < sortedArray.length; i++) {
-    const objCopy = { ...sortedArray[i] };
+  for (let i = 0; i < arr.length; i++) {
+    const objCopy = { ...arr[i] };
     const amount = objCopy.amount;
     for (let j = 0; j < amount; j++) {
       const img = document.createElement('img');
@@ -76,12 +60,12 @@ export const calculateStickerOnList = (arr: ICard[], options: IOptions): ICard[]
         element.removeChild(element.lastElementChild);
         element.removeChild(element.lastElementChild);
         document.body.removeChild(document.body.querySelector('.listCalculate') as HTMLDivElement);
+        const currentList = [objCopy, ...arr.slice(i + 1, arr.length)];
 
-        if (sortedArray.length === 1) {
-          return [objCopy];
-        }
+        const allLists: ICard[][] = JSON.parse(localStorage.getItem('lists') as string) as ICard[][] || [];
+        localStorage.setItem('lists', JSON.stringify([...allLists, currentList]));
 
-        return [objCopy, ...sortedArray.slice(i + 1, sortedArray.length)];
+        return currentList;
       }
 
       objCopy.amount -= 1;

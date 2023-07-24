@@ -9,6 +9,7 @@ import { ICardsState } from '../../../interfaces';
 import { addCard } from '../../../store/cardsSlice';
 import { generateRandomNumber } from '../../../utils/generateRandomNumber';
 import { calculateStickerOnList } from '../../../utils/calculateStickerOnList';
+import { calculateLists } from '../../../utils/calculateLists';
 import styles from './AddStickers.module.scss';
 
 const AddStickers: React.FC = () => {
@@ -55,7 +56,7 @@ const AddStickers: React.FC = () => {
               className={styles.preview}
               onClick={() => {
                 console.log(
-                  calculateStickerOnList(cards, {
+                  calculateLists(cards, {
                     paddingList: { top: 40, right: 40, bottom: 40, left: 40 },
                     gapX: 20,
                     gapY: 22,
