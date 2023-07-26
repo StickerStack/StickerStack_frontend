@@ -45,7 +45,7 @@ const AddStickers: React.FC = () => {
         <section className={styles.info}>
           <div className={styles.info_pages}>
             <div className={styles.flex}>
-              <span className={styles.text}>Количество листов А4</span>
+              <span className={styles.text}>Количество листов</span>
               <span className={styles.amount}>{pages.length}</span>
             </div>
             <TextUnderline
