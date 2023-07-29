@@ -67,6 +67,10 @@ const cardsSlice = createSlice({
     deleteCard(state, action: { payload: number; type: string }) {
       state.cards = state.cards.filter((card) => card.id !== action.payload);
     },
+    cleanCards(state) {
+      state.cards = initialState.cards;
+      state.valid = initialState.valid;
+    },
     updateCard(state, action) {
       const { id, updatedCard } = action.payload;
       const indexCard = state.cards.findIndex((card) => card.id === id);
@@ -141,6 +145,7 @@ const cardsSliceReducer = cardsSlice.reducer;
 const {
   addCard,
   deleteCard,
+  cleanCards,
   setActive,
   setValid,
   checkValidation,
@@ -155,6 +160,7 @@ export {
   cardsSliceReducer,
   addCard,
   deleteCard,
+  cleanCards,
   setActive,
   setValid,
   checkValidation,

@@ -38,7 +38,7 @@ class Api {
     cropping: boolean,
     stickers: Array<OrderItem>,
   ) {
-    const data = await fetch(`${this.url}/orders/add_order`, {
+    const data = await fetch(`${this.url}/add_order`, {
       method: 'POST',
       credentials: 'include',
       headers: this.headers,

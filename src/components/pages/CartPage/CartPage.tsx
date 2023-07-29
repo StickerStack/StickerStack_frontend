@@ -7,10 +7,11 @@ import { TitlePage, Container, ButtonWithText, TextUnderline } from '../../UI';
 import { ADD_STICKERS } from '../../../utils/constants';
 import { Sticker } from '../../Sticker/Sticker';
 import { ICardsState, CartState } from '../../../interfaces';
-
-import styles from './CartPage.module.scss';
 import { InfoBox } from '../../InfoBox/InfoBox';
 import { uploadOrder } from '../../../store/cartSlice';
+import { cleanCards } from '../../../store/cardsSlice';
+
+import styles from './CartPage.module.scss';
 
 const CartPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -25,7 +26,7 @@ const CartPage: React.FC = () => {
     dispatch(
       uploadOrder({
         cost: 1500,
-        address: 'qwe',
+        address: 'Москва, ул. Пушкина, дом Калатушкина 25',
         number: 100,
         cropping: false,
         stickers: [
@@ -33,7 +34,14 @@ const CartPage: React.FC = () => {
           { image: cards[0].image, shape: 'square', amount: 5, size: '15' },
         ],
       }),
-    );
+    ).then((res) => {
+      if (res.meta.requestStatus === 'fulfilled') {
+        dispatch(cleanCards());
+      }
+      if (res.meta.requestStatus === 'rejected') {
+        console.log('Ошибочка вышла');
+      }
+    });
   };
 
   // ...
