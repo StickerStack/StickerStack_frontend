@@ -1,17 +1,4 @@
-import { ICard } from '../interfaces';
-
-interface IOptions {
-  widthPage: number;
-  heightPage: number;
-  paddingList: {
-    top: number;
-    right: number;
-    bottom: number;
-    left: number;
-  };
-  gapX: number;
-  gapY: number;
-}
+import { ICard, IOptions } from '../interfaces';
 
 const sortArrayICard = (arr: Array<ICard>): Array<ICard> => {
   return [...arr].sort((card1, card2) => {

@@ -1,4 +1,5 @@
 import sticker_page from '../images/sticker_page.svg';
+import { IOptions } from '../interfaces';
 // eslint-disable-next-line no-useless-escape
 const REG_EMAIL = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 // Только цифры от 1 до 100
@@ -28,6 +29,22 @@ const SIZE_INPUT_MAX_LENGTH = 25;
 // Мок страниц со стикерами, стоимости одной страницы
 const pages = [{ link: sticker_page }, { link: sticker_page }, { link: sticker_page }];
 const pagePrice = 490;
+
+// Мок параметров страницы
+const pageSize: IOptions = {
+  widthPage: 266.49,
+  heightPage: 382.4,
+  paddingList: {
+    top: 10.0,
+    right: 10.0,
+    bottom: 10.0,
+    left: 10.0,
+  },
+  gapX: 5,
+  gapY: 5,
+};
+
+const stickerWhiteBorder = 5;
 
 // Мок раздела вопросы и ответы
 
@@ -89,4 +106,6 @@ export {
   pages,
   questions,
   pagePrice,
+  pageSize,
+  stickerWhiteBorder,
 };

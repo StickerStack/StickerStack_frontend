@@ -1,9 +1,13 @@
 import { useState } from 'react';
+import cn from 'classnames';
 
 import { ImagePick } from '../ImagePick/ImagePick';
 import { ICard } from '../../interfaces';
 import { useAppDispatch } from '../../hooks/hooks';
 import { updatePicture } from '../../store/cardsSlice';
+import { stickerWhiteBorder } from '../../utils/constants';
+import { converter } from '../../utils/converter';
+
 import styles from './DragAndDrop.module.scss';
 
 interface IProps {
@@ -21,6 +25,8 @@ const DragAndDrop: React.FC<IProps> = ({ card }: IProps) => {
   const [imageFile, setImageFile] = useState<TFile>(null);
 
   const dispatch = useAppDispatch();
+
+  const borderInPx = converter.mmToPx(stickerWhiteBorder);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -65,7 +71,7 @@ const DragAndDrop: React.FC<IProps> = ({ card }: IProps) => {
           onLoadImage={handleImageChange}
           deleteImage={() => setImageFile(null)}
           image={imageFile.urlFilePreview}
-          shape={card.shape}
+          card={card}
         />
       ) : (
         <div className={styles.dnd}>
