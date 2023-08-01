@@ -19,14 +19,6 @@ const CART = '/cart';
 const VERIFY_FORGOT_PASSWORD = '/auth/verify-forgot-password/:token';
 const VERIFY_EMAIL = '/auth/verifyemail/:token';
 
-// Minmax ограничения инпутов
-const PROFILE_INPUT_MIN_LENGTH = 2;
-const PROFILE_INPUT_MAX_LENGTH = 30;
-const AMOUNT_INPUT_MIN_LENGTH = 1;
-const AMOUNT_INPUT_MAX_LENGTH = 100;
-const SIZE_INPUT_MIN_LENGTH = 1;
-const SIZE_INPUT_MAX_LENGTH = 25;
-
 // Мок страниц со стикерами, стоимости одной страницы
 const pages = [{ link: sticker_page }, { link: sticker_page }, { link: sticker_page }];
 const pagePrice = 290;
@@ -46,6 +38,13 @@ const pageSize: IOptions = {
 };
 
 const stickerWhiteBorder = 5;
+// Minmax ограничения инпутов
+const PROFILE_INPUT_MIN_LENGTH = 2;
+const PROFILE_INPUT_MAX_LENGTH = 30;
+const AMOUNT_INPUT_MIN_LENGTH = 1;
+const AMOUNT_INPUT_MAX_LENGTH = 100;
+const SIZE_INPUT_MIN_LENGTH = 1;
+const SIZE_INPUT_MAX_LENGTH = Math.round(pageSize.widthPage / 10);
 
 // Мок раздела вопросы и ответы
 
