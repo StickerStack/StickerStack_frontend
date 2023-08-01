@@ -66,6 +66,20 @@ const cardsSlice = createSlice({
     },
     deleteCard(state, action: { payload: number; type: string }) {
       state.cards = state.cards.filter((card) => card.id !== action.payload);
+      if (state.cards.length === 0) {
+        state.cards = [
+          {
+            image: '',
+            shape: 'square',
+            amount: 1,
+            size: { width: 0, height: 0 },
+            optimalSize: { width: 0, height: 0 },
+            id: generateRandomNumber(),
+            active: true,
+            valid: false,
+          },
+        ];
+      }
     },
     cleanCards(state) {
       state.cards = initialState.cards;

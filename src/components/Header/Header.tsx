@@ -5,7 +5,7 @@ import cn from 'classnames';
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAppDispatch } from '../../hooks/hooks';
-import { ICardsState, IUserState } from '../../interfaces';
+import { CartState, IUserState } from '../../interfaces';
 import { openPopup } from '../../store/popupSlice';
 import { CART, PAGE_404 } from '../../utils/constants';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
@@ -22,7 +22,7 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [isMenuShow, setIsMenuShow] = useState(false);
-  const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
+  const cart = useSelector((state: { cart: CartState }) => state.cart);
   const [y, setY] = useState(window.scrollY);
   const [visibleBorder, setVisibleBorder] = useState(false);
 
@@ -121,7 +121,7 @@ const Header: React.FC = () => {
         {isLogged ? (
           <div className={styles.buttons}>
             <div className={styles.cart} onClick={() => navigate(CART)}>
-              {cards.length > 0 && <div className={styles.badge}>{cards.length}</div>}
+              {cart.items.length > 0 && <div className={styles.badge}>{cart.items.length}</div>}
               <ButtonCustom type='cart' label='Перейти в корзину' onClick={() => navigate(CART)} />
             </div>
 

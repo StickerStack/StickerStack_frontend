@@ -1,11 +1,11 @@
 import cn from 'classnames';
-import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
 import { ButtonCustom } from '../UI';
 import { useAppDispatch } from '../../hooks/hooks';
 import { deleteCard } from '../../store/cardsSlice';
-import { ICard, ICardsState } from '../../interfaces';
+import { CartItem, ICard } from '../../interfaces';
+import { deleteItem } from '../../store/cartSlice';
 import { ADD_STICKERS, CART, stickerWhiteBorder } from '../../utils/constants';
 import { InfoBox } from '../InfoBox/InfoBox';
 import { converter } from '../../utils/converter';
@@ -13,7 +13,7 @@ import { converter } from '../../utils/converter';
 import styles from './Sticker.module.scss';
 
 interface IProps {
-  card: ICard;
+  card: ICard | CartItem;
   onClick?: () => void;
 }
 
@@ -21,10 +21,11 @@ const Sticker: React.FC<IProps> = ({ card, onClick }: IProps) => {
   const dispatch = useAppDispatch();
   const location = useLocation();
 
-  const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
   const borderInPx = converter.mmToPx(stickerWhiteBorder);
+
   const handleDelete = () => {
     dispatch(deleteCard(card.id));
+    dispatch(deleteItem(card.id));
   };
 
   const translateShape = () => {

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import cn from 'classnames';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { useSelector } from 'react-redux';
@@ -8,7 +9,7 @@ import { ADD_STICKERS } from '../../../utils/constants';
 import { Sticker } from '../../Sticker/Sticker';
 import { ICardsState, CartState } from '../../../interfaces';
 import { InfoBox } from '../../InfoBox/InfoBox';
-import { uploadOrder } from '../../../store/cartSlice';
+import { cleanCart, countTotal, uploadOrder } from '../../../store/cartSlice';
 import { cleanCards } from '../../../store/cardsSlice';
 
 import styles from './CartPage.module.scss';
@@ -18,17 +19,21 @@ const CartPage: React.FC = () => {
   const navigate = useNavigate();
 
   const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
-  const settings = useSelector((state: CartState) => state);
+  const cart = useSelector((state: { cart: CartState }) => state.cart);
+
+  useEffect(() => {
+    dispatch(countTotal());
+  }, [cart.items, cart.number_of_sheets]);
 
   // Пример запроса на оформление заказа
 
   const postOrder = () => {
     dispatch(
       uploadOrder({
-        cost: 1500,
+        cost: cart.cost,
         address: 'Москва, ул. Пушкина, дом Калатушкина 25',
-        number: 100,
-        cropping: false,
+        number: cart.number_of_sheets,
+        cropping: cart.cropping,
         stickers: [
           { image: cards[0].image, shape: 'square', amount: 5, size: '15' },
           { image: cards[0].image, shape: 'square', amount: 5, size: '15' },
@@ -37,6 +42,7 @@ const CartPage: React.FC = () => {
     ).then((res) => {
       if (res.meta.requestStatus === 'fulfilled') {
         dispatch(cleanCards());
+        dispatch(cleanCart());
       }
       if (res.meta.requestStatus === 'rejected') {
         console.log('Ошибочка вышла');
@@ -50,7 +56,7 @@ const CartPage: React.FC = () => {
     <main className={styles.cart}>
       <Container className={styles.cart_container}>
         <TitlePage type='main-title'>Корзина</TitlePage>
-        {cards.length === 0 ? (
+        {cart.items.length === 0 ? (
           <div className={styles.box}>
             <span className={styles.text}>Ваша корзина пуста</span>
             <ButtonWithText color='contrast' onClick={() => navigate(ADD_STICKERS)}>
@@ -60,29 +66,25 @@ const CartPage: React.FC = () => {
         ) : (
           <div className={styles.flex}>
             <div className={cn(styles.banner, styles.cards)}>
-              {cards.map((card) => (
+              {cart.items.map((card) => (
                 <Sticker key={card.id} card={card} />
               ))}
             </div>
             <div className={cn(styles.banner, styles.info)}>
-              {settings.cropping ? (
-                <span>Вырезать по контуру</span>
-              ) : (
-                <InfoBox
-                  type='number'
-                  description='Количество листов'
-                  descriptionClass={styles.description}
-                >
-                  10
-                </InfoBox>
-              )}
-
+              <InfoBox
+                type='number'
+                description='Количество листов'
+                descriptionClass={styles.description}
+              >
+                {cart.number_of_sheets}
+              </InfoBox>
+              {cart.cropping && <span>Вырезать по контуру</span>}
               <InfoBox
                 type='number'
                 description='Количество стикеров'
                 descriptionClass={styles.description}
               >
-                100
+                {cart.totalAmount}
               </InfoBox>
               <InfoBox type='simple' description='Адрес' className={styles.address_box}>
                 <div>
@@ -90,7 +92,7 @@ const CartPage: React.FC = () => {
                 </div>
               </InfoBox>
               <InfoBox type='simple' description='Итого' numberClass={styles.number}>
-                1490 ₽
+                {cart.cost} ₽
               </InfoBox>
               <div className={styles.buttons}>
                 <TextUnderline onClick={() => navigate(ADD_STICKERS)}>

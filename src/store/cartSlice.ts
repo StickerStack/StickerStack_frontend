@@ -1,28 +1,21 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { CartState } from '../interfaces/CartState';
 import { CartItem } from '../interfaces';
-import { generateRandomNumber } from '../utils/generateRandomNumber';
 import { api } from '../utils/api/Api';
 import { OrderItem } from '../interfaces/OrderItem';
+import { pagePrice } from '../utils/constants';
 
 const initialState: CartState = {
   cost: 0,
+  totalAmount: 0,
   address: '',
-  number_of_sheets: 0,
+  number_of_sheets: 1,
   cropping: false,
-  items: [
-    {
-      image: '',
-      shape: 'square',
-      amount: 1,
-      size: { width: 0, height: 0 },
-      id: generateRandomNumber(),
-    },
-  ],
+  items: [],
 };
 
 const uploadOrder = createAsyncThunk(
-  'orders/add_order',
+  'add_order',
   async (
     data: {
       cost: number;
@@ -56,17 +49,36 @@ const cartSlice = createSlice({
       state.items.push(...action.payload);
     },
     addItem(state, action: { payload: CartItem; type: string }) {
-      state.items.push({ ...action.payload });
+      const indexCard = state.items.find((card) => card.id === action.payload.id);
+      if (!indexCard) {
+        state.items.push({ ...action.payload });
+      }
     },
     deleteItem(state, action: { payload: number; type: string }) {
       state.items = state.items.filter((card) => card.id !== action.payload);
     },
-    updateItem(state, action) {
-      const { id, updatedItem } = action.payload;
-      const indexCard = state.items.findIndex((card) => card.id === id);
+    cleanCart(state) {
+      state.items = [];
+    },
+    updateItem(state, action: { payload: CartItem; type: string }) {
+      const { id, shape, amount, size, image } = action.payload;
+      const indexCard = state.items.find((card) => card.id === id);
+      if (indexCard) {
+        indexCard.shape = shape;
+        indexCard.amount = amount;
+        indexCard.size = size;
+        indexCard.image = image;
+      }
     },
     updateCropping(state, action) {
       state.cropping = action.payload;
+    },
+    countTotal(state) {
+      const sumAmount = state.items.reduce((acc, item) => acc + item.amount, 0);
+      const sumCost = state.number_of_sheets * pagePrice;
+
+      state.totalAmount = sumAmount;
+      state.cost = sumCost;
     },
   },
   extraReducers: (builder) => {
@@ -77,6 +89,17 @@ const cartSlice = createSlice({
 });
 
 const cartSliceReducer = cartSlice.reducer;
-const { addItem, deleteItem, updateItem, updateCropping } = cartSlice.actions;
+const { addItem, addItems, deleteItem, cleanCart, updateItem, updateCropping, countTotal } =
+  cartSlice.actions;
 
-export { cartSliceReducer, addItem, deleteItem, updateItem, updateCropping, uploadOrder };
+export {
+  cartSliceReducer,
+  addItems,
+  addItem,
+  deleteItem,
+  cleanCart,
+  updateItem,
+  updateCropping,
+  uploadOrder,
+  countTotal,
+};

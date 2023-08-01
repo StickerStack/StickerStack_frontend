@@ -12,7 +12,7 @@ import { openPreview } from '../../../store/popupSlice';
 import { pages, pagePrice, CART } from '../../../utils/constants';
 import { CartState, ICardsState } from '../../../interfaces';
 import { addCard, setActive } from '../../../store/cardsSlice';
-import { updateCropping } from '../../../store/cartSlice';
+import { addItems, updateCropping } from '../../../store/cartSlice';
 import { generateRandomNumber } from '../../../utils/generateRandomNumber';
 import { calculateStickerOnList } from '../../../utils/calculateStickerOnList';
 
@@ -23,11 +23,11 @@ const AddStickers: React.FC = () => {
   const navigate = useNavigate();
 
   const fullPrice = pagePrice * pages.length;
-  const itemPrice = (pagePrice * pages.length) / (pages.length * 35);
+  const itemPrice = Math.round((pagePrice * pages.length) / (pages.length * 35));
 
   const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
+  const cart = useSelector((state: { cart: CartState }) => state.cart);
   const validation = useSelector((state: { cards: ICardsState }) => state.cards.valid);
-  const settings = useSelector((state: CartState) => state);
 
   const handleAddCard = () => {
     dispatch(
@@ -45,7 +45,7 @@ const AddStickers: React.FC = () => {
   };
 
   const cropping = () => {
-    if (settings.cropping) {
+    if (cart.cropping) {
       return 'true';
     } else return 'false';
   };
@@ -178,14 +178,23 @@ const AddStickers: React.FC = () => {
             </RadioButton>
           </form>
         </section>
-        <ButtonWithText
-          theme='filled'
-          className={styles.button}
-          onClick={() => navigate(CART)}
-          disabled={!validation}
-        >
-          Перейти в корзину
-        </ButtonWithText>
+        {cart.items.length === 0 ? (
+          <ButtonWithText
+            theme='filled'
+            className={styles.button}
+            onClick={() => {
+              dispatch(addItems(cards));
+              navigate(CART);
+            }}
+            disabled={!validation}
+          >
+            Добавить в корзину
+          </ButtonWithText>
+        ) : (
+          <ButtonWithText theme='filled' className={styles.button} onClick={() => navigate(CART)}>
+            Перейти в корзину
+          </ButtonWithText>
+        )}
       </Container>
     </main>
   );

@@ -26,11 +26,10 @@ import {
   updateShape,
   updateSize,
 } from '../../store/cardsSlice';
-import { ICard, ICardsState } from '../../interfaces';
+import { CartState, ICard, ICardsState } from '../../interfaces';
 import { TCardShape } from '../../interfaces/ICard';
 import { registerAmount, registerSize } from '../../utils/registersRHF';
-import { addItem } from '../../store/cartSlice';
-import { generateRandomNumber } from '../../utils/generateRandomNumber';
+import { addItem, deleteItem, updateItem } from '../../store/cartSlice';
 import {
   AMOUNT_INPUT_MAX_LENGTH,
   AMOUNT_INPUT_MIN_LENGTH,
@@ -65,9 +64,13 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
   );
 
   const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
+  const cart = useSelector((state: { cart: CartState }) => state.cart);
 
   const handleDelete = () => {
     dispatch(deleteCard(card.id));
+    if (cart.items.length !== 0) {
+      dispatch(deleteItem(card.id));
+    }
   };
 
   useEffect(() => {
@@ -78,6 +81,7 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
 
   const {
     register,
+    watch,
     formState: { errors, isValid },
     setValue,
     getValues,
@@ -92,14 +96,17 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
           : 'custom',
     },
   });
+  const watchAllFields = watch();
 
   useEffect(() => {
     if (isValid) {
       dispatch(setValid({ id: card.id, valid: true }));
       dispatch(checkValidation());
+      cart.items.length !== 0 && dispatch(addItem(card));
     } else dispatch(setValid({ id: card.id, valid: false }));
     dispatch(checkValidation());
-  }, [isValid]);
+    watchAllFields && cart.items.length !== 0 && dispatch(updateItem(card));
+  }, [isValid, watchAllFields, card.image]);
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const number = Number(e.target.value);
@@ -191,6 +198,8 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
 
   useEffect(() => {
     if (!customVisible) {
+      setValue('width', Math.round(converter.pxToCm(card.optimalSize.width)));
+      setValue('height', Math.round(converter.pxToCm(card.optimalSize.height)));
       dispatch(
         updateSize({
           id: card.id,
@@ -198,6 +207,9 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
           width: card.optimalSize.width,
         }),
       );
+    } else {
+      setValue('width', Math.round(converter.pxToCm(card.size.width)));
+      setValue('height', Math.round(converter.pxToCm(card.size.height)));
     }
   }, [customVisible]);
 
@@ -221,17 +233,6 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
               required: 'Загрузите изображение',
             }}
             card={card}
-            onLoad={() => {
-              dispatch(
-                addItem({
-                  image: card.image,
-                  shape: card.shape,
-                  amount: card.amount,
-                  size: { width: card.size.width, height: card.size.height },
-                  id: generateRandomNumber(),
-                }),
-              );
-            }}
           />
         </div>
         <fieldset className={cn(styles.flex, styles.flex_shapes)}>

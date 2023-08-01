@@ -5,7 +5,6 @@ import cn from 'classnames';
 import { stickerWhiteBorder } from '../../utils/constants';
 import { converter } from '../../utils/converter';
 import { PicOverlay } from '../PicOverlay/PicOverlay';
-import { ImagePick } from '../ImagePick/ImagePick';
 import { ICard } from '../../interfaces';
 import { useAppDispatch } from '../../hooks/hooks';
 import { updatePicture } from '../../store/cardsSlice';
@@ -68,6 +67,7 @@ const DragAndDrop: React.FC<IProps> = ({ card, name, option, register, onLoad }:
         }
       };
     }
+
     if (onLoad) {
       onLoad();
     }

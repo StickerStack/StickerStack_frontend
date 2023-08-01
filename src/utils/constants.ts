@@ -29,7 +29,7 @@ const SIZE_INPUT_MAX_LENGTH = 25;
 
 // Мок страниц со стикерами, стоимости одной страницы
 const pages = [{ link: sticker_page }, { link: sticker_page }, { link: sticker_page }];
-const pagePrice = 490;
+const pagePrice = 290;
 
 // Мок параметров страницы
 const pageSize: IOptions = {
