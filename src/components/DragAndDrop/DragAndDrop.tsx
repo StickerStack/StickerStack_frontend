@@ -10,6 +10,7 @@ import { useAppDispatch } from '../../hooks/hooks';
 import { updatePicture } from '../../store/cardsSlice';
 
 import styles from './DragAndDrop.module.scss';
+import { openMessage } from '../../store/popupSlice';
 
 interface IProps {
   card: ICard;
@@ -27,7 +28,7 @@ const DragAndDrop: React.FC<IProps> = ({ card, name, option, register, onLoad }:
 
   const allowedTypeFile = ['image/png', 'image/jpeg', 'image/jpg'];
 
-  const [imageFile, setImageFile] = useState<TFile>(null);
+  const [sizeError, setSizeError] = useState(false);
 
   const dispatch = useAppDispatch();
 
@@ -43,27 +44,32 @@ const DragAndDrop: React.FC<IProps> = ({ card, name, option, register, onLoad }:
 
       reader.readAsDataURL(files[0]);
       reader.onloadend = () => {
-        const file = {
+        const file: TFile = {
           file: files[0],
           urlFilePreview: reader.result,
         };
-        setImageFile(file);
+        if (file.file.size < 2000000) {
+          setSizeError(false);
 
-        if (typeof reader.result === 'string') {
-          const image = new Image();
-          image.src = reader.result;
-          image.onload = () => {
-            if (typeof file.urlFilePreview === 'string') {
-              dispatch(
-                updatePicture({
-                  id: card.id,
-                  image: file.urlFilePreview,
-                  size: { width: image.naturalWidth, height: image.naturalHeight },
-                  optimalSize: { width: image.naturalWidth, height: image.naturalHeight },
-                }),
-              );
-            }
-          };
+          if (typeof reader.result === 'string') {
+            const image = new Image();
+            image.src = reader.result;
+            image.onload = () => {
+              if (typeof file.urlFilePreview === 'string') {
+                dispatch(
+                  updatePicture({
+                    id: card.id,
+                    image: file.urlFilePreview,
+                    size: { width: image.naturalWidth, height: image.naturalHeight },
+                    optimalSize: { width: image.naturalWidth, height: image.naturalHeight },
+                  }),
+                );
+              }
+            };
+          }
+        } else {
+          setSizeError(true);
+          dispatch(openMessage({ text: 'Максимальный размер картинки - до 2Мб!', isError: true }));
         }
       };
     }
