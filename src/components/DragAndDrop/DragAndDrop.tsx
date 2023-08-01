@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { UseFormRegister, FieldValues, RegisterOptions } from 'react-hook-form';
+import cn from 'classnames';
 
+import { stickerWhiteBorder } from '../../utils/constants';
+import { converter } from '../../utils/converter';
+import { PicOverlay } from '../PicOverlay/PicOverlay';
 import { ImagePick } from '../ImagePick/ImagePick';
 import { ICard } from '../../interfaces';
 import { useAppDispatch } from '../../hooks/hooks';
 import { updatePicture } from '../../store/cardsSlice';
-import { converter } from '../../utils/converter';
 
 import styles from './DragAndDrop.module.scss';
 
@@ -28,6 +31,8 @@ const DragAndDrop: React.FC<IProps> = ({ card, name, option, register, onLoad }:
   const [imageFile, setImageFile] = useState<TFile>(null);
 
   const dispatch = useAppDispatch();
+
+  const borderInPx = converter.mmToPx(stickerWhiteBorder);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -71,19 +76,26 @@ const DragAndDrop: React.FC<IProps> = ({ card, name, option, register, onLoad }:
   return (
     <div className={styles.container}>
       {card.image ? (
-        <ImagePick
-          onLoadImage={handleImageChange}
-          deleteImage={() => setImageFile(null)}
-          image={card.image}
-          shape={card.shape}
-        />
-      ) : imageFile ? (
-        <ImagePick
-          onLoadImage={handleImageChange}
-          deleteImage={() => setImageFile(null)}
-          image={imageFile.urlFilePreview}
-          shape={card.shape}
-        />
+        <div
+          className={cn(styles.border, styles[`border_${card.shape}`])}
+          style={{
+            width:
+              card.size.width / card.size.height >= 1
+                ? 255
+                : (card.size.width / card.size.height) * 255,
+            height:
+              card.size.height / card.size.width >= 1
+                ? 262
+                : (card.size.height / card.size.width) * 262,
+            padding: (borderInPx / card.size.width) * 255,
+          }}
+        >
+          <img
+            className={cn(styles.image, styles[`image_${card.shape}`])}
+            alt='Загруженное изображение'
+            src={`${card.image}`}
+          />
+        </div>
       ) : (
         <div className={styles.dnd}>
           <div className={styles.text}>
@@ -96,9 +108,17 @@ const DragAndDrop: React.FC<IProps> = ({ card, name, option, register, onLoad }:
         {...(register && register(name, option))}
         className={styles.input}
         type='file'
+        id='stickerFile'
         onChange={handleImageChange}
         accept='.jpg, .jpeg, .png'
       />
+      {card.image && (
+        <PicOverlay
+          className={styles.overlay}
+          onLoadImage={handleImageChange}
+          label='stickerFile'
+        />
+      )}
     </div>
   );
 };

@@ -6,7 +6,7 @@ import { ButtonCustom } from '../UI';
 import { useAppDispatch } from '../../hooks/hooks';
 import { deleteCard } from '../../store/cardsSlice';
 import { ICard, ICardsState } from '../../interfaces';
-import { ADD_STICKERS, CART } from '../../utils/constants';
+import { ADD_STICKERS, CART, stickerWhiteBorder } from '../../utils/constants';
 import { InfoBox } from '../InfoBox/InfoBox';
 import { converter } from '../../utils/converter';
 
@@ -22,7 +22,7 @@ const Sticker: React.FC<IProps> = ({ card, onClick }: IProps) => {
   const location = useLocation();
 
   const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
-
+  const borderInPx = converter.mmToPx(stickerWhiteBorder);
   const handleDelete = () => {
     dispatch(deleteCard(card.id));
   };
@@ -54,11 +54,26 @@ const Sticker: React.FC<IProps> = ({ card, onClick }: IProps) => {
     >
       <ul className={cn(styles.info, location.pathname === CART && styles.info_cart)}>
         {card.image ? (
-          <img
-            className={cn(styles.image, styles[`image_${card.shape}`])}
-            src={card.image}
-            alt='Изображение стикера'
-          />
+          <div
+            className={cn(styles.border, styles[`border_${card.shape}`])}
+            style={{
+              width:
+                card.size.width / card.size.height >= 1
+                  ? 140
+                  : (card.size.width / card.size.height) * 140,
+              height:
+                card.size.height / card.size.width >= 1
+                  ? 140
+                  : (card.size.height / card.size.width) * 140,
+              padding: (borderInPx / card.size.width) * 140,
+            }}
+          >
+            <img
+              className={cn(styles.image, styles[`image_${card.shape}`])}
+              src={card.image}
+              alt='Изображение стикера'
+            />
+          </div>
         ) : (
           <div className={cn(styles.image, styles.image_empty)} />
         )}

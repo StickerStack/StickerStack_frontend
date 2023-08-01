@@ -58,7 +58,11 @@ const sizeValidate = (value: string): boolean => {
 
 const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
   const dispatch = useAppDispatch();
-  const [customVisible, setCustomVisible] = useState<boolean>(false);
+  const [customVisible, setCustomVisible] = useState<boolean>(
+    card.size.width === card.optimalSize.width && card.size.height === card.optimalSize.height
+      ? false
+      : true,
+  );
 
   const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
 
@@ -82,7 +86,10 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
     defaultValues: {
       shape: card.shape,
       amount: card.amount,
-      size: 'optimal',
+      size:
+        card.size.width === card.optimalSize.width && card.size.height === card.optimalSize.height
+          ? 'optimal'
+          : 'custom',
     },
   });
 
