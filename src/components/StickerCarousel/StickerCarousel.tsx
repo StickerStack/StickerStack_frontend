@@ -1,4 +1,4 @@
-import { IOrder } from '../../interfaces/IOrder';
+import { IOrderState } from '../../interfaces/IOrderState';
 import Slider from 'react-slick';
 
 import { settings } from './settings';
@@ -8,7 +8,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import styles from './StickerCarousel.module.scss';
 
 interface IProps {
-  order: IOrder;
+  order: IOrderState;
 }
 
 const stickers = [

@@ -73,7 +73,7 @@ const questions = [
 const orders = [
   {
     id: 1,
-    delivery: { status: 'Оформлен', statuses: [{ id: 1, status: 'Оформлен', date: '5 апреля' }] },
+    delivery: { status: 'Оформлен', statuses: [{ id: 1, status: 'Оформлен', date: '3 апреля' }] },
     cost: 2000,
     amount: 50,
     number_of_sheets: 3,
@@ -81,7 +81,7 @@ const orders = [
   },
   {
     id: 2,
-    delivery: { status: 'Оформлен', statuses: [{ id: 1, status: 'Оформлен', date: '5 апреля' }] },
+    delivery: { status: 'Оформлен', statuses: [{ id: 1, status: 'Оформлен', date: '4 апреля' }] },
     cost: 1000,
     amount: 30,
     number_of_sheets: 2,
@@ -89,7 +89,14 @@ const orders = [
   },
   {
     id: 3,
-    delivery: { status: 'Оформлен', statuses: [{ id: 1, status: 'Оформлен', date: '5 апреля' }] },
+    delivery: {
+      status: 'В пути',
+      statuses: [
+        { id: 1, status: 'Оформлен', date: '5 апреля' },
+        { id: 2, status: 'Отправлен', date: '5 апреля' },
+        { id: 3, status: 'В пути', date: '6 апреля' },
+      ],
+    },
     cost: 1000,
     amount: 50,
     number_of_sheets: 2,
@@ -102,7 +109,7 @@ const orders = [
       statuses: [
         { id: 1, status: 'Оформлен', date: '5 апреля' },
         { id: 2, status: 'Оплачен', date: '5 апреля' },
-        { id: 3, status: 'Отправлен', date: '5 апреля' },
+        { id: 3, status: 'Отправлен', date: '6 апреля' },
       ],
     },
     cost: 1000,
@@ -112,7 +119,7 @@ const orders = [
   },
   {
     id: 5,
-    delivery: { status: 'Оформлен', statuses: [{ id: 1, status: 'Оформлен', date: '5 апреля' }] },
+    delivery: { status: 'Оформлен', statuses: [{ id: 1, status: 'Оформлен', date: '8 апреля' }] },
     cost: 500,
     amount: 20,
     number_of_sheets: 1,

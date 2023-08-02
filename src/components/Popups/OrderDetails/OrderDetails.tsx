@@ -1,4 +1,4 @@
-import { IOrder } from '../../../interfaces/IOrder';
+import { IOrderState } from '../../../interfaces/IOrderState';
 import { orders } from '../../../utils/constants';
 import { StickerCarousel } from '../../StickerCarousel/StickerCarousel';
 import { ButtonWithText } from '../../UI';
@@ -6,15 +6,10 @@ import { ButtonWithText } from '../../UI';
 import styles from './OrderDetails.module.scss';
 
 interface IProps {
-  id: number;
+  order: IOrderState;
 }
 
-const OrderDetails: React.FC<IProps> = ({ id }: IProps) => {
-  const order = orders.find((o: IOrder) => {
-    o.id = id;
-    return o;
-  });
-
+const OrderDetails: React.FC<IProps> = ({ order }: IProps) => {
   return (
     <>
       {order && (
@@ -42,12 +37,14 @@ const OrderDetails: React.FC<IProps> = ({ id }: IProps) => {
                 {order.amount} шт на {order.number_of_sheets} листах
               </li>
               <li className={styles.info_item}>Белая виниловая пленка</li>
-              <ButtonWithText theme='light' className={styles.button}>
-                Повторить заказ
-              </ButtonWithText>
-              <ButtonWithText theme='light' className={styles.button}>
-                Удалить
-              </ButtonWithText>
+              <div className={styles.buttons}>
+                <ButtonWithText theme='light' className={styles.button}>
+                  Повторить заказ
+                </ButtonWithText>
+                <ButtonWithText theme='light' className={styles.button}>
+                  Удалить
+                </ButtonWithText>
+              </div>
             </ul>
           </div>
         </div>

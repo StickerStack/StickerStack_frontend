@@ -4,7 +4,7 @@ interface IStatus {
   date: string;
 }
 
-export interface IOrder {
+export interface IOrderState {
   id: number;
   delivery: { status: string; statuses: Array<IStatus> };
   cost: number;

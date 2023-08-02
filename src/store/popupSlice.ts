@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { Signin } from '../components/Popups/Signin/Signin';
 import { IPopupState } from '../interfaces';
+import { IOrderState } from '../interfaces/IOrderState';
 
 const initialState: IPopupState = {
   isOpen: false,
@@ -25,7 +26,14 @@ const initialState: IPopupState = {
   },
   order: {
     isOpen: false,
-    id: 0,
+    content: {
+      id: 0,
+      delivery: { status: '', statuses: [] },
+      cost: 0,
+      amount: 0,
+      number_of_sheets: 0,
+      stickers: 0,
+    },
   },
 };
 
@@ -55,8 +63,8 @@ const popupSlice = createSlice({
       state.info.title = action.payload.title;
     },
 
-    openOrder(state, action: { payload: number; type: string }) {
-      state.order.id = action.payload;
+    openOrder(state, action: { payload: IOrderState; type: string }) {
+      state.order.content = action.payload;
       state.isOpen = true;
       state.order.isOpen = true;
     },

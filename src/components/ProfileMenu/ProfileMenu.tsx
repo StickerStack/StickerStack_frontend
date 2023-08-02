@@ -30,12 +30,16 @@ const ProfileMenu = forwardRef<HTMLHeadingElement>((props, ref) => {
     <div className={styles.menu} ref={ref}>
       <Link to={PROFILE} className={styles.profile}>
         <div className={styles.avatar}></div>
-        <div className={styles.name}>
+        <span className={styles.name}>
           {lastName || firstName ? `${lastName} ${firstName}` : email}
-        </div>
+        </span>
       </Link>
 
-      <ButtonWithText className={styles.button} onClick={() => navigate(ADD_STICKERS)}>
+      <ButtonWithText
+        className={styles.button}
+        color='contrast'
+        onClick={() => navigate(ADD_STICKERS)}
+      >
         Заказать стикеры
       </ButtonWithText>
 

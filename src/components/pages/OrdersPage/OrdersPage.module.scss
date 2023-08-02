@@ -14,6 +14,13 @@
   }
 }
 
+.empty {
+  width: 100%;
+  text-align: center;
+  @include flex(column, center, center);
+  gap: 30px;
+}
+
 .grid {
   width: 100%;
   display: grid;

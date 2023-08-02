@@ -18,17 +18,24 @@
     display: flex;
     align-items: center;
     text-decoration: none;
+    max-width: 200px;
 
     &:hover .name {
       color: #929292;
+    }
+
+    &:hover .avatar {
+      opacity: 0.85;
     }
   }
 
   .avatar {
     background-color: #d9d9d9;
+    min-width: 64px;
     width: 64px;
     height: 64px;
     border-radius: 32px;
+    transition: opacity 0.2s ease-in-out;
   }
 
   .name {
@@ -37,12 +44,15 @@
     transition: color 0.2s ease-in-out;
   }
 
+  .link,
+  .name {
+    font-size: 16px;
+  }
+
   .button {
     margin-top: 25px;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 21px;
-    padding: 14px 17px;
+    font-size: 16px;
+    padding: 14px 15px;
   }
 
   .list {

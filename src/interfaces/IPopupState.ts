@@ -1,3 +1,5 @@
+import { IOrderState } from './IOrderState';
+
 export interface IPopupState {
   isOpen: boolean;
 
@@ -25,6 +27,6 @@ export interface IPopupState {
 
   order: {
     isOpen: boolean;
-    id: number;
+    content: IOrderState;
   };
 }

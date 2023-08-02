@@ -32,6 +32,11 @@
   margin-top: -30px;
 }
 
+.buttons {
+  @include flex(column, start, start);
+  gap: 10px;
+}
+
 .button {
   &:first-child {
     margin-top: 15px;

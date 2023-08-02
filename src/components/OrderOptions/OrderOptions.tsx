@@ -4,13 +4,13 @@ import { TextUnderline } from '../UI';
 import { useAppDispatch } from '../../hooks/hooks';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 import { openOrder } from '../../store/popupSlice';
-import { IOrder } from '../../interfaces/IOrder';
+import { IOrderState } from '../../interfaces/IOrderState';
 
 import styles from './OrderOptions.module.scss';
 
 interface IProps {
   setIsOpen: (open: boolean) => void;
-  order: IOrder;
+  order: IOrderState;
 }
 
 const OrderOptions: React.FC<IProps> = ({ order, setIsOpen }: IProps) => {
@@ -26,7 +26,7 @@ const OrderOptions: React.FC<IProps> = ({ order, setIsOpen }: IProps) => {
       <TextUnderline
         className={styles.button}
         onClick={() => {
-          order && dispatch(openOrder(order.id));
+          order && dispatch(openOrder(order));
           setIsOpen(false);
         }}
       >

@@ -5,14 +5,14 @@ import { ButtonCustom } from '../UI';
 import { useAppDispatch } from '../../hooks/hooks';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 import { openOrder } from '../../store/popupSlice';
-import { IOrder } from '../../interfaces/IOrder';
+import { IOrderState } from '../../interfaces/IOrderState';
 import { OrderOptions } from '../OrderOptions/OrderOptions';
 import { StickerCarousel } from '../StickerCarousel/StickerCarousel';
 
 import styles from './OrderPreview.module.scss';
 
 interface IProps {
-  order: IOrder;
+  order: IOrderState;
 }
 
 const OrderPreview: React.FC<IProps> = ({ order }: IProps) => {
@@ -20,20 +20,20 @@ const OrderPreview: React.FC<IProps> = ({ order }: IProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className={styles.order} onClick={() => dispatch(openOrder(order.id))}>
-      <div className={styles.carousel}></div>
+    <div className={styles.order} onClick={() => dispatch(openOrder(order))}>
+      <div className={styles.image}></div>
       <div className={styles.info}>
         <span className={styles.cost}>{order.cost} ₽</span>
         <span className={styles.amount}>{order.amount} шт</span>
-        <ButtonCustom
+        {/* <ButtonCustom
           type='more'
           label='Опции'
           className={styles.button}
           onClick={() => !isOpen && setIsOpen(true)}
-        />
+        /> */}
         <span className={styles.status}>{order.delivery.status}</span>
 
-        <AnimatePresence>
+        {/* <AnimatePresence>
           {isOpen && (
             <motion.div
               className={styles.motion}
@@ -56,7 +56,7 @@ const OrderPreview: React.FC<IProps> = ({ order }: IProps) => {
               <OrderOptions setIsOpen={setIsOpen} order={order} />
             </motion.div>
           )}
-        </AnimatePresence>
+        </AnimatePresence> */}
       </div>
     </div>
   );
