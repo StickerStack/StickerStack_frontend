@@ -5,9 +5,8 @@ const REG_EMAIL = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 // Только цифры от 1 до 100
 const REG_STICKERS = /^[1-9][0-9]?$|^100$/;
 const REG_PASS = /(^[A-Za-z0-9!"#$% &'()*+,-./:;<=>?@[\]\\^_`{|}№~])+/g;
-const REG_SPACE = /\s/g;
 /* Только латинские и кириллические буквы и знак - */
-const PROFILE_ONLY_LETTERS = /^[а-яА-ЯёЁa-zA-Z-]+$/;
+const PROFILE_ONLY_LETTERS = /^(?!(?:.*-){3})(?!.*--)[а-яА-ЯёЁa-zA-Z-]+$/;
 // http://api.stickerstack.ru/v1   http://localhost:8000/v1  http://93.95.98.73:7080/v1
 const API_URL = 'https://api.stickerstack.ru/v1';
 
