@@ -23,7 +23,8 @@ const CartPage: React.FC = () => {
 
   useEffect(() => {
     dispatch(countTotal());
-  }, [cart.items, cart.number_of_sheets]);
+    // eslint-disable-next-line
+  }, [cart.items]);
 
   // Пример запроса на оформление заказа
 

@@ -31,6 +31,7 @@ const Header: React.FC = () => {
       setVisibleBorder(true);
     } else setVisibleBorder(false);
     setY(window.scrollY);
+    // eslint-disable-next-line
   }, [y]);
 
   useEffect(() => {
@@ -44,6 +45,7 @@ const Header: React.FC = () => {
 
   useEffect(() => {
     setIsMenuShow(false);
+    // eslint-disable-next-line
   }, [location, window.scrollY]);
 
   useEffect(() => {

@@ -9,7 +9,6 @@ interface IProps {
   description: string;
   descriptionClass?: string;
   children: React.ReactNode;
-  number?: number;
   numberClass?: string;
 }
 
@@ -17,7 +16,6 @@ const InfoBox: React.FC<IProps> = ({
   type = 'simple',
   description,
   descriptionClass,
-  number,
   className,
   children,
   numberClass,

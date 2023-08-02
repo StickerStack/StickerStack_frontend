@@ -28,8 +28,6 @@ const DragAndDrop: React.FC<IProps> = ({ card, name, option, register, onLoad }:
 
   const allowedTypeFile = ['image/png', 'image/jpeg', 'image/jpg'];
 
-  const [sizeError, setSizeError] = useState(false);
-
   const dispatch = useAppDispatch();
 
   const borderInPx = converter.mmToPx(stickerWhiteBorder);
@@ -49,8 +47,6 @@ const DragAndDrop: React.FC<IProps> = ({ card, name, option, register, onLoad }:
           urlFilePreview: reader.result,
         };
         if (file.file.size < 2000000) {
-          setSizeError(false);
-
           if (typeof reader.result === 'string') {
             const image = new Image();
             image.src = reader.result;
@@ -68,7 +64,6 @@ const DragAndDrop: React.FC<IProps> = ({ card, name, option, register, onLoad }:
             };
           }
         } else {
-          setSizeError(true);
           dispatch(openMessage({ text: 'Максимальный размер картинки - до 2Мб!', isError: true }));
         }
       };

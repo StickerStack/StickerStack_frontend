@@ -1,4 +1,4 @@
-import { OrderItem } from '../../interfaces/OrderItem';
+import { OrderItem } from '../../interfaces';
 import { API_URL } from '../constants';
 
 class Api {

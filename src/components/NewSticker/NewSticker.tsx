@@ -77,6 +77,7 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
     if (card.active) {
       dispatch(setActive(card.id));
     }
+    // eslint-disable-next-line
   }, [card.active, card.id]);
 
   const {
@@ -106,6 +107,7 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
     } else dispatch(setValid({ id: card.id, valid: false }));
     dispatch(checkValidation());
     watchAllFields && cart.items.length !== 0 && dispatch(updateItem(card));
+    // eslint-disable-next-line
   }, [isValid, watchAllFields, card.image]);
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -211,6 +213,7 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
       setValue('width', Math.round(converter.pxToCm(card.size.width)));
       setValue('height', Math.round(converter.pxToCm(card.size.height)));
     }
+    // eslint-disable-next-line
   }, [customVisible]);
 
   const onChangeSizeType = (showCustomSize: boolean) => {
