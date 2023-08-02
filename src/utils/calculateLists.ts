@@ -1,5 +1,5 @@
-import { ICard } from "../interfaces";
-import { IOptions, calculateStickerOnList } from "./calculateStickerOnList";
+import { IOptions, ICard } from "../interfaces";
+import { calculateStickerOnList } from "./calculateStickerOnList";
 import { sortArrayICard } from "./sortArrayICard";
 
 export const calculateLists = (arr: ICard[], options: IOptions): number => {
