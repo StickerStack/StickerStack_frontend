@@ -2,11 +2,6 @@
 
 .item {
   border-bottom: 1px solid $element-color;
-  cursor: pointer;
-
-  &:hover .button {
-    opacity: 0.7;
-  }
 }
 
 .heading {
@@ -14,6 +9,11 @@
   gap: 10px;
   padding: 17px 0;
   box-sizing: border-box;
+  cursor: pointer;
+
+  &:hover .button {
+    opacity: 0.7;
+  }
 }
 
 .question {

@@ -17,8 +17,8 @@ const Dropdown: React.FC<IProps> = ({ heading, content, id }: IProps) => {
   const [active, setActive] = useState(false);
 
   return (
-    <div className={styles.item} onClick={() => setActive(!active)}>
-      <div className={styles.heading}>
+    <div className={styles.item}>
+      <div className={styles.heading} onClick={() => setActive(!active)}>
         <p className={styles.question}>{heading}</p>
         <ButtonCustom
           type='arrow'
