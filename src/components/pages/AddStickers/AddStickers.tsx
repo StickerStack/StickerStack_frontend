@@ -15,6 +15,7 @@ import { addCard, setActive } from '../../../store/cardsSlice';
 import { addItems, updateCropping } from '../../../store/cartSlice';
 import { generateRandomNumber } from '../../../utils/generateRandomNumber';
 import { calculateStickerOnList } from '../../../utils/calculateStickerOnList';
+import { calculateLists } from '../../../utils/calculateLists';
 
 import styles from './AddStickers.module.scss';
 
@@ -139,7 +140,7 @@ const AddStickers: React.FC = () => {
               className={styles.preview}
               onClick={() => {
                 console.log(
-                  calculateStickerOnList(cards, {
+                  calculateLists(cards, {
                     paddingList: { top: 40, right: 40, bottom: 40, left: 40 },
                     gapX: 20,
                     gapY: 22,
