@@ -24,13 +24,15 @@ import {
   VERIFY_FORGOT_PASSWORD,
 } from '../../utils/constants';
 import { useAppDispatch } from '../../hooks/hooks';
+import { useScrollToTop } from '../../hooks/useScrollToTop';
 import { getUser, signInMockUser } from '../../store/userSlice';
 import styles from './App.module.scss';
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
-
   const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  useScrollToTop();
 
   useEffect(() => {
     if (localStorage.getItem('token')) {

@@ -1,6 +1,6 @@
 import cn from 'classnames';
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 
 import {
@@ -15,7 +15,13 @@ import {
 import { Shape } from '../Shape/Shape';
 import { DragAndDrop } from '../';
 import { useAppDispatch } from '../../hooks/hooks';
-import { deleteCard, removeBackground, updateAmount, updateShape, updateSize } from '../../store/cardsSlice';
+import {
+  deleteCard,
+  removeBackground,
+  updateAmount,
+  updateShape,
+  updateSize,
+} from '../../store/cardsSlice';
 import { ICard, ICardsState } from '../../interfaces';
 import { TCardShape } from '../../interfaces/ICard';
 import { registerAmount, registerSize } from '../../utils/registersRHF';
@@ -26,7 +32,7 @@ import {
   SIZE_INPUT_MAX_LENGTH,
   SIZE_INPUT_MIN_LENGTH,
 } from '../../utils/constants';
-import { converter } from "../../utils/converter";
+import { converter } from '../../utils/converter';
 
 import { tooltipText } from '../../utils/texts';
 
@@ -37,10 +43,12 @@ interface IProps {
 }
 
 const sizeValidate = (value: string): boolean => {
-  return REG_STICKERS.test(value) &&
-      Number(value) >= SIZE_INPUT_MIN_LENGTH &&
-      Number(value) <= SIZE_INPUT_MAX_LENGTH;
-}
+  return (
+    REG_STICKERS.test(value) &&
+    Number(value) >= SIZE_INPUT_MIN_LENGTH &&
+    Number(value) <= SIZE_INPUT_MAX_LENGTH
+  );
+};
 
 const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
   const dispatch = useAppDispatch();
@@ -56,9 +64,14 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
     register,
     formState: { errors },
     setValue,
+    getValues,
   } = useForm<FieldValues>({
     mode: 'onBlur',
-    defaultValues: { shape: card.shape, amount: card.amount, size: 'optimal' },
+    defaultValues: {
+      shape: card.shape,
+      amount: card.amount,
+      size: 'optimal',
+    },
   });
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -86,25 +99,89 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
 
   const onWidthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
+    setValue('width', value.trim());
+    if (card.shape === 'circle') {
+      setValue('height', value.trim());
+    }
     if (sizeValidate(value)) {
-      dispatch(updateSize({ id: card.id, width: converter.cmToPx(Number(value)), height: card.size.height}))
+      dispatch(
+        updateSize({
+          id: card.id,
+          width: converter.cmToPx(Number(value)),
+          height: card.shape === 'circle' ? converter.cmToPx(Number(value)) : card.size.height,
+        }),
+      );
     }
   };
 
   const onHeightChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
+    setValue('height', value.trim());
+    if (card.shape === 'circle') {
+      setValue('width', value.trim());
+    }
     if (sizeValidate(value)) {
-      dispatch(updateSize({ id: card.id, height: converter.cmToPx(Number(value)), width: card.size.width}))
+      dispatch(
+        updateSize({
+          id: card.id,
+          height: converter.cmToPx(Number(value)),
+          width: card.shape === 'circle' ? converter.cmToPx(Number(value)) : card.size.width,
+        }),
+      );
     }
   };
 
+  useEffect(() => {
+    const widthValue = getValues('width');
+    const heightValue = getValues('height');
+    if (card.shape === 'circle' && customVisible) {
+      if (heightValue > widthValue) {
+        setValue('height', widthValue);
+        if (sizeValidate(widthValue)) {
+          dispatch(
+            updateSize({
+              id: card.id,
+              height: converter.cmToPx(Number(widthValue)),
+              width: converter.cmToPx(Number(widthValue)),
+            }),
+          );
+        }
+      }
+      if (widthValue > heightValue) {
+        setValue('width', heightValue);
+        if (sizeValidate(heightValue)) {
+          dispatch(
+            updateSize({
+              id: card.id,
+              height: converter.cmToPx(Number(heightValue)),
+              width: converter.cmToPx(Number(heightValue)),
+            }),
+          );
+        }
+      }
+    }
+  }, [card.id, card.shape, dispatch, getValues, setValue, customVisible]);
+
+  useEffect(() => {
+    if (!customVisible) {
+      dispatch(
+        updateSize({
+          id: card.id,
+          height: card.optimalSize.height,
+          width: card.optimalSize.width,
+        }),
+      );
+    }
+  }, [customVisible]);
+
   const onChangeSizeType = (showCustomSize: boolean) => {
     if (showCustomSize) {
-      card.size.width && setValue('width', Math.round(converter.pxToCm(card.size.width)));
-      card.size.height && setValue('height', Math.round(converter.pxToCm(card.size.height)));
+      card.size.width && setValue('width', Math.round(converter.pxToCm(card.optimalSize.width)));
+      card.size.height && setValue('height', Math.round(converter.pxToCm(card.optimalSize.height)));
     }
+
     setCustomVisible(showCustomSize);
-  }
+  };
 
   return (
     <section className={styles.card}>
@@ -196,7 +273,7 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
                     register={register}
                     option={{
                       ...registerSize,
-                      onChange: onWidthChange
+                      onChange: onWidthChange,
                     }}
                     name='width'
                     placeholder='ширина'
@@ -209,13 +286,13 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
                     register={register}
                     option={{
                       ...registerSize,
-                      onChange: onHeightChange
+                      onChange: onHeightChange,
                     }}
                     name='height'
                     placeholder='высота'
                     error={errors.height}
                   />
-                    см
+                  см
                   <InputError className='size' error={errors.width || errors.height} />
                 </InputField>
               </div>

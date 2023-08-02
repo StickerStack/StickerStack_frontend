@@ -1,18 +1,5 @@
 import { sortArrayICard } from './sortArrayICard';
-import { ICard } from '../interfaces';
-
-export interface IOptions {
-  widthPage: number;
-  heightPage: number;
-  paddingList: {
-    top: number;
-    right: number;
-    bottom: number;
-    left: number;
-  };
-  gapX: number;
-  gapY: number;
-}
+import { ICard, IOptions } from '../interfaces';
 
 // Принимает массив с ICard и возвращает обновленный массив с ICard amount
 // Если стикеры все уместились возвращается пустой массив
