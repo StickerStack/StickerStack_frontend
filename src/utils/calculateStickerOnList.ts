@@ -1,4 +1,3 @@
-import { sortArrayICard } from './sortArrayICard';
 import { ICard, IOptions } from '../interfaces';
 
 // Принимает массив с ICard и возвращает обновленный массив с ICard amount
@@ -10,22 +9,23 @@ export const calculateStickerOnList = (arr: ICard[], options: IOptions): ICard[]
   element.innerHTML = '';
   element.style.cssText = `
     background-color: gray;
-    padding: ${options.paddingList.top}px ${options.paddingList.right}px ${options.paddingList.bottom}px ${options.paddingList.left}px;
-    border: 1px solid black;
-    display: flex; 
-    flex-wrap: wrap; 
-    width: ${options.widthPage}px; 
-    height: ${options.heightPage}px; 
-    box-sizing: border-box;
-    gap: ${options.gapX}px ${options.gapY}px;
-    align-content: flex-start;
-    justify-content: center;
+    width: ${options.widthPage}px;
+    height: ${options.heightPage}px;
+    max-height: ${options.heightPage}px;
+    padding: ${options.paddingList.top}px ${options.paddingList.right}px ${
+    options.paddingList.bottom
+  }px ${options.paddingList.left}px;
+    display: grid;
+    grid-auto-flow: row dense;
+    grid-template-columns: repeat(${Math.floor(options.widthPage)}, 1px);
+    grid-template-rows: repeat(${Math.floor(options.heightPage)}, 1px);
     overflow: hidden;
     white-space: nowrap;
     position: absolute;
     top: 0;
     left: 0;
     opacity: 0;
+    
   `;
 
   for (let i = 0; i < arr.length; i++) {
@@ -39,7 +39,9 @@ export const calculateStickerOnList = (arr: ICard[], options: IOptions): ICard[]
       img.width = objCopy.size.width;
       img.height = objCopy.size.height;
       img.style.cssText = `
-        object-fit: contain;  
+        object-fit: cover;
+        grid-row: span ${Math.ceil(objCopy.size.height + options.gapY)};
+        grid-column: span ${Math.ceil(objCopy.size.width + options.gapX)};
       `;
       element.appendChild(img);
 
@@ -49,7 +51,8 @@ export const calculateStickerOnList = (arr: ICard[], options: IOptions): ICard[]
         document.body.removeChild(document.body.querySelector('.listCalculate') as HTMLDivElement);
         const currentList = [objCopy, ...arr.slice(i + 1, arr.length)];
 
-        const allLists: ICard[][] = JSON.parse(localStorage.getItem('lists') as string) as ICard[][] || [];
+        const allLists: ICard[][] =
+          (JSON.parse(localStorage.getItem('lists') as string) as ICard[][]) || [];
         localStorage.setItem('lists', JSON.stringify([...allLists, currentList]));
 
         return currentList;

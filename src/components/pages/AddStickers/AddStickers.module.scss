@@ -58,6 +58,7 @@
 
 .prices {
   @include flex(column, center, center);
+  width: 90px;
 }
 
 .price {

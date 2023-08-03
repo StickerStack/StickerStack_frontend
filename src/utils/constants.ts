@@ -1,4 +1,5 @@
 import sticker_page from '../images/sticker_page.svg';
+import { converter } from '../utils/converter';
 import { IOptions } from '../interfaces';
 // eslint-disable-next-line no-useless-escape
 const REG_EMAIL = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
@@ -20,7 +21,7 @@ const VERIFY_FORGOT_PASSWORD = '/auth/verify-forgot-password/:token';
 const VERIFY_EMAIL = '/auth/verifyemail/:token';
 
 // Мок страниц со стикерами, стоимости одной страницы
-const pages = [{ link: sticker_page }, { link: sticker_page }, { link: sticker_page }];
+
 const pagePrice = 290;
 
 // Мок параметров страницы
@@ -35,6 +36,19 @@ const pageSize: IOptions = {
   },
   gapX: 5,
   gapY: 5,
+};
+
+const pageSizePx = {
+  widthPage: converter.mmToPx(pageSize.widthPage),
+  heightPage: converter.mmToPx(pageSize.heightPage),
+  paddingList: {
+    top: converter.mmToPx(pageSize.paddingList.top),
+    right: converter.mmToPx(pageSize.paddingList.right),
+    bottom: converter.mmToPx(pageSize.paddingList.bottom),
+    left: converter.mmToPx(pageSize.paddingList.left),
+  },
+  gapX: converter.mmToPx(pageSize.gapX),
+  gapY: converter.mmToPx(pageSize.gapY),
 };
 
 const stickerWhiteBorder = 5;
@@ -104,9 +118,9 @@ export {
   AMOUNT_INPUT_MAX_LENGTH,
   SIZE_INPUT_MIN_LENGTH,
   SIZE_INPUT_MAX_LENGTH,
-  pages,
   questions,
   pagePrice,
   pageSize,
+  pageSizePx,
   stickerWhiteBorder,
 };

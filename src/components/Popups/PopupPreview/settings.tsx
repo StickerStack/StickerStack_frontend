@@ -2,8 +2,6 @@
 import { MouseEventHandler } from 'react';
 import cn from 'classnames';
 
-import { pages } from '../../../utils/constants';
-
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import styles from './PopupPreview.module.scss';
@@ -48,7 +46,7 @@ const settings = {
   customPaging: function (i: number) {
     return (
       <span className={styles.page_numbers}>
-        {i + 1}/{pages.length}
+        {i + 1}/{1}
       </span>
     );
   },
