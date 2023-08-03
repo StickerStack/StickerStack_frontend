@@ -6,8 +6,8 @@
   flex-direction: column;
   align-items: flex-start;
   padding: 25px 40px 45px;
-  background: #ffffff;
-  box-shadow: 3px 3px 10px rgba(65, 65, 65, 0.15);
+  background: $popup-bg-color;
+  box-shadow: 3px 3px 10px rgba(32, 62, 124, 0.2);
   border-radius: 10px;
   position: absolute;
   top: 90px;
@@ -21,7 +21,7 @@
   }
 
   .avatar {
-    background-color: #d9d9d9;
+    background-color: $element-color;
     width: 64px;
     height: 64px;
     border-radius: 32px;
@@ -29,7 +29,7 @@
 
   .name {
     padding-left: 15px;
-    color: #333333;
+    color: $main-text-color;
   }
 
   .button {
@@ -55,7 +55,7 @@
     font-size: 14px;
     line-height: 19px;
     letter-spacing: -0.01em;
-    color: #333333;
+    color: $main-text-color;
     padding-bottom: 20px;
     padding-left: 10px;
     cursor: pointer;

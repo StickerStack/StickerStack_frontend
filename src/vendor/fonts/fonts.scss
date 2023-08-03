@@ -30,3 +30,9 @@ $montserrat-path: './Montserrat';
   font-weight: 600;
   src: url('#{$montserrat-path}/Montserrat-SemiBold.ttf') format('truetype');
 }
+
+@font-face {
+  font-family: 'Montserrat';
+  font-weight: 700;
+  src: url('#{$montserrat-path}/Montserrat-Bold.ttf') format('truetype');
+}

@@ -8,20 +8,35 @@
 
   @include flex(row, _, _);
   gap: 50px;
+
+  @media screen and (max-width: 1010px) {
+    flex-direction: column-reverse;
+    gap: 10px;
+    padding-top: calc(100vh / 30);
+  }
+
+  @media screen and (max-width: 768px) {
+    padding-top: calc(100vh / 70);
+  }
 }
 .section {
   margin-top: 70px;
+
+  @media screen and (max-width: 1010px) {
+    margin-top: 0;
+  }
 }
 .title {
   font-style: normal;
   @include font(48px, 65px, 700);
+  letter-spacing: 0.48px;
   margin: 0 0 30px;
   color: $secondary-text-color;
 }
 
 .description {
-  font-style: normal;
-  @include font(20px, 23px, 400);
+  max-width: 445px;
+  @include font(24px, 24px, 500);
   margin: 0 0 60px;
   color: $secondary-text-color;
 }
@@ -30,6 +45,11 @@
   min-width: 520px;
   height: 520px;
   position: relative;
+
+  @media screen and (max-width: 1010px) {
+    margin: 0 auto;
+    height: 440px;
+  }
 }
 
 .image {

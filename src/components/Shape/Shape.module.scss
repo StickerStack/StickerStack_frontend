@@ -1,30 +1,30 @@
 @import '../../utils/_scss-variables.scss';
 
 .shape {
-  width: 65px;
+  max-width: 110px;
   height: 89px;
   @include flex(column, flex-start, center);
   gap: 5px;
   cursor: pointer;
 
   &:hover .shape_pic {
-    background: $element-active-color;
+    background: $element-secondary-active-color;
   }
 }
 
 .shape_pic {
   width: 56px;
   height: 56px;
-  background: $element-color;
-  color: $main-text-color;
+  background: $element-secondary-color;
+  color: $regular-button-bg-color;
   border-radius: 10px;
   @include flex(row, center, center);
-  transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.2s, color 0.2s ease-in-out;
 }
 
 .shape_title {
   display: block;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 14px;
   text-align: center;
 }
@@ -34,5 +34,6 @@
 
   &:checked + label .shape_pic {
     background: $element-active-color;
+    color: $contrast-text-color;
   }
 }

@@ -3,12 +3,14 @@ import { popupSliceReducer } from './popupSlice';
 import { userSliceReducer } from './userSlice';
 import { authSliceReducer } from './authSlice';
 import { cardsSliceReducer } from './cardsSlice';
+import { cartSliceReducer } from './cartSlice';
 
 const rootReducer = combineReducers({
   popup: popupSliceReducer,
   user: userSliceReducer,
   auth: authSliceReducer,
   cards: cardsSliceReducer,
+  cart: cartSliceReducer,
 });
 
 const store = configureStore({

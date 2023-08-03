@@ -15,11 +15,12 @@ import {
   Preloader,
   Footer,
 } from '../';
-
+import { CartPage } from '../pages/CartPage/CartPage';
 import {
   PROFILE,
   PAGE_404,
   ADD_STICKERS,
+  CART,
   VERIFY_EMAIL,
   VERIFY_FORGOT_PASSWORD,
 } from '../../utils/constants';
@@ -63,6 +64,14 @@ const App: React.FC = () => {
               element={
                 <ProtectedRoute redirectPath='/'>
                   <AddStickers />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path={CART}
+              element={
+                <ProtectedRoute redirectPath='/'>
+                  <CartPage />
                 </ProtectedRoute>
               }
             />

@@ -35,8 +35,8 @@
   font-size: 11px;
   color: $main-text-color;
   text-align: center;
-  background-color: $element-color;
+  background-color: $element-secondary-active-color;
   &:hover {
-    background-color: $element-active-color;
+    background-color: $element-secondary-color;
   }
 }

@@ -8,6 +8,7 @@
   box-sizing: border-box;
   &_container {
     @include flex(row, space-between, _);
+    flex-wrap: wrap;
     background-color: $secondary-bg-color;
     color: $contrast-text-color;
   }

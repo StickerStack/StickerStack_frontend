@@ -14,17 +14,22 @@ import {
 } from '../UI';
 import { Shape } from '../Shape/Shape';
 import { DragAndDrop } from '../';
+import { InfoBox } from '../InfoBox/InfoBox';
 import { useAppDispatch } from '../../hooks/hooks';
 import {
+  checkValidation,
   deleteCard,
   removeBackground,
+  setActive,
+  setValid,
   updateAmount,
   updateShape,
   updateSize,
 } from '../../store/cardsSlice';
-import { ICard, ICardsState } from '../../interfaces';
+import { CartState, ICard, ICardsState } from '../../interfaces';
 import { TCardShape } from '../../interfaces/ICard';
 import { registerAmount, registerSize } from '../../utils/registersRHF';
+import { addItem, deleteItem, updateItem } from '../../store/cartSlice';
 import {
   AMOUNT_INPUT_MAX_LENGTH,
   AMOUNT_INPUT_MIN_LENGTH,
@@ -52,17 +57,33 @@ const sizeValidate = (value: string): boolean => {
 
 const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
   const dispatch = useAppDispatch();
-  const [customVisible, setCustomVisible] = useState<boolean>(false);
+  const [customVisible, setCustomVisible] = useState<boolean>(
+    card.size.width === card.optimalSize.width && card.size.height === card.optimalSize.height
+      ? false
+      : true,
+  );
 
   const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
+  const cart = useSelector((state: { cart: CartState }) => state.cart);
 
   const handleDelete = () => {
     dispatch(deleteCard(card.id));
+    if (cart.items.length !== 0) {
+      dispatch(deleteItem(card.id));
+    }
   };
+
+  useEffect(() => {
+    if (card.active) {
+      dispatch(setActive(card.id));
+    }
+    // eslint-disable-next-line
+  }, [card.active, card.id]);
 
   const {
     register,
-    formState: { errors },
+    watch,
+    formState: { errors, isValid },
     setValue,
     getValues,
   } = useForm<FieldValues>({
@@ -70,9 +91,24 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
     defaultValues: {
       shape: card.shape,
       amount: card.amount,
-      size: 'optimal',
+      size:
+        card.size.width === card.optimalSize.width && card.size.height === card.optimalSize.height
+          ? 'optimal'
+          : 'custom',
     },
   });
+  const watchAllFields = watch();
+
+  useEffect(() => {
+    if (isValid) {
+      dispatch(setValid({ id: card.id, valid: true }));
+      dispatch(checkValidation());
+      cart.items.length !== 0 && dispatch(addItem(card));
+    } else dispatch(setValid({ id: card.id, valid: false }));
+    dispatch(checkValidation());
+    watchAllFields && cart.items.length !== 0 && dispatch(updateItem(card));
+    // eslint-disable-next-line
+  }, [isValid, watchAllFields, card.image]);
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const number = Number(e.target.value);
@@ -164,6 +200,8 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
 
   useEffect(() => {
     if (!customVisible) {
+      setValue('width', Math.round(converter.pxToCm(card.optimalSize.width)));
+      setValue('height', Math.round(converter.pxToCm(card.optimalSize.height)));
       dispatch(
         updateSize({
           id: card.id,
@@ -171,7 +209,11 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
           width: card.optimalSize.width,
         }),
       );
+    } else {
+      setValue('width', Math.round(converter.pxToCm(card.size.width)));
+      setValue('height', Math.round(converter.pxToCm(card.size.height)));
     }
+    // eslint-disable-next-line
   }, [customVisible]);
 
   const onChangeSizeType = (showCustomSize: boolean) => {
@@ -187,10 +229,19 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
     <section className={styles.card}>
       <form className={styles.info}>
         <div className={styles.image}>
-          <DragAndDrop card={card} />
+          <DragAndDrop
+            register={register}
+            name='dnd'
+            option={{
+              required: 'Загрузите изображение',
+            }}
+            card={card}
+          />
         </div>
         <fieldset className={cn(styles.flex, styles.flex_shapes)}>
-          <p className={styles.category}>Форма</p>
+          <label className={styles.category} htmlFor='shape'>
+            Форма
+          </label>
           <div className={styles.shapes}>
             <Shape
               register={register}
@@ -213,36 +264,36 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
               value='circle'
               onShapeChange={onShapeChange}
             />
-            <Shape
+            {/* <Shape
               register={register}
               name='shape'
               card={card}
               value='contour'
               onShapeChange={onShapeChange}
-            />
+            /> */}
           </div>
         </fieldset>
-        <div>
-          <div className={styles.flex}>
-            <label className={styles.category} htmlFor='amount' onClick={() => console.log(errors)}>
-              Количество стикеров
-            </label>
-            <div>
-              <Input
-                className='amount'
-                register={register}
-                option={{
-                  ...registerAmount,
-                  onChange: (e) => {
-                    handleAmountChange(e);
-                  },
-                }}
-                name='amount'
-              />
-              <Error className={styles.error}>{errors.amount && `${errors.amount?.message}`}</Error>
-            </div>
-          </div>
-        </div>
+        <fieldset className={styles.flex}>
+          <label className={styles.category} htmlFor='amount'>
+            Количество стикеров
+          </label>
+          <InputField className='amount'>
+            <Input
+              className='amount'
+              register={register}
+              option={{
+                ...registerAmount,
+                onChange: (e) => {
+                  handleAmountChange(e);
+                },
+              }}
+              name='amount'
+              error={errors.amount}
+            />
+            <InputError className='amount' error={errors.amount} />
+          </InputField>
+        </fieldset>
+
         <fieldset className={styles.flex}>
           <p className={styles.category}>Размер</p>
           <div className={styles.options}>
@@ -301,23 +352,27 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
         </fieldset>
 
         <div className={styles.flex}>
-          <p className={styles.category}>Цвет фона</p>
-          <label className={styles.text}>белый</label>
-          <div className={styles.color_sample} />
+          <InfoBox type='simple' description='Цвет фона'>
+            <div className={styles.flexible}>
+              белый
+              <div className={styles.color_sample} />
+            </div>
+          </InfoBox>
         </div>
         <div className={styles.flex}>
-          <p className={styles.category}>Материал</p>
-          <p className={styles.text}>винил</p>
+          <InfoBox type='simple' description='Материал'>
+            винил
+          </InfoBox>
         </div>
       </form>
-      {cards.length > 1 ? (
+      {cards.length > 1 && (
         <ButtonCustom
           type='delete'
           className={styles.delete}
           label='Удалить'
           onClick={handleDelete}
         />
-      ) : null}
+      )}
     </section>
   );
 };
