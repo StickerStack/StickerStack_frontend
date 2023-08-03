@@ -4,7 +4,7 @@ import { TextUnderline } from '../UI';
 import { useAppDispatch } from '../../hooks/hooks';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 import { openOrder } from '../../store/popupSlice';
-import { IOrderState } from '../../interfaces/IOrderState';
+import { IOrderState } from '../../interfaces';
 
 import styles from './OrderOptions.module.scss';
 

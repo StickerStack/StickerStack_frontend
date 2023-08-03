@@ -10,7 +10,7 @@ import styles from './PopupPreview.module.scss';
 const PopupPreview: React.FC = () => {
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Так будет выглядеть набор на листе А4</h2>
+      <h2 className={styles.title}>Так будет выглядеть набор на листе</h2>
       <Slider {...settings}>
         <StickerList />
       </Slider>

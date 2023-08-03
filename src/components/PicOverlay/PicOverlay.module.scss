@@ -1,0 +1,42 @@
+@import '../../utils/_scss-variables.scss';
+
+.overlay {
+  position: absolute;
+  @include flex(column, center, center);
+  height: 0;
+  opacity: 0;
+  width: 100%;
+  box-sizing: border-box;
+  background: rgba(65, 65, 65, 0.8);
+  bottom: 0;
+  transition: height 0.3s, opacity 0.3s, padding 0.3s ease-in-out;
+  z-index: 2;
+}
+
+.button {
+  width: 245px;
+  height: 32px;
+  padding: 8px 10px;
+  font-size: 14px;
+  box-sizing: border-box;
+  color: white;
+  border-radius: 10px;
+  transition: background-color 0.3s ease-in-out;
+  &:hover {
+    color: white;
+    opacity: 1;
+    background: #929292b6;
+  }
+}
+
+.flex {
+  @include flex(row, flex-start, center);
+  gap: 15px;
+  cursor: pointer;
+}
+
+.input {
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+}

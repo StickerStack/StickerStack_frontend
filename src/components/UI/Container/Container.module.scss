@@ -8,4 +8,16 @@
   padding: 0 165px;
   box-sizing: border-box;
   background-color: $main-bg-color;
+
+  @media screen and (max-width: 1330px) {
+    padding: 0 70px;
+  }
+
+  @media screen and (max-width: 768px) {
+    padding: 0 40px;
+  }
+
+  @media screen and (max-width: 460px) {
+    padding: 0 20px;
+  }
 }

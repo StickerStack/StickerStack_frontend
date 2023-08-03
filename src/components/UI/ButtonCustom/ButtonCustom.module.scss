@@ -34,6 +34,12 @@
   background-image: url(../../../images/icons/profile-icon.svg);
 }
 
+.button_cart {
+  width: 32px;
+  height: 32px;
+  background-image: url(../../../images/icons/cart.svg);
+}
+
 .button_delete {
   width: 24px;
   height: 24px;
@@ -41,9 +47,9 @@
 }
 
 .button_arrow {
-  width: 32px;
+  min-width: 32px;
   height: 32px;
-  background-color: $element-active-color;
+  background-color: $element-color;
   border-radius: 50%;
   background-image: url(../../../images/icons/arrow-small.svg);
   background-size: auto;

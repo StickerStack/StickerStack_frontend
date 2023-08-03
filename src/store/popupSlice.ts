@@ -1,8 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { Signin } from '../components/Popups/Signin/Signin';
-import { IPopupState } from '../interfaces';
-import { IOrderState } from '../interfaces/IOrderState';
+import { IPopupState, IOrderState } from '../interfaces';
 
 const initialState: IPopupState = {
   isOpen: false,
@@ -27,12 +26,15 @@ const initialState: IPopupState = {
   order: {
     isOpen: false,
     content: {
-      id: 0,
-      delivery: { status: '', statuses: [] },
+      order_id: 0,
+      address: '',
+      cropping: true,
+      created_at: '',
+      //  delivery: { status: '', statuses: [] },
       cost: 0,
-      amount: 0,
+      //   amount: 0,
       number_of_sheets: 0,
-      stickers: 0,
+      //    stickers: 0,
     },
   },
 };
