@@ -1,18 +1,20 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import cn from 'classnames';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { TitlePage, Container, ButtonWithText, TextUnderline } from '../../UI';
+import { TitlePage, Container, ButtonWithText, TextUnderline, Input } from '../../UI';
 import { ADD_STICKERS } from '../../../utils/constants';
 import { Sticker } from '../../Sticker/Sticker';
 import { ICardsState, CartState } from '../../../interfaces';
 import { InfoBox } from '../../InfoBox/InfoBox';
-import { cleanCart, countTotal, uploadOrder } from '../../../store/cartSlice';
+import { cleanCart, countTotal, updateAddress, uploadOrder } from '../../../store/cartSlice';
 import { cleanCards } from '../../../store/cardsSlice';
 
+import { ReactComponent as WriteSvg } from '../../../images/icons/write-icon.svg';
 import styles from './CartPage.module.scss';
+import { useForm, FieldValues } from 'react-hook-form';
 
 const CartPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -21,6 +23,22 @@ const CartPage: React.FC = () => {
   const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
   const cart = useSelector((state: { cart: CartState }) => state.cart);
 
+  const {
+    register,
+    setValue,
+    formState: { errors, isValid },
+    handleSubmit,
+    watch,
+  } = useForm<FieldValues>({
+    mode: 'onBlur',
+  });
+
+  useEffect(() => {
+    setValue('address', cart.address);
+
+    // eslint-disable-next-line
+  }, []);
+
   useEffect(() => {
     dispatch(countTotal());
     // eslint-disable-next-line
@@ -28,11 +46,11 @@ const CartPage: React.FC = () => {
 
   // Пример запроса на оформление заказа
 
-  const postOrder = () => {
+  const onSubmit = () => {
     dispatch(
       uploadOrder({
         cost: cart.cost,
-        address: 'Москва, ул. Пушкина, дом Калатушкина 25',
+        address: cart.address,
         number: cart.number_of_sheets,
         cropping: cart.cropping,
         stickers: [
@@ -67,8 +85,6 @@ const CartPage: React.FC = () => {
     });
   };
 
-  // ...
-
   return (
     <main className={styles.cart}>
       <Container className={styles.cart_container}>
@@ -87,7 +103,7 @@ const CartPage: React.FC = () => {
                 <Sticker key={card.id} card={card} />
               ))}
             </div>
-            <div className={cn(styles.banner, styles.info)}>
+            <form className={cn(styles.banner, styles.info)} onSubmit={handleSubmit(onSubmit)}>
               <InfoBox
                 type='number'
                 description='Количество листов'
@@ -103,23 +119,43 @@ const CartPage: React.FC = () => {
               >
                 {cart.totalAmount}
               </InfoBox>
+              <InfoBox
+                type='simple'
+                description='Способ доставки'
+                descriptionClass={styles.description}
+              >
+                Самовывоз
+              </InfoBox>
               <InfoBox type='simple' description='Адрес' className={styles.address_box}>
-                <div>
-                  <span className={styles.address}>Москва, ул. Пушкина, дом Калатушкина 25</span>
+                <div className={styles.address_box}>
+                  <Input
+                    register={register}
+                    option={{
+                      required: 'Введите адрес',
+                      onBlur: (value: React.FocusEvent<HTMLInputElement>) => {
+                        dispatch(updateAddress(value.target.value));
+                      },
+                    }}
+                    name='address'
+                    type='textarea'
+                    className={cn(styles.address, errors.address && styles.address_error)}
+                    placeholder='Выберите адрес'
+                  />
+                  <WriteSvg className={styles.write} />
                 </div>
               </InfoBox>
               <InfoBox type='simple' description='Итого' numberClass={styles.number}>
                 {cart.cost} ₽
               </InfoBox>
               <div className={styles.buttons}>
-                <TextUnderline onClick={() => navigate(ADD_STICKERS)}>
+                <TextUnderline theme='secondary' onClick={() => navigate(ADD_STICKERS)}>
                   Редактировать заказ
                 </TextUnderline>
-                <ButtonWithText className={styles.button} onClick={postOrder}>
+                <ButtonWithText className={styles.button} type='submit'>
                   Оформить заказ
                 </ButtonWithText>
               </div>
-            </div>
+            </form>
           </div>
         )}
       </Container>

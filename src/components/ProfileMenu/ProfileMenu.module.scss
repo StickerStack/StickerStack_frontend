@@ -11,8 +11,20 @@
   border-radius: 10px;
   position: absolute;
   top: 90px;
-  right: 165px;
+  right: $fullscreen-padding;
   z-index: 1;
+
+  @media screen and (max-width: 1330px) {
+    right: $desktop-padding;
+  }
+
+  @media screen and (max-width: 768px) {
+    right: $tablet-padding;
+  }
+
+  @media screen and (max-width: 460px) {
+    right: $mobile-padding;
+  }
 
   .profile {
     display: flex;

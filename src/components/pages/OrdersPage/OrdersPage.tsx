@@ -21,6 +21,7 @@ const OrdersPage: React.FC = () => {
     dispatch(getUserOrders()).then((res) => {
       if (res.meta.requestStatus === 'fulfilled') {
         setError(false);
+        console.log(res);
       }
 
       if (res.meta.requestStatus === 'rejected') {

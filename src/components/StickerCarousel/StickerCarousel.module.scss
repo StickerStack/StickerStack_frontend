@@ -26,14 +26,14 @@
 .prev_arrow {
   top: 55% !important;
   left: 15px !important;
-  &::after {
+  &::before {
     background: url(../../images/icons/arrow-round.svg) no-repeat center;
   }
 }
 .next_arrow {
   top: -48% !important;
   left: 210px !important;
-  &::after {
+  &::before {
     background: url(../../images/icons/arrow-round.svg) no-repeat center;
     transform: rotate(180deg);
   }
@@ -47,7 +47,7 @@
   border-radius: 40px;
   z-index: 1;
 
-  &::after {
+  &::before {
     content: '';
     display: block;
     position: absolute;
@@ -60,8 +60,9 @@
     box-shadow: 1px 1px 2px 0px rgba(26, 50, 99, 0.1);
     opacity: 1;
     z-index: 4;
+    cursor: pointer;
   }
-  &:hover::after {
+  &:hover::before {
     opacity: 0.85;
   }
 }
@@ -71,12 +72,11 @@
   height: 300px;
   border-radius: 20px;
 
-  & :global(.slick-disabled::after) {
+  & :global(.slick-disabled::before) {
     cursor: auto;
     opacity: 0.25;
   }
-}
-
-.slider .slick-slider,
-.slider .slick-track {
+  & :global(.slick-disabled) {
+    cursor: auto;
+  }
 }
