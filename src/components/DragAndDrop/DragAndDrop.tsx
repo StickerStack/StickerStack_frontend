@@ -1,15 +1,15 @@
 import { UseFormRegister, FieldValues, RegisterOptions } from 'react-hook-form';
 import cn from 'classnames';
 
-import { stickerWhiteBorder } from '../../utils/constants';
+import { SIZE_INPUT_MAX_LENGTH, stickerWhiteBorder } from '../../utils/constants';
 import { converter } from '../../utils/converter';
 import { PicOverlay } from '../PicOverlay/PicOverlay';
 import { ICard } from '../../interfaces';
 import { useAppDispatch } from '../../hooks/hooks';
 import { updatePicture } from '../../store/cardsSlice';
+import { openMessage } from '../../store/popupSlice';
 
 import styles from './DragAndDrop.module.scss';
-import { openMessage } from '../../store/popupSlice';
 
 interface IProps {
   card: ICard;
@@ -31,6 +31,8 @@ const DragAndDrop: React.FC<IProps> = ({ card, name, option, register, onLoad }:
 
   const borderInPx = converter.mmToPx(stickerWhiteBorder);
 
+  const maxSize = converter.cmToPx(SIZE_INPUT_MAX_LENGTH);
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
 
@@ -51,14 +53,48 @@ const DragAndDrop: React.FC<IProps> = ({ card, name, option, register, onLoad }:
             image.src = reader.result;
             image.onload = () => {
               if (typeof file.urlFilePreview === 'string') {
-                dispatch(
-                  updatePicture({
-                    id: card.id,
-                    image: file.urlFilePreview,
-                    size: { width: image.naturalWidth, height: image.naturalHeight },
-                    optimalSize: { width: image.naturalWidth, height: image.naturalHeight },
-                  }),
-                );
+                if (image.naturalWidth <= maxSize && image.naturalHeight <= maxSize) {
+                  dispatch(
+                    updatePicture({
+                      id: card.id,
+                      image: file.urlFilePreview,
+                      size: { width: image.naturalWidth, height: image.naturalHeight },
+                      optimalSize: { width: image.naturalWidth, height: image.naturalHeight },
+                    }),
+                  );
+                } else {
+                  if (image.naturalWidth > image.naturalHeight) {
+                    dispatch(
+                      updatePicture({
+                        id: card.id,
+                        image: file.urlFilePreview,
+                        size: {
+                          width: maxSize,
+                          height: (image.naturalHeight / image.naturalWidth) * maxSize,
+                        },
+                        optimalSize: {
+                          width: maxSize,
+                          height: (image.naturalHeight / image.naturalWidth) * maxSize,
+                        },
+                      }),
+                    );
+                  } else {
+                    dispatch(
+                      updatePicture({
+                        id: card.id,
+                        image: file.urlFilePreview,
+                        size: {
+                          width: (image.naturalWidth / image.naturalHeight) * maxSize,
+                          height: maxSize,
+                        },
+                        optimalSize: {
+                          width: (image.naturalWidth / image.naturalHeight) * maxSize,
+                          height: maxSize,
+                        },
+                      }),
+                    );
+                  }
+                }
               }
             };
           }

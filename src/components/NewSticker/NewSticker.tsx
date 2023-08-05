@@ -75,7 +75,6 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
   const {
     register,
     watch,
-    trigger,
     formState: { errors, isValid },
     setValue,
     getValues,
