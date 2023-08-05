@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import cn from 'classnames';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useForm, FieldValues } from 'react-hook-form';
 
+import { openInfo, openMessage } from '../../../store/popupSlice';
 import { TitlePage, Container, ButtonWithText, TextUnderline, Input } from '../../UI';
 import { ADD_STICKERS } from '../../../utils/constants';
 import { Sticker } from '../../Sticker/Sticker';
@@ -14,7 +16,6 @@ import { cleanCards } from '../../../store/cardsSlice';
 
 import { ReactComponent as WriteSvg } from '../../../images/icons/write-icon.svg';
 import styles from './CartPage.module.scss';
-import { useForm, FieldValues } from 'react-hook-form';
 
 const CartPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -26,9 +27,8 @@ const CartPage: React.FC = () => {
   const {
     register,
     setValue,
-    formState: { errors, isValid },
+    formState: { errors },
     handleSubmit,
-    watch,
   } = useForm<FieldValues>({
     mode: 'onBlur',
   });
@@ -55,21 +55,9 @@ const CartPage: React.FC = () => {
         cropping: cart.cropping,
         stickers: [
           {
-            image: cards[0].image.replace('data:image/png;', ''),
-            shape: 'square',
-            amount: 5,
-            size: '8',
-          },
-          {
-            image: cards[0].image.replace('data:image/png;', ''),
-            shape: 'rounded-square',
-            amount: 5,
-            size: '8',
-          },
-          {
-            image: cards[0].image.replace('data:image/png;', ''),
-            shape: 'circle',
-            amount: 5,
+            image: cart.items[0].image.replace('data:image/png;', ''),
+            shape: cart.items[0].shape,
+            amount: cart.items[0].amount,
             size: '8',
           },
         ],
@@ -78,9 +66,16 @@ const CartPage: React.FC = () => {
       if (res.meta.requestStatus === 'fulfilled') {
         dispatch(cleanCards());
         dispatch(cleanCart());
+        dispatch(
+          openInfo({
+            title: 'Ваш заказ оформлен',
+            text: 'Следите за статусом заказа в личном кабинете',
+            buttonText: 'Понятно!',
+          }),
+        );
       }
       if (res.meta.requestStatus === 'rejected') {
-        console.log('Ошибочка вышла');
+        dispatch(openMessage({ text: 'Не удалось оформить заказ', isError: true }));
       }
     });
   };
@@ -133,6 +128,7 @@ const CartPage: React.FC = () => {
                     option={{
                       required: 'Введите адрес',
                       onBlur: (value: React.FocusEvent<HTMLInputElement>) => {
+                        setValue('address', value.target.value.trim());
                         dispatch(updateAddress(value.target.value));
                       },
                     }}

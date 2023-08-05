@@ -43,7 +43,10 @@ const OrderDetails: React.FC<IProps> = ({ order, onClose }: IProps) => {
               </ul> */}
             </div>
             <ul className={styles.info}>
-              <li className={styles.info_item}>?? шт на {order.number_of_sheets} листах</li>
+              <li className={styles.info_item}>
+                ?? шт на {order.number_of_sheets}{' '}
+                {order.number_of_sheets.toString().endsWith('1') ? 'листе' : 'листах'}
+              </li>
               <li className={styles.info_item}>
                 {order.cropping ? 'Вырезать по контуру' : 'Оставить на листе'}
               </li>
