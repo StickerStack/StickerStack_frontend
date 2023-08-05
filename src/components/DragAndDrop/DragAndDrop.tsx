@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { UseFormRegister, FieldValues, RegisterOptions } from 'react-hook-form';
 import cn from 'classnames';
 
