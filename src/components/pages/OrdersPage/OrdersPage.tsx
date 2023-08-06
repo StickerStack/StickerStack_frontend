@@ -15,15 +15,16 @@ const OrdersPage: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const [error, setError] = useState(false);
+
   const userOrders = useSelector((state: { user: IUserState }) => state.user.orders);
 
   useEffect(() => {
     dispatch(getUserOrders()).then((res) => {
       if (res.meta.requestStatus === 'fulfilled') {
         setError(false);
+        console.log(userOrders);
         console.log(res);
       }
-
       if (res.meta.requestStatus === 'rejected') {
         setError(true);
       }
@@ -47,7 +48,7 @@ const OrdersPage: React.FC = () => {
         ) : (
           <div className={styles.grid}>
             {userOrders.map((order) => (
-              <OrderPreview key={order.order_id} order={order} />
+              <OrderPreview key={order.order_number} order={order} />
             ))}
           </div>
         )}

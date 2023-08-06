@@ -1,10 +1,21 @@
+import { TCardShape } from './ICard';
+
+interface Sticker {
+  amount: number;
+  image: string;
+  shape: TCardShape;
+  height: number;
+  width: number;
+}
+
 export interface IOrderState {
-  order_id: number;
+  order_number: number;
   cost: number;
   address: string;
   number_of_sheets: number;
   cropping: boolean;
   created_at: string;
+  stickers: Array<Sticker>;
 }
 
 // Мок заказа

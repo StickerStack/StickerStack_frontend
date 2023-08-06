@@ -7,6 +7,30 @@
   @include flex(column, start, center);
   gap: 8px;
 
+  &_box {
+    max-height: 250px;
+    max-width: 250px;
+    background-color: $element-color;
+    border-radius: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  &_image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    box-sizing: border-box;
+
+    &_rounded-square {
+      border-radius: 10px;
+    }
+
+    &_circle {
+      border-radius: 50%;
+    }
+  }
+
   &_pic {
     margin: 0;
     width: 100%;
@@ -20,6 +44,20 @@
   &_info {
     text-align: center;
     margin: 0 auto;
+  }
+}
+
+.border {
+  box-sizing: border-box;
+  background-color: #fff;
+  justify-self: center;
+
+  &_rounded-square {
+    border-radius: 10px;
+  }
+
+  &_circle {
+    border-radius: 50%;
   }
 }
 
@@ -68,6 +106,7 @@
 }
 
 .slider {
+  margin-top: 30px;
   max-width: 255px;
   height: 300px;
   border-radius: 20px;

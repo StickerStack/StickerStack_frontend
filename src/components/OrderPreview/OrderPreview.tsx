@@ -1,3 +1,4 @@
+import cn from 'classnames';
 import { useCallback, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -7,6 +8,7 @@ import { useOutsideClick } from '../../hooks/useOutsideClick';
 import { openOrder } from '../../store/popupSlice';
 import { IOrderState } from '../../interfaces';
 import { OrderOptions } from '../OrderOptions/OrderOptions';
+import { stickerWhiteBorder } from '../../utils/constants';
 
 import styles from './OrderPreview.module.scss';
 
@@ -18,12 +20,37 @@ const OrderPreview: React.FC<IProps> = ({ order }: IProps) => {
   const dispatch = useAppDispatch();
   // const [isOpen, setIsOpen] = useState(false);
 
+  const firstSticker = order.stickers[0];
+
   return (
     <div className={styles.order} onClick={() => dispatch(openOrder(order))}>
-      <div className={styles.image}></div>
+      <div className={styles.image_box}>
+        <div
+          className={cn(styles.border, styles[`border_${firstSticker.shape}`])}
+          style={{
+            width:
+              firstSticker.width / firstSticker.height >= 1
+                ? '100%'
+                : (firstSticker.width / firstSticker.height) * 100,
+            height:
+              firstSticker.height / firstSticker.width >= 1
+                ? '100%'
+                : (firstSticker.height / firstSticker.width) * 100,
+            padding: (stickerWhiteBorder / 10 / firstSticker.width) * 100,
+          }}
+        >
+          <img
+            className={cn(styles.image, styles[`image_${firstSticker.shape}`])}
+            src={`data:image/png;base64,${firstSticker.image}`}
+          />
+        </div>
+      </div>
+
       <div className={styles.info}>
         <span className={styles.cost}>{order.cost} ₽</span>
-        {/* <span className={styles.amount}>{order.amount} шт</span> */}
+        <span className={styles.amount}>
+          {order.stickers.reduce((acc, item) => acc + item.amount, 0)} шт
+        </span>
 
         {/* <ButtonCustom
           type='more'

@@ -21,7 +21,7 @@ const OrderDetails: React.FC<IProps> = ({ order, onClose }: IProps) => {
     <>
       {order && (
         <div className={styles.container}>
-          <span className={styles.id}>Номер заказа: {order.order_id}</span>
+          <span className={styles.id}>Номер заказа: {order.order_number}</span>
           <div className={styles.content}>
             <div className={styles.carousel}>
               <StickerCarousel order={order} />
@@ -44,7 +44,8 @@ const OrderDetails: React.FC<IProps> = ({ order, onClose }: IProps) => {
             </div>
             <ul className={styles.info}>
               <li className={styles.info_item}>
-                ?? шт на {order.number_of_sheets}{' '}
+                {order.stickers.reduce((acc, item) => acc + item.amount, 0)} шт на{' '}
+                {order.number_of_sheets}{' '}
                 {order.number_of_sheets.toString().endsWith('1') ? 'листе' : 'листах'}
               </li>
               <li className={styles.info_item}>

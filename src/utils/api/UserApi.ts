@@ -32,7 +32,7 @@ class UserApi extends Api {
   }
 
   public async getUserOrders() {
-    const data = await fetch(`${this.url}/get_orders`, {
+    const data = await fetch(`${this.url}/orders`, {
       method: 'GET',
       credentials: 'include',
       headers: this.headers,

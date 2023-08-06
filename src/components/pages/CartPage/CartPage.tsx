@@ -59,9 +59,8 @@ const CartPage: React.FC = () => {
             image: item.image.replace('data:image/png;base64,', ''),
             shape: item.shape,
             amount: item.amount,
-            size: '8',
-            // width: converter.pxToCm(Math.round(cart.items[0].size.width)),
-            // height: converter.pxToCm(Math.round(cart.items[0].size.height)),})
+            width: converter.pxToCm(Math.round(cart.items[0].size.width)),
+            height: converter.pxToCm(Math.round(cart.items[0].size.height)),
           };
         }),
       }),
@@ -71,7 +70,7 @@ const CartPage: React.FC = () => {
         dispatch(cleanCart());
         dispatch(
           openInfo({
-            title: 'Ваш заказ оформлен',
+            title: 'Заказ оформлен!',
             text: 'Следите за статусом заказа в личном кабинете',
             buttonText: 'Понятно!',
           }),

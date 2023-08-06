@@ -101,8 +101,8 @@ const userSlice = createSlice({
 
     builder.addCase(
       getUserOrders.fulfilled,
-      (state, action: { payload: { orders: Array<IOrderState> }; type: string }) => {
-        state.orders = action.payload.orders;
+      (state, action: { payload: Array<IOrderState>; type: string }) => {
+        state.orders = action.payload;
       },
     );
     builder.addCase(getUserOrders.rejected, (state) => {

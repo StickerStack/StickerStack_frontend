@@ -26,7 +26,7 @@ const initialState: IPopupState = {
   order: {
     isOpen: false,
     content: {
-      order_id: 0,
+      order_number: 0,
       address: '',
       cropping: true,
       created_at: '',
@@ -34,7 +34,7 @@ const initialState: IPopupState = {
       cost: 0,
       //   amount: 0,
       number_of_sheets: 0,
-      //    stickers: 0,
+      stickers: [],
     },
   },
 };
