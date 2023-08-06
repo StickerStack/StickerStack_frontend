@@ -13,6 +13,7 @@ import { cleanCart, countTotal, uploadOrder } from '../../../store/cartSlice';
 import { cleanCards } from '../../../store/cardsSlice';
 
 import styles from './CartPage.module.scss';
+import { Rocket } from '../../Rocket/Rocket';
 
 const CartPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -107,6 +108,8 @@ const CartPage: React.FC = () => {
           </div>
         )}
       </Container>
+
+      <Rocket />
     </main>
   );
 };

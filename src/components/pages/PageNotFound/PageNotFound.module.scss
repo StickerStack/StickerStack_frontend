@@ -3,12 +3,25 @@
 .page {
   width: 100%;
   height: 90vh;
-  @include flex(column, center, center);
+  @include flex(row, center, center);
 }
 
 .container {
+  margin-left: 250px;
   max-width: 310px;
   text-align: center;
   @include flex(column, center, center);
   gap: 30px;
+  position: relative;
+}
+
+.ufo {
+  position: absolute;
+  max-width: 400px;
+  max-height: 500px;
+  left: -320px;
+}
+
+.button {
+  z-index: 2;
 }
