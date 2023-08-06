@@ -75,12 +75,11 @@ const popupSlice = createSlice({
       state.form.isOpen = false;
       state.order.isOpen = false;
       state.info.isOpen = false;
-      state.preview.isOpen = true;
+      state.preview.isOpen = false;
+      state.isOpen = false;
       state.info.title = '';
       state.info.text = '';
       state.info.buttonText = '';
-
-      state.isOpen = false;
     },
 
     openMessage(state, action: { payload: { text: string; isError: boolean }; type: string }) {

@@ -16,6 +16,7 @@ import { cleanCards } from '../../../store/cardsSlice';
 
 import { ReactComponent as WriteSvg } from '../../../images/icons/write-icon.svg';
 import styles from './CartPage.module.scss';
+import { converter } from '../../../utils/converter';
 
 const CartPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -53,14 +54,16 @@ const CartPage: React.FC = () => {
         address: cart.address,
         number: cart.number_of_sheets,
         cropping: cart.cropping,
-        stickers: [
-          {
-            image: cart.items[0].image.replace('data:image/png;', ''),
-            shape: cart.items[0].shape,
-            amount: cart.items[0].amount,
+        stickers: cart.items.map((item) => {
+          return {
+            image: item.image.replace('data:image/png;base64,', ''),
+            shape: item.shape,
+            amount: item.amount,
             size: '8',
-          },
-        ],
+            // width: converter.pxToCm(Math.round(cart.items[0].size.width)),
+            // height: converter.pxToCm(Math.round(cart.items[0].size.height)),})
+          };
+        }),
       }),
     ).then((res) => {
       if (res.meta.requestStatus === 'fulfilled') {

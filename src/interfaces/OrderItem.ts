@@ -5,4 +5,6 @@ export interface OrderItem {
   shape: TCardShape;
   amount: number;
   size: string;
+  // width: number;
+  // height: number;
 }
