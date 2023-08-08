@@ -15,9 +15,8 @@ import { CartState, ICardsState } from '../../../interfaces';
 import { addCard, setActive } from '../../../store/cardsSlice';
 import { addItems, updateCropping } from '../../../store/cartSlice';
 import { generateRandomNumber } from '../../../utils/generateRandomNumber';
-import { calculateLists } from '../../../utils/calculateLists';
-
 import styles from './AddStickers.module.scss';
+import { calculateStickerOnList } from '../../../utils/calculateStickerOnList';
 
 const AddStickers: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -45,21 +44,6 @@ const AddStickers: React.FC = () => {
         valid: false,
       }),
     );
-  };
-
-  const calculatePages = () => {
-    return calculateLists(cards, {
-      paddingList: {
-        top: pageSizePx.paddingList.top,
-        right: pageSizePx.paddingList.right,
-        bottom: pageSizePx.paddingList.bottom,
-        left: pageSizePx.paddingList.left,
-      },
-      gapX: pageSizePx.gapX,
-      gapY: pageSizePx.gapY,
-      widthPage: pageSizePx.widthPage,
-      heightPage: pageSizePx.heightPage,
-    });
   };
 
   const cropping = () => {
@@ -155,9 +139,21 @@ const AddStickers: React.FC = () => {
             <TextUnderline
               type='button'
               className={styles.preview}
-              onClick={() => {
-                setPages(calculatePages());
-                console.log(calculatePages());
+              onClick={ () => {
+                 calculateStickerOnList(cards, {
+                  paddingList: {
+                    top: pageSizePx.paddingList.top,
+                    right: pageSizePx.paddingList.right,
+                    bottom: pageSizePx.paddingList.bottom,
+                    left: pageSizePx.paddingList.left,
+                  },
+                  gapX: pageSizePx.gapX,
+                  gapY: pageSizePx.gapY,
+                  widthPage: pageSizePx.widthPage,
+                  heightPage: pageSizePx.heightPage,
+                });
+
+                setPages(JSON.parse(localStorage.getItem('pagesWithStickers') || '[]')?.length || 1);
               }}
             >
               Рассчитать стоимость

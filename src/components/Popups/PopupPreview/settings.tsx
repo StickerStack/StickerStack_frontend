@@ -46,7 +46,7 @@ const settings = {
   customPaging: function (i: number) {
     return (
       <span className={styles.page_numbers}>
-        {i + 1}/{1}
+        {i + 1}/{JSON.parse(localStorage.getItem('pagesWithStickers') as string).length}
       </span>
     );
   },

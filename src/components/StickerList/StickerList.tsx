@@ -1,15 +1,16 @@
 import cn from 'classnames';
-import { useSelector } from 'react-redux';
 
-import { ICardsState } from '../../interfaces';
+import { ICard } from '../../interfaces';
 import { converter } from '../../utils/converter';
 import { pageSizePx, stickerWhiteBorder } from '../../utils/constants';
 
 import styles from './StickerList.module.scss';
 
-const StickerList: React.FC = () => {
-  const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
+interface IProps {
+  cards: ICard[];
+}
 
+const StickerList: React.FC<IProps> = ({ cards }: IProps) => {
   const pageSizePxSmall = {
     widthPage: pageSizePx.widthPage / 2,
     heightPage: pageSizePx.heightPage / 2,
@@ -37,25 +38,21 @@ const StickerList: React.FC = () => {
       }}
     >
       {cards.map((card) => {
-        const elements: JSX.Element[] = [];
-        for (let i = 1; i <= card.amount; i++) {
-          elements.push(
-            <div
-              className={cn(styles.border, styles[`border_${card.shape}`])}
-              style={{
-                width: card.size.width / 2,
-                height: card.size.height / 2,
-                padding: borderInPx / 2,
-                gridRow: `span ${Math.ceil(card.size.height / 2 + pageSizePxSmall.gapY)}`,
-                gridColumn: `span ${Math.ceil(card.size.width / 2 + pageSizePxSmall.gapX)}`,
-              }}
-              key={card.id + i}
-            >
-              <img className={cn(styles.image, styles[`image_${card.shape}`])} src={card.image} />
-            </div>,
-          );
-        }
-        return elements;
+        return (
+          <div
+            className={cn(styles.border, styles[`border_${card.shape}`])}
+            style={{
+              width: card.size.width / 2,
+              height: card.size.height / 2,
+              padding: borderInPx / 2,
+              gridRow: `span ${Math.ceil(card.size.height / 2 + pageSizePxSmall.gapY)}`,
+              gridColumn: `span ${Math.ceil(card.size.width / 2 + pageSizePxSmall.gapX)}`,
+            }}
+            key={card.id}
+          >
+            <img className={cn(styles.image, styles[`image_${card.shape}`])} src={card.image} />
+          </div>
+        );
       })}
     </div>
   );

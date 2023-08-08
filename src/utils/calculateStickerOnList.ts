@@ -1,20 +1,19 @@
 import { ICard, IOptions } from '../interfaces';
+import { sortArrayICard } from './sortArrayICard';
 
-// Принимает массив с ICard и возвращает обновленный массив с ICard amount
-// Если стикеры все уместились возвращается пустой массив
-export const calculateStickerOnList = (arr: ICard[], options: IOptions): ICard[] => {
-  const element = document.createElement('div');
-  element.className = 'listCalculate';
-  document.body.appendChild(element);
-  element.innerHTML = '';
-  element.style.cssText = `
+export const calculateStickerOnList = (arr: ICard[], options: IOptions): void => {
+  const page = document.createElement('div');
+  page.className = 'pageWithStickers';
+  document.body.appendChild(page);
+  page.innerHTML = '';
+  page.style.cssText = `
     background-color: gray;
     width: ${options.widthPage}px;
     height: ${options.heightPage}px;
     max-height: ${options.heightPage}px;
-    padding: ${options.paddingList.top}px ${options.paddingList.right}px ${
-    options.paddingList.bottom
-  }px ${options.paddingList.left}px;
+    padding: ${options.paddingList.top}px ${options.paddingList.right}px ${options.paddingList.bottom}px ${
+    options.paddingList.left
+  }px;
     display: grid;
     grid-auto-flow: row dense;
     grid-template-columns: repeat(${Math.floor(options.widthPage)}, 1px);
@@ -25,42 +24,43 @@ export const calculateStickerOnList = (arr: ICard[], options: IOptions): ICard[]
     top: 0;
     left: 0;
     opacity: 0;
-    
   `;
+  const allPages = [];
+  let currentPage = [];
 
-  for (let i = 0; i < arr.length; i++) {
-    const objCopy = { ...arr[i] };
-    const amount = objCopy.amount;
-    for (let j = 0; j < amount; j++) {
-      const img = document.createElement('img');
-      const hasOverflowed = element.scrollHeight > element.clientHeight;
+  const sortedArray = sortArrayICard(arr).map((card) => JSON.parse(JSON.stringify(card)));
 
-      img.src = objCopy.image;
-      img.width = objCopy.size.width;
-      img.height = objCopy.size.height;
-      img.style.cssText = `
+  for (let i = 0; i < sortedArray.length; i++) {
+    const imageObject = JSON.parse(JSON.stringify(sortedArray[i]));
+    for (let j = 0; j < sortedArray[i].amount; j++) {
+      const images = document.createElement('img');
+      images.src = sortedArray[i].image;
+      images.className = 'sticker';
+      images.width = sortedArray[i].size.width;
+      images.height = sortedArray[i].size.height;
+      images.style.cssText = `
         object-fit: cover;
-        grid-row: span ${Math.ceil(objCopy.size.height + options.gapY)};
-        grid-column: span ${Math.ceil(objCopy.size.width + options.gapX)};
+        grid-row: span ${Math.ceil(sortedArray[i].size.height + options.gapY)};
+        grid-column: span ${Math.ceil(sortedArray[i].size.width + options.gapX)};
       `;
-      element.appendChild(img);
+      page.appendChild(images);
+      const hasOverflowed = page.scrollHeight > page.clientHeight;
 
-      if (hasOverflowed && element.lastElementChild) {
-        element.removeChild(element.lastElementChild);
-        element.removeChild(element.lastElementChild);
-        document.body.removeChild(document.body.querySelector('.listCalculate') as HTMLDivElement);
-        const currentList = [objCopy, ...arr.slice(i + 1, arr.length)];
-
-        const allLists: ICard[][] =
-          (JSON.parse(localStorage.getItem('lists') as string) as ICard[][]) || [];
-        localStorage.setItem('lists', JSON.stringify([...allLists, currentList]));
-
-        return currentList;
+      if (hasOverflowed) {
+        if (j === sortedArray[i].amount - 2) {
+          allPages.push(currentPage);
+        }
+        allPages.push(currentPage);
+        currentPage = [];
+        page.innerHTML = '';
+        j--;
+      } else {
+        currentPage.push(imageObject);
+        imageObject.amount -= 1;
       }
-
-      objCopy.amount -= 1;
     }
   }
-  document.body.removeChild(document.body.querySelector('.listCalculate') as HTMLDivElement);
-  return [];
+  document.body.removeChild(page)
+  localStorage.setItem('pagesWithStickers', JSON.stringify(allPages));
+  console.log(allPages);
 };

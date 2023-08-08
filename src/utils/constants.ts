@@ -123,4 +123,6 @@ export {
   pageSize,
   pageSizePx,
   stickerWhiteBorder,
+  REG_SPACE,
+  sticker_page,
 };
