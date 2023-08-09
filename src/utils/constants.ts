@@ -22,6 +22,7 @@ const VERIFY_EMAIL = '/auth/verifyemail/:token';
 // Мок страниц со стикерами, стоимости одной страницы
 const pages = [{ link: sticker_page }, { link: sticker_page }, { link: sticker_page }];
 const pagePrice = 290;
+const CARDS_MAXIMUM = 15;
 
 // Мок параметров страницы
 const pageSize: IOptions = {
@@ -92,6 +93,7 @@ export {
   REG_PASS,
   REG_STICKERS,
   PROFILE_ONLY_LETTERS,
+  CARDS_MAXIMUM,
   PROFILE,
   PAGE_404,
   ADD_STICKERS,
