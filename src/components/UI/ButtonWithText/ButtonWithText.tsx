@@ -1,6 +1,5 @@
 import cn from 'classnames';
 
-import { ReactComponent as Loading } from '../../../images/icons/light-button-loading.svg';
 import styles from './ButtonWithText.module.scss';
 
 type ButtonTheme = 'filled' | 'transparent' | 'no-border';
@@ -39,8 +38,7 @@ const ButtonWithText: React.FC<IProps> = ({
       type={type}
       disabled={disabled || loading}
     >
-      {children}
-      {loading && <Loading className={styles.loader} />}
+      {loading ? <div className={cn(styles.loader, styles[`loader_${theme}`])} /> : children}
     </button>
   );
 };

@@ -47,7 +47,8 @@ const ChangePassword: React.FC = () => {
             title: 'Пароль изменён',
             text: 'Сделай свои вещи уникальными с помощью стикеров на виниловой пленке. ',
             buttonText: 'Начать!',
-          })
+            image: '',
+          }),
         );
         localStorage.removeItem('change-password-token');
       } else if (res.meta.requestStatus === 'rejected' && res.payload === 422) {
@@ -55,14 +56,14 @@ const ChangePassword: React.FC = () => {
           openMessage({
             text: 'Новый пароль не должен совпадать со старым',
             isError: true,
-          })
+          }),
         );
       } else if (res.meta.requestStatus === 'rejected') {
         dispatch(
           openMessage({
             text: 'Ошибка при попытке сменить пароль',
             isError: true,
-          })
+          }),
         );
       }
     });

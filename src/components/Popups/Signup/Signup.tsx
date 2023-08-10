@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 import {
   ButtonWithText,
@@ -12,12 +13,12 @@ import {
   Label,
   InputField,
   InputError,
-  InputWithButton
+  InputWithButton,
 } from '../../UI';
 import { Signin } from '../Signin/Signin';
 
 import { useAppDispatch } from '../../../hooks/hooks';
-import { openMessage, openPopup, closePopup } from '../../../store/popupSlice';
+import { openMessage, openPopup, closePopup, openInfo } from '../../../store/popupSlice';
 import { getUser, updateStatus } from '../../../store/userSlice';
 import { signUp, signIn, sendVerificationCode } from '../../../store/authSlice';
 import {
@@ -25,9 +26,10 @@ import {
   registerPassword,
   registerRepeatPassword,
 } from '../../../utils/registersRHF';
-
-import styles from './Signup.module.scss';
 import { ADD_STICKERS } from '../../../utils/constants';
+
+import mail from '../../../images/check-your-mail.svg';
+import styles from './Signup.module.scss';
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
@@ -36,7 +38,7 @@ const Signup: React.FC = () => {
     register,
     setValue,
     getValues,
-    formState: { errors, dirtyFields },
+    formState: { errors, dirtyFields, isValid },
     watch,
     handleSubmit,
   } = useForm({
@@ -45,42 +47,92 @@ const Signup: React.FC = () => {
 
   const [statePassword, setStatePasswod] = useState(false);
   const [stateRepeatPassword, setStateRepeatPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const userEmail = getValues('email');
   const userPassword = getValues('password');
 
   const onSubmit = () => {
-    dispatch(signUp({ email: userEmail, password: userPassword })).then((res) => {
-      if (res.meta.requestStatus === 'fulfilled') {
-        dispatch(sendVerificationCode());
-        dispatch(signIn({ email: userEmail, password: userPassword })).then((res) => {
-          if (res.meta.requestStatus === 'fulfilled') {
-            dispatch(getUser());
-            dispatch(updateStatus(true));
-            dispatch(closePopup());
-            navigate(ADD_STICKERS);
-            dispatch(
-              openMessage({
-                text: 'Подтвердите почту',
-                isError: false,
-              }),
-            );
-          }
-        });
-      }
-      if (res.meta.requestStatus === 'rejected' && res.payload === '400') {
-        dispatch(
-          openMessage({
-            text: 'Учётная запись с такой почтой уже существует',
-            isError: true,
-          }),
-        );
-      }
-    });
+    setLoading(true);
+    dispatch(signUp({ email: userEmail, password: userPassword }))
+      .then((res) => {
+        if (res.meta.requestStatus === 'fulfilled') {
+          dispatch(sendVerificationCode());
+          dispatch(signIn({ email: userEmail, password: userPassword })).then((res) => {
+            if (res.meta.requestStatus === 'fulfilled') {
+              dispatch(getUser());
+              dispatch(updateStatus(true));
+              dispatch(closePopup());
+              navigate(ADD_STICKERS);
+              dispatch(
+                openInfo({
+                  title: 'Подтвердите почту',
+                  text: 'Мы направили письмо вам на электронную почту. Для подтверждения перейдите по ссылке в письме.',
+                  buttonText: 'Понятно!',
+                  image: mail,
+                }),
+              );
+              // dispatch(
+              //   openMessage({
+              //     text: 'Подтвердите почту',
+              //     isError: false,
+              //   }),
+              // );
+            }
+          });
+        }
+        if (res.meta.requestStatus === 'rejected' && res.payload === '400') {
+          dispatch(
+            openMessage({
+              text: 'Учётная запись с такой почтой уже существует',
+              isError: true,
+            }),
+          );
+        }
+      })
+      .finally(() => setLoading(false));
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={styles.signup}>
+    <motion.form
+      onSubmit={handleSubmit(onSubmit)}
+      className={styles.signup}
+      initial={{
+        opacity: 0.1,
+      }}
+      animate={{
+        transition: {
+          duration: 0.5,
+        },
+        opacity: 1,
+      }}
+      exit={{
+        opacity: 0.2,
+        transition: {
+          duration: 0.5,
+        },
+      }}
+    >
+      {/* <motion.div
+        initial={{
+          opacity: 1,
+          height: '100%',
+        }}
+        animate={{
+          transition: {
+            duration: 0.3,
+          },
+          opacity: 0.9,
+          height: 0,
+        }}
+        exit={{
+          opacity: 1,
+          transition: {
+            duration: 0.5,
+          },
+        }}
+        className={styles.motion}
+      /> */}
       <TitlePopup>Регистрация</TitlePopup>
       <div className={styles.inputs}>
         <InputField className='email'>
@@ -165,14 +217,16 @@ const Signup: React.FC = () => {
           </a>
         </p>
       </CheckBoxForm>
-      <ButtonWithText type='submit'>Зарегистрироваться</ButtonWithText>
+      <ButtonWithText type='submit' disabled={!isValid} loading={loading}>
+        Зарегистрироваться
+      </ButtonWithText>
       <span className={styles.link}>
         Уже есть аккаунт?{' '}
         <TextUnderline type='button' onClick={() => dispatch(openPopup(Signin))}>
           Войти
         </TextUnderline>
       </span>
-    </form>
+    </motion.form>
   );
 };
 

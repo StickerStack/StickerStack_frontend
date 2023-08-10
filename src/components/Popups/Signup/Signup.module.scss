@@ -4,6 +4,7 @@
   @include flex(column, _, _);
   gap: 25px;
   box-sizing: border-box;
+  position: relative;
 
   .inputs {
     @include flex(column, flex-start, flex-start);
@@ -25,4 +26,12 @@
     color: $span-text-color;
     text-align: center;
   }
+}
+
+.motion {
+  position: absolute;
+  background-color: $main-bg-color;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
 }

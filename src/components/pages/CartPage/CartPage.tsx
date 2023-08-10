@@ -15,6 +15,7 @@ import { cleanCards } from '../../../store/cardsSlice';
 import styles from './CartPage.module.scss';
 import { Rocket } from '../../animations/Rocket/Rocket';
 import { Ufo } from '../../animations/Ufo/Ufo';
+import { CelebratingDog } from '../../animations/CelebratingDog/CelebratingDog';
 
 const CartPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -109,10 +110,6 @@ const CartPage: React.FC = () => {
           </div>
         )}
       </Container>
-
-      <Rocket />
-
-      <Ufo />
     </main>
   );
 };

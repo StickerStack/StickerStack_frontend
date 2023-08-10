@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -15,6 +15,7 @@ import styles from './Popup.module.scss';
 
 const Popup: React.FC = () => {
   const dispatch = useAppDispatch();
+  const [formChange, setFormChange] = useState<boolean>(false);
   const { blockScroll, unblockScroll } = useBlockScroll();
   const { form, preview, info, isOpen } = useSelector(
     (state: { popup: IPopupState }) => state.popup,
@@ -85,6 +86,13 @@ const Popup: React.FC = () => {
                 duration: 0.5,
               },
               scale: 1,
+            }}
+            exit={{
+              scale: 1.4,
+              opacity: 0,
+              transition: {
+                duration: 0.2,
+              },
             }}
             className={styles.popup}
           >

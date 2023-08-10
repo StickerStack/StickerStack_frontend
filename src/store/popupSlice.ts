@@ -17,12 +17,13 @@ const initialState: IPopupState = {
     title: '',
     text: '',
     buttonText: '',
+    src: '',
   },
   message: {
     isOpen: false,
     isError: false,
     text: '',
-  }
+  },
 };
 
 const popupSlice = createSlice({
@@ -40,26 +41,32 @@ const popupSlice = createSlice({
       state.preview.isOpen = true;
     },
 
-    openInfo(state, action: { payload: { title: string; text: string; buttonText: string }; type: string }) {
+    openInfo(
+      state,
+      action: {
+        payload: { title: string; text: string; buttonText: string; image: string };
+        type: string;
+      },
+    ) {
       state.isOpen = true;
       state.info.isOpen = true;
       state.info.text = action.payload.text;
       state.info.buttonText = action.payload.buttonText;
       state.info.title = action.payload.title;
+      state.info.src = action.payload.image;
     },
 
     closePopup(state) {
       state.form.isOpen = false;
-
       state.info.isOpen = false;
-      state.info.title = '';
-      state.info.text = '';
-      state.info.buttonText = '';
-
       state.isOpen = false;
+
+      // state.info.title = '';
+      // state.info.text = '';
+      // state.info.buttonText = '';
     },
 
-    openMessage(state, action: { payload: { text: string, isError: boolean }, type: string }) {
+    openMessage(state, action: { payload: { text: string; isError: boolean }; type: string }) {
       state.message.isOpen = true;
       state.message.isError = action.payload.isError;
       state.message.text = action.payload.text;
@@ -69,11 +76,20 @@ const popupSlice = createSlice({
       state.message.isOpen = false;
       state.message.isError = false;
       state.message.text = '';
-    }
+    },
   },
 });
 
 const popupSliceReducer = popupSlice.reducer;
-const { closePopup, openPopup, openPreview, openInfo, openMessage, closeMessage } = popupSlice.actions;
+const { closePopup, openPopup, openPreview, openInfo, openMessage, closeMessage } =
+  popupSlice.actions;
 
-export { popupSliceReducer, closePopup, openPopup, openPreview, openInfo, openMessage, closeMessage };
+export {
+  popupSliceReducer,
+  closePopup,
+  openPopup,
+  openPreview,
+  openInfo,
+  openMessage,
+  closeMessage,
+};

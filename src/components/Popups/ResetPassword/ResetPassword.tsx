@@ -12,6 +12,7 @@ import { forgotPassword } from '../../../store/authSlice';
 import { openPopup } from '../../../store/popupSlice';
 import { registerEmail } from '../../../utils/registersRHF';
 import styles from './ResetPassword.module.scss';
+import { motion } from 'framer-motion';
 
 const ResetPassword: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -32,7 +33,26 @@ const ResetPassword: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={styles.resetpassword}>
+    <motion.form
+      onSubmit={handleSubmit(onSubmit)}
+      className={styles.resetpassword}
+      initial={{
+        opacity: 0.1,
+      }}
+      animate={{
+        transition: {
+          duration: 0.5,
+        },
+        opacity: 1,
+      }}
+      exit={{
+        opacity: 0.2,
+
+        transition: {
+          duration: 0.5,
+        },
+      }}
+    >
       <TitlePopup>Восстановление пароля</TitlePopup>
       <InputField className='email'>
         <Label>Электронная почта</Label>
@@ -65,7 +85,7 @@ const ResetPassword: React.FC = () => {
           Зарегистрироваться
         </TextUnderline>
       </div>
-    </form>
+    </motion.form>
   );
 };
 

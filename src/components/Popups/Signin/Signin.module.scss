@@ -25,3 +25,23 @@
     margin-top: 20px;
   }
 }
+
+.change {
+  animation: 2s linear change;
+}
+
+@keyframes change {
+  0% {
+    transform: translate(0) scale(1);
+  }
+  10% {
+    transform: translate(0) scale(1.05);
+  }
+  60% {
+    transform: translate(-300px) scale(1.05);
+  }
+  100% {
+    transform: translate(0px) scale(0.5);
+    z-index: 1;
+  }
+}

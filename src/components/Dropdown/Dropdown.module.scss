@@ -24,7 +24,7 @@
 }
 
 .button {
-  transition: transform 0.3s, opacity 0.2 ease-in-out;
+  transition: transform 0.3s, opacity 0.2s ease-in-out;
   &_up {
     transform: rotate(180deg);
   }

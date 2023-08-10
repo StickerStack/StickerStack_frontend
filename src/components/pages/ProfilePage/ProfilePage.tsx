@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import cn from 'classnames';
@@ -24,6 +24,7 @@ const EMAIL_INPUT_LABEL = 'email';
 
 const ProfilePage: React.FC = () => {
   const user = useSelector((state: { user: IUserState }) => state.user);
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -69,29 +70,32 @@ const ProfilePage: React.FC = () => {
 
   const onSubmit = () => {
     const emailChanged = user.email !== email;
+    setLoading(true);
     dispatch(
       updateUser({
         email: email,
         firstName: firstname,
         lastName: lastname,
       }),
-    ).then((res) => {
-      if (res.meta.requestStatus === 'fulfilled') {
-        dispatch(openMessage({ text: 'Успешно изменено', isError: false }));
-        if (emailChanged) {
-          dispatch(sendVerificationCode());
+    )
+      .then((res) => {
+        if (res.meta.requestStatus === 'fulfilled') {
+          dispatch(openMessage({ text: 'Успешно изменено', isError: false }));
+          if (emailChanged) {
+            dispatch(sendVerificationCode());
+          }
         }
-      }
 
-      if (res.meta.requestStatus === 'rejected') {
-        dispatch(
-          openMessage({
-            text: 'Ошибка. Информация профиля не изменана',
-            isError: true,
-          }),
-        );
-      }
-    });
+        if (res.meta.requestStatus === 'rejected') {
+          dispatch(
+            openMessage({
+              text: 'Ошибка. Информация профиля не изменана',
+              isError: true,
+            }),
+          );
+        }
+      })
+      .finally(() => setLoading(false));
   };
 
   return (
