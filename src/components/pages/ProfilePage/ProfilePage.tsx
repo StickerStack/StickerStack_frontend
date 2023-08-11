@@ -109,7 +109,16 @@ const ProfilePage: React.FC = () => {
               <InputField>
                 <InputWithButton
                   register={register}
-                  option={profileName}
+                  option={{
+                    ...profileName,
+                    onBlur: (value: React.FocusEvent<HTMLInputElement>) => {
+                      setValue('firstName', value.target.value.trim());
+                      setValue(
+                        'firstName',
+                        value.target.value[0].toUpperCase() + value.target.value.slice(1),
+                      );
+                    },
+                  }}
                   name={FIRSTNAME_INPUT_LABEL}
                   error={errors[FIRSTNAME_INPUT_LABEL]}
                   placeholder='Имя'
@@ -127,7 +136,16 @@ const ProfilePage: React.FC = () => {
               <InputField>
                 <InputWithButton
                   register={register}
-                  option={profileName}
+                  option={{
+                    ...profileName,
+                    onBlur: (value: React.FocusEvent<HTMLInputElement>) => {
+                      setValue('lastName', value.target.value.trim());
+                      setValue(
+                        'lastName',
+                        value.target.value[0].toUpperCase() + value.target.value.slice(1),
+                      );
+                    },
+                  }}
                   name={LASTNAME_INPUT_LABEL}
                   placeholder='Фамилия'
                   className='profile'

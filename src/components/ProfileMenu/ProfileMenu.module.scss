@@ -1,7 +1,7 @@
 @import '../../utils/_scss-variables.scss';
 
 .menu {
-  max-width: 255px;
+  max-width: 355px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -11,51 +11,71 @@
   border-radius: 10px;
   position: absolute;
   top: 90px;
-  right: 165px;
+  right: $fullscreen-padding;
   z-index: 1;
+
+  @media screen and (max-width: 1330px) {
+    right: $desktop-padding;
+  }
+
+  @media screen and (max-width: 768px) {
+    right: $tablet-padding;
+  }
+
+  @media screen and (max-width: 460px) {
+    right: $mobile-padding;
+  }
 
   .profile {
     display: flex;
     align-items: center;
     text-decoration: none;
+    max-width: 300px;
+
+    &:hover .name {
+      color: #929292;
+    }
+
+    &:hover .avatar {
+      opacity: 0.85;
+    }
   }
 
   .avatar {
     background-color: $element-color;
+    min-width: 64px;
     width: 64px;
     height: 64px;
     border-radius: 32px;
+    transition: opacity 0.2s ease-in-out;
   }
 
   .name {
     padding-left: 15px;
-    color: $main-text-color;
+    color: $secondary-text-color;
+    transition: color 0.2s ease-in-out;
+  }
+
+  .link,
+  .name {
+    font-size: 16px;
   }
 
   .button {
     margin-top: 25px;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 21px;
-    padding: 14px 17px;
+    font-size: 16px;
+    padding: 14px 15px;
   }
 
   .list {
     margin: 0;
     padding: 0;
-    margin-top: 40px;
+    margin-top: 30px;
   }
 
   .list li {
     list-style-type: none;
     height: 19px;
-    font-family: 'Nunito';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 19px;
-    letter-spacing: -0.01em;
-    color: $main-text-color;
     padding-bottom: 20px;
     padding-left: 10px;
     cursor: pointer;

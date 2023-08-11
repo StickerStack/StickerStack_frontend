@@ -1,14 +1,16 @@
-import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { userApi } from '../utils/api/UserApi';
 import { authApi } from '../utils/api/AuthApi';
+import { IOrderState, IUserState } from '../interfaces';
 
-const initialState = {
+const initialState: IUserState = {
   email: '',
   firstName: '',
   lastName: '',
+  orders: [],
   isLogged: false,
-  isVerified: false
+  isVerified: false,
 };
 
 const getUser = createAsyncThunk('user/getUser', async () => {
@@ -21,24 +23,24 @@ const getUser = createAsyncThunk('user/getUser', async () => {
 
 const updateUser = createAsyncThunk(
   'user/updateUser',
-  async (data: { email: string; firstName: string; lastName: string }, {rejectWithValue}) => {
+  async (data: { email: string; firstName: string; lastName: string }, { rejectWithValue }) => {
     try {
       return userApi.updateUser(data.email, data.firstName, data.lastName);
     } catch (err) {
       return rejectWithValue(err);
     }
-  }
+  },
 );
 
 const updateProfileImage = createAsyncThunk(
   'user/updateProfileImage',
-  async (data : { formData: FormData }, { rejectWithValue }) => {
+  async (data: { formData: FormData }, { rejectWithValue }) => {
     try {
       return authApi.uploadProfileImage(data.formData);
     } catch (err) {
       return rejectWithValue(err);
     }
-  }
+  },
 );
 
 const getProfileImage = createAsyncThunk(
@@ -49,8 +51,16 @@ const getProfileImage = createAsyncThunk(
     } catch (err) {
       return rejectWithValue(err);
     }
-  }
+  },
 );
+
+const getUserOrders = createAsyncThunk('user/getUserOrders', async (data, { rejectWithValue }) => {
+  try {
+    return userApi.getUserOrders();
+  } catch (err) {
+    return rejectWithValue(err);
+  }
+});
 
 const userSlice = createSlice({
   name: 'user',
@@ -65,7 +75,7 @@ const userSlice = createSlice({
 
     updateStatus(state, action) {
       state.isLogged = action.payload;
-    }
+    },
   },
   extraReducers: (builder) => {
     // Получение юзера, если есть token
@@ -81,7 +91,6 @@ const userSlice = createSlice({
       state.isLogged = false;
     });
 
-
     builder.addCase(updateUser.fulfilled, (state, action) => {
       state.email = action.payload.email;
       state.firstName = action.payload.first_name;
@@ -89,11 +98,21 @@ const userSlice = createSlice({
       state.isVerified = action.payload.is_verified;
       state.isLogged = true;
     });
+
+    builder.addCase(
+      getUserOrders.fulfilled,
+      (state, action: { payload: Array<IOrderState>; type: string }) => {
+        state.orders = action.payload;
+      },
+    );
+    builder.addCase(getUserOrders.rejected, (state) => {
+      state.orders = [];
+    });
   },
 });
 
 const userSliceReducer = userSlice.reducer;
-const {signInMockUser, updateStatus} = userSlice.actions;
+const { signInMockUser, updateStatus } = userSlice.actions;
 
 export {
   userSliceReducer,
@@ -102,5 +121,6 @@ export {
   signInMockUser,
   updateStatus,
   updateProfileImage,
-  getProfileImage
+  getProfileImage,
+  getUserOrders,
 };

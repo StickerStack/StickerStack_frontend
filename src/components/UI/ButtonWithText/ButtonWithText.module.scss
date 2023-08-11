@@ -50,12 +50,35 @@
 
 .button_no-border {
   background: transparent;
-  @include font(16px, 19px, 500);
-  color: $main-text-color;
+  @include font(16px, 19px, 400);
+  color: $secondary-text-color;
   text-align: left;
   padding: 0;
   height: 16px;
   border: none;
+  transition: color 0.2s ease-in-out;
+
+  &:hover {
+    color: $placeholder-text-color;
+    opacity: 1;
+  }
+}
+
+.button_light {
+  border: none;
+  width: fit-content;
+  width: -moz-fit-content;
+  height: fit-content;
+  height: -moz-fit-content;
+  background-color: $element-color;
+  color: $main-text-color;
+  padding: 8px 10px;
+  font-size: 16px;
+
+  &:hover {
+    opacity: 1;
+    background-color: #f1f1f1;
+  }
 }
 
 .loading {

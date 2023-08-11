@@ -7,7 +7,7 @@
   padding: 0;
   border: none;
   color: $main-text-color;
-  @include font(16px, 19px, 500);
+  @include font(16px, 19px, 400);
   cursor: pointer;
 }
 
@@ -22,7 +22,7 @@
     display: block;
     margin-top: 2px;
     width: 0;
-    height: 1px;
+    height: 0.5px;
     background: $main-text-color;
     transition: width 0.3s;
   }
@@ -34,6 +34,15 @@
       background: $contrast-text-color;
     }
   }
+
+  &_secondary {
+    color: $secondary-text-color;
+
+    &::after {
+      background: $secondary-text-color;
+    }
+  }
+
   &:hover::after {
     width: 100%;
   }

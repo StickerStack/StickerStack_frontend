@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -6,6 +7,7 @@ import { useBlockScroll } from '../../hooks/useBlockScroll';
 import { PopupForm } from '../';
 import { PopupInfo } from '../Popups/PopupInfo/PopupInfo';
 import { PopupPreview } from '../Popups/PopupPreview/PopupPreview';
+import { OrderDetails } from '../Popups/OrderDetails/OrderDetails';
 import { ButtonCustom } from '../UI';
 import { IPopupState } from '../../interfaces/IPopupState';
 import { useAppDispatch } from '../../hooks/hooks';
@@ -15,15 +17,21 @@ import styles from './Popup.module.scss';
 
 const Popup: React.FC = () => {
   const dispatch = useAppDispatch();
-  const [formChange, setFormChange] = useState<boolean>(false);
+  const location = useLocation();
   const { blockScroll, unblockScroll } = useBlockScroll();
-  const { form, preview, info, isOpen } = useSelector(
+  const { form, preview, info, order, isOpen } = useSelector(
     (state: { popup: IPopupState }) => state.popup,
   );
 
   useEffect(() => {
     isOpen ? blockScroll() : unblockScroll();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
+
+  useEffect(() => {
+    dispatch(closePopup());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location]);
 
   useEffect(() => {
     const handleKeyDown = (evn: KeyboardEvent) => {
@@ -99,6 +107,8 @@ const Popup: React.FC = () => {
             <div className={styles.container}>
               {form.isOpen ? (
                 <PopupForm />
+              ) : order.isOpen ? (
+                <OrderDetails order={order.content} onClose={() => dispatch(closePopup())} />
               ) : preview.isOpen ? (
                 <PopupPreview />
               ) : info.isOpen ? (

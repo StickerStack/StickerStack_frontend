@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { Signin } from '../components/Popups/Signin/Signin';
-import { IPopupState } from '../interfaces';
+import { IPopupState, IOrderState } from '../interfaces';
 
 const initialState: IPopupState = {
   isOpen: false,
@@ -23,6 +23,20 @@ const initialState: IPopupState = {
     isOpen: false,
     isError: false,
     text: '',
+  },
+  order: {
+    isOpen: false,
+    content: {
+      order_number: 0,
+      address: '',
+      cropping: true,
+      created_at: '',
+      //  delivery: { status: '', statuses: [] },
+      cost: 0,
+      //   amount: 0,
+      number_of_sheets: 0,
+      stickers: [],
+    },
   },
 };
 
@@ -56,14 +70,27 @@ const popupSlice = createSlice({
       state.info.src = action.payload.image;
     },
 
+    openOrder(state, action: { payload: IOrderState; type: string }) {
+      state.isOpen = true;
+      state.order.isOpen = true;
+      state.order.content = action.payload;
+    },
+
+    openOrder(state, action: { payload: IOrderState; type: string }) {
+      state.isOpen = true;
+      state.order.isOpen = true;
+      state.order.content = action.payload;
+    },
+
     closePopup(state) {
       state.form.isOpen = false;
+      state.order.isOpen = false;
       state.info.isOpen = false;
+      state.preview.isOpen = false;
       state.isOpen = false;
-
-      // state.info.title = '';
-      // state.info.text = '';
-      // state.info.buttonText = '';
+      state.info.title = '';
+      state.info.text = '';
+      state.info.buttonText = '';
     },
 
     openMessage(state, action: { payload: { text: string; isError: boolean }; type: string }) {
@@ -81,13 +108,14 @@ const popupSlice = createSlice({
 });
 
 const popupSliceReducer = popupSlice.reducer;
-const { closePopup, openPopup, openPreview, openInfo, openMessage, closeMessage } =
+const { closePopup, openPopup, openPreview, openOrder, openInfo, openMessage, closeMessage } =
   popupSlice.actions;
 
 export {
   popupSliceReducer,
   closePopup,
   openPopup,
+  openOrder,
   openPreview,
   openInfo,
   openMessage,
