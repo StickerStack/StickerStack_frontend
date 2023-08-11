@@ -3,16 +3,20 @@ import cn from 'classnames';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { useForm, FieldValues } from 'react-hook-form';
 
-import { TitlePage, Container, ButtonWithText, TextUnderline } from '../../UI';
+import { openInfo, openMessage } from '../../../store/popupSlice';
+import { TitlePage, Container, ButtonWithText, TextUnderline, Input } from '../../UI';
 import { ADD_STICKERS } from '../../../utils/constants';
 import { Sticker } from '../../Sticker/Sticker';
 import { ICardsState, CartState } from '../../../interfaces';
 import { InfoBox } from '../../InfoBox/InfoBox';
-import { cleanCart, countTotal, uploadOrder } from '../../../store/cartSlice';
+import { cleanCart, countTotal, updateAddress, uploadOrder } from '../../../store/cartSlice';
 import { cleanCards } from '../../../store/cardsSlice';
 
+import { ReactComponent as WriteSvg } from '../../../images/icons/write-icon.svg';
 import styles from './CartPage.module.scss';
+import { converter } from '../../../utils/converter';
 
 const CartPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -21,6 +25,21 @@ const CartPage: React.FC = () => {
   const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
   const cart = useSelector((state: { cart: CartState }) => state.cart);
 
+  const {
+    register,
+    setValue,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<FieldValues>({
+    mode: 'onBlur',
+  });
+
+  useEffect(() => {
+    setValue('address', cart.address);
+
+    // eslint-disable-next-line
+  }, []);
+
   useEffect(() => {
     dispatch(countTotal());
     // eslint-disable-next-line
@@ -28,30 +47,40 @@ const CartPage: React.FC = () => {
 
   // Пример запроса на оформление заказа
 
-  const postOrder = () => {
+  const onSubmit = () => {
     dispatch(
       uploadOrder({
         cost: cart.cost,
-        address: 'Москва, ул. Пушкина, дом Калатушкина 25',
+        address: cart.address,
         number: cart.number_of_sheets,
         cropping: cart.cropping,
-        stickers: [
-          { image: cards[0].image, shape: 'square', amount: 5, size: '15' },
-          { image: cards[0].image, shape: 'square', amount: 5, size: '15' },
-        ],
+        stickers: cart.items.map((item) => {
+          return {
+            image: item.image.replace('data:image/png;base64,', ''),
+            shape: item.shape,
+            amount: item.amount,
+            width: converter.pxToCm(Math.round(cart.items[0].size.width)),
+            height: converter.pxToCm(Math.round(cart.items[0].size.height)),
+          };
+        }),
       }),
     ).then((res) => {
       if (res.meta.requestStatus === 'fulfilled') {
         dispatch(cleanCards());
         dispatch(cleanCart());
+        dispatch(
+          openInfo({
+            title: 'Заказ оформлен!',
+            text: 'Следите за статусом заказа в личном кабинете',
+            buttonText: 'Понятно!',
+          }),
+        );
       }
       if (res.meta.requestStatus === 'rejected') {
-        console.log('Ошибочка вышла');
+        dispatch(openMessage({ text: 'Не удалось оформить заказ', isError: true }));
       }
     });
   };
-
-  // ...
 
   return (
     <main className={styles.cart}>
@@ -71,7 +100,7 @@ const CartPage: React.FC = () => {
                 <Sticker key={card.id} card={card} />
               ))}
             </div>
-            <div className={cn(styles.banner, styles.info)}>
+            <form className={cn(styles.banner, styles.info)} onSubmit={handleSubmit(onSubmit)}>
               <InfoBox
                 type='number'
                 description='Количество листов'
@@ -87,23 +116,44 @@ const CartPage: React.FC = () => {
               >
                 {cart.totalAmount}
               </InfoBox>
+              <InfoBox
+                type='simple'
+                description='Способ доставки'
+                descriptionClass={styles.description}
+              >
+                Самовывоз
+              </InfoBox>
               <InfoBox type='simple' description='Адрес' className={styles.address_box}>
-                <div>
-                  <span className={styles.address}>Москва, ул. Пушкина, дом Калатушкина 25</span>
+                <div className={styles.address_box}>
+                  <Input
+                    register={register}
+                    option={{
+                      required: 'Введите адрес',
+                      onBlur: (value: React.FocusEvent<HTMLInputElement>) => {
+                        setValue('address', value.target.value.trim());
+                        dispatch(updateAddress(value.target.value));
+                      },
+                    }}
+                    name='address'
+                    type='textarea'
+                    className={cn(styles.address, errors.address && styles.address_error)}
+                    placeholder='Выберите адрес'
+                  />
+                  <WriteSvg className={styles.write} />
                 </div>
               </InfoBox>
               <InfoBox type='simple' description='Итого' numberClass={styles.number}>
                 {cart.cost} ₽
               </InfoBox>
               <div className={styles.buttons}>
-                <TextUnderline onClick={() => navigate(ADD_STICKERS)}>
+                <TextUnderline theme='secondary' onClick={() => navigate(ADD_STICKERS)}>
                   Редактировать заказ
                 </TextUnderline>
-                <ButtonWithText className={styles.button} onClick={postOrder}>
+                <ButtonWithText className={styles.button} type='submit'>
                   Оформить заказ
                 </ButtonWithText>
               </div>
-            </div>
+            </form>
           </div>
         )}
       </Container>

@@ -6,3 +6,4 @@ export type { IOptions } from './IOptions';
 export type { CartState } from './CartState';
 export type { CartItem } from './CartItem';
 export type { OrderItem } from './OrderItem';
+export type { IOrderState } from './IOrderState';

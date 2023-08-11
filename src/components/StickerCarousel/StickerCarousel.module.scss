@@ -1,0 +1,121 @@
+@import '../../utils/_scss-variables.scss';
+
+.item {
+  display: flex !important;
+  height: 100%;
+
+  @include flex(column, start, center);
+  gap: 8px;
+
+  &_box {
+    max-height: 250px;
+    max-width: 250px;
+    background-color: $element-color;
+    border-radius: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  &_image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    box-sizing: border-box;
+
+    &_rounded-square {
+      border-radius: 10px;
+    }
+
+    &_circle {
+      border-radius: 50%;
+    }
+  }
+
+  &_pic {
+    margin: 0;
+    width: 100%;
+    height: 250px;
+    border-radius: 20px;
+    background-color: $element-color;
+
+    object-fit: cover;
+  }
+
+  &_info {
+    text-align: center;
+    margin: 0 auto;
+  }
+}
+
+.border {
+  box-sizing: border-box;
+  background-color: #fff;
+  justify-self: center;
+
+  &_rounded-square {
+    border-radius: 10px;
+  }
+
+  &_circle {
+    border-radius: 50%;
+  }
+}
+
+.prev_arrow {
+  top: 55% !important;
+  left: 15px !important;
+  &::before {
+    background: url(../../images/icons/arrow-round.svg) no-repeat center;
+  }
+}
+.next_arrow {
+  top: -48% !important;
+  left: 210px !important;
+  &::before {
+    background: url(../../images/icons/arrow-round.svg) no-repeat center;
+    transform: rotate(180deg);
+  }
+}
+
+.next_arrow,
+.prev_arrow {
+  position: relative;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 40px;
+  z-index: 1;
+
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: -10px;
+    left: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 40px;
+    background-color: white;
+    box-shadow: 1px 1px 2px 0px rgba(26, 50, 99, 0.1);
+    opacity: 1;
+    z-index: 4;
+    cursor: pointer;
+  }
+  &:hover::before {
+    opacity: 0.85;
+  }
+}
+
+.slider {
+  margin-top: 30px;
+  max-width: 255px;
+  height: 300px;
+  border-radius: 20px;
+
+  & :global(.slick-disabled::before) {
+    cursor: auto;
+    opacity: 0.25;
+  }
+  & :global(.slick-disabled) {
+    cursor: auto;
+  }
+}

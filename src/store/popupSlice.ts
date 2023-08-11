@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { Signin } from '../components/Popups/Signin/Signin';
-import { IPopupState } from '../interfaces';
+import { IPopupState, IOrderState } from '../interfaces';
 
 const initialState: IPopupState = {
   isOpen: false,
@@ -22,7 +22,21 @@ const initialState: IPopupState = {
     isOpen: false,
     isError: false,
     text: '',
-  }
+  },
+  order: {
+    isOpen: false,
+    content: {
+      order_number: 0,
+      address: '',
+      cropping: true,
+      created_at: '',
+      //  delivery: { status: '', statuses: [] },
+      cost: 0,
+      //   amount: 0,
+      number_of_sheets: 0,
+      stickers: [],
+    },
+  },
 };
 
 const popupSlice = createSlice({
@@ -40,7 +54,10 @@ const popupSlice = createSlice({
       state.preview.isOpen = true;
     },
 
-    openInfo(state, action: { payload: { title: string; text: string; buttonText: string }; type: string }) {
+    openInfo(
+      state,
+      action: { payload: { title: string; text: string; buttonText: string }; type: string },
+    ) {
       state.isOpen = true;
       state.info.isOpen = true;
       state.info.text = action.payload.text;
@@ -48,18 +65,24 @@ const popupSlice = createSlice({
       state.info.title = action.payload.title;
     },
 
+    openOrder(state, action: { payload: IOrderState; type: string }) {
+      state.isOpen = true;
+      state.order.isOpen = true;
+      state.order.content = action.payload;
+    },
+
     closePopup(state) {
       state.form.isOpen = false;
-
+      state.order.isOpen = false;
       state.info.isOpen = false;
+      state.preview.isOpen = false;
+      state.isOpen = false;
       state.info.title = '';
       state.info.text = '';
       state.info.buttonText = '';
-
-      state.isOpen = false;
     },
 
-    openMessage(state, action: { payload: { text: string, isError: boolean }, type: string }) {
+    openMessage(state, action: { payload: { text: string; isError: boolean }; type: string }) {
       state.message.isOpen = true;
       state.message.isError = action.payload.isError;
       state.message.text = action.payload.text;
@@ -69,11 +92,21 @@ const popupSlice = createSlice({
       state.message.isOpen = false;
       state.message.isError = false;
       state.message.text = '';
-    }
+    },
   },
 });
 
 const popupSliceReducer = popupSlice.reducer;
-const { closePopup, openPopup, openPreview, openInfo, openMessage, closeMessage } = popupSlice.actions;
+const { closePopup, openPopup, openPreview, openOrder, openInfo, openMessage, closeMessage } =
+  popupSlice.actions;
 
-export { popupSliceReducer, closePopup, openPopup, openPreview, openInfo, openMessage, closeMessage };
+export {
+  popupSliceReducer,
+  closePopup,
+  openPopup,
+  openOrder,
+  openPreview,
+  openInfo,
+  openMessage,
+  closeMessage,
+};

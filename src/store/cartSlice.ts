@@ -70,8 +70,11 @@ const cartSlice = createSlice({
         indexCard.image = image;
       }
     },
-    updateCropping(state, action) {
+    updateCropping(state, action: { payload: boolean; type: string }) {
       state.cropping = action.payload;
+    },
+    updateAddress(state, action: { payload: string; type: string }) {
+      state.address = action.payload;
     },
     countTotal(state) {
       const sumAmount = state.items.reduce((acc, item) => acc + item.amount, 0);
@@ -89,8 +92,16 @@ const cartSlice = createSlice({
 });
 
 const cartSliceReducer = cartSlice.reducer;
-const { addItem, addItems, deleteItem, cleanCart, updateItem, updateCropping, countTotal } =
-  cartSlice.actions;
+const {
+  addItem,
+  addItems,
+  deleteItem,
+  cleanCart,
+  updateItem,
+  updateCropping,
+  updateAddress,
+  countTotal,
+} = cartSlice.actions;
 
 export {
   cartSliceReducer,
@@ -100,6 +111,7 @@ export {
   cleanCart,
   updateItem,
   updateCropping,
+  updateAddress,
   uploadOrder,
   countTotal,
 };
