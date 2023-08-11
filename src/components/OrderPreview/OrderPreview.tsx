@@ -30,13 +30,13 @@ const OrderPreview: React.FC<IProps> = ({ order }: IProps) => {
           style={{
             width:
               firstSticker.width / firstSticker.height >= 1
-                ? '100%'
-                : (firstSticker.width / firstSticker.height) * 100,
+                ? '215px'
+                : (firstSticker.width / firstSticker.height) * 215,
             height:
               firstSticker.height / firstSticker.width >= 1
-                ? '100%'
-                : (firstSticker.height / firstSticker.width) * 100,
-            padding: (stickerWhiteBorder / 10 / firstSticker.width) * 100,
+                ? '215px'
+                : (firstSticker.height / firstSticker.width) * 215,
+            padding: (stickerWhiteBorder / 10 / firstSticker.width) * 215,
           }}
         >
           <img

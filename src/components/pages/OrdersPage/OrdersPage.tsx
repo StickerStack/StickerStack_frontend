@@ -1,4 +1,6 @@
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
 import { OrderPreview } from '../../OrderPreview/OrderPreview';
 import { ButtonWithText, Container, TitlePage, Error } from '../../UI';
 import { ADD_STICKERS } from '../../../utils/constants';
@@ -8,7 +10,6 @@ import { useAppDispatch } from '../../../hooks/hooks';
 import { IUserState } from '../../../interfaces';
 
 import styles from './OrdersPage.module.scss';
-import { useSelector } from 'react-redux';
 
 const OrdersPage: React.FC = () => {
   const navigate = useNavigate();
@@ -22,8 +23,6 @@ const OrdersPage: React.FC = () => {
     dispatch(getUserOrders()).then((res) => {
       if (res.meta.requestStatus === 'fulfilled') {
         setError(false);
-        console.log(userOrders);
-        console.log(res);
       }
       if (res.meta.requestStatus === 'rejected') {
         setError(true);
