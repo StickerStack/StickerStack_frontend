@@ -40,7 +40,6 @@ const Signin: React.FC = () => {
 
   const [statePassword, setStatePasswod] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [formChange, setFormChange] = useState(false);
 
   const onSubmit = () => {
     const userEmail = getValues('email');
@@ -122,10 +121,7 @@ const Signin: React.FC = () => {
           <Label htmlFor='password'>
             Пароль
             <TextUnderline
-              onClick={() => {
-                setFormChange(true);
-                dispatch(openPopup(ResetPassword));
-              }}
+              onClick={() => dispatch(openPopup(ResetPassword))}
               className={styles.reset}
             >
               Забыли пароль?

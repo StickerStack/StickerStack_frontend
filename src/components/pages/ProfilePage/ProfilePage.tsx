@@ -6,7 +6,7 @@ import cn from 'classnames';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { IUserState } from '../../../interfaces';
 import { sendVerificationCode } from '../../../store/authSlice';
-import { openMessage } from '../../../store/popupSlice';
+import { openInfo, openMessage } from '../../../store/popupSlice';
 import { updateUser } from '../../../store/userSlice';
 import { profileName, registerEmail } from '../../../utils/registersRHF';
 import { ImagePick } from '../../ImagePick/ImagePick';
@@ -14,8 +14,12 @@ import { ButtonWithText, Container, TextUnderline, TitlePage } from '../../UI';
 import { InputWithButton } from '../../UI/InputWithButton/InputWithButton';
 import { InputField } from '../../UI/InputField/InputField';
 import { InputError } from '../../UI/InputError/InputError';
+import { getRandomNumber } from '../../../utils/constants';
 
 import EmptyAvatarImage from '../../../images/empty-avatar.svg';
+import mail1 from '../../../images/check-your-mail-1.svg';
+import mail2 from '../../../images/check-your-mail-2.svg';
+import mail3 from '../../../images/check-your-mail-3.svg';
 import styles from './ProfilePage.module.scss';
 
 const FIRSTNAME_INPUT_LABEL = 'firstName';
@@ -83,6 +87,15 @@ const ProfilePage: React.FC = () => {
           dispatch(openMessage({ text: 'Успешно изменено', isError: false }));
           if (emailChanged) {
             dispatch(sendVerificationCode());
+            const randomNumber = getRandomNumber(1, 3);
+            dispatch(
+              openInfo({
+                title: 'Подтвердите почту',
+                text: 'Мы направили письмо на новую электронную почту. Для подтверждения перейдите по ссылке в письме.',
+                buttonText: 'Понятно!',
+                image: randomNumber === 1 ? mail1 : randomNumber === 2 ? mail2 : mail3,
+              }),
+            );
           }
         }
 
@@ -188,6 +201,7 @@ const ProfilePage: React.FC = () => {
                 className={styles.button}
                 type='submit'
                 disabled={(fieldsUnchanged && validOrInvalid) || !isValid}
+                loading={loading}
               >
                 Сохранить
               </ButtonWithText>
@@ -197,7 +211,18 @@ const ProfilePage: React.FC = () => {
                 <p>Не пришло письмо подтверждения электронной почты?</p>
                 <TextUnderline
                   className={styles.underline}
-                  onClick={() => dispatch(sendVerificationCode())}
+                  onClick={() => {
+                    dispatch(sendVerificationCode());
+                    const randomNumber = getRandomNumber(1, 3);
+                    dispatch(
+                      openInfo({
+                        title: 'Подтвердите почту',
+                        text: 'Мы направили письмо на вашу электронную почту. Для подтверждения перейдите по ссылке в письме.',
+                        buttonText: 'Понятно!',
+                        image: randomNumber === 1 ? mail1 : randomNumber === 2 ? mail2 : mail3,
+                      }),
+                    );
+                  }}
                 >
                   Выслать повторно
                 </TextUnderline>

@@ -20,6 +20,12 @@ const ORDERS = '/orders';
 const VERIFY_FORGOT_PASSWORD = '/auth/verify-forgot-password/:token';
 const VERIFY_EMAIL = '/auth/verifyemail/:token';
 
+const getRandomNumber = (min: number, max: number) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
 // Мок страниц со стикерами, стоимости одной страницы
 const pages = [{ link: sticker_page }, { link: sticker_page }, { link: sticker_page }];
 const pagePrice = 290;
@@ -169,4 +175,5 @@ export {
   pagePrice,
   pageSize,
   stickerWhiteBorder,
+  getRandomNumber,
 };

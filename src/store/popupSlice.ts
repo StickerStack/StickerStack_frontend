@@ -76,12 +76,6 @@ const popupSlice = createSlice({
       state.order.content = action.payload;
     },
 
-    openOrder(state, action: { payload: IOrderState; type: string }) {
-      state.isOpen = true;
-      state.order.isOpen = true;
-      state.order.content = action.payload;
-    },
-
     closePopup(state) {
       state.form.isOpen = false;
       state.order.isOpen = false;

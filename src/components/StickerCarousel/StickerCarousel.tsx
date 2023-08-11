@@ -24,7 +24,7 @@ const StickerCarousel: React.FC<IProps> = ({ order }: IProps) => {
       height: sticker.height,
     };
   });
-  console.log(stickers);
+
   return (
     <Slider {...settings}>
       {order &&

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import cn from 'classnames';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { useSelector } from 'react-redux';
@@ -13,14 +13,16 @@ import { ICardsState, CartState } from '../../../interfaces';
 import { InfoBox } from '../../InfoBox/InfoBox';
 import { cleanCart, countTotal, updateAddress, uploadOrder } from '../../../store/cartSlice';
 import { cleanCards } from '../../../store/cardsSlice';
+import { converter } from '../../../utils/converter';
 
+import image from '../../../images/cart-dog.svg';
 import { ReactComponent as WriteSvg } from '../../../images/icons/write-icon.svg';
 import styles from './CartPage.module.scss';
-import { converter } from '../../../utils/converter';
 
 const CartPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
   const cart = useSelector((state: { cart: CartState }) => state.cart);
@@ -45,9 +47,16 @@ const CartPage: React.FC = () => {
     // eslint-disable-next-line
   }, [cart.items]);
 
-  // Пример запроса на оформление заказа
-
   const onSubmit = () => {
+    // dispatch(
+    //   openInfo({
+    //     title: 'Заказ оформлен!',
+    //     text: 'Следите за статусом заказа в личном кабинете',
+    //     buttonText: 'Понятно!',
+    //     image: image,
+    //   }),
+    // );
+    setLoading(true);
     dispatch(
       uploadOrder({
         cost: cart.cost,
@@ -64,22 +73,25 @@ const CartPage: React.FC = () => {
           };
         }),
       }),
-    ).then((res) => {
-      if (res.meta.requestStatus === 'fulfilled') {
-        dispatch(cleanCards());
-        dispatch(cleanCart());
-        dispatch(
-          openInfo({
-            title: 'Заказ оформлен!',
-            text: 'Следите за статусом заказа в личном кабинете',
-            buttonText: 'Понятно!',
-          }),
-        );
-      }
-      if (res.meta.requestStatus === 'rejected') {
-        dispatch(openMessage({ text: 'Не удалось оформить заказ', isError: true }));
-      }
-    });
+    )
+      .then((res) => {
+        if (res.meta.requestStatus === 'fulfilled') {
+          dispatch(cleanCards());
+          dispatch(cleanCart());
+          dispatch(
+            openInfo({
+              title: 'Заказ оформлен!',
+              text: 'Следите за статусом заказа в личном кабинете',
+              buttonText: 'Понятно!',
+              image: image,
+            }),
+          );
+        }
+        if (res.meta.requestStatus === 'rejected') {
+          dispatch(openMessage({ text: 'Не удалось оформить заказ', isError: true }));
+        }
+      })
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -149,7 +161,7 @@ const CartPage: React.FC = () => {
                 <TextUnderline theme='secondary' onClick={() => navigate(ADD_STICKERS)}>
                   Редактировать заказ
                 </TextUnderline>
-                <ButtonWithText className={styles.button} type='submit'>
+                <ButtonWithText className={styles.button} type='submit' loading={loading}>
                   Оформить заказ
                 </ButtonWithText>
               </div>
