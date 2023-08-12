@@ -62,7 +62,8 @@ export const calculateStickerOnList = (arr: ICard[], options: IOptions): void =>
       }
     }
   }
-  document.body.removeChild(page)
+  allPages.push(currentPage);
   localStorage.setItem('pagesWithStickers', JSON.stringify(allPages));
+  document.body.removeChild(page)
   console.log(allPages);
 };
