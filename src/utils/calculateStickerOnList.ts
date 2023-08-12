@@ -49,7 +49,9 @@ export const calculateStickerOnList = (arr: ICard[], options: IOptions): void =>
       if (hasOverflowed) {
         if (j === sortedArray[i].amount - 2) {
           allPages.push(currentPage);
+          
         }
+        localStorage.setItem('pagesWithStickers', JSON.stringify(allPages));
         allPages.push(currentPage);
         currentPage = [];
         page.innerHTML = '';
