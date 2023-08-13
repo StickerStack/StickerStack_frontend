@@ -139,7 +139,7 @@ const CartPage: React.FC = () => {
                     className={cn(styles.address, errors.address && styles.address_error)}
                     placeholder='Выберите адрес'
                   />
-                  <WriteSvg className={styles.write} />
+                  {/* <WriteSvg className={styles.write} /> */}
                 </div>
               </InfoBox>
               <InfoBox type='simple' description='Итого' numberClass={styles.number}>
