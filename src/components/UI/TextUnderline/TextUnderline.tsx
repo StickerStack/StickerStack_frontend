@@ -4,7 +4,7 @@ import styles from './TextUnderline.module.scss';
 
 type TextType = 'button' | 'link';
 
-type TextTheme = 'regular' | 'contrast';
+type TextTheme = 'regular' | 'secondary' | 'contrast';
 
 interface IProps {
   children: React.ReactNode;
@@ -27,10 +27,7 @@ const TextUnderline: React.FC<IProps> = ({
     </button>
   ) : type === 'link' ? (
     // TODO: добработать ссылку, когда появится
-    <Link
-      to=''
-      className={cn(styles.text, className, theme === 'contrast' && styles.text_contrast)}
-    >
+    <Link to='' className={cn(styles.text, className, styles[`text_${theme}`])}>
       {children}
     </Link>
   ) : null;

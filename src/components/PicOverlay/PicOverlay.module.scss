@@ -14,23 +14,24 @@
 }
 
 .button {
-  @include flex(row, flex-start, center);
   width: 245px;
   height: 32px;
   padding: 8px 10px;
   font-size: 14px;
   box-sizing: border-box;
   color: white;
-  gap: 15px;
   border-radius: 10px;
   transition: background-color 0.3s ease-in-out;
   &:hover {
+    color: white;
     opacity: 1;
     background: #929292b6;
   }
 }
 
-.label {
+.flex {
+  @include flex(row, flex-start, center);
+  gap: 15px;
   cursor: pointer;
 }
 

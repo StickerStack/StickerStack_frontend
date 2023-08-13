@@ -1,0 +1,93 @@
+@import '../../utils/_scss-variables.scss';
+
+.order {
+  width: 255px;
+  @include flex(column, _, _);
+  gap: 25px;
+  cursor: pointer;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: calc(100% + 10px);
+    border-radius: 20px;
+    background-color: $active-field-color;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  &:hover::after {
+    opacity: 0.3;
+  }
+}
+
+.border {
+  box-sizing: border-box;
+  background-color: #fff;
+  justify-self: center;
+
+  &_rounded-square {
+    border-radius: 10px;
+  }
+
+  &_circle {
+    border-radius: 50%;
+  }
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  max-height: 255px;
+  object-fit: cover;
+  box-sizing: border-box;
+
+  &_rounded-square {
+    border-radius: 10px;
+  }
+
+  &_circle {
+    border-radius: 50%;
+  }
+
+  &_box {
+    height: 255px;
+    background-color: $element-color;
+    border-radius: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+}
+
+.info {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 15px;
+  padding-left: 8px;
+}
+
+.cost {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.amount {
+  justify-self: center;
+}
+
+.status {
+  grid-column: 1/4;
+}
+
+.button {
+  justify-self: flex-end;
+}
+
+.motion {
+  position: absolute;
+  right: -15px;
+  top: 300px;
+  z-index: 3;
+}
