@@ -1,5 +1,4 @@
 import { ICard, IOptions } from '../interfaces';
-import { sortArrayICard } from './sortArrayICard';
 
 export interface PageElement {
   card: ICard;

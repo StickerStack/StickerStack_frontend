@@ -34,15 +34,13 @@ const PopupPreview: React.FC = () => {
 
       {pagesCards.length > 0 &&
         pagesCards.map((elementsPage) => {
-          const cards =  [];
-          for(let i = 0; i < elementsPage.length; i++) {
-            for(let j = 0; j < elementsPage[i].count; j++) {
+          const cards = [];
+          for (let i = 0; i < elementsPage.length; i++) {
+            for (let j = 0; j < elementsPage[i].count; j++) {
               cards.push(elementsPage[i].card);
             }
           }
-          return (
-            <StickerList key={generateRandomNumber()} cards={cards} />
-          )
+          return <StickerList key={generateRandomNumber()} cards={cards} />;
         })}
     </div>
   );
