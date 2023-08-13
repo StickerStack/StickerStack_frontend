@@ -62,8 +62,8 @@ const CartPage: React.FC = () => {
               item.image.replace('data:image/jpg;base64,', ''),
             shape: item.shape,
             amount: item.amount,
-            width: converter.pxToCm(Math.round(item.size.width)),
-            height: converter.pxToCm(Math.round(item.size.height)),
+            width: Math.round(converter.pxToCm(item.size.width)),
+            height: Math.round(converter.pxToCm(item.size.height)),
           };
         }),
       }),
