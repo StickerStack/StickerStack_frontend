@@ -33,7 +33,7 @@ const Sticker: React.FC<IProps> = ({ card, onClick }: IProps) => {
       case 'square':
         return 'квадрат';
 
-      case 'rounded-square':
+      case 'rounded_square':
         return 'закругленный квадрат';
 
       case 'circle':

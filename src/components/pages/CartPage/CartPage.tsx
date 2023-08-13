@@ -65,11 +65,14 @@ const CartPage: React.FC = () => {
         cropping: cart.cropping,
         stickers: cart.items.map((item) => {
           return {
-            image: item.image.replace('data:image/png;base64,', ''),
+            image:
+              item.image.replace('data:image/png;base64,', '') ||
+              item.image.replace('data:image/jpeg;base64,', '') ||
+              item.image.replace('data:image/jpg;base64,', ''),
             shape: item.shape,
             amount: item.amount,
-            width: converter.pxToCm(Math.round(cart.items[0].size.width)),
-            height: converter.pxToCm(Math.round(cart.items[0].size.height)),
+            width: Math.round(converter.pxToCm(item.size.width)),
+            height: Math.round(converter.pxToCm(item.size.height)),
           };
         }),
       }),
@@ -151,7 +154,7 @@ const CartPage: React.FC = () => {
                     className={cn(styles.address, errors.address && styles.address_error)}
                     placeholder='Выберите адрес'
                   />
-                  <WriteSvg className={styles.write} />
+                  {/* <WriteSvg className={styles.write} /> */}
                 </div>
               </InfoBox>
               <InfoBox type='simple' description='Итого' numberClass={styles.number}>

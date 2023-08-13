@@ -11,24 +11,17 @@
 .title {
   margin: 0;
   font-weight: 400;
-  font-size: 14px;
-  line-height: 16px;
-}
-
-.page {
-  width: 402px;
-  height: 568px;
-  background-color: $element-color;
+  font-size: 16px;
 }
 
 .prev_arrow {
-  transform: translate(-100%, -50%);
+  transform: translate(-50%, -50%);
   &::before {
     background: url(../../../images/icons/arrow-round.svg) no-repeat center;
   }
 }
 .next_arrow {
-  transform: translate(100%, -50%);
+  transform: translate(50%, -50%);
   &::before {
     background: url(../../../images/icons/arrow-round.svg) no-repeat center;
     transform: rotate(180deg);
@@ -70,13 +63,13 @@
 
 .paging .page_numbers {
   font-weight: 400;
-  font-size: 14px;
-  line-height: 16px;
+  font-size: 16px;
+  cursor: auto;
 }
 
 .slider {
   max-width: 600px;
-  max-height: 700px;
+  max-height: 850px;
 
   & :global(.slick-disabled::before) {
     cursor: auto;
