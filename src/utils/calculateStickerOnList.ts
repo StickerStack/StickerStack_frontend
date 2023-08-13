@@ -1,6 +1,11 @@
 import { ICard, IOptions } from '../interfaces';
 import { sortArrayICard } from './sortArrayICard';
 
+export interface PageElement {
+  card: ICard;
+  count: number;
+}
+
 export const calculateStickerOnList = (arr: ICard[], options: IOptions): void => {
   const page = document.createElement('div');
   page.className = 'pageWithStickers';
@@ -26,44 +31,41 @@ export const calculateStickerOnList = (arr: ICard[], options: IOptions): void =>
     opacity: 0;
   `;
   const allPages = [];
-  let currentPage = [];
+  let currentPage: PageElement[] = [];
 
-  const sortedArray = sortArrayICard(arr).map((card) => JSON.parse(JSON.stringify(card)));
-
-  for (let i = 0; i < sortedArray.length; i++) {
-    const imageObject = JSON.parse(JSON.stringify(sortedArray[i]));
-    for (let j = 0; j < sortedArray[i].amount; j++) {
+  for (let i = 0; i < arr.length; i++) {
+    const imageObject = JSON.parse(JSON.stringify(arr[i]));
+    let pageElement = { card: imageObject, count: 0 };
+    while (imageObject.amount > 0) {
       const images = document.createElement('img');
-      images.src = sortedArray[i].image;
+      images.src = imageObject.image;
       images.className = 'sticker';
-      images.width = sortedArray[i].size.width;
-      images.height = sortedArray[i].size.height;
+      images.width = imageObject.size.width;
+      images.height = imageObject.size.height;
       images.style.cssText = `
         object-fit: cover;
-        grid-row: span ${Math.ceil(sortedArray[i].size.height + options.gapY)};
-        grid-column: span ${Math.ceil(sortedArray[i].size.width + options.gapX)};
+        grid-row: span ${Math.ceil(imageObject.size.height + options.gapY)};
+        grid-column: span ${Math.ceil(imageObject.size.width + options.gapX)};
       `;
       page.appendChild(images);
+      
       const hasOverflowed = page.scrollHeight > page.clientHeight;
 
       if (hasOverflowed) {
-        if (j === sortedArray[i].amount - 2) {
-          allPages.push(currentPage);
-          
-        }
-        localStorage.setItem('pagesWithStickers', JSON.stringify(allPages));
+        currentPage.push(pageElement);
         allPages.push(currentPage);
+        pageElement = { card: imageObject, count: 0 };
         currentPage = [];
         page.innerHTML = '';
-        j--;
       } else {
-        currentPage.push(imageObject);
         imageObject.amount -= 1;
+        pageElement.count += 1;
       }
     }
+    currentPage.push(pageElement);
   }
+
   allPages.push(currentPage);
   localStorage.setItem('pagesWithStickers', JSON.stringify(allPages));
-  document.body.removeChild(page)
-  console.log(allPages);
+  document.body.removeChild(page);
 };
