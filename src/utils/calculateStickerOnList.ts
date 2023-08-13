@@ -1,25 +1,27 @@
-import { sortArrayICard } from './sortArrayICard';
 import { ICard, IOptions } from '../interfaces';
 
-// Принимает массив с ICard и возвращает обновленный массив с ICard amount
-// Если стикеры все уместились возвращается пустой массив
-export const calculateStickerOnList = (arr: ICard[], options: IOptions): ICard[] => {
-  const element = document.createElement('div');
-  element.className = 'listCalculate';
-  document.body.appendChild(element);
-  element.innerHTML = '';
-  element.style.cssText = `
+export interface PageElement {
+  card: ICard;
+  count: number;
+}
+
+export const calculateStickerOnList = (arr: ICard[], options: IOptions): void => {
+  const page = document.createElement('div');
+  page.className = 'pageWithStickers';
+  document.body.appendChild(page);
+  page.innerHTML = '';
+  page.style.cssText = `
     background-color: gray;
-    padding: ${options.paddingList.top}px ${options.paddingList.right}px ${options.paddingList.bottom}px ${options.paddingList.left}px;
-    border: 1px solid black;
-    display: flex; 
-    flex-wrap: wrap; 
-    width: ${options.widthPage}px; 
-    height: ${options.heightPage}px; 
-    box-sizing: border-box;
-    gap: ${options.gapX}px ${options.gapY}px;
-    align-content: flex-start;
-    justify-content: center;
+    width: ${options.widthPage}px;
+    height: ${options.heightPage}px;
+    max-height: ${options.heightPage}px;
+    padding: ${options.paddingList.top}px ${options.paddingList.right}px ${options.paddingList.bottom}px ${
+    options.paddingList.left
+  }px;
+    display: grid;
+    grid-auto-flow: row dense;
+    grid-template-columns: repeat(${Math.floor(options.widthPage)}, 1px);
+    grid-template-rows: repeat(${Math.floor(options.heightPage)}, 1px);
     overflow: hidden;
     white-space: nowrap;
     position: absolute;
@@ -27,37 +29,42 @@ export const calculateStickerOnList = (arr: ICard[], options: IOptions): ICard[]
     left: 0;
     opacity: 0;
   `;
+  const allPages = [];
+  let currentPage: PageElement[] = [];
 
   for (let i = 0; i < arr.length; i++) {
-    const objCopy = { ...arr[i] };
-    const amount = objCopy.amount;
-    for (let j = 0; j < amount; j++) {
-      const img = document.createElement('img');
-      const hasOverflowed = element.scrollHeight > element.clientHeight;
-
-      img.src = objCopy.image;
-      img.width = objCopy.size.width;
-      img.height = objCopy.size.height;
-      img.style.cssText = `
-        object-fit: contain;  
+    const imageObject = JSON.parse(JSON.stringify(arr[i]));
+    let pageElement = { card: imageObject, count: 0 };
+    while (imageObject.amount > 0) {
+      const images = document.createElement('img');
+      images.src = imageObject.image;
+      images.className = 'sticker';
+      images.width = imageObject.size.width;
+      images.height = imageObject.size.height;
+      images.style.cssText = `
+        object-fit: cover;
+        grid-row: span ${Math.ceil(imageObject.size.height + options.gapY)};
+        grid-column: span ${Math.ceil(imageObject.size.width + options.gapX)};
       `;
-      element.appendChild(img);
+      page.appendChild(images);
+      
+      const hasOverflowed = page.scrollHeight > page.clientHeight;
 
-      if (hasOverflowed && element.lastElementChild) {
-        element.removeChild(element.lastElementChild);
-        element.removeChild(element.lastElementChild);
-        document.body.removeChild(document.body.querySelector('.listCalculate') as HTMLDivElement);
-        const currentList = [objCopy, ...arr.slice(i + 1, arr.length)];
-
-        const allLists: ICard[][] = JSON.parse(localStorage.getItem('lists') as string) as ICard[][] || [];
-        localStorage.setItem('lists', JSON.stringify([...allLists, currentList]));
-
-        return currentList;
+      if (hasOverflowed) {
+        currentPage.push(pageElement);
+        allPages.push(currentPage);
+        pageElement = { card: imageObject, count: 0 };
+        currentPage = [];
+        page.innerHTML = '';
+      } else {
+        imageObject.amount -= 1;
+        pageElement.count += 1;
       }
-
-      objCopy.amount -= 1;
     }
+    currentPage.push(pageElement);
   }
-  document.body.removeChild(document.body.querySelector('.listCalculate') as HTMLDivElement);
-  return [];
+
+  allPages.push(currentPage);
+  localStorage.setItem('pagesWithStickers', JSON.stringify(allPages));
+  document.body.removeChild(page);
 };
