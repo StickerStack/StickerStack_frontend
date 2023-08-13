@@ -207,8 +207,10 @@ const ProfilePage: React.FC = () => {
               </ButtonWithText>
             </form>
             {!user.isVerified && (
-              <>
-                <p>Не пришло письмо подтверждения электронной почты?</p>
+              <div className={styles.additional}>
+                <span className={styles.additional_text}>
+                  Не пришло письмо подтверждения электронной почты?
+                </span>
                 <TextUnderline
                   className={styles.underline}
                   onClick={() => {
@@ -226,7 +228,7 @@ const ProfilePage: React.FC = () => {
                 >
                   Выслать повторно
                 </TextUnderline>
-              </>
+              </div>
             )}
           </div>
         </section>

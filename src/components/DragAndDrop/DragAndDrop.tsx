@@ -5,12 +5,12 @@ import cn from 'classnames';
 import { stickerWhiteBorder } from '../../utils/constants';
 import { converter } from '../../utils/converter';
 import { PicOverlay } from '../PicOverlay/PicOverlay';
+import { Error } from '../UI';
 import { ICard } from '../../interfaces';
 import { useAppDispatch } from '../../hooks/hooks';
 import { updatePicture } from '../../store/cardsSlice';
 
 import styles from './DragAndDrop.module.scss';
-import { openMessage } from '../../store/popupSlice';
 
 interface IProps {
   card: ICard;
@@ -30,6 +30,8 @@ const DragAndDrop: React.FC<IProps> = ({ card, name, option, register, onLoad }:
 
   const dispatch = useAppDispatch();
 
+  const [error, setError] = useState(false);
+
   const borderInPx = converter.mmToPx(stickerWhiteBorder);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,7 +48,8 @@ const DragAndDrop: React.FC<IProps> = ({ card, name, option, register, onLoad }:
           file: files[0],
           urlFilePreview: reader.result,
         };
-        if (file.file.size < 2000000) {
+        if (file.file.size < 1000000) {
+          setError(false);
           if (typeof reader.result === 'string') {
             const image = new Image();
             image.src = reader.result;
@@ -64,7 +67,7 @@ const DragAndDrop: React.FC<IProps> = ({ card, name, option, register, onLoad }:
             };
           }
         } else {
-          dispatch(openMessage({ text: 'Максимальный размер картинки - до 2Мб!', isError: true }));
+          setError(true);
         }
       };
     }
@@ -119,6 +122,9 @@ const DragAndDrop: React.FC<IProps> = ({ card, name, option, register, onLoad }:
           onLoadImage={handleImageChange}
           label='stickerFile'
         />
+      )}
+      {error && (
+        <Error className={styles.error}>Максимально допустимый размер картинки - до 1Мб!</Error>
       )}
     </div>
   );

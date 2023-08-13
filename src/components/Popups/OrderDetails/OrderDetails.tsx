@@ -31,16 +31,16 @@ const OrderDetails: React.FC<IProps> = ({ order, onClose }: IProps) => {
               <span className={styles.current}>
                 Создан {date.toLocaleDateString()} в {date.toLocaleTimeString().slice(0, 5)}
               </span>
-              {/* <ul className={styles.statuses}>
-                {order.delivery.statuses.map((item) => (
-                  <li className={styles.status} key={item.id}>
-                    <div className={styles.flex}>
-                      <span className={styles.status_title}>{item.status}</span>
-                      <span className={styles.date}>{item.date}</span>
-                    </div>
-                  </li>
-                ))}
-              </ul> */}
+              <ul className={styles.statuses}>
+                {/* {order.delivery.statuses.map((item) => ( */}
+                <li className={styles.status}>
+                  <div className={styles.flex}>
+                    <span className={styles.status_title}>Оформлен</span>
+                    <span className={styles.date}>{date.toLocaleDateString()}</span>
+                  </div>
+                </li>
+                {/* ))} */}
+              </ul>
             </div>
             <ul className={styles.info}>
               <li className={styles.info_item}>
@@ -54,13 +54,13 @@ const OrderDetails: React.FC<IProps> = ({ order, onClose }: IProps) => {
               <li className={styles.info_item}>Белая виниловая пленка</li>
               <div className={styles.buttons}>
                 <ButtonWithText
-                  theme='light'
+                  theme='transparent'
                   className={styles.button}
                   onClick={() => navigate(CART)}
                 >
                   Повторить заказ
                 </ButtonWithText>
-                <ButtonWithText theme='light' className={styles.button} onClick={onClose}>
+                <ButtonWithText theme='transparent' className={styles.button} onClick={onClose}>
                   Удалить
                 </ButtonWithText>
               </div>

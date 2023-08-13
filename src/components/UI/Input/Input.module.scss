@@ -37,17 +37,6 @@
     border: none;
   }
 
-  &.profile {
-    border: none;
-    border-bottom: 2px solid $regular-field-color;
-    border-radius: 0;
-    padding: 4px 5px;
-
-    &.error {
-      border-color: $error-text-color;
-    }
-  }
-
   &.input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 50px $popup-bg-color inset;
     -webkit-text-fill-color: $main-text-color;
@@ -67,5 +56,21 @@
 
   &.error {
     border-color: $error-text-color;
+  }
+}
+
+.profile {
+  border: none;
+  border-bottom: 2px solid $placeholder-text-color;
+  border-radius: 0;
+  padding: 4px 5px;
+  color: $main-text-color;
+
+  &.error {
+    border-color: $error-text-color;
+  }
+  &:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 50px $main-bg-color inset;
+    -webkit-text-fill-color: $main-text-color;
   }
 }

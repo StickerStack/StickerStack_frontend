@@ -17,9 +17,13 @@
 
   &.profile {
     border: none;
-    border-bottom: 2px solid $regular-field-color;
+    border-bottom: 2px solid $active-field-color;
     border-radius: 0;
     padding: 4px 5px;
+
+    &:hover {
+      border-color: $placeholder-text-color;
+    }
 
     &:hover > button {
       opacity: 1;
@@ -49,9 +53,17 @@
       }
     }
     &.profile {
+      color: $main-text-color;
+      &:focus {
+        border-color: $placeholder-text-color;
+      }
       &:focus > button {
         opacity: 1;
         cursor: pointer;
+      }
+      &:-webkit-autofill {
+        -webkit-box-shadow: 0 0 0 50px $main-bg-color inset;
+        -webkit-text-fill-color: $main-text-color;
       }
     }
   }
