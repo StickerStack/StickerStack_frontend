@@ -34,6 +34,17 @@
   @media screen and (max-width: 1400px) {
     transform: translate(1400%, 550%);
   }
+  @media screen and (max-width: 1100px) {
+    transform: translate(calc(100vw * 0.7), 550%);
+  }
+
+  @media screen and (max-width: 880px) {
+    transform: translate(calc(100vw * 0.65), 550%);
+  }
+  @media screen and (max-width: 530px) {
+    transform: translate(calc(100vw * 0.55), 550%);
+  }
+
   &::before {
     background: url(../../images/icons/arrow-simple.svg) no-repeat center;
     transform: rotate(180deg);
@@ -72,6 +83,18 @@
 
   @media screen and (max-width: 1400px) {
     max-width: 920px;
+  }
+
+  @media screen and (max-width: 1100px) {
+    max-width: calc(100vw - 160px);
+  }
+
+  @media screen and (max-width: 768px) {
+    max-width: calc(100vw - 80px);
+  }
+
+  @media screen and (max-width: 460px) {
+    max-width: calc(100vw - 40px);
   }
 
   & :global(:focus) {

@@ -1,13 +1,27 @@
 @import '../../../utils/_scss-variables.scss';
 
-.container {
-  padding-top: 80px;
-  padding-bottom: 60px;
-  background-color: $main-bg-color;
+.add {
   flex: 1;
-  text-align: left;
-  @include flex(column, center, flex-start);
+
+  &_container {
+    padding-top: 80px;
+    padding-bottom: calc(100vh / 7);
+    background-color: $main-bg-color;
+    text-align: left;
+    @include flex(column, center, flex-start);
+    gap: 30px;
+  }
+}
+
+.cards {
+  width: 100%;
+  max-width: 1110px;
+  @include flex(column, center, start);
   gap: 30px;
+}
+
+.motion {
+  width: 100%;
 }
 
 .info {
@@ -16,6 +30,10 @@
   column-gap: 132px;
   row-gap: 35px;
   flex-wrap: wrap;
+
+  &_pages {
+    @include flex(column, start, flex-start);
+  }
 }
 
 .flex {
@@ -26,7 +44,7 @@
 .text {
   max-width: 80px;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 16px;
 }
 
@@ -40,17 +58,18 @@
 
 .prices {
   @include flex(column, center, center);
+  width: 90px;
 }
 
 .price {
   font-family: 'Nunito';
   font-weight: 600;
-  font-size: 18px;
+  font-size: 20px;
   line-height: 25px;
 }
 
 .price_small {
-  font-size: 10px;
+  font-size: 14px;
   line-height: 12px;
   color: $placeholder-text-color;
 }
@@ -58,11 +77,15 @@
 .preview {
   margin-top: 25px;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 16px;
 }
 
 .options {
   @include flex(column, center, flex-start);
   gap: 17px;
+}
+
+.button {
+  margin: 0 auto;
 }

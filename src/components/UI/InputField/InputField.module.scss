@@ -8,4 +8,8 @@
     flex-direction: row;
     align-items: center;
   }
+
+  &.amount {
+    max-width: 140px;
+  }
 }

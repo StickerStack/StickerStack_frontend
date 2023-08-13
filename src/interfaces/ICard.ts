@@ -1,4 +1,4 @@
-export type TCardShape = 'square' | 'rounded-square' | 'circle' | 'contour';
+export type TCardShape = 'square' | 'rounded_square' | 'circle' | 'contour';
 export interface ICard {
   image: string;
   shape: TCardShape;
@@ -7,5 +7,11 @@ export interface ICard {
     width: number;
     height: number;
   };
+  optimalSize: {
+    width: number;
+    height: number;
+  };
   id: number;
+  active?: boolean;
+  valid: boolean;
 }

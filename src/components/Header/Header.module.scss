@@ -6,8 +6,23 @@
   position: sticky;
   z-index: 4;
 
+  &_border {
+    box-shadow: 2px 1px 7px 0px rgba(32, 62, 124, 0.15);
+  }
+
+  &_bar {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    background-color: $contrast-color;
+    opacity: 0;
+    z-index: 5;
+  }
+
   &_container {
     @include flex(row, space-between, center);
+    position: relative;
   }
 
   .logo {
@@ -25,6 +40,33 @@
       width: 96px;
       height: 96px;
     }
+  }
+
+  .buttons {
+    display: flex;
+    gap: 25px;
+  }
+
+  .cart {
+    position: relative;
+    height: fit-content;
+    cursor: pointer;
+  }
+
+  .badge {
+    position: absolute;
+    background-color: $contrast-color;
+    bottom: 4px;
+    left: 0;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    font-size: 13px;
+    text-align: center;
+    font-weight: 500;
+    line-height: 128.7%;
+    color: $contrast-text-color;
+    z-index: 6;
   }
 }
 
