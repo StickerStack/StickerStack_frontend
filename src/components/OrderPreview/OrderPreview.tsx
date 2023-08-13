@@ -58,7 +58,7 @@ const OrderPreview: React.FC<IProps> = ({ order }: IProps) => {
           className={styles.button}
           onClick={() => !isOpen && setIsOpen(true)}
         /> */}
-        {/* <span className={styles.status}>{order.delivery.status}</span> */}
+        <span className={styles.status}>Оформлен</span>
 
         {/* <AnimatePresence>
           {isOpen && (

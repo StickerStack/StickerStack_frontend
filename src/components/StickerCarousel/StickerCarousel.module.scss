@@ -8,8 +8,8 @@
   gap: 8px;
 
   &_box {
-    max-height: 250px;
-    max-width: 250px;
+    height: 250px;
+    width: 250px;
     background-color: $element-color;
     border-radius: 20px;
     padding: 20px;
@@ -28,6 +28,10 @@
 
     &_circle {
       border-radius: 50%;
+    }
+
+    &_single {
+      margin-top: 30px;
     }
   }
 
@@ -50,7 +54,7 @@
 .border {
   box-sizing: border-box;
   background-color: #fff;
-  justify-self: center;
+  margin: 0 auto;
 
   &_rounded-square {
     border-radius: 10px;
@@ -62,18 +66,19 @@
 }
 
 .prev_arrow {
-  top: 55% !important;
-  left: 15px !important;
+  top: 60% !important;
+  left: 0px !important;
   &::before {
-    background: url(../../images/icons/arrow-round.svg) no-repeat center;
+    background: url(../../images/icons/arrow-small.svg) no-repeat center;
+    transform: rotate(90deg);
   }
 }
 .next_arrow {
-  top: -48% !important;
-  left: 210px !important;
+  top: -52% !important;
+  left: 300px !important;
   &::before {
-    background: url(../../images/icons/arrow-round.svg) no-repeat center;
-    transform: rotate(180deg);
+    background: url(../../images/icons/arrow-small.svg) no-repeat center;
+    transform: rotate(270deg);
   }
 }
 
@@ -94,8 +99,8 @@
     width: 32px;
     height: 32px;
     border-radius: 40px;
-    background-color: white;
-    box-shadow: 1px 1px 2px 0px rgba(26, 50, 99, 0.1);
+    background-color: transparent;
+
     opacity: 1;
     z-index: 4;
     cursor: pointer;
@@ -106,9 +111,9 @@
 }
 
 .slider {
-  margin-top: 30px;
-  max-width: 255px;
-  height: 300px;
+  margin-top: -30px;
+  width: 330px;
+  height: 275px;
   border-radius: 20px;
 
   & :global(.slick-disabled::before) {

@@ -13,7 +13,7 @@
     width: 100%;
     height: calc(100% + 10px);
     border-radius: 20px;
-    background-color: $active-field-color;
+    background-color: $element-secondary-color;
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
   }
@@ -27,6 +27,7 @@
   box-sizing: border-box;
   background-color: #fff;
   justify-self: center;
+  margin: 0 auto;
 
   &_rounded-square {
     border-radius: 10px;
@@ -54,7 +55,7 @@
 
   &_box {
     height: 255px;
-    background-color: $element-color;
+    background-color: $element-secondary-active-color;
     border-radius: 20px;
     padding: 20px;
     box-sizing: border-box;

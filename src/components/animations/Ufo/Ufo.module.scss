@@ -2,27 +2,27 @@
 
 .container {
   width: 100%;
-  height: 700px;
-  @include flex(column, center, center);
+  height: 317px;
+  @include flex(column, space-between, center);
 }
 
 .move {
-  width: 400px;
-  height: 700px;
+  width: 185px;
+  height: 255px;
 }
 
 .object {
   position: relative;
-  width: 300px;
-  height: 500px;
+  width: 185px;
+  height: 255px;
   animation: 15s alternate infinite move;
 }
 
 .ufo {
   position: absolute;
-  top: 15px;
-  width: 300px;
-  height: 200px;
+  top: 0;
+  width: 165px;
+  height: 150px;
   background: url('../../../images/ufo-animation/ufo.svg') center no-repeat;
   background-size: contain;
   transform: rotate(28deg);
@@ -31,10 +31,10 @@
 
 .light {
   position: absolute;
-  left: 29%;
-  top: 28%;
-  width: 140px;
-  height: 300px;
+  left: 22%;
+  bottom: 0;
+  width: 94px;
+  height: 140px;
   background: url('../../../images/ufo-animation/light.svg') center no-repeat;
   background-size: contain;
   z-index: 1;
@@ -43,16 +43,16 @@
 
 @keyframes move {
   0% {
-    transform: translateX(200px) translateZ(-300px) scale(0.6);
+    transform: translateX(90px) scale(0.75);
   }
   33% {
-    transform: translateX(50px) translateZ(-120px) scale(0.8);
+    transform: translateX(30px) scale(0.8);
   }
   66% {
-    transform: translateX(20px) translateZ(0px) scale(1);
+    transform: translateX(-60px) scale(1);
   }
   100% {
-    transform: translateX(70px) translateZ(-20px) scale(0.95);
+    transform: translateX(20px) scale(0.95);
   }
 }
 
@@ -63,10 +63,10 @@
   }
 
   33% {
-    transform: translateX(30px) skew(0.3rad);
+    transform: translateX(20px) skew(0.3rad);
   }
 
   66% {
-    transform: translateX(-30px) skew(-0.3rad);
+    transform: translateX(-20px) skew(-0.3rad);
   }
 }

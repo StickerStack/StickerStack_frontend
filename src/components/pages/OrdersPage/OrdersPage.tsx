@@ -28,6 +28,7 @@ const OrdersPage: React.FC = () => {
       .then((res) => {
         if (res.meta.requestStatus === 'fulfilled') {
           setError(false);
+          console.log(userOrders);
         }
         if (res.meta.requestStatus === 'rejected') {
           setError(true);
@@ -47,7 +48,8 @@ const OrdersPage: React.FC = () => {
           <Ufo />
         ) : userOrders.length === 0 ? (
           <div className={styles.empty}>
-            <span>У вас пока нет заказов</span>
+            <div className={styles.ufo} />
+            <span>У вас пока нет заказов.</span>
             <ButtonWithText color='contrast' onClick={() => navigate(ADD_STICKERS)}>
               Заказать стикеры
             </ButtonWithText>

@@ -28,10 +28,6 @@
   }
 }
 
-.carousel {
-  margin-top: -30px;
-}
-
 .buttons {
   @include flex(column, start, start);
   gap: 10px;

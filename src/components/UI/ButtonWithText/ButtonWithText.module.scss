@@ -51,7 +51,7 @@
 .button_no-border {
   background: transparent;
   @include font(16px, 19px, 400);
-  color: $secondary-text-color;
+  color: $main-text-color;
   text-align: left;
   padding: 0;
   height: 16px;

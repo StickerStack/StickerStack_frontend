@@ -1,8 +1,8 @@
 @import '../../../utils/_scss-variables.scss';
 
 .text {
+  font-size: 18px;
   @include flex(row, space-between, center);
-  margin-bottom: 50px;
 }
 
 .dots {
