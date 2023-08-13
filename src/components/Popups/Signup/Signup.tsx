@@ -110,26 +110,6 @@ const Signup: React.FC = () => {
         },
       }}
     >
-      {/* <motion.div
-        initial={{
-          opacity: 1,
-          height: '100%',
-        }}
-        animate={{
-          transition: {
-            duration: 0.3,
-          },
-          opacity: 0.9,
-          height: 0,
-        }}
-        exit={{
-          opacity: 1,
-          transition: {
-            duration: 0.5,
-          },
-        }}
-        className={styles.motion}
-      /> */}
       <TitlePopup>Регистрация</TitlePopup>
       <div className={styles.inputs}>
         <InputField className='email'>
@@ -155,6 +135,7 @@ const Signup: React.FC = () => {
             register={register}
             option={registerPassword}
             name='password'
+            className={dirtyFields['password'] && !statePassword ? styles.password : ''}
             placeholder='Введите пароль'
             type={statePassword ? 'text' : 'password'}
             autoComplete='current-password'
@@ -183,6 +164,9 @@ const Signup: React.FC = () => {
             }}
             placeholder='Введите пароль'
             name='repeat-password'
+            className={
+              dirtyFields['repeat-password'] && !stateRepeatPassword ? styles.password : ''
+            }
             type={stateRepeatPassword ? 'text' : 'password'}
             autoComplete='repeat-password'
             error={errors['repeat-password']}

@@ -20,6 +20,13 @@ const OrderPreview: React.FC<IProps> = ({ order }: IProps) => {
   const dispatch = useAppDispatch();
   // const [isOpen, setIsOpen] = useState(false);
 
+  const getStatus = () => {
+    switch (order.status) {
+      case 'placed':
+        return 'Оформлен';
+    }
+  };
+
   const firstSticker = order.stickers[0];
 
   return (
@@ -58,7 +65,7 @@ const OrderPreview: React.FC<IProps> = ({ order }: IProps) => {
           className={styles.button}
           onClick={() => !isOpen && setIsOpen(true)}
         /> */}
-        <span className={styles.status}>Оформлен</span>
+        <span className={styles.status}>{getStatus()}</span>
 
         {/* <AnimatePresence>
           {isOpen && (

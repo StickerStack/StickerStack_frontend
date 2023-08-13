@@ -132,6 +132,7 @@ const Signin: React.FC = () => {
             register={register}
             option={registerPassword}
             name='password'
+            className={dirtyFields['password'] && !statePassword ? styles.password : ''}
             type={statePassword ? 'text' : 'password'}
             autoComplete='current-password'
             error={errors.password}

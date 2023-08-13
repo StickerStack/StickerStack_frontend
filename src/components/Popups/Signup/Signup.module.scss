@@ -11,6 +11,11 @@
     gap: 25px;
   }
 
+  .password {
+    font-weight: 700;
+    font-family: Verdana;
+  }
+
   .checktext {
     @include font(12px, 15px, 400);
     margin: 0;
@@ -27,12 +32,4 @@
 
     text-align: center;
   }
-}
-
-.motion {
-  position: absolute;
-  background-color: $main-bg-color;
-  width: 100%;
-  height: 100%;
-  z-index: 2;
 }

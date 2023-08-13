@@ -28,7 +28,6 @@ const OrdersPage: React.FC = () => {
       .then((res) => {
         if (res.meta.requestStatus === 'fulfilled') {
           setError(false);
-          console.log(userOrders);
         }
         if (res.meta.requestStatus === 'rejected') {
           setError(true);
