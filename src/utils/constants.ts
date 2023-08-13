@@ -1,6 +1,8 @@
 import sticker_page from '../images/sticker_page.svg';
 import { converter } from '../utils/converter';
 import { IOptions } from '../interfaces';
+
+const REG_SPACE = ''
 // eslint-disable-next-line no-useless-escape
 const REG_EMAIL = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 // Только цифры от 1 до 100
