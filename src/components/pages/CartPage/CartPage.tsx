@@ -56,11 +56,14 @@ const CartPage: React.FC = () => {
         cropping: cart.cropping,
         stickers: cart.items.map((item) => {
           return {
-            image: item.image.replace('data:image/png;base64,', ''),
+            image:
+              item.image.replace('data:image/png;base64,', '') ||
+              item.image.replace('data:image/jpeg;base64,', '') ||
+              item.image.replace('data:image/jpg;base64,', ''),
             shape: item.shape,
             amount: item.amount,
-            width: converter.pxToCm(Math.round(cart.items[0].size.width)),
-            height: converter.pxToCm(Math.round(cart.items[0].size.height)),
+            width: converter.pxToCm(Math.round(item.size.width)),
+            height: converter.pxToCm(Math.round(item.size.height)),
           };
         }),
       }),

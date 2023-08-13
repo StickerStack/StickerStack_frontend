@@ -254,7 +254,7 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
               register={register}
               name='shape'
               card={card}
-              value='rounded-square'
+              value='rounded_square'
               onShapeChange={onShapeChange}
             />
             <Shape
