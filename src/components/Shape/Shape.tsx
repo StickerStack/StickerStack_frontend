@@ -29,7 +29,7 @@ const Shape: React.FC<IProps> = ({
     switch (value) {
       case 'square':
         return <RectSvg />;
-      case 'rounded-square':
+      case 'rounded_square':
         return <RectRondedSvg />;
       case 'circle':
         return <CircleSvg />;
@@ -42,7 +42,7 @@ const Shape: React.FC<IProps> = ({
     switch (value) {
       case 'square':
         return 'Квадрат';
-      case 'rounded-square':
+      case 'rounded_square':
         return 'Закругленный вадрат';
       case 'circle':
         return 'Круг';
