@@ -12,11 +12,15 @@
 
     &:checked + .label {
       background-color: $secondary-bg-color;
-      position: relative;
+    }
+
+    &:checked + .label_error {
+      border-color: $main-text-color !important;
     }
   }
 
   .label {
+    position: relative;
     display: inline-block;
     color: $popup-bg-color;
     width: 20px;
@@ -32,14 +36,13 @@
       top: 2px;
       left: 2px;
     }
-  }
 
-  .label_error {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 1px solid $error-text-color;
-    border-radius: 3px;
-    content: '';
+    &_error {
+      border-color: $error-text-color;
+
+      &:checked {
+        border-color: $main-text-color !important;
+      }
+    }
   }
 }

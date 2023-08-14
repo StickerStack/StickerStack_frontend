@@ -1,4 +1,5 @@
 import { forwardRef } from 'react';
+import cn from 'classnames';
 import {
   FieldError,
   FieldErrorsImpl,
@@ -32,7 +33,7 @@ const CheckBoxForm: React.FC<IProps> = forwardRef<HTMLInputElement, IProps>(
             name={name}
             {...(register && register(name, option))}
           />
-          <label className={error ? styles.label_error : styles.label} htmlFor={name}>
+          <label className={cn(styles.label, error && styles.label_error)} htmlFor={name}>
             <CheckerSvg className={styles.label_svg} />
           </label>
         </div>
