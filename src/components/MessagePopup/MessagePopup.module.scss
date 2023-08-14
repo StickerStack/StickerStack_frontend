@@ -85,7 +85,7 @@
     background-color: $main-text-color;
     border-radius: 2px;
     top: 1px;
-    left: 8px;
+    left: 9px;
 
     &:first-child {
       transform: rotate(45deg);
@@ -97,8 +97,8 @@
 
   &_box {
     position: relative;
-    width: 24px;
-    height: 24px;
+    width: 25px;
+    height: 25px;
     border-radius: 50%;
     border: 2px solid $main-text-color;
     box-sizing: border-box;
