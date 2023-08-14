@@ -4,21 +4,50 @@
   position: fixed;
   z-index: 5;
   top: 100px;
-  right: $desktop-padding;
+  right: $fullscreen-padding;
+
+  @media screen and (max-width: 1330px) {
+    right: $desktop-padding;
+  }
+
+  @media screen and (max-width: 768px) {
+    right: $tablet-padding;
+  }
+
+  @media screen and (max-width: 460px) {
+    right: $mobile-padding;
+  }
 }
 
 .message {
+  @include flex(row, center, center);
+  gap: 10px;
   z-index: 6;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 19px;
-  background-color: $success-color;
+  background-color: $popup-bg-color;
+  box-shadow: 3px 3px 10px 0px rgba(212, 73, 0, 0.1);
   border-radius: 15px;
-  padding: 40px 30px 30px;
+  padding: 35px 30px 25px;
   margin: 0;
   box-sizing: border-box;
 
-  &.error {
-    background-color: #c17c65;
+  & .icon {
+    &:first-child {
+      visibility: visible;
+    }
+    &:last-child {
+      visibility: hidden;
+    }
+  }
+
+  &.error .icon {
+    &:first-child {
+      visibility: hidden;
+    }
+    &:last-child {
+      visibility: visible;
+    }
   }
   &::before {
     content: '';
@@ -26,10 +55,11 @@
     left: 10px;
     bottom: 0;
     width: calc(100% - 20px);
-    height: 4px;
+    height: 2px;
     border-radius: 15px;
     z-index: 10;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: $contrast-color;
+    opacity: 0.7;
     transition: width 3s ease-in;
   }
 }
@@ -40,9 +70,44 @@
   }
 }
 
+.icon {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  top: 2px;
+  left: 1px;
+  visibility: hidden;
+
+  &_line {
+    position: absolute;
+    width: 2px;
+    height: 15px;
+    background-color: $main-text-color;
+    border-radius: 2px;
+    top: 1px;
+    left: 8px;
+
+    &:first-child {
+      transform: rotate(45deg);
+    }
+    &:last-child {
+      transform: rotate(135deg);
+    }
+  }
+
+  &_box {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid $main-text-color;
+    box-sizing: border-box;
+  }
+}
+
 .button {
   position: absolute;
-  right: 20px;
+  right: 15px;
   top: 15px;
   width: 16px !important;
   height: 16px !important;

@@ -7,6 +7,8 @@ import { useAppDispatch } from '../../hooks/hooks';
 import { closeMessage } from '../../store/popupSlice';
 import { ButtonCustom } from '../UI';
 
+import { ReactComponent as CheckerSvg } from '../../images/icons/checker-icon.svg';
+import { ReactComponent as ErrorSvg } from '../../images/icons/button-close.svg';
 import styles from './MessagePopup.module.scss';
 
 const MessagePopup: React.FC = () => {
@@ -29,7 +31,7 @@ const MessagePopup: React.FC = () => {
 
     return () => {
       clearTimeout(timeoutId);
-    }
+    };
     // eslint-disable-next-line
   }, [message.isOpen]);
 
@@ -59,6 +61,13 @@ const MessagePopup: React.FC = () => {
               message.isOpen ? styles.message_opened : ''
             }`}
           >
+            <div className={styles.icon_box}>
+              <CheckerSvg className={styles.icon} />
+              <div className={styles.icon}>
+                <div className={styles.icon_line} />
+                <div className={styles.icon_line} />
+              </div>
+            </div>
             {message.text}
             <ButtonCustom
               className={styles.button}
@@ -71,24 +80,6 @@ const MessagePopup: React.FC = () => {
       )}
     </AnimatePresence>
   );
-
-  /*
-  messageIsOpen
-    ? createPortal(
-        <div className={styles.message__block}>
-          <p
-            className={`${styles.message} ${messageIsOpen ? styles.message_opened : ''} ${
-              closing ? styles.message_closed : ''
-            } ${messageIsError && styles.error}`}
-          >
-            {message}
-            <ButtonCustom className={styles.button} type='close' onClick={() => closeMessage()} />
-          </p>
-        </div>,
-        document.getElementById('app-popup') as HTMLElement,
-      )
-    : null;
-    */
 };
 
 export { MessagePopup };

@@ -8,6 +8,7 @@ import {
   UseFormRegister,
 } from 'react-hook-form';
 
+import { ReactComponent as CheckerSvg } from '../../../images/icons/checker-icon.svg';
 import styles from './CheckBoxForm.module.scss';
 
 interface IProps {
@@ -31,7 +32,9 @@ const CheckBoxForm: React.FC<IProps> = forwardRef<HTMLInputElement, IProps>(
             name={name}
             {...(register && register(name, option))}
           />
-          <label className={error ? styles.label_error : styles.label} htmlFor={name} />
+          <label className={error ? styles.label_error : styles.label} htmlFor={name}>
+            <CheckerSvg className={styles.label_svg} />
+          </label>
         </div>
         {children}
       </div>
