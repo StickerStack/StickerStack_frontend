@@ -31,6 +31,38 @@ class UserApi extends Api {
     return this.checkResponse(data);
   }
 
+  public async getProfileImage() {
+    const data = await fetch(`${this.url}/user/profile-image`, {
+      method: 'GET',
+      credentials: 'include',
+      headers: this.headers,
+    });
+
+    return this.checkResponse(data);
+  }
+
+  public async uploadProfileImage(formData: FormData) {
+    const data = await fetch(`${this.url}/user/upload-profile-image`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      body: formData,
+    });
+    return this.checkResponse(data);
+  }
+
+  public async deleteProfileImage() {
+    const data = await fetch(`${this.url}/user/profile-image`, {
+      method: 'DELETE',
+      credentials: 'include',
+      headers: this.headers,
+    });
+
+    return this.checkResponse(data);
+  }
+
   public async getUserOrders() {
     const data = await fetch(`${this.url}/orders`, {
       method: 'GET',

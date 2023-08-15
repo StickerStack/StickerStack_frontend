@@ -27,7 +27,7 @@ import {
 } from '../../utils/constants';
 import { useAppDispatch } from '../../hooks/hooks';
 import { useScrollToTop } from '../../hooks/useScrollToTop';
-import { getUser, signInMockUser } from '../../store/userSlice';
+import { getProfileImage, getUser, signInMockUser } from '../../store/userSlice';
 import styles from './App.module.scss';
 import { OrdersPage } from '../pages/OrdersPage/OrdersPage';
 
@@ -47,6 +47,7 @@ const App: React.FC = () => {
     dispatch(getUser()).then(() => {
       setIsLoading(false);
     });
+    dispatch(getProfileImage());
 
     // eslint-disable-next-line
   }, []);

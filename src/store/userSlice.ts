@@ -8,6 +8,7 @@ const initialState: IUserState = {
   email: '',
   firstName: '',
   lastName: '',
+  avatar: '',
   orders: [],
   isLogged: false,
   isVerified: false,
@@ -34,9 +35,9 @@ const updateUser = createAsyncThunk(
 
 const updateProfileImage = createAsyncThunk(
   'user/updateProfileImage',
-  async (data: { formData: FormData }, { rejectWithValue }) => {
+  async (data: FormData, { rejectWithValue }) => {
     try {
-      return authApi.uploadProfileImage(data.formData);
+      return authApi.uploadProfileImage(data);
     } catch (err) {
       return rejectWithValue(err);
     }
@@ -97,6 +98,14 @@ const userSlice = createSlice({
       state.lastName = action.payload.last_name;
       state.isVerified = action.payload.is_verified;
       state.isLogged = true;
+    });
+
+    builder.addCase(getProfileImage.fulfilled, (state, action) => {
+      state.avatar = action.payload;
+    });
+
+    builder.addCase(updateProfileImage.fulfilled, (state, action) => {
+      state.avatar = action.payload;
     });
 
     builder.addCase(
