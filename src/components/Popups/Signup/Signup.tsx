@@ -68,7 +68,8 @@ const Signup: React.FC = () => {
           }
         });
       }
-      if (res.meta.requestStatus === 'rejected' && res.payload === '400') {
+
+      if (res.meta.requestStatus === 'rejected') {
         dispatch(
           openMessage({
             text: 'Учётная запись с такой почтой уже существует',
