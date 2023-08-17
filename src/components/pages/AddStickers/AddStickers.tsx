@@ -10,7 +10,7 @@ import { RadioButton, TextUnderline, ButtonWithText, TitlePage, Container } from
 import { NewSticker } from '../../index';
 import { InfoBox } from '../../InfoBox/InfoBox';
 import { openPreview } from '../../../store/popupSlice';
-import { pagePrice, pageSizePx, CART } from '../../../utils/constants';
+import { pagePrice, pageSizePx, CART, CARDS_MAXIMUM } from '../../../utils/constants';
 import { CartState, ICardsState } from '../../../interfaces';
 import { addCard, setActive } from '../../../store/cardsSlice';
 import { addItems, updateCropping, updateSheets } from '../../../store/cartSlice';
@@ -127,10 +127,11 @@ const AddStickers: React.FC = () => {
             </AnimatePresence>
           ))}
         </div>
-
-        <ButtonWithText theme='transparent' onClick={handleAddCard}>
-          Добавить стикер
-        </ButtonWithText>
+        {cards.length < CARDS_MAXIMUM && (
+          <ButtonWithText theme='transparent' onClick={handleAddCard}>
+            Добавить стикер
+          </ButtonWithText>
+        )}
         <section className={styles.info}>
           <div className={styles.info_pages}>
             <InfoBox type='number' description='Количество листов'>
