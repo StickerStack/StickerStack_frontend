@@ -47,11 +47,10 @@
   box-sizing: border-box;
   background-color: #fff;
   box-shadow: 1px 1px 4px 0px rgba(34, 68, 137, 0.2);
-  cursor: pointer;
   grid-row: 1/4;
   justify-self: center;
 
-  &_rounded-square {
+  &_rounded_square {
     border-radius: 10px;
   }
 
@@ -83,7 +82,7 @@
     grid-row: 1/4;
   }
 
-  &_rounded-square {
+  &_rounded_square {
     border-radius: 10px;
   }
 

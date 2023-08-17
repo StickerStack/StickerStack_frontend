@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -9,26 +10,26 @@ import { RadioButton, TextUnderline, ButtonWithText, TitlePage, Container } from
 import { NewSticker } from '../../index';
 import { InfoBox } from '../../InfoBox/InfoBox';
 import { openPreview } from '../../../store/popupSlice';
-import { pages, pagePrice, CART, CARDS_MAXIMUM } from '../../../utils/constants';
+import { pagePrice, pageSizePx, CART, CARDS_MAXIMUM } from '../../../utils/constants';
 import { CartState, ICardsState } from '../../../interfaces';
 import { addCard, setActive } from '../../../store/cardsSlice';
 import { addItems, updateCropping } from '../../../store/cartSlice';
 import { generateRandomNumber } from '../../../utils/generateRandomNumber';
-import { calculateStickerOnList } from '../../../utils/calculateStickerOnList';
-import { calculateLists } from '../../../utils/calculateLists';
-
 import styles from './AddStickers.module.scss';
+import { calculateStickerOnList } from '../../../utils/calculateStickerOnList';
 
 const AddStickers: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
-  const fullPrice = pagePrice * pages.length;
-  const itemPrice = Math.round((pagePrice * pages.length) / (pages.length * 35));
+  const [pages, setPages] = useState<number>(1);
 
   const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
   const cart = useSelector((state: { cart: CartState }) => state.cart);
   const validation = useSelector((state: { cards: ICardsState }) => state.cards.valid);
+
+  const fullPrice = pagePrice * pages;
+  const fullAmount = cards.reduce((acc, item) => acc + item.amount, 0);
+  const itemPrice = Math.round((pagePrice * pages) / fullAmount);
 
   const handleAddCard = () => {
     dispatch(
@@ -127,7 +128,7 @@ const AddStickers: React.FC = () => {
         <section className={styles.info}>
           <div className={styles.info_pages}>
             <InfoBox type='number' description='Количество листов'>
-              {pages.length}
+              {pages}
             </InfoBox>
             <TextUnderline
               type='button'
@@ -139,16 +140,21 @@ const AddStickers: React.FC = () => {
             <TextUnderline
               type='button'
               className={styles.preview}
-              onClick={() => {
-                console.log(
-                  calculateLists(cards, {
-                    paddingList: { top: 40, right: 40, bottom: 40, left: 40 },
-                    gapX: 20,
-                    gapY: 22,
-                    widthPage: 2480,
-                    heightPage: 3508,
-                  }),
-                );
+              onClick={ () => {
+                 calculateStickerOnList(cards, {
+                  paddingList: {
+                    top: pageSizePx.paddingList.top,
+                    right: pageSizePx.paddingList.right,
+                    bottom: pageSizePx.paddingList.bottom,
+                    left: pageSizePx.paddingList.left,
+                  },
+                  gapX: pageSizePx.gapX,
+                  gapY: pageSizePx.gapY,
+                  widthPage: pageSizePx.widthPage,
+                  heightPage: pageSizePx.heightPage,
+                });
+
+                setPages(JSON.parse(localStorage.getItem('pagesWithStickers') || '[]')?.length || 1);
               }}
             >
               Рассчитать стоимость

@@ -1,0 +1,30 @@
+@import '../../../utils/_scss-variables.scss';
+
+.orders {
+  flex: 1;
+
+  &_container {
+    padding-top: 80px;
+    padding-bottom: calc(100vh / 4);
+    background-color: $main-bg-color;
+
+    text-align: left;
+    @include flex(column, center, flex-start);
+    gap: 30px;
+  }
+}
+
+.empty {
+  width: 100%;
+  text-align: center;
+  @include flex(column, center, center);
+  gap: 30px;
+}
+
+.grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 255px);
+  grid-template-rows: repeat(auto-fill, 332px);
+  gap: 30px;
+}
