@@ -1,0 +1,39 @@
+@import '../../utils/_scss-variables.scss';
+
+.shape {
+  max-width: 110px;
+  height: 89px;
+  @include flex(column, flex-start, center);
+  gap: 5px;
+  cursor: pointer;
+
+  &:hover .shape_pic {
+    background: $element-secondary-active-color;
+  }
+}
+
+.shape_pic {
+  width: 56px;
+  height: 56px;
+  background: $element-secondary-color;
+  color: $regular-button-bg-color;
+  border-radius: 10px;
+  @include flex(row, center, center);
+  transition: background-color 0.2s, color 0.2s ease-in-out;
+}
+
+.shape_title {
+  display: block;
+  font-size: 14px;
+  line-height: 14px;
+  text-align: center;
+}
+
+.radio {
+  display: none;
+
+  &:checked + label .shape_pic {
+    background: $element-active-color;
+    color: $contrast-text-color;
+  }
+}

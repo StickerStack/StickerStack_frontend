@@ -1,20 +1,38 @@
 @import '../vendor/fonts/fonts';
 
 $main-bg-color: #fff;
-$secondary-bg-color: #d9d9d9;
-$desktop-padding: 165px;
+$secondary-bg-color: #1a3263;
+$popup-bg-color: #fff;
+
+$fullscreen-padding: 165px;
+$desktop-padding: 70px;
+$tablet-padding: 40px;
+$mobile-padding: 20px;
+
+$element-color: #dbe7ff;
+$element-secondary-color: #fff7f3;
+$element-secondary-active-color: #fdeae0;
+$element-active-color: #1a3263;
+$contrast-color: #f16821;
 
 $main-text-color: #333333;
+$secondary-text-color: #1a3263;
+$contrast-text-color: #fff;
+
 $main-text-desktop-size: 20px;
 $secondary-text-desktop-size: 16px;
 $sub-text-desktop-size: 14px;
-$span-text-color: #414141;
-$placeholder-text-color: rgba(0, 0, 0, 0.4);
 
-$regular-button-bg-color: #333333;
+$span-text-color: #414141;
+$placeholder-text-color: #929292;
+$regular-field-color: #929292;
+$active-field-color: #d9d9d9;
+
+$regular-button-bg-color: #1a3263;
 $regular-button-text-color: #fff;
 $other-button-bg-color: transparent;
-$other-button-text-color: #333333;
+$other-button-text-color: #1a3263;
+$clicked-button-color: #0d1e43;
 
 $error-text-color: #d94917;
 

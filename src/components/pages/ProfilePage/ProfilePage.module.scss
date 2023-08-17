@@ -1,10 +1,11 @@
 @import '../../../utils/_scss-variables.scss';
 
 .profile {
-  padding-top: 80px;
   flex: 1;
 
   &_container {
+    padding-top: 80px;
+    background-color: $main-bg-color;
     @include flex(column, flex-start, flex-start);
     gap: 20px;
   }
@@ -17,6 +18,23 @@
 
 .profile_data {
   width: 270px;
+}
+
+.remove {
+  background-image: url(../../../images/icons/clear-field.svg);
+  width: 18px;
+  height: 18px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  border: none;
+  background-color: transparent;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+
+  &_none {
+    display: none;
+  }
 }
 
 .button {

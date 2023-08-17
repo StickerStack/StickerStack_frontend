@@ -1,0 +1,31 @@
+@import '../../utils/_scss-variables.scss';
+
+.item {
+  border-bottom: 1px solid $element-color;
+}
+
+.heading {
+  @include flex(row, space-between, center);
+  gap: 10px;
+  padding: 17px 0;
+  box-sizing: border-box;
+  cursor: pointer;
+
+  &:hover .button {
+    opacity: 0.7;
+  }
+}
+
+.question {
+  margin: 0;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+}
+
+.button {
+  transition: transform 0.3s, opacity 0.2 ease-in-out;
+  &_up {
+    transform: rotate(180deg);
+  }
+}

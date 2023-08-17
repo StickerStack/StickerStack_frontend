@@ -1,40 +1,112 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { Signin } from '../components/Signin/Signin';
+import { Signin } from '../components/Popups/Signin/Signin';
+import { IPopupState, IOrderState } from '../interfaces';
+
+const initialState: IPopupState = {
+  isOpen: false,
+  form: {
+    isOpen: false,
+    element: Signin,
+  },
+  preview: {
+    isOpen: false,
+  },
+  info: {
+    isOpen: false,
+    title: '',
+    text: '',
+    buttonText: '',
+  },
+  message: {
+    isOpen: false,
+    isError: false,
+    text: '',
+  },
+  order: {
+    isOpen: false,
+    content: {
+      order_number: 0,
+      address: '',
+      cropping: true,
+      created_at: '',
+      //  delivery: { status: '', statuses: [] },
+      cost: 0,
+      //   amount: 0,
+      number_of_sheets: 0,
+      stickers: [],
+    },
+  },
+};
 
 const popupSlice = createSlice({
   name: 'popupSlice',
-  initialState: {
-    isOpen: false,
-    form: Signin,
-    previewIsOpen: false,
-    messageIsOpen: false,
-    message: '',
-    messageIsError: false,
-  },
+  initialState,
   reducers: {
-    setMessageIsOpen(state, action) {
-      state.messageIsOpen = action.payload.messageIsOpen;
-      state.message = action.payload.message;
-      state.messageIsError = action.payload.messageIsError;
+    openPopup(state, action: { payload: React.FC; type: string }) {
+      state.isOpen = true;
+      state.form.isOpen = true;
+      state.form.element = action.payload;
     },
-    setPreviewIsOpen(state, action) {
-      state.isOpen = action.payload;
-      state.previewIsOpen = action.payload;
+
+    openPreview(state) {
+      state.isOpen = true;
+      state.preview.isOpen = true;
     },
-    setIsOpen(state, action) {
-      if (!state.isOpen) {
-        state.form = Signin;
-      }
-      state.isOpen = action.payload;
+
+    openInfo(
+      state,
+      action: { payload: { title: string; text: string; buttonText: string }; type: string },
+    ) {
+      state.isOpen = true;
+      state.info.isOpen = true;
+      state.info.text = action.payload.text;
+      state.info.buttonText = action.payload.buttonText;
+      state.info.title = action.payload.title;
     },
-    switchForm(state, action) {
-      state.form = action.payload;
+
+    openOrder(state, action: { payload: IOrderState; type: string }) {
+      state.isOpen = true;
+      state.order.isOpen = true;
+      state.order.content = action.payload;
+    },
+
+    closePopup(state) {
+      state.form.isOpen = false;
+      state.order.isOpen = false;
+      state.info.isOpen = false;
+      state.preview.isOpen = false;
+      state.isOpen = false;
+      state.info.title = '';
+      state.info.text = '';
+      state.info.buttonText = '';
+    },
+
+    openMessage(state, action: { payload: { text: string; isError: boolean }; type: string }) {
+      state.message.isOpen = true;
+      state.message.isError = action.payload.isError;
+      state.message.text = action.payload.text;
+    },
+
+    closeMessage(state) {
+      state.message.isOpen = false;
+      state.message.isError = false;
+      state.message.text = '';
     },
   },
 });
 
 const popupSliceReducer = popupSlice.reducer;
-const { setMessageIsOpen, setIsOpen, switchForm, setPreviewIsOpen } = popupSlice.actions;
+const { closePopup, openPopup, openPreview, openOrder, openInfo, openMessage, closeMessage } =
+  popupSlice.actions;
 
-export { popupSliceReducer, setMessageIsOpen, setIsOpen, switchForm, setPreviewIsOpen };
+export {
+  popupSliceReducer,
+  closePopup,
+  openPopup,
+  openOrder,
+  openPreview,
+  openInfo,
+  openMessage,
+  closeMessage,
+};

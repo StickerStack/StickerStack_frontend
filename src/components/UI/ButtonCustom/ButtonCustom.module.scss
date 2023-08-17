@@ -34,8 +34,30 @@
   background-image: url(../../../images/icons/profile-icon.svg);
 }
 
+.button_cart {
+  width: 32px;
+  height: 32px;
+  background-image: url(../../../images/icons/cart.svg);
+}
+
 .button_delete {
   width: 24px;
   height: 24px;
   background-image: url(../../../images/icons/bin.svg);
+}
+
+.button_arrow {
+  min-width: 32px;
+  height: 32px;
+  background-color: $element-color;
+  border-radius: 50%;
+  background-image: url(../../../images/icons/arrow-small.svg);
+  background-size: auto;
+  transform: rotate(1deg);
+}
+
+.button_more {
+  width: 19px;
+  height: 19px;
+  background-image: url(../../../images/icons/vertical-dots.svg);
 }

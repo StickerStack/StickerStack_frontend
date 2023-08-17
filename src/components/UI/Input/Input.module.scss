@@ -1,35 +1,71 @@
-@import '../../../utils/scss-variables';
+@import '../../../utils/_scss-variables.scss';
 
 .input {
-  width: 60px;
-  height: 30px;
-  border-radius: 5px;
-  border: 1px solid $main-text-color;
-  padding: 5px auto;
+  background-color: transparent;
+  border: 1px solid $regular-field-color;
+  border-radius: 15px;
+  padding: 11px 15px;
   box-sizing: border-box;
-  text-align: center;
   outline: none;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: $main-text-color;
   transition: border-color 0.2s ease-in-out;
 
+  &.size,
+  &.amount {
+    padding: 5px 0;
+    width: 76px;
+    text-align: center;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 16px;
+    position: relative;
+  }
+
+  &.amount {
+    width: 60px;
+  }
+
+  &::placeholder {
+    color: $placeholder-text-color;
+    transition: color 0.1s ease-in;
+  }
+
+  &.password {
+    border: none;
+  }
+
+  &.profile {
+    border: none;
+    border-bottom: 2px solid $regular-field-color;
+    border-radius: 0;
+    padding: 4px 5px;
+
+    &.error {
+      border-color: $error-text-color;
+    }
+  }
+
+  &.input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 50px $popup-bg-color inset;
+    -webkit-text-fill-color: $main-text-color;
+  }
+
+  &:hover {
+    border-color: $active-field-color;
+  }
+
   &:focus {
-    border-color: #d9d9d9;
+    border-color: $active-field-color;
 
     &::placeholder {
       color: transparent;
     }
   }
-  &:hover {
-    border-color: #d9d9d9;
-  }
 
-  &_error {
+  &.error {
     border-color: $error-text-color;
-
-    &:focus {
-      border-color: $error-text-color;
-    }
-    &:hover {
-      border-color: $error-text-color;
-    }
   }
 }

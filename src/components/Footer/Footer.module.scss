@@ -2,12 +2,15 @@
 
 .footer {
   position: relative;
+  background-color: $secondary-bg-color;
   min-height: 335px;
-  margin-top: 55px;
   padding-top: 55px;
-
+  box-sizing: border-box;
   &_container {
     @include flex(row, space-between, _);
+    flex-wrap: wrap;
+    background-color: $secondary-bg-color;
+    color: $contrast-text-color;
   }
 
   .logo {
@@ -30,14 +33,19 @@
   gap: 20px;
 }
 
-.item {
+.items {
   @include flex(row, start, center);
   gap: 10px;
-  color: $main-text-color;
-  transition: color 0.3s ease-in-out;
+}
+
+.item {
+  @include flex(row, flex-start, center);
+  gap: 10px;
+  color: $contrast-text-color;
+  transition: color 0.3s, opacity 0.3s ease-in-out;
 
   &:hover {
-    color: #929292;
+    opacity: 0.7;
   }
 }
 
@@ -48,5 +56,6 @@
 .text {
   text-decoration: none;
   max-width: fit-content;
+  color: $contrast-text-color;
   @include font(14px, 16px, 400);
 }

@@ -3,33 +3,34 @@
 .card {
   position: relative;
   width: 100%;
-  max-width: 1076px;
+  max-width: 1110px;
   box-sizing: border-box;
-  padding: 40px 50px 40px 30px;
-  box-shadow: 3px 3px 10px rgba(45, 56, 68, 0.25);
+  background-color: $popup-bg-color;
+  padding: 40px 40px 40px 30px;
+  box-shadow: 3px 3px 10px rgba(32, 62, 124, 0.2);
   border-radius: 10px;
 }
 
 .category {
   margin: 0;
-  max-width: 80px;
+  max-width: 100px;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 16px;
 }
 
 .text {
   margin: 0;
-  @include flex(row, start, center);
+  @include flex(row, flex-start, center);
   gap: 10px;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 16px;
 }
 
 .info {
   display: grid;
-  grid-template-columns: 255px minmax(160px, 255px) 1fr;
+  grid-template-columns: 255px minmax(160px, 265px) 1fr;
   grid-template-rows: repeat(3, min-content);
   row-gap: 35px;
   column-gap: 25px;
@@ -56,10 +57,17 @@
   position: relative;
   padding: 0;
   border: none;
-  @include flex(row, start, start);
+  @include flex(row, flex-start, flex-start);
   flex-wrap: wrap;
   gap: 20px;
 }
+
+.flexible {
+  @include flex(row, flex-start, center);
+  flex-wrap: wrap;
+  gap: 13px;
+}
+
 .flex_shapes {
   grid-column: 2/4;
   @media screen and (max-width: 1010px) {
@@ -75,39 +83,10 @@
   gap: 23px;
 }
 
-.shape {
-  width: 65px;
-  height: 89px;
-  @include flex(column, start, center);
-  gap: 5px;
-  cursor: pointer;
-
-  &:hover .shape_pic {
-    background: #d9d9d9;
-  }
-}
-
-.shape_pic {
-  width: 56px;
-  height: 56px;
-  background: #f1f1f1;
-  color: $main-text-color;
-  border-radius: 10px;
-  @include flex(row, center, center);
-  transition: background-color 0.2s ease-in-out;
-}
-
-.shape_title {
-  display: block;
-  font-size: 12px;
-  line-height: 14px;
-  text-align: center;
-}
-
 .options {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 10px;
   font-weight: 400;
   font-size: 14px;
   line-height: 16px;
@@ -115,6 +94,7 @@
 
 .option {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
   gap: 10px;
 }
@@ -125,6 +105,21 @@
   top: 40px;
 }
 
+.add {
+  position: absolute;
+  right: 30px;
+  bottom: 30px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  padding: 6px 12px;
+  height: 40px;
+}
+
+.motion {
+  width: 100%;
+}
+
 .visible {
   visibility: visible;
 }
@@ -132,21 +127,9 @@
   visibility: hidden;
 }
 
-.radio {
-  display: none;
-
-  &:checked + label .shape_pic {
-    background: #d9d9d9;
-  }
-}
-
 .color_sample {
   width: 19px;
   height: 19px;
   box-shadow: 1px 1px 3px rgba(45, 56, 68, 0.25);
   border-radius: 3px;
-}
-
-.error {
-  max-width: 140px;
 }

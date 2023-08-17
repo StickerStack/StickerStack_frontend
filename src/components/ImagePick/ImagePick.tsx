@@ -1,10 +1,7 @@
 import cn from 'classnames';
 
-import { ButtonWithText } from '../UI';
-
-import { ReactComponent as PictureSvg } from '../../images/icons/upload-image.svg';
-import { ReactComponent as BinSvg } from '../../images/icons/bin.svg';
 import styles from './ImagePick.module.scss';
+import { PicOverlay } from '../PicOverlay/PicOverlay';
 
 interface IProps {
   image?: string | ArrayBuffer | null;
@@ -15,33 +12,10 @@ interface IProps {
 
 const ImagePick: React.FC<IProps> = ({ image, className, onLoadImage, deleteImage }: IProps) => {
   return (
-    <div className={cn(styles.avatar, className)}>
-      <img className={styles.image} alt='Изображение' src={`${image}`} />
-      <div className={styles.overlay}>
-        <ButtonWithText type='button' theme='no-border' className={styles.button}>
-          <PictureSvg />
-          <label htmlFor='myimage' className={styles.label}>
-            Загрузить изображение
-          </label>
-        </ButtonWithText>
-        <input
-          type='file'
-          name='file'
-          id='myimage'
-          accept='image/*'
-          className={styles.input}
-          onChange={onLoadImage}
-        ></input>
-        <ButtonWithText
-          onClick={deleteImage}
-          type='button'
-          theme='no-border'
-          className={styles.button}
-        >
-          <BinSvg />
-          Удалить изображение
-        </ButtonWithText>
-      </div>
+    <div className={cn(styles.pic, className)}>
+      <img className={styles.image} alt='Загруженное изображение' src={`${image}`} />
+
+      <PicOverlay className={styles.overlay} onLoadImage={onLoadImage} deleteImage={deleteImage} />
     </div>
   );
 };

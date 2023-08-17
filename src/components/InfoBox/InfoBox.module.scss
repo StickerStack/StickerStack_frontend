@@ -1,0 +1,32 @@
+@import '../../utils/_scss-variables.scss';
+
+.flex {
+  @include flex(row, center, center);
+  gap: 15px;
+  font-size: 16px;
+  line-height: 16px;
+}
+
+.simple {
+  font-weight: 400;
+}
+
+.text {
+  margin: 0;
+  max-width: 105px;
+  font-weight: 500;
+}
+
+.number {
+  min-width: 48px;
+  padding: 5px 8px;
+  box-sizing: border-box;
+  background: $element-color;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: 400;
+
+  &_simple {
+    padding: 8px 25px;
+  }
+}

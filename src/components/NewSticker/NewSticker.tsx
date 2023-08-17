@@ -1,20 +1,44 @@
 import cn from 'classnames';
 import { useSelector } from 'react-redux';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 
-import { ButtonCustom, Error, Input, RadioButton, SizeInput, TooltipCustom } from '../UI';
+import {
+  ButtonCustom,
+  Error,
+  Input,
+  RadioButton,
+  TooltipCustom,
+  InputField,
+  InputError,
+} from '../UI';
+import { Shape } from '../Shape/Shape';
 import { DragAndDrop } from '../';
+import { InfoBox } from '../InfoBox/InfoBox';
 import { useAppDispatch } from '../../hooks/hooks';
-import { deleteCard, removeBackground, updateCard } from '../../store/cardsSlice';
-import { ICard, ICardsState } from '../../interfaces';
+import {
+  checkValidation,
+  deleteCard,
+  removeBackground,
+  setActive,
+  setValid,
+  updateAmount,
+  updateShape,
+  updateSize,
+} from '../../store/cardsSlice';
+import { CartState, ICard, ICardsState } from '../../interfaces';
 import { TCardShape } from '../../interfaces/ICard';
 import { registerAmount, registerSize } from '../../utils/registersRHF';
+import { addItem, deleteItem, updateItem } from '../../store/cartSlice';
+import {
+  AMOUNT_INPUT_MAX_LENGTH,
+  AMOUNT_INPUT_MIN_LENGTH,
+  REG_STICKERS,
+  SIZE_INPUT_MAX_LENGTH,
+  SIZE_INPUT_MIN_LENGTH,
+} from '../../utils/constants';
+import { converter } from '../../utils/converter';
 
-import { ReactComponent as RectSvg } from '../../images/icons/rect.svg';
-import { ReactComponent as RectRondedSvg } from '../../images/icons/rect_rounded.svg';
-import { ReactComponent as CircleSvg } from '../../images/icons/circle.svg';
-import { ReactComponent as ContourSvg } from '../../images/icons/contour.svg';
 import { tooltipText } from '../../utils/texts';
 
 import styles from './NewSticker.module.scss';
@@ -23,147 +47,253 @@ interface IProps {
   card: ICard;
 }
 
+const sizeValidate = (value: string): boolean => {
+  return (
+    REG_STICKERS.test(value) &&
+    Number(value) >= SIZE_INPUT_MIN_LENGTH &&
+    Number(value) <= SIZE_INPUT_MAX_LENGTH
+  );
+};
+
 const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
   const dispatch = useAppDispatch();
-  const [customVisible, setCustomVisible] = useState<boolean>(false);
-  const [cardShape, setCardShape] = useState<TCardShape>('square');
+  const [customVisible, setCustomVisible] = useState<boolean>(
+    card.size.width === card.optimalSize.width && card.size.height === card.optimalSize.height
+      ? false
+      : true,
+  );
+
   const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
-  const [amount, setAmount] = useState<number>(card.amount);
-  const [width, setWidth] = useState<number>();
-  const [height, setHeight] = useState<number>();
+  const cart = useSelector((state: { cart: CartState }) => state.cart);
 
   const handleDelete = () => {
     dispatch(deleteCard(card.id));
+    if (cart.items.length !== 0) {
+      dispatch(deleteItem(card.id));
+    }
   };
 
-  const handleChange = (e: { target: { value: unknown } }) => {
-    setAmount(Number(e.target.value));
-  };
+  useEffect(() => {
+    if (card.active) {
+      dispatch(setActive(card.id));
+    }
+    // eslint-disable-next-line
+  }, [card.active, card.id]);
 
   const {
     register,
-    formState: { errors },
+    watch,
+    formState: { errors, isValid },
+    setValue,
+    getValues,
   } = useForm<FieldValues>({
     mode: 'onBlur',
-    defaultValues: { size: 'optimal' },
+    defaultValues: {
+      shape: card.shape,
+      amount: card.amount,
+      size:
+        card.size.width === card.optimalSize.width && card.size.height === card.optimalSize.height
+          ? 'optimal'
+          : 'custom',
+    },
   });
+  const watchAllFields = watch();
+
+  useEffect(() => {
+    if (isValid) {
+      dispatch(setValid({ id: card.id, valid: true }));
+      dispatch(checkValidation());
+      cart.items.length !== 0 && dispatch(addItem(card));
+    } else dispatch(setValid({ id: card.id, valid: false }));
+    dispatch(checkValidation());
+    watchAllFields && cart.items.length !== 0 && dispatch(updateItem(card));
+    // eslint-disable-next-line
+  }, [isValid, watchAllFields, card.image]);
+
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const number = Number(e.target.value);
+
+    if (
+      REG_STICKERS.test(number.toString()) &&
+      number <= AMOUNT_INPUT_MAX_LENGTH &&
+      number >= AMOUNT_INPUT_MIN_LENGTH
+    ) {
+      dispatch(updateAmount({ id: card.id, amount: number }));
+    }
+  };
 
   const onShapeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCardShape(event.target.value as TCardShape);
-    const copyCard = { ...card };
-    copyCard.shape = event.target.value as TCardShape;
+    const shape = event.target.value as TCardShape;
 
-    if ((event.target.value as TCardShape) === 'contour') {
+    if ((shape as TCardShape) === 'contour') {
       const formData = new FormData();
       formData.append('file', card.image);
       dispatch(removeBackground({ data: formData, id: card.id }));
     }
+    dispatch(updateShape({ id: card.id, shape: shape }));
+  };
 
-    dispatch(updateCard({ id: card.id, updatedCard: copyCard }));
+  const onWidthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setValue('width', value.trim());
+    if (card.shape === 'circle') {
+      setValue('height', value.trim());
+    }
+    if (sizeValidate(value)) {
+      dispatch(
+        updateSize({
+          id: card.id,
+          width: converter.cmToPx(Number(value)),
+          height: card.shape === 'circle' ? converter.cmToPx(Number(value)) : card.size.height,
+        }),
+      );
+    }
+  };
+
+  const onHeightChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setValue('height', value.trim());
+    if (card.shape === 'circle') {
+      setValue('width', value.trim());
+    }
+    if (sizeValidate(value)) {
+      dispatch(
+        updateSize({
+          id: card.id,
+          height: converter.cmToPx(Number(value)),
+          width: card.shape === 'circle' ? converter.cmToPx(Number(value)) : card.size.width,
+        }),
+      );
+    }
+  };
+
+  useEffect(() => {
+    const widthValue = getValues('width');
+    const heightValue = getValues('height');
+    if (card.shape === 'circle' && customVisible) {
+      if (heightValue > widthValue) {
+        setValue('height', widthValue);
+        if (sizeValidate(widthValue)) {
+          dispatch(
+            updateSize({
+              id: card.id,
+              height: converter.cmToPx(Number(widthValue)),
+              width: converter.cmToPx(Number(widthValue)),
+            }),
+          );
+        }
+      }
+      if (widthValue > heightValue) {
+        setValue('width', heightValue);
+        if (sizeValidate(heightValue)) {
+          dispatch(
+            updateSize({
+              id: card.id,
+              height: converter.cmToPx(Number(heightValue)),
+              width: converter.cmToPx(Number(heightValue)),
+            }),
+          );
+        }
+      }
+    }
+  }, [card.id, card.shape, dispatch, getValues, setValue, customVisible]);
+
+  useEffect(() => {
+    if (!customVisible) {
+      setValue('width', Math.round(converter.pxToCm(card.optimalSize.width)));
+      setValue('height', Math.round(converter.pxToCm(card.optimalSize.height)));
+      dispatch(
+        updateSize({
+          id: card.id,
+          height: card.optimalSize.height,
+          width: card.optimalSize.width,
+        }),
+      );
+    } else {
+      setValue('width', Math.round(converter.pxToCm(card.size.width)));
+      setValue('height', Math.round(converter.pxToCm(card.size.height)));
+    }
+    // eslint-disable-next-line
+  }, [customVisible]);
+
+  const onChangeSizeType = (showCustomSize: boolean) => {
+    if (showCustomSize) {
+      card.size.width && setValue('width', Math.round(converter.pxToCm(card.optimalSize.width)));
+      card.size.height && setValue('height', Math.round(converter.pxToCm(card.optimalSize.height)));
+    }
+
+    setCustomVisible(showCustomSize);
   };
 
   return (
     <section className={styles.card}>
       <form className={styles.info}>
         <div className={styles.image}>
-          <DragAndDrop card={card} />
+          <DragAndDrop
+            register={register}
+            name='dnd'
+            option={{
+              required: 'Загрузите изображение',
+            }}
+            card={card}
+          />
         </div>
         <fieldset className={cn(styles.flex, styles.flex_shapes)}>
-          <p className={styles.category}>Форма</p>
+          <label className={styles.category} htmlFor='shape'>
+            Форма
+          </label>
           <div className={styles.shapes}>
-            <input
-              className={styles.radio}
-              type='radio'
-              id={`${card.id}-shape-square`}
-              name={`${card.id}-shape`}
+            <Shape
+              register={register}
+              name='shape'
+              card={card}
               value='square'
-              checked={cardShape === 'square'}
-              onChange={onShapeChange}
+              onShapeChange={onShapeChange}
             />
-            <label className={styles.label} htmlFor={`${card.id}-shape-square`}>
-              <div className={styles.shape}>
-                <div className={styles.shape_pic}>
-                  <RectSvg />
-                </div>
-                <span className={styles.shape_title}>Квадрат</span>
-              </div>
-            </label>
-
-            <input
-              className={styles.radio}
-              type='radio'
-              id={`${card.id}-shape-rounded-square`}
-              name={`${card.id}-shape`}
-              value='rounded-square'
-              checked={cardShape === 'rounded-square'}
-              onChange={onShapeChange}
+            <Shape
+              register={register}
+              name='shape'
+              card={card}
+              value='rounded_square'
+              onShapeChange={onShapeChange}
             />
-            <label className={styles.label} htmlFor={`${card.id}-shape-rounded-square`}>
-              <div className={styles.shape}>
-                <div className={styles.shape_pic}>
-                  <RectRondedSvg />
-                </div>
-                <span className={styles.shape_title}>Закругленный квадрат</span>
-              </div>
-            </label>
-
-            <input
-              className={styles.radio}
-              type='radio'
-              id={`${card.id}-shape-circle`}
-              name={`${card.id}-shape`}
+            <Shape
+              register={register}
+              name='shape'
+              card={card}
               value='circle'
-              checked={cardShape === 'circle'}
-              onChange={onShapeChange}
+              onShapeChange={onShapeChange}
             />
-            <label className={styles.label} htmlFor={`${card.id}-shape-circle`}>
-              <div className={styles.shape}>
-                <div className={styles.shape_pic}>
-                  <CircleSvg />
-                </div>
-                <span className={styles.shape_title}>Круг</span>
-              </div>
-            </label>
-
-            <input
-              className={styles.radio}
-              type='radio'
-              id={`${card.id}-shape-contour`}
-              name={`${card.id}-shape`}
+            {/* <Shape
+              register={register}
+              name='shape'
+              card={card}
               value='contour'
-              checked={cardShape === 'contour'}
-              onChange={onShapeChange}
-            />
-            <label className={styles.label} htmlFor={`${card.id}-shape-contour`}>
-              <div className={styles.shape}>
-                <div className={styles.shape_pic}>
-                  <ContourSvg />
-                </div>
-                <span className={styles.shape_title}>По контуру</span>
-              </div>
-            </label>
+              onShapeChange={onShapeChange}
+            /> */}
           </div>
         </fieldset>
-        <div>
-          <div className={styles.flex}>
-            <label className={styles.category} htmlFor='amount' onClick={() => console.log(errors)}>
-              Количество стикеров
-            </label>
-            <div>
-              <Input
-                name='amount'
-                id='amount'
-                value={amount}
-                option={registerAmount}
-                type='tel'
-                register={register}
-                onChange={handleChange}
-                error={errors.amount}
-              />
-              <Error className={styles.error}>{errors.amount && `${errors.amount?.message}`}</Error>
-            </div>
-          </div>
-        </div>
+        <fieldset className={styles.flex}>
+          <label className={styles.category} htmlFor='amount'>
+            Количество стикеров
+          </label>
+          <InputField className='amount'>
+            <Input
+              className='amount'
+              register={register}
+              option={{
+                ...registerAmount,
+                onChange: (e) => {
+                  handleAmountChange(e);
+                },
+              }}
+              name='amount'
+              error={errors.amount}
+            />
+            <InputError className='amount' error={errors.amount} />
+          </InputField>
+        </fieldset>
+
         <fieldset className={styles.flex}>
           <p className={styles.category}>Размер</p>
           <div className={styles.options}>
@@ -171,7 +301,7 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
               register={register}
               name='size'
               value='optimal'
-              onClick={() => setCustomVisible(false)}
+              onClick={() => onChangeSizeType(false)}
             >
               Оптимальный размер
               <TooltipCustom text={tooltipText} />
@@ -182,46 +312,67 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
                 name='size'
                 value='custom'
                 className={styles.size}
-                onClick={() => setCustomVisible(true)}
+                onClick={() => onChangeSizeType(true)}
               >
                 Свой размер
               </RadioButton>
               <div className={cn(customVisible ? styles.visible : styles.hidden)}>
-                <SizeInput
-                  nameWidth='width'
-                  nameHeight='height'
-                  valueWidth={width}
-                  valueHeight={height}
-                  setWidth={setWidth}
-                  setHeight={setHeight}
-                  register={register}
-                  errorWidth={errors.width}
-                  errorHeight={errors.height}
-                  option={registerSize}
-                />
+                <InputField className='size'>
+                  <Input
+                    type='tel'
+                    className='size'
+                    register={register}
+                    option={{
+                      ...registerSize,
+                      onChange: onWidthChange,
+                    }}
+                    name='width'
+                    placeholder='ширина'
+                    error={errors.width}
+                  />
+                  x
+                  <Input
+                    type='tel'
+                    className='size'
+                    register={register}
+                    option={{
+                      ...registerSize,
+                      onChange: onHeightChange,
+                    }}
+                    name='height'
+                    placeholder='высота'
+                    error={errors.height}
+                  />
+                  см
+                  <InputError className='size' error={errors.width || errors.height} />
+                </InputField>
               </div>
             </div>
           </div>
         </fieldset>
 
         <div className={styles.flex}>
-          <p className={styles.category}>Цвет фона</p>
-          <label className={styles.text}>белый</label>
-          <div className={styles.color_sample} />
+          <InfoBox type='simple' description='Цвет фона'>
+            <div className={styles.flexible}>
+              белый
+              <div className={styles.color_sample} />
+            </div>
+          </InfoBox>
         </div>
         <div className={styles.flex}>
-          <p className={styles.category}>Материал</p>
-          <p className={styles.text}>винил</p>
+          <InfoBox type='simple' description='Материал'>
+            винил
+          </InfoBox>
         </div>
       </form>
-      {cards.length > 1 ? (
+      {cards.length > 1 && (
         <ButtonCustom
           type='delete'
           className={styles.delete}
           label='Удалить'
           onClick={handleDelete}
         />
-      ) : null}
+      )}
     </section>
   );
 };

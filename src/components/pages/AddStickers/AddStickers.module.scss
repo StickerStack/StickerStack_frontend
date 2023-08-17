@@ -1,66 +1,91 @@
 @import '../../../utils/_scss-variables.scss';
 
-.container {
-  padding-top: 80px;
+.add {
   flex: 1;
-  text-align: left;
+
+  &_container {
+    padding-top: 80px;
+    padding-bottom: calc(100vh / 7);
+    background-color: $main-bg-color;
+    text-align: left;
+    @include flex(column, center, flex-start);
+    gap: 30px;
+  }
+}
+
+.cards {
+  width: 100%;
+  max-width: 1110px;
   @include flex(column, center, start);
   gap: 30px;
 }
 
+.motion {
+  width: 100%;
+}
+
 .info {
   margin-top: 26px;
-  @include flex(row, start, start);
+  @include flex(row, flex-start, flex-start);
   column-gap: 132px;
   row-gap: 35px;
   flex-wrap: wrap;
+
+  &_pages {
+    @include flex(column, start, flex-start);
+  }
 }
 
 .flex {
-  @include flex(row, center, start);
+  @include flex(row, center, flex-start);
   gap: 25px;
 }
 
 .text {
   max-width: 80px;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 16px;
 }
 
 .amount {
   padding: 8px 25px;
   box-sizing: border-box;
-  background: #f1f1f1;
+  background: $element-color;
   border-radius: 10px;
   text-align: center;
 }
 
 .prices {
   @include flex(column, center, center);
+  width: 90px;
 }
 
 .price {
   font-family: 'Nunito';
   font-weight: 600;
-  font-size: 18px;
+  font-size: 20px;
   line-height: 25px;
 }
 
 .price_small {
-  font-size: 10px;
+  font-size: 14px;
   line-height: 12px;
-  color: #929292;
+  color: $placeholder-text-color;
 }
 
 .preview {
   margin-top: 25px;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 16px;
   line-height: 16px;
 }
 
 .options {
-  @include flex(column, center, start);
+  @include flex(column, center, flex-start);
   gap: 17px;
+}
+
+.button {
+  margin: 0 auto;
 }

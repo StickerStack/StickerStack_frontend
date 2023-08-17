@@ -1,6 +1,8 @@
 @import '../../../utils/_scss-variables.scss';
 
 .button {
+  width: fit-content;
+  margin: 0 auto;
   background-color: transparent;
   padding: 0;
   border: none;
@@ -20,9 +22,25 @@
     display: block;
     margin-top: 2px;
     width: 0;
-    height: 1px;
+    height: 0.5px;
     background: $main-text-color;
     transition: width 0.3s;
+  }
+
+  &_contrast {
+    color: $contrast-text-color;
+
+    &::after {
+      background: $contrast-text-color;
+    }
+  }
+
+  &_secondary {
+    color: $secondary-text-color;
+
+    &::after {
+      background: $secondary-text-color;
+    }
   }
 
   &:hover::after {

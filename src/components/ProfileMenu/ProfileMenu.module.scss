@@ -1,74 +1,84 @@
 @import '../../utils/_scss-variables.scss';
 
 .menu {
-  max-width: 255px;
+  max-width: 355px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 25px 40px 45px;
-  background: #ffffff;
-  box-shadow: 3px 3px 10px rgba(65, 65, 65, 0.15);
+  background: $popup-bg-color;
+  box-shadow: 3px 3px 10px rgba(32, 62, 124, 0.2);
   border-radius: 10px;
   position: absolute;
   top: 90px;
-  right: 165px;
+  right: $fullscreen-padding;
   z-index: 1;
+
+  @media screen and (max-width: 1330px) {
+    right: $desktop-padding;
+  }
+
+  @media screen and (max-width: 768px) {
+    right: $tablet-padding;
+  }
+
+  @media screen and (max-width: 460px) {
+    right: $mobile-padding;
+  }
 
   .profile {
     display: flex;
     align-items: center;
+    text-decoration: none;
+    max-width: 300px;
+
+    &:hover .name {
+      color: #929292;
+    }
+
+    &:hover .avatar {
+      opacity: 0.85;
+    }
   }
 
   .avatar {
-    background-color: #d9d9d9;
+    background-color: $element-color;
+    min-width: 64px;
     width: 64px;
     height: 64px;
     border-radius: 32px;
-  }
-
-  .prfile_link {
-    text-decoration: none !important;
+    transition: opacity 0.2s ease-in-out;
   }
 
   .name {
     padding-left: 15px;
-    color: #333333;
+    color: $secondary-text-color;
+    transition: color 0.2s ease-in-out;
   }
 
-  .button_container {
-    padding-top: 25px;
+  .link,
+  .name {
+    font-size: 16px;
   }
 
   .button {
-    font-weight: 400;
+    margin-top: 25px;
     font-size: 16px;
-    line-height: 22px;
+    padding: 14px 15px;
   }
 
   .list {
     margin: 0;
     padding: 0;
-    margin-top: 40px;
+    margin-top: 30px;
   }
 
   .list li {
     list-style-type: none;
     height: 19px;
-    font-family: 'Nunito';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 19px;
-    letter-spacing: -0.01em;
-    color: #333333;
     padding-bottom: 20px;
     padding-left: 10px;
     cursor: pointer;
-  }
-
-  .list li:hover {
-    color: #000;
-    font-weight: 600;
   }
 
   .list :last-child {

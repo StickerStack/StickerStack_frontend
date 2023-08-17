@@ -1,37 +1,49 @@
 import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
 
+import { useBlockScroll } from '../../hooks/useBlockScroll';
 import { PopupForm } from '../';
-import { Preview } from '../Preview/Preview';
+import { PopupInfo } from '../Popups/PopupInfo/PopupInfo';
+import { PopupPreview } from '../Popups/PopupPreview/PopupPreview';
+import { OrderDetails } from '../Popups/OrderDetails/OrderDetails';
+import { ButtonCustom } from '../UI';
 import { IPopupState } from '../../interfaces/IPopupState';
 import { useAppDispatch } from '../../hooks/hooks';
-import { setIsOpen } from '../../store/popupSlice';
+import { closePopup } from '../../store/popupSlice';
+
 import styles from './Popup.module.scss';
 
 const Popup: React.FC = () => {
   const dispatch = useAppDispatch();
+  const location = useLocation();
+  const { blockScroll, unblockScroll } = useBlockScroll();
+  const { form, preview, info, order, isOpen } = useSelector(
+    (state: { popup: IPopupState }) => state.popup,
+  );
 
-  const isOpen = useSelector((state: { popup: IPopupState }) => state.popup.isOpen);
-  const previewIsOpen = useSelector((state: { popup: IPopupState }) => state.popup.previewIsOpen);
+  useEffect(() => {
+    isOpen ? blockScroll() : unblockScroll();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen]);
 
-  const onClose = () => {
-    dispatch(setIsOpen(false));
-  };
+  useEffect(() => {
+    dispatch(closePopup());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location]);
 
   useEffect(() => {
     const handleKeyDown = (evn: KeyboardEvent) => {
       if (evn.code === 'Escape') {
-        onClose();
+        dispatch(closePopup());
       }
     };
     document.addEventListener('keydown', handleKeyDown);
     return () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
-
-    // eslint-disable-next-line
-  }, []);
+  }, [dispatch]);
 
   return (
     <AnimatePresence>
@@ -71,7 +83,7 @@ const Popup: React.FC = () => {
               },
             }}
             className={styles.background}
-            onClick={onClose}
+            onClick={() => dispatch(closePopup())}
           ></motion.div>
           <motion.div
             initial={{
@@ -85,7 +97,23 @@ const Popup: React.FC = () => {
             }}
             className={styles.popup}
           >
-            {previewIsOpen ? <Preview onClose={onClose} /> : <PopupForm onClose={onClose} />}
+            <div className={styles.container}>
+              {form.isOpen ? (
+                <PopupForm />
+              ) : order.isOpen ? (
+                <OrderDetails order={order.content} onClose={() => dispatch(closePopup())} />
+              ) : preview.isOpen ? (
+                <PopupPreview />
+              ) : info.isOpen ? (
+                <PopupInfo />
+              ) : null}
+              <ButtonCustom
+                className={styles.button}
+                type='close'
+                label='Закрыть'
+                onClick={() => dispatch(closePopup())}
+              />
+            </div>
           </motion.div>
         </motion.div>
       )}

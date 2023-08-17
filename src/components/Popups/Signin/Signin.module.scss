@@ -1,0 +1,27 @@
+@import '../../../utils/_scss-variables.scss';
+
+.signin {
+  @include flex(column, _, _);
+  gap: 25px;
+
+  .inputs {
+    @include flex(column, flex-start, flex-start);
+    gap: 40px;
+  }
+
+  .reset {
+    margin: 0;
+    &::after {
+      margin-top: 0;
+    }
+  }
+
+  .link {
+    color: $span-text-color;
+    text-align: center;
+  }
+
+  .button {
+    margin-top: 20px;
+  }
+}

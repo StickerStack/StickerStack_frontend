@@ -1,23 +1,25 @@
 @import '../../../utils/scss-variables.scss';
 
 .button {
-  padding: 16px 45px;
+  padding: 14px 70.5px;
   box-sizing: border-box;
-  height: 55px;
-  border-radius: 20px;
+  height: 50px;
+  border-radius: 10px;
   text-align: center;
-  @include font(20px, 24px, 400);
+  @include font(18px, 21px, 400);
   cursor: pointer;
   transition: opacity 0.3s, background-color 0.3s ease-in-out;
 
   &:hover {
-    opacity: 0.6;
+    opacity: 0.9;
   }
+
   &:hover:disabled {
-    opacity: 1;
+    opacity: 0.7;
   }
   &:disabled {
     cursor: auto;
+    opacity: 0.7;
   }
 }
 
@@ -25,29 +27,54 @@
   background-color: $regular-button-bg-color;
   color: $regular-button-text-color;
   border: none;
-  &:disabled {
-    background-color: #d9d9d9;
+  :focus {
+    background-color: $clicked-button-color;
   }
+}
+.button_contrast {
+  background-color: $contrast-color;
 }
 
 .button_transparent {
-  padding: 10px 50px;
-  height: 45px;
-  border-radius: 15px;
+  padding: 14px 35px;
   background-color: $other-button-bg-color;
   color: $other-button-text-color;
   border: 1px solid $other-button-text-color;
-  &:disabled {
-    border-color: #d9d9d9;
+
+  :focus {
+    border-color: $clicked-button-color;
   }
 }
 
 .button_no-border {
   background: transparent;
-  @include font(14px, 16px, 400);
-  color: $main-bg-color;
+  @include font(16px, 19px, 400);
+  color: $secondary-text-color;
   text-align: left;
   padding: 0;
   height: 16px;
   border: none;
+  transition: color 0.2s ease-in-out;
+
+  &:hover {
+    color: $placeholder-text-color;
+    opacity: 1;
+  }
+}
+
+.button_light {
+  border: none;
+  width: fit-content;
+  width: -moz-fit-content;
+  height: fit-content;
+  height: -moz-fit-content;
+  background-color: $element-color;
+  color: $main-text-color;
+  padding: 8px 10px;
+  font-size: 16px;
+
+  &:hover {
+    opacity: 1;
+    background-color: #f1f1f1;
+  }
 }

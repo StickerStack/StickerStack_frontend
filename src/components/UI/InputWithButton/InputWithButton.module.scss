@@ -1,0 +1,66 @@
+@import '../../../utils/_scss-variables.scss';
+
+.field {
+  background-color: transparent;
+  border: 1px solid $regular-field-color;
+  border-radius: 15px;
+  padding: 11px 15px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  width: 100%;
+  transition: border-color 0.2s ease-in-out;
+
+  &.profile {
+    border: none;
+    border-bottom: 2px solid $regular-field-color;
+    border-radius: 0;
+    padding: 4px 5px;
+
+    &:hover > button {
+      opacity: 1;
+      cursor: pointer;
+    }
+  }
+
+  .input {
+    border: none;
+    outline: none;
+    width: 90%;
+    background-color: transparent;
+
+    &.input:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0 50px $popup-bg-color inset;
+      -webkit-text-fill-color: $main-text-color;
+    }
+    &::placeholder {
+      color: $placeholder-text-color;
+      transition: color 0.1s ease-in;
+    }
+    &:focus {
+      border-color: $active-field-color;
+
+      &::placeholder {
+        color: transparent;
+      }
+    }
+    &.profile {
+      &:focus > button {
+        opacity: 1;
+        cursor: pointer;
+      }
+    }
+  }
+
+  &:hover {
+    border-color: $active-field-color;
+  }
+
+  &.error {
+    border-color: $error-text-color;
+  }
+}

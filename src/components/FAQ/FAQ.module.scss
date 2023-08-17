@@ -1,0 +1,15 @@
+@import '../../utils/_scss-variables.scss';
+
+.container {
+  padding-bottom: calc(100vh / 5);
+  box-sizing: border-box;
+  @include flex(column, center, center);
+  gap: 25px;
+}
+
+.list {
+  max-width: 730px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
