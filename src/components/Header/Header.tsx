@@ -78,7 +78,7 @@ const Header: React.FC = () => {
       <div
         className={styles.header_bar}
         style={
-          location.pathname === '/' && visibleBorder
+          window.innerHeight / document.body.clientHeight < 0.6 && visibleBorder
             ? {
                 opacity: 0.6,
                 width:
@@ -86,7 +86,7 @@ const Header: React.FC = () => {
                     window.innerHeight *
                       ((scrollY + window.innerHeight) / document.body.clientHeight)) /
                     document.body.clientHeight) *
-                  document.body.clientWidth,
+                  (document.body.clientWidth - 2),
               }
             : {}
         }

@@ -76,6 +76,9 @@ const cartSlice = createSlice({
     updateAddress(state, action: { payload: string; type: string }) {
       state.address = action.payload;
     },
+    updateSheets(state, action: { payload: number; type: string }) {
+      state.number_of_sheets = action.payload;
+    },
     countTotal(state) {
       const sumAmount = state.items.reduce((acc, item) => acc + item.amount, 0);
       const sumCost = state.number_of_sheets * pagePrice;
@@ -100,6 +103,7 @@ const {
   updateItem,
   updateCropping,
   updateAddress,
+  updateSheets,
   countTotal,
 } = cartSlice.actions;
 
@@ -113,5 +117,6 @@ export {
   updateCropping,
   updateAddress,
   uploadOrder,
+  updateSheets,
   countTotal,
 };

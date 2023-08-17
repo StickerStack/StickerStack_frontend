@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -10,26 +10,27 @@ import { RadioButton, TextUnderline, ButtonWithText, TitlePage, Container } from
 import { NewSticker } from '../../index';
 import { InfoBox } from '../../InfoBox/InfoBox';
 import { openPreview } from '../../../store/popupSlice';
-import { pagePrice, pageSizePx, CART } from '../../../utils/constants';
+import { pagePrice, pageSizePx, CART, CARDS_MAXIMUM } from '../../../utils/constants';
 import { CartState, ICardsState } from '../../../interfaces';
 import { addCard, setActive } from '../../../store/cardsSlice';
-import { addItems, updateCropping } from '../../../store/cartSlice';
+import { addItems, updateCropping, updateSheets } from '../../../store/cartSlice';
 import { generateRandomNumber } from '../../../utils/generateRandomNumber';
-import styles from './AddStickers.module.scss';
 import { calculateStickerOnList } from '../../../utils/calculateStickerOnList';
+
+import styles from './AddStickers.module.scss';
 
 const AddStickers: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [pages, setPages] = useState<number>(1);
+  const [changed, setChanged] = useState(false);
 
   const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
   const cart = useSelector((state: { cart: CartState }) => state.cart);
   const validation = useSelector((state: { cards: ICardsState }) => state.cards.valid);
 
-  const fullPrice = pagePrice * pages;
+  const fullPrice = pagePrice * cart.number_of_sheets;
   const fullAmount = cards.reduce((acc, item) => acc + item.amount, 0);
-  const itemPrice = Math.round((pagePrice * pages) / fullAmount);
+  const itemPrice = Math.round((pagePrice * cart.number_of_sheets) / fullAmount);
 
   const handleAddCard = () => {
     dispatch(
@@ -45,6 +46,12 @@ const AddStickers: React.FC = () => {
       }),
     );
   };
+
+  useEffect(() => {
+    if (cards) {
+      setChanged(true);
+    }
+  }, [cards]);
 
   const cropping = () => {
     if (cart.cropping) {
@@ -120,44 +127,54 @@ const AddStickers: React.FC = () => {
             </AnimatePresence>
           ))}
         </div>
-
-        <ButtonWithText theme='transparent' onClick={handleAddCard}>
-          Добавить стикер
-        </ButtonWithText>
+        {cards.length < CARDS_MAXIMUM && (
+          <ButtonWithText theme='transparent' onClick={handleAddCard}>
+            Добавить стикер
+          </ButtonWithText>
+        )}
         <section className={styles.info}>
           <div className={styles.info_pages}>
             <InfoBox type='number' description='Количество листов'>
-              {pages}
+              {cart.number_of_sheets}
             </InfoBox>
-            <TextUnderline
-              type='button'
-              className={styles.preview}
-              onClick={() => dispatch(openPreview())}
-            >
-              Предпросмотр страницы
-            </TextUnderline>
-            <TextUnderline
-              type='button'
-              className={styles.preview}
-              onClick={ () => {
-                 calculateStickerOnList(cards, {
-                  paddingList: {
-                    top: pageSizePx.paddingList.top,
-                    right: pageSizePx.paddingList.right,
-                    bottom: pageSizePx.paddingList.bottom,
-                    left: pageSizePx.paddingList.left,
-                  },
-                  gapX: pageSizePx.gapX,
-                  gapY: pageSizePx.gapY,
-                  widthPage: pageSizePx.widthPage,
-                  heightPage: pageSizePx.heightPage,
-                });
+            {changed ? (
+              <TextUnderline
+                type='button'
+                className={styles.preview}
+                onClick={() => {
+                  calculateStickerOnList(cards, {
+                    paddingList: {
+                      top: pageSizePx.paddingList.top,
+                      right: pageSizePx.paddingList.right,
+                      bottom: pageSizePx.paddingList.bottom,
+                      left: pageSizePx.paddingList.left,
+                    },
+                    gapX: pageSizePx.gapX,
+                    gapY: pageSizePx.gapY,
+                    widthPage: pageSizePx.widthPage,
+                    heightPage: pageSizePx.heightPage,
+                  });
 
-                setPages(JSON.parse(localStorage.getItem('pagesWithStickers') || '[]')?.length || 1);
-              }}
-            >
-              Рассчитать стоимость
-            </TextUnderline>
+                  dispatch(
+                    updateSheets(
+                      JSON.parse(localStorage.getItem('pagesWithStickers') || '[]')?.length || 1,
+                    ),
+                  );
+
+                  setChanged(false);
+                }}
+              >
+                Рассчитать стоимость
+              </TextUnderline>
+            ) : (
+              <TextUnderline
+                type='button'
+                className={styles.preview}
+                onClick={() => dispatch(openPreview())}
+              >
+                Предпросмотр страницы
+              </TextUnderline>
+            )}
           </div>
           <div className={styles.flex}>
             <span className={styles.text}>Стоимость</span>

@@ -5,6 +5,8 @@ import { useAppDispatch } from '../../../hooks/hooks';
 import { verifyEmail } from '../../../store/authSlice';
 import { openInfo } from '../../../store/popupSlice';
 
+import image from '../../../images/email-confirmed.svg';
+
 const VerifyEmail: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -20,6 +22,7 @@ const VerifyEmail: React.FC = () => {
               title: 'Почта подтверждена',
               text: 'Сделай свои вещи уникальными с помощью стикеров на виниловой пленке. ',
               buttonText: 'Начать!',
+              image: image,
             }),
           );
         }

@@ -21,6 +21,8 @@
     cursor: auto;
     opacity: 0.7;
   }
+
+  position: relative;
 }
 
 .button_filled {
@@ -49,7 +51,7 @@
 .button_no-border {
   background: transparent;
   @include font(16px, 19px, 400);
-  color: $secondary-text-color;
+  color: $main-text-color;
   text-align: left;
   padding: 0;
   height: 16px;
@@ -76,5 +78,79 @@
   &:hover {
     opacity: 1;
     background-color: #f1f1f1;
+  }
+}
+
+.loading {
+  &:disabled {
+    opacity: 1;
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  @include flex(row, center, center);
+}
+
+.loader {
+  width: 24px;
+  height: 24px;
+  position: relative;
+  border-radius: 50%;
+
+  background-repeat: no-repeat;
+  background-size: 50% 51.8%;
+  overflow: hidden;
+  animation: 2s linear infinite rotate;
+
+  &::before {
+    content: '';
+    position: absolute;
+    background-color: #dbe7ff;
+    border-radius: 50%;
+    width: 4px;
+    height: 4px;
+    right: 0;
+    top: 9px;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    background: $regular-button-bg-color;
+    border-radius: 50%;
+    top: 15%;
+    bottom: 15%;
+    left: 16%;
+    right: 15%;
+  }
+
+  &_filled {
+    background: conic-gradient(
+      from 86deg at 48.07% 50%,
+      #dbe7ff 0deg,
+      rgba(219, 231, 255, 0) 360deg
+    );
+  }
+
+  &_transparent {
+    background: conic-gradient(
+      from 86deg at 48.07% 50%,
+      #1a3263 0deg,
+      rgba(219, 231, 255, 0) 360deg
+    );
+
+    &::before {
+      background-color: $other-button-text-color;
+    }
+    &::after {
+      background: $main-bg-color;
+    }
+  }
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(-1turn);
   }
 }

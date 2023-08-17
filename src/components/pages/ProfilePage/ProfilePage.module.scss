@@ -5,6 +5,7 @@
 
   &_container {
     padding-top: 80px;
+    padding-bottom: 80px;
     background-color: $main-bg-color;
     @include flex(column, flex-start, flex-start);
     gap: 20px;
@@ -47,7 +48,7 @@
 }
 
 .inputs {
-  @include flex(column, flex-start, _);
+  @include flex(column, flex-start, start);
   margin-bottom: 45px;
   gap: 25px;
 }
@@ -58,4 +59,17 @@
   &:not(:last-child) {
     margin-bottom: 20px;
   }
+}
+
+.additional {
+  @include flex(column, flex-start, start);
+  gap: 10px;
+  &_text {
+    font-size: 14px;
+  }
+}
+
+.underline {
+  font-size: 14px;
+  margin: 0;
 }

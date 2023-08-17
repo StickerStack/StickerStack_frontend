@@ -6,7 +6,7 @@ const REG_SPACE = ''
 // eslint-disable-next-line no-useless-escape
 const REG_EMAIL = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 // Только цифры от 1 до 100
-const REG_STICKERS = /^[1-9][0-9]?$|^100$/;
+const REG_STICKERS = /^[1-9][0-9][0-9]?$|^1000$/;
 const REG_PASS = /(^[A-Za-z0-9!"#$% &'()*+,-./:;<=>?@[\]\\^_`{|}№~])+/g;
 
 /* Только латинские и кириллические буквы и знак - */
@@ -23,9 +23,16 @@ const ORDERS = '/orders';
 const VERIFY_FORGOT_PASSWORD = '/auth/verify-forgot-password/:token';
 const VERIFY_EMAIL = '/auth/verifyemail/:token';
 
+const getRandomNumber = (min: number, max: number) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
 // Мок страниц со стикерами, стоимости одной страницы
 
 const pagePrice = 290;
+const CARDS_MAXIMUM = 15;
 
 // Мок параметров страницы
 const pageSize: IOptions = {
@@ -59,7 +66,7 @@ const stickerWhiteBorder = 5;
 const PROFILE_INPUT_MIN_LENGTH = 2;
 const PROFILE_INPUT_MAX_LENGTH = 30;
 const AMOUNT_INPUT_MIN_LENGTH = 1;
-const AMOUNT_INPUT_MAX_LENGTH = 100;
+const AMOUNT_INPUT_MAX_LENGTH = 1000;
 const SIZE_INPUT_MIN_LENGTH = 1;
 const SIZE_INPUT_MAX_LENGTH = Math.round(pageSize.widthPage / 10);
 
@@ -166,6 +173,7 @@ export {
   REG_PASS,
   REG_STICKERS,
   PROFILE_ONLY_LETTERS,
+  CARDS_MAXIMUM,
   PROFILE,
   ORDERS,
   PAGE_404,
@@ -185,6 +193,7 @@ export {
   pageSize,
   pageSizePx,
   stickerWhiteBorder,
+  getRandomNumber,
   REG_SPACE,
-  sticker_page,
+
 };

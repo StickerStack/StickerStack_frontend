@@ -1,0 +1,72 @@
+@import '../../../utils/_scss-variables.scss';
+
+.container {
+  width: 100%;
+  height: 317px;
+  @include flex(column, space-between, center);
+}
+
+.move {
+  width: 185px;
+  height: 255px;
+}
+
+.object {
+  position: relative;
+  width: 185px;
+  height: 255px;
+  animation: 15s alternate infinite move;
+}
+
+.ufo {
+  position: absolute;
+  top: 0;
+  width: 165px;
+  height: 150px;
+  background: url('../../../images/ufo-animation/ufo.svg') center no-repeat;
+  background-size: contain;
+  transform: rotate(28deg);
+  z-index: 2;
+}
+
+.light {
+  position: absolute;
+  left: 22%;
+  bottom: 0;
+  width: 94px;
+  height: 140px;
+  background: url('../../../images/ufo-animation/light.svg') center no-repeat;
+  background-size: contain;
+  z-index: 1;
+  animation: 10s 3s alternate infinite lightmove;
+}
+
+@keyframes move {
+  0% {
+    transform: translateX(90px) scale(0.75);
+  }
+  33% {
+    transform: translateX(30px) scale(0.8);
+  }
+  66% {
+    transform: translateX(-60px) scale(1);
+  }
+  100% {
+    transform: translateX(20px) scale(0.95);
+  }
+}
+
+@keyframes lightmove {
+  0%,
+  100% {
+    transform: translateX(0) skew(0);
+  }
+
+  33% {
+    transform: translateX(20px) skew(0.3rad);
+  }
+
+  66% {
+    transform: translateX(-20px) skew(-0.3rad);
+  }
+}

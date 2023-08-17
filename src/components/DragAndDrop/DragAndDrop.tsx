@@ -2,15 +2,16 @@ import { useState } from 'react';
 import { UseFormRegister, FieldValues, RegisterOptions } from 'react-hook-form';
 import cn from 'classnames';
 
-import { stickerWhiteBorder } from '../../utils/constants';
+import { SIZE_INPUT_MAX_LENGTH, stickerWhiteBorder } from '../../utils/constants';
 import { converter } from '../../utils/converter';
 import { PicOverlay } from '../PicOverlay/PicOverlay';
+import { Error } from '../UI';
 import { ICard } from '../../interfaces';
 import { useAppDispatch } from '../../hooks/hooks';
 import { updatePicture } from '../../store/cardsSlice';
+import { openMessage } from '../../store/popupSlice';
 
 import styles from './DragAndDrop.module.scss';
-import { openMessage } from '../../store/popupSlice';
 
 interface IProps {
   card: ICard;
@@ -30,7 +31,11 @@ const DragAndDrop: React.FC<IProps> = ({ card, name, option, register, onLoad }:
 
   const dispatch = useAppDispatch();
 
+  const [error, setError] = useState(false);
+
   const borderInPx = converter.mmToPx(stickerWhiteBorder);
+
+  const maxSize = converter.cmToPx(SIZE_INPUT_MAX_LENGTH);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -46,25 +51,60 @@ const DragAndDrop: React.FC<IProps> = ({ card, name, option, register, onLoad }:
           file: files[0],
           urlFilePreview: reader.result,
         };
-        if (file.file.size < 2000000) {
+        if (file.file.size < 1000000) {
+          setError(false);
           if (typeof reader.result === 'string') {
             const image = new Image();
             image.src = reader.result;
             image.onload = () => {
               if (typeof file.urlFilePreview === 'string') {
-                dispatch(
-                  updatePicture({
-                    id: card.id,
-                    image: file.urlFilePreview,
-                    size: { width: image.naturalWidth, height: image.naturalHeight },
-                    optimalSize: { width: image.naturalWidth, height: image.naturalHeight },
-                  }),
-                );
+                if (image.naturalWidth <= maxSize && image.naturalHeight <= maxSize) {
+                  dispatch(
+                    updatePicture({
+                      id: card.id,
+                      image: file.urlFilePreview,
+                      size: { width: image.naturalWidth, height: image.naturalHeight },
+                      optimalSize: { width: image.naturalWidth, height: image.naturalHeight },
+                    }),
+                  );
+                } else {
+                  if (image.naturalWidth > image.naturalHeight) {
+                    dispatch(
+                      updatePicture({
+                        id: card.id,
+                        image: file.urlFilePreview,
+                        size: {
+                          width: maxSize,
+                          height: (image.naturalHeight / image.naturalWidth) * maxSize,
+                        },
+                        optimalSize: {
+                          width: maxSize,
+                          height: (image.naturalHeight / image.naturalWidth) * maxSize,
+                        },
+                      }),
+                    );
+                  } else {
+                    dispatch(
+                      updatePicture({
+                        id: card.id,
+                        image: file.urlFilePreview,
+                        size: {
+                          width: (image.naturalWidth / image.naturalHeight) * maxSize,
+                          height: maxSize,
+                        },
+                        optimalSize: {
+                          width: (image.naturalWidth / image.naturalHeight) * maxSize,
+                          height: maxSize,
+                        },
+                      }),
+                    );
+                  }
+                }
               }
             };
           }
         } else {
-          dispatch(openMessage({ text: 'Максимальный размер картинки - до 2Мб!', isError: true }));
+          setError(true);
         }
       };
     }
@@ -119,6 +159,9 @@ const DragAndDrop: React.FC<IProps> = ({ card, name, option, register, onLoad }:
           onLoadImage={handleImageChange}
           label='stickerFile'
         />
+      )}
+      {error && (
+        <Error className={styles.error}>Максимально допустимый размер картинки - до 1Мб!</Error>
       )}
     </div>
   );

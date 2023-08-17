@@ -24,8 +24,8 @@ const StickerCarousel: React.FC<IProps> = ({ order }: IProps) => {
       height: sticker.height,
     };
   });
-  console.log(stickers);
-  return (
+
+  return stickers.length > 1 ? (
     <Slider {...settings}>
       {order &&
         stickers.map((sticker) => (
@@ -63,6 +63,39 @@ const StickerCarousel: React.FC<IProps> = ({ order }: IProps) => {
           </div>
         ))}
     </Slider>
+  ) : (
+    <div className={cn(styles.item, styles.item_single)}>
+      {stickers[0].image ? (
+        <div className={styles.item_box}>
+          <div
+            className={cn(styles.border, styles[`border_${stickers[0].shape}`])}
+            style={{
+              width:
+                stickers[0].width / stickers[0].height >= 1
+                  ? 210
+                  : (stickers[0].width / stickers[0].height) * 210,
+              height:
+                stickers[0].height / stickers[0].width >= 1
+                  ? 210
+                  : (stickers[0].height / stickers[0].width) * 210,
+              padding: (stickerWhiteBorder / 10 / stickers[0].width) * 210,
+            }}
+          >
+            <img
+              className={cn(styles.item_image, styles[`item_image_${stickers[0].shape}`])}
+              src={stickers[0].image}
+              alt='Изображение стикера'
+            />
+          </div>
+        </div>
+      ) : (
+        <div className={styles.item_pic} />
+      )}
+
+      <span className={styles.item_info}>
+        {stickers[0].width} x {stickers[0].height} см ({stickers[0].amount} шт)
+      </span>
+    </div>
   );
 };
 
