@@ -17,6 +17,7 @@ const initialState: IPopupState = {
     title: '',
     text: '',
     buttonText: '',
+    src: '',
   },
   message: {
     isOpen: false,
@@ -30,9 +31,8 @@ const initialState: IPopupState = {
       address: '',
       cropping: true,
       created_at: '',
-      //  delivery: { status: '', statuses: [] },
+      status: '',
       cost: 0,
-      //   amount: 0,
       number_of_sheets: 0,
       stickers: [],
     },
@@ -56,13 +56,17 @@ const popupSlice = createSlice({
 
     openInfo(
       state,
-      action: { payload: { title: string; text: string; buttonText: string }; type: string },
+      action: {
+        payload: { title: string; text: string; buttonText: string; image: string };
+        type: string;
+      },
     ) {
       state.isOpen = true;
       state.info.isOpen = true;
       state.info.text = action.payload.text;
       state.info.buttonText = action.payload.buttonText;
       state.info.title = action.payload.title;
+      state.info.src = action.payload.image;
     },
 
     openOrder(state, action: { payload: IOrderState; type: string }) {

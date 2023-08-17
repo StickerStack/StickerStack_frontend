@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 import {
   ButtonWithText,
@@ -12,12 +13,12 @@ import {
   Label,
   InputField,
   InputError,
-  InputWithButton
+  InputWithButton,
 } from '../../UI';
 import { Signin } from '../Signin/Signin';
 
 import { useAppDispatch } from '../../../hooks/hooks';
-import { openMessage, openPopup, closePopup } from '../../../store/popupSlice';
+import { openMessage, openPopup, closePopup, openInfo } from '../../../store/popupSlice';
 import { getUser, updateStatus } from '../../../store/userSlice';
 import { signUp, signIn, sendVerificationCode } from '../../../store/authSlice';
 import {
@@ -25,9 +26,12 @@ import {
   registerPassword,
   registerRepeatPassword,
 } from '../../../utils/registersRHF';
+import { ADD_STICKERS, getRandomNumber } from '../../../utils/constants';
 
+import mail1 from '../../../images/check-your-mail-1.svg';
+import mail2 from '../../../images/check-your-mail-2.svg';
+import mail3 from '../../../images/check-your-mail-3.svg';
 import styles from './Signup.module.scss';
-import { ADD_STICKERS } from '../../../utils/constants';
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
@@ -36,7 +40,7 @@ const Signup: React.FC = () => {
     register,
     setValue,
     getValues,
-    formState: { errors, dirtyFields },
+    formState: { errors, dirtyFields, isValid },
     watch,
     handleSubmit,
   } = useForm({
@@ -45,42 +49,67 @@ const Signup: React.FC = () => {
 
   const [statePassword, setStatePasswod] = useState(false);
   const [stateRepeatPassword, setStateRepeatPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const userEmail = getValues('email');
   const userPassword = getValues('password');
 
   const onSubmit = () => {
-    dispatch(signUp({ email: userEmail, password: userPassword })).then((res) => {
-      if (res.meta.requestStatus === 'fulfilled') {
-        dispatch(sendVerificationCode());
-        dispatch(signIn({ email: userEmail, password: userPassword })).then((res) => {
-          if (res.meta.requestStatus === 'fulfilled') {
-            dispatch(getUser());
-            dispatch(updateStatus(true));
-            dispatch(closePopup());
-            navigate(ADD_STICKERS);
-            dispatch(
-              openMessage({
-                text: 'Подтвердите почту',
-                isError: false,
-              }),
-            );
-          }
-        });
-      }
-      if (res.meta.requestStatus === 'rejected' && res.payload === '400') {
-        dispatch(
-          openMessage({
-            text: 'Учётная запись с такой почтой уже существует',
-            isError: true,
-          }),
-        );
-      }
-    });
+    setLoading(true);
+    dispatch(signUp({ email: userEmail, password: userPassword }))
+      .then((res) => {
+        if (res.meta.requestStatus === 'fulfilled') {
+          dispatch(sendVerificationCode());
+          dispatch(signIn({ email: userEmail, password: userPassword })).then((res) => {
+            if (res.meta.requestStatus === 'fulfilled') {
+              dispatch(getUser());
+              dispatch(updateStatus(true));
+              dispatch(closePopup());
+              navigate(ADD_STICKERS);
+              const randomNumber = getRandomNumber(1, 3);
+              dispatch(
+                openInfo({
+                  title: 'Подтвердите почту',
+                  text: 'Мы направили письмо вам на электронную почту. Для подтверждения перейдите по ссылке в письме.',
+                  buttonText: 'Понятно!',
+                  image: randomNumber === 1 ? mail1 : randomNumber === 2 ? mail2 : mail3,
+                }),
+              );
+            }
+          });
+        }
+        if (res.meta.requestStatus === 'rejected' && res.payload === '400') {
+          dispatch(
+            openMessage({
+              text: 'Учётная запись с такой почтой уже существует',
+              isError: true,
+            }),
+          );
+        }
+      })
+      .finally(() => setLoading(false));
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={styles.signup}>
+    <motion.form
+      onSubmit={handleSubmit(onSubmit)}
+      className={styles.signup}
+      initial={{
+        opacity: 0.1,
+      }}
+      animate={{
+        transition: {
+          duration: 0.5,
+        },
+        opacity: 1,
+      }}
+      exit={{
+        opacity: 0.2,
+        transition: {
+          duration: 0.5,
+        },
+      }}
+    >
       <TitlePopup>Регистрация</TitlePopup>
       <div className={styles.inputs}>
         <InputField className='email'>
@@ -106,6 +135,7 @@ const Signup: React.FC = () => {
             register={register}
             option={registerPassword}
             name='password'
+            className={dirtyFields['password'] && !statePassword ? styles.password : ''}
             placeholder='Введите пароль'
             type={statePassword ? 'text' : 'password'}
             autoComplete='current-password'
@@ -134,6 +164,9 @@ const Signup: React.FC = () => {
             }}
             placeholder='Введите пароль'
             name='repeat-password'
+            className={
+              dirtyFields['repeat-password'] && !stateRepeatPassword ? styles.password : ''
+            }
             type={stateRepeatPassword ? 'text' : 'password'}
             autoComplete='repeat-password'
             error={errors['repeat-password']}
@@ -165,14 +198,16 @@ const Signup: React.FC = () => {
           </a>
         </p>
       </CheckBoxForm>
-      <ButtonWithText type='submit'>Зарегистрироваться</ButtonWithText>
+      <ButtonWithText type='submit' disabled={!isValid} loading={loading}>
+        Зарегистрироваться
+      </ButtonWithText>
       <span className={styles.link}>
         Уже есть аккаунт?{' '}
         <TextUnderline type='button' onClick={() => dispatch(openPopup(Signin))}>
           Войти
         </TextUnderline>
       </span>
-    </form>
+    </motion.form>
   );
 };
 

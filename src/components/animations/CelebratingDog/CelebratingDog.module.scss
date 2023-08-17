@@ -1,0 +1,143 @@
+@import '../../../utils/_scss-variables.scss';
+
+.container {
+  width: 100%;
+  height: 500px;
+  @include flex(column, center, center);
+}
+
+.animation {
+  width: 300px;
+  height: 350px;
+  @include flex(column, center, center);
+  position: relative;
+}
+
+.dog {
+  width: 300px;
+  height: 300px;
+  background: url('../../../images/celebrate-animation/celebrating-dog.svg') center no-repeat;
+  background-size: contain;
+  z-index: 2;
+}
+
+.confetti {
+  position: absolute;
+  height: 25px;
+  width: 20px;
+
+  &_blue {
+    background: url('../../../images/celebrate-animation/confetti-blue.svg') center no-repeat;
+    background-size: contain;
+  }
+  &_red {
+    background: url('../../../images/celebrate-animation/confetti-red.svg') center no-repeat;
+
+    background-size: contain;
+  }
+  &_yellow {
+    background: url('../../../images/celebrate-animation/confetti-yellow.svg') center no-repeat;
+    background-size: contain;
+  }
+
+  top: 0;
+  left: 0;
+  animation: 3s infinite linear fall1;
+
+  &:nth-of-type(2n) {
+    left: 4%;
+    animation: 3s infinite linear fall1;
+  }
+  &:nth-of-type(3n) {
+    animation: 4s infinite linear fall1;
+    left: 38%;
+  }
+  &:nth-of-type(4n) {
+    left: 54%;
+    animation: 3.5s infinite linear fall2;
+  }
+  &:nth-of-type(5n) {
+    left: 15%;
+    animation: 2s 1s infinite linear fall2;
+    z-index: 3;
+  }
+  &:nth-of-type(6n) {
+    left: 10%;
+    animation: 3.5s infinite linear fall1;
+  }
+  &:nth-of-type(7n) {
+    left: 84%;
+    animation: 3s infinite linear fall1;
+  }
+  &:nth-of-type(8n) {
+    left: 60%;
+    animation: 4s infinite linear fall1;
+  }
+  &:nth-of-type(9n) {
+    left: 30%;
+    animation: 2.5s infinite linear fall1;
+  }
+  &:nth-of-type(10n) {
+    left: 90%;
+    animation: 3s 1s infinite linear fall2;
+  }
+  &:nth-of-type(11n) {
+    left: 44%;
+    animation: 3s infinite linear fall2;
+  }
+  &:nth-of-type(12n) {
+    left: 95%;
+    animation: 3s 2s infinite linear fall2;
+  }
+  &:nth-of-type(13n) {
+    left: 68%;
+  }
+  &:nth-of-type(14n) {
+    left: 75%;
+  }
+  &:nth-of-type(15n) {
+    left: 35%;
+  }
+}
+
+@keyframes fall1 {
+  0% {
+    transform: translate(2px, 0);
+  }
+  22% {
+    transform: translate(-6px, 90px) rotate(175deg);
+  }
+  44% {
+    transform: translate(6px, 170px) rotate(185deg);
+  }
+  66% {
+    transform: translate(0px, 230px) rotate(195deg);
+  }
+  88% {
+    transform: translate(4px, 280px) rotate(205deg);
+  }
+  100% {
+    transform: translate(-2px, 310px) rotate(215deg);
+  }
+}
+
+@keyframes fall2 {
+  0% {
+    transform: translate(12px, 0) rotate(175deg);
+  }
+  22% {
+    transform: translate(8px, 90px) rotate(180deg);
+  }
+  44% {
+    transform: translate(6px, 170px) rotate(180deg);
+  }
+  66% {
+    transform: translate(0px, 230px) rotate(185deg);
+  }
+  88% {
+    transform: translate(4px, 280px) rotate(185deg);
+  }
+  100% {
+    transform: translate(-2px, 310px) rotate(195deg);
+  }
+}

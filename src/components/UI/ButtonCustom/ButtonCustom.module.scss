@@ -9,6 +9,7 @@
   background-position: center;
   background-size: contain;
   cursor: pointer;
+  color: $main-text-color;
   transition: opacity 0.3s ease-in-out;
 
   &:hover {
@@ -49,7 +50,7 @@
 .button_arrow {
   min-width: 32px;
   height: 32px;
-  background-color: $element-color;
+  background-color: $element-secondary-active-color;
   border-radius: 50%;
   background-image: url(../../../images/icons/arrow-small.svg);
   background-size: auto;

@@ -11,35 +11,38 @@
     z-index: -1;
 
     &:checked + .label {
-      background-image: url(../../../images/icons/checker-icon.svg);
-      background-position: center;
-      background-size: 16px 16px;
-      background-repeat: no-repeat;
       background-color: $secondary-bg-color;
+    }
+
+    &:checked + .label_error {
+      border-color: $main-text-color !important;
     }
   }
 
   .label {
+    position: relative;
     display: inline-block;
+    color: $popup-bg-color;
     width: 20px;
     height: 20px;
     border: 1px solid $main-text-color;
     border-radius: 3px;
     content: '';
-  }
 
-  .label_error {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    border: 1px solid $error-text-color;
-    border-radius: 3px;
-    content: '';
-  }
-}
+    &_svg {
+      position: absolute;
+      width: 17px;
+      height: 17px;
+      top: 2px;
+      left: 2px;
+    }
 
-.text {
-  // что за текст?
-  padding: 0;
-  margin: 0;
+    &_error {
+      border-color: $error-text-color;
+
+      &:checked {
+        border-color: $main-text-color !important;
+      }
+    }
+  }
 }

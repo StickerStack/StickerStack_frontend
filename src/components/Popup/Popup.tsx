@@ -95,6 +95,13 @@ const Popup: React.FC = () => {
               },
               scale: 1,
             }}
+            exit={{
+              scale: 1.4,
+              opacity: 0,
+              transition: {
+                duration: 0.2,
+              },
+            }}
             className={styles.popup}
           >
             <div className={styles.container}>

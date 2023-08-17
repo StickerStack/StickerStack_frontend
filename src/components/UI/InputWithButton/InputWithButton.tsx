@@ -20,7 +20,7 @@ const InputWithButton: FC<IProps> = ({
   return (
     <div className={cn(styles.field, styles[className], error && styles.error)}>
       <input
-        className={cn(styles.input, styles[className], error && styles.error)}
+        className={cn(styles.input, styles[className], className, error && styles.error)}
         {...(register && register(name, option))}
         name={name}
         id={name}

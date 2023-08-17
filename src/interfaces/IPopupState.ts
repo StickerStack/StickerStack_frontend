@@ -17,6 +17,7 @@ export interface IPopupState {
     title: string;
     text: string;
     buttonText: string;
+    src: string;
   };
 
   message: {

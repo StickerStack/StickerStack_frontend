@@ -1,4 +1,5 @@
 import cn from 'classnames';
+
 import styles from './ButtonWithText.module.scss';
 
 type ButtonTheme = 'filled' | 'transparent' | 'light' | 'no-border';
@@ -9,6 +10,7 @@ interface IProps {
   theme?: ButtonTheme;
   type?: 'submit' | 'reset' | 'button';
   color?: 'regular' | 'contrast';
+  loading?: boolean;
   disabled?: boolean;
   onClick?: () => void;
 }
@@ -19,17 +21,24 @@ const ButtonWithText: React.FC<IProps> = ({
   color = 'regular',
   className,
   type,
+  loading,
   disabled,
   onClick,
 }: IProps) => {
   return (
     <button
-      className={cn(styles.button, styles[`button_${theme}`], styles[`button_${color}`], className)}
+      className={cn(
+        styles.button,
+        styles[`button_${theme}`],
+        styles[`button_${color}`],
+        loading && styles.loading,
+        className,
+      )}
       onClick={onClick}
       type={type}
-      disabled={disabled}
+      disabled={disabled || loading}
     >
-      {children}
+      {loading ? <div className={cn(styles.loader, styles[`loader_${theme}`])} /> : children}
     </button>
   );
 };
