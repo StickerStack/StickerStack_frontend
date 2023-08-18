@@ -18,6 +18,7 @@ import {
 import { CartPage } from '../pages/CartPage/CartPage';
 import {
   PROFILE,
+  POLICY,
   PAGE_404,
   ADD_STICKERS,
   CART,
@@ -30,6 +31,7 @@ import { useScrollToTop } from '../../hooks/useScrollToTop';
 import { getUser, signInMockUser } from '../../store/userSlice';
 import styles from './App.module.scss';
 import { OrdersPage } from '../pages/OrdersPage/OrdersPage';
+import { PolicyPage } from '../pages/PolicyPage/PolicyPage';
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -96,6 +98,7 @@ const App: React.FC = () => {
             <Route path='*' element={<Navigate to={PAGE_404} />} />
             <Route path={PAGE_404} element={<PageNotFound />} />
             <Route path='/' element={<MainPage />} />
+            <Route path={POLICY} element={<PolicyPage />} />
           </Routes>
           <Footer />
           <MessagePopup />

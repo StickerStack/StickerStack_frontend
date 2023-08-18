@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import { Link } from 'react-router-dom';
+import { Link, To } from 'react-router-dom';
 import styles from './TextUnderline.module.scss';
 
 type TextType = 'button' | 'link';
@@ -10,6 +10,7 @@ interface IProps {
   children: React.ReactNode;
   className?: string;
   type?: TextType;
+  link?: To;
   theme?: TextTheme;
   onClick?: () => void;
 }
@@ -17,6 +18,7 @@ interface IProps {
 const TextUnderline: React.FC<IProps> = ({
   children,
   className,
+  link,
   type = 'button',
   theme = 'regular',
   onClick,
@@ -25,9 +27,8 @@ const TextUnderline: React.FC<IProps> = ({
     <button type='button' onClick={onClick} className={cn(styles.button, className)}>
       <span className={cn(styles.text, className)}>{children}</span>
     </button>
-  ) : type === 'link' ? (
-    // TODO: добработать ссылку, когда появится
-    <Link to='' className={cn(styles.text, className, styles[`text_${theme}`])}>
+  ) : type === 'link' && link ? (
+    <Link to={link} target='_blank' className={cn(styles.text, className, styles[`text_${theme}`])}>
       {children}
     </Link>
   ) : null;
