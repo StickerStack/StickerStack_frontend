@@ -6,7 +6,7 @@ const REG_SPACE = ''
 // eslint-disable-next-line no-useless-escape
 const REG_EMAIL = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 // Только цифры от 1 до 100
-const REG_STICKERS = /^[1-9][0-9][0-9]?$|^1000$/;
+const REG_STICKERS = /^([1-9][0-9]{0,2}|1000)$/;
 const REG_PASS = /(^[A-Za-z0-9!"#$% &'()*+,-./:;<=>?@[\]\\^_`{|}№~])+/g;
 
 /* Только латинские и кириллические буквы и знак - */
