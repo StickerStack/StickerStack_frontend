@@ -22,7 +22,6 @@ import styles from './AddStickers.module.scss';
 const AddStickers: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [changed, setChanged] = useState(false);
 
   const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
   const cart = useSelector((state: { cart: CartState }) => state.cart);
@@ -49,8 +48,24 @@ const AddStickers: React.FC = () => {
 
   useEffect(() => {
     if (cards) {
-      setChanged(true);
+      calculateStickerOnList(cards, {
+        paddingList: {
+          top: pageSizePx.paddingList.top,
+          right: pageSizePx.paddingList.right,
+          bottom: pageSizePx.paddingList.bottom,
+          left: pageSizePx.paddingList.left,
+        },
+        gapX: pageSizePx.gapX,
+        gapY: pageSizePx.gapY,
+        widthPage: pageSizePx.widthPage,
+        heightPage: pageSizePx.heightPage,
+      });
+
+      dispatch(
+        updateSheets(JSON.parse(localStorage.getItem('pagesWithStickers') || '[]')?.length || 1),
+      );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cards]);
 
   const cropping = () => {
@@ -71,33 +86,32 @@ const AddStickers: React.FC = () => {
         <div className={styles.cards}>
           {cards.map((card) => (
             <AnimatePresence key={card.id}>
-              {card.active ? (
-                <motion.div
-                  className={styles.motion}
-                  initial={{
-                    opacity: 0.4,
-                    height: 0,
-                  }}
-                  animate={{
-                    transition: {
-                      height: { duration: 0.4 },
-                      opacity: { duration: 0.25, delay: 0.15 },
-                    },
-                    opacity: 1,
-                    height: 'auto',
-                  }}
-                  exit={{
-                    opacity: 0,
-                    height: 0,
-                    transition: {
-                      height: { duration: 0.4 },
-                      opacity: { duration: 0.25 },
-                    },
-                  }}
-                >
-                  <NewSticker key={card.id} card={card} />
-                </motion.div>
-              ) : (
+              <motion.div
+                className={card.active ? styles.motion : styles.motion_inactive}
+                initial={{
+                  opacity: 0.4,
+                  height: 0,
+                }}
+                animate={{
+                  transition: {
+                    height: { duration: 0.4 },
+                    opacity: { duration: 0.25, delay: 0.15 },
+                  },
+                  opacity: 1,
+                  height: 'auto',
+                }}
+                exit={{
+                  opacity: 0,
+                  height: 0,
+                  transition: {
+                    height: { duration: 0.4 },
+                    opacity: { duration: 0.25 },
+                  },
+                }}
+              >
+                <NewSticker key={card.id} card={card} />
+              </motion.div>
+              {!card.active && (
                 <motion.div
                   className={styles.motion}
                   initial={{
@@ -137,44 +151,13 @@ const AddStickers: React.FC = () => {
             <InfoBox type='number' description='Количество листов'>
               {cart.number_of_sheets}
             </InfoBox>
-            {changed ? (
-              <TextUnderline
-                type='button'
-                className={styles.preview}
-                onClick={() => {
-                  calculateStickerOnList(cards, {
-                    paddingList: {
-                      top: pageSizePx.paddingList.top,
-                      right: pageSizePx.paddingList.right,
-                      bottom: pageSizePx.paddingList.bottom,
-                      left: pageSizePx.paddingList.left,
-                    },
-                    gapX: pageSizePx.gapX,
-                    gapY: pageSizePx.gapY,
-                    widthPage: pageSizePx.widthPage,
-                    heightPage: pageSizePx.heightPage,
-                  });
-
-                  dispatch(
-                    updateSheets(
-                      JSON.parse(localStorage.getItem('pagesWithStickers') || '[]')?.length || 1,
-                    ),
-                  );
-
-                  setChanged(false);
-                }}
-              >
-                Рассчитать стоимость
-              </TextUnderline>
-            ) : (
-              <TextUnderline
-                type='button'
-                className={styles.preview}
-                onClick={() => dispatch(openPreview())}
-              >
-                Предпросмотр страницы
-              </TextUnderline>
-            )}
+            <TextUnderline
+              type='button'
+              className={styles.preview}
+              onClick={() => dispatch(openPreview())}
+            >
+              Предпросмотр страницы
+            </TextUnderline>
           </div>
           <div className={styles.flex}>
             <span className={styles.text}>Стоимость</span>

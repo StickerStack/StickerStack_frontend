@@ -94,7 +94,7 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
   const watchAllFields = watch();
 
   useEffect(() => {
-    if (isValid) {
+    if (isValid && card.image) {
       dispatch(setValid({ id: card.id, valid: true }));
       dispatch(checkValidation());
       cart.items.length !== 0 && dispatch(addItem(card));
@@ -244,14 +244,7 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
     <section className={styles.card}>
       <form className={styles.info}>
         <div className={styles.image}>
-          <DragAndDrop
-            register={register}
-            name='dnd'
-            option={{
-              required: 'Загрузите изображение',
-            }}
-            card={card}
-          />
+          <DragAndDrop register={register} name='dnd' card={card} />
         </div>
         <fieldset className={cn(styles.flex, styles.flex_shapes)}>
           <label className={styles.category} htmlFor='shape'>
