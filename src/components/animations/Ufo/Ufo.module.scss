@@ -23,7 +23,7 @@
   top: 0;
   width: 165px;
   height: 150px;
-  background: url('../../../images/ufo-animation/ufo.svg') center no-repeat;
+  background: url('../../../images/ufo-animation/ufo.png') center no-repeat;
   background-size: contain;
   transform: rotate(28deg);
   z-index: 2;
@@ -35,7 +35,7 @@
   bottom: 0;
   width: 94px;
   height: 140px;
-  background: url('../../../images/ufo-animation/light.svg') center no-repeat;
+  background: url('../../../images/ufo-animation/light.png') center no-repeat;
   background-size: contain;
   z-index: 1;
   animation: 10s 3s alternate infinite lightmove;

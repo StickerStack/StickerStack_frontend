@@ -7,7 +7,7 @@ import { useForm, FieldValues } from 'react-hook-form';
 
 import { openInfo, openMessage } from '../../../store/popupSlice';
 import { TitlePage, Container, ButtonWithText, TextUnderline, Input } from '../../UI';
-import { ADD_STICKERS } from '../../../utils/constants';
+import { ADD_STICKERS, ORDERS } from '../../../utils/constants';
 import { Sticker } from '../../Sticker/Sticker';
 import { ICardsState, CartState } from '../../../interfaces';
 import { InfoBox } from '../../InfoBox/InfoBox';
@@ -15,7 +15,7 @@ import { cleanCart, countTotal, updateAddress, uploadOrder } from '../../../stor
 import { cleanCards } from '../../../store/cardsSlice';
 import { converter } from '../../../utils/converter';
 
-import image from '../../../images/cart-dog.svg';
+import image from '../../../images/cart-dog.png';
 import { ReactComponent as WriteSvg } from '../../../images/icons/write-icon.svg';
 import styles from './CartPage.module.scss';
 
@@ -76,8 +76,11 @@ const CartPage: React.FC = () => {
           dispatch(
             openInfo({
               title: 'Заказ оформлен!',
-              text: 'Следите за статусом заказа в личном кабинете',
-              buttonText: 'Понятно!',
+              text: 'Вся информация по заказу отправлена на почту. Следите за статусом его готовности в личном кабинете',
+              buttonText: 'Заказать еще',
+              onClick: () => navigate(ADD_STICKERS),
+              buttonSecondText: 'Перейти к заказам',
+              onClickSecond: () => navigate(ORDERS),
               image: image,
             }),
           );
@@ -96,9 +99,8 @@ const CartPage: React.FC = () => {
         {cart.items.length === 0 ? (
           <div className={styles.box}>
             <span className={styles.text}>Ваша корзина пуста</span>
-            <ButtonWithText color='contrast' onClick={() => navigate(ADD_STICKERS)}>
-              Заказать стикеры
-            </ButtonWithText>
+            <ButtonWithText onClick={() => navigate(ADD_STICKERS)}>Заказать стикеры</ButtonWithText>
+            <div className={styles.image} />
           </div>
         ) : (
           <div className={styles.flex}>

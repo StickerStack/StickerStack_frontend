@@ -17,6 +17,11 @@ const initialState: IPopupState = {
     title: '',
     text: '',
     buttonText: '',
+    buttonSecondText: '',
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    onClick: () => {},
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    onClickSecond: () => {},
     src: '',
   },
   message: {
@@ -57,7 +62,15 @@ const popupSlice = createSlice({
     openInfo(
       state,
       action: {
-        payload: { title: string; text: string; buttonText: string; image: string };
+        payload: {
+          title: string;
+          text: string;
+          buttonText: string;
+          buttonSecondText?: string;
+          onClick?: () => void;
+          onClickSecond?: () => void;
+          image: string;
+        };
         type: string;
       },
     ) {
@@ -65,7 +78,10 @@ const popupSlice = createSlice({
       state.info.isOpen = true;
       state.info.text = action.payload.text;
       state.info.buttonText = action.payload.buttonText;
+      state.info.buttonSecondText = action.payload.buttonSecondText;
       state.info.title = action.payload.title;
+      state.info.onClick = action.payload.onClick;
+      state.info.onClickSecond = action.payload.onClickSecond;
       state.info.src = action.payload.image;
     },
 
