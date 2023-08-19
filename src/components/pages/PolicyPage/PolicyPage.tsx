@@ -1,21 +1,41 @@
-import cn from 'classnames';
 import { ButtonWithText, Container, TitlePage } from '../../UI';
+import { useRef, useEffect } from 'react';
+
+import { PolicyNavigation } from '../../PolicyNavigation/PolicyNavigation';
 
 import styles from './PolicyPage.module.scss';
-import { useRef, useEffect } from 'react';
-import { policy } from '../../../utils/constants';
 
-const PolicyPage: React.FC = () => {
+interface Props {
+  policy: {
+    title: string;
+    sections: Array<{
+      id: number;
+      title: string;
+      paragraphs: Array<{ id: number; text: string }>;
+    }>;
+  };
+}
+
+const PolicyPage: React.FC<Props> = ({ policy }: Props) => {
   const sectionRef = useRef<Array<HTMLDivElement>>([]);
   useEffect(() => {
     sectionRef.current = sectionRef.current.slice(0, policy.sections.length);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [policy.sections]);
 
   return (
     <main className={styles.policy}>
       <Container className={styles.policy_container}>
-        <TitlePage type='main-title'>{policy.title}</TitlePage>
         <div className={styles.content}>
+          {
+            <div className={styles.nav}>
+              <PolicyNavigation />
+            </div>
+          }
+          <div className={styles.image} />
+          <TitlePage type='main-title' className={styles.title}>
+            {policy.title}
+          </TitlePage>
           <section className={styles.lines}>
             {policy.sections.map((section, i) => (
               <div
@@ -34,25 +54,25 @@ const PolicyPage: React.FC = () => {
               </div>
             ))}
           </section>
-          <section className={styles.menu}>
-            {policy.sections.map((section, i) => (
-              <ButtonWithText
-                theme='no-border'
-                className={styles.menu_item}
-                key={section.id}
-                onClick={() => {
-                  sectionRef.current &&
-                    window.scrollTo({
-                      behavior: 'smooth',
-                      top: sectionRef.current[i].offsetTop + 120,
-                    });
-                }}
-              >
-                {section.title.slice(3)}
-              </ButtonWithText>
-            ))}
-          </section>
         </div>
+        <section className={styles.menu}>
+          {policy.sections.map((section, i) => (
+            <ButtonWithText
+              theme='no-border'
+              className={styles.menu_item}
+              key={section.id}
+              onClick={() => {
+                sectionRef.current &&
+                  window.scrollTo({
+                    behavior: 'smooth',
+                    top: sectionRef.current[i].offsetTop - 55,
+                  });
+              }}
+            >
+              {section.title.slice(3)}
+            </ButtonWithText>
+          ))}
+        </section>
       </Container>
     </main>
   );

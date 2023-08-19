@@ -26,7 +26,7 @@ import {
   registerPassword,
   registerRepeatPassword,
 } from '../../../utils/registersRHF';
-import { ADD_STICKERS, POLICY, getRandomNumber } from '../../../utils/constants';
+import { ADD_STICKERS, PRIVACY, TERMS, getRandomNumber } from '../../../utils/constants';
 
 import mail1 from '../../../images/check-your-mail-1.svg';
 import mail2 from '../../../images/check-your-mail-2.svg';
@@ -189,11 +189,11 @@ const Signup: React.FC = () => {
       >
         <p className={styles.checktext}>
           Я согласен с{' '}
-          <a href={POLICY} target='_blank' rel='noreferrer' className={styles.documentLink}>
+          <a href={PRIVACY} target='_blank' rel='noreferrer' className={styles.documentLink}>
             Политикой конфиденциальности
           </a>{' '}
           и{' '}
-          <a href={POLICY} target='_blank' rel='noreferrer' className={styles.documentLink}>
+          <a href={TERMS} target='_blank' rel='noreferrer' className={styles.documentLink}>
             Условиями использования сервиса
           </a>
         </p>
