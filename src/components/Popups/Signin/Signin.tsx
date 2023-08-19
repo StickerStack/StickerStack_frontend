@@ -51,25 +51,29 @@ const Signin: React.FC = () => {
     }
 
     dispatch(signIn({ email: userEmail, password: userPassword }))
-      .then((res) => {
-        if (res.meta.requestStatus === 'fulfilled') {
-          dispatch(getUser());
-          dispatch(updateStatus(true));
-          dispatch(closePopup());
-          navigate('/add-stickers');
-        }
-
-        if (res.meta.requestStatus === 'rejected') {
+      .unwrap()
+      .then(() => {
+        dispatch(getUser());
+        dispatch(updateStatus(true));
+        dispatch(closePopup());
+        navigate('/add-stickers');
+      })
+      .catch((err) => {
+        if (err.message === '400') {
           dispatch(
             openMessage({
               text: 'Неверная почта или пароль',
               isError: true,
             })
           );
+        } else {
+          dispatch(
+            openMessage({
+              text: 'Что-то пошло не так',
+              isError: true,
+            })
+          );
         }
-      })
-      .catch((err) => {
-        console.log(err);
       });
   };
 

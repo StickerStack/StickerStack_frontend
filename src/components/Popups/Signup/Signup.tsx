@@ -12,7 +12,7 @@ import {
   Label,
   InputField,
   InputError,
-  InputWithButton
+  InputWithButton,
 } from '../../UI';
 import { Signin } from '../Signin/Signin';
 
@@ -20,11 +20,7 @@ import { useAppDispatch } from '../../../hooks/hooks';
 import { openMessage, openPopup, closePopup } from '../../../store/popupSlice';
 import { getUser, updateStatus } from '../../../store/userSlice';
 import { signUp, signIn, sendVerificationCode } from '../../../store/authSlice';
-import {
-  registerEmail,
-  registerPassword,
-  registerRepeatPassword,
-} from '../../../utils/registersRHF';
+import { registerEmail, registerPassword, registerRepeatPassword } from '../../../utils/registersRHF';
 
 import styles from './Signup.module.scss';
 import { ADD_STICKERS } from '../../../utils/constants';
@@ -50,34 +46,53 @@ const Signup: React.FC = () => {
   const userPassword = getValues('password');
 
   const onSubmit = () => {
-    dispatch(signUp({ email: userEmail, password: userPassword })).then((res) => {
-      if (res.meta.requestStatus === 'fulfilled') {
-        dispatch(sendVerificationCode());
-        dispatch(signIn({ email: userEmail, password: userPassword })).then((res) => {
-          if (res.meta.requestStatus === 'fulfilled') {
+    dispatch(signUp({ email: userEmail, password: userPassword }))
+      .unwrap()
+      .then(() => {
+        dispatch(signIn({ email: userEmail, password: userPassword }))
+          .unwrap()
+          .then(() => {
             dispatch(getUser());
             dispatch(updateStatus(true));
             dispatch(closePopup());
-            navigate(ADD_STICKERS);
-            dispatch(
-              openMessage({
-                text: 'Подтвердите почту',
-                isError: false,
-              }),
-            );
-          }
-        });
-      }
-
-      if (res.meta.requestStatus === 'rejected') {
-        dispatch(
-          openMessage({
-            text: 'Учётная запись с такой почтой уже существует',
-            isError: true,
-          }),
-        );
-      }
-    });
+            navigate('/add-stickers');
+          })
+          .catch((err) => {
+            if (err.message === '400') {
+              dispatch(
+                openMessage({
+                  text: 'Неверная почта или пароль',
+                  isError: true,
+                })
+              );
+            } else {
+              dispatch(
+                openMessage({
+                  text: 'Что-то пошло не так',
+                  isError: true,
+                })
+              );
+            }
+          });
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.message === '400') {
+          dispatch(
+            openMessage({
+              text: 'Учётная запись с такой почтой уже существует',
+              isError: true,
+            })
+          );
+        } else {
+          dispatch(
+            openMessage({
+              text: 'Что-то пошло не так',
+              isError: true,
+            })
+          );
+        }
+      });
   };
 
   return (
