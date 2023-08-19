@@ -96,9 +96,8 @@ const CartPage: React.FC = () => {
         {cart.items.length === 0 ? (
           <div className={styles.box}>
             <span className={styles.text}>Ваша корзина пуста</span>
-            <ButtonWithText color='contrast' onClick={() => navigate(ADD_STICKERS)}>
-              Заказать стикеры
-            </ButtonWithText>
+            <ButtonWithText onClick={() => navigate(ADD_STICKERS)}>Заказать стикеры</ButtonWithText>
+            <div className={styles.image} />
           </div>
         ) : (
           <div className={styles.flex}>
