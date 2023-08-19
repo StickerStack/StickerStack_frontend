@@ -28,9 +28,9 @@ import {
 } from '../../../utils/registersRHF';
 import { ADD_STICKERS, getRandomNumber } from '../../../utils/constants';
 
-import mail1 from '../../../images/check-your-mail-1.svg';
-import mail2 from '../../../images/check-your-mail-2.svg';
-import mail3 from '../../../images/check-your-mail-3.svg';
+import mail1 from '../../../images/check-your-mail-1.png';
+import mail2 from '../../../images/check-your-mail-2.png';
+import mail3 from '../../../images/check-your-mail-3.png';
 import styles from './Signup.module.scss';
 
 const Signup: React.FC = () => {
@@ -70,7 +70,7 @@ const Signup: React.FC = () => {
               dispatch(
                 openInfo({
                   title: 'Подтвердите почту',
-                  text: 'Мы направили письмо вам на электронную почту. Для подтверждения перейдите по ссылке в письме.',
+                  text: 'Мы направили ссылку на вашу почту, указанную при регистрации. Пожалуйста, подтвердите почту.',
                   buttonText: 'Понятно!',
                   image: randomNumber === 1 ? mail1 : randomNumber === 2 ? mail2 : mail3,
                 }),

@@ -1,7 +1,7 @@
 @import '../../../utils/_scss-variables.scss';
 
 .container {
-  @include flex(column, _, _);
+  @include flex(column, start, center);
   width: 330px;
   gap: 25px;
 }
@@ -12,4 +12,19 @@
   border-radius: 20px;
   margin-bottom: 25px;
   object-fit: contain;
+}
+
+.buttons {
+  width: 255px;
+  @include flex(column, start, center);
+  gap: 10px;
+}
+
+.button {
+  padding: 14px 15px;
+  width: 255px;
+
+  &_wide {
+    width: 100%;
+  }
 }

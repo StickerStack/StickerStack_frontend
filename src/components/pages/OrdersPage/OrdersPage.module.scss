@@ -22,7 +22,9 @@
 }
 
 .ufo {
-  background: url('../../../images/ufo-full.svg');
+  background: url('../../../images/ufo-full.png') no-repeat;
+  background-position: center;
+  background-size: contain;
   height: 255px;
   width: 183px;
 }

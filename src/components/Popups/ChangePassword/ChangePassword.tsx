@@ -16,11 +16,11 @@ import { closePopup, openInfo, openMessage } from '../../../store/popupSlice';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { resetPassword } from '../../../store/authSlice';
 import { registerPassword, registerRepeatPassword } from '../../../utils/registersRHF';
-import { getRandomNumber } from '../../../utils/constants';
+import { ADD_STICKERS, getRandomNumber } from '../../../utils/constants';
 
-import image1 from '../../../images/password-changed-1.svg';
-import image2 from '../../../images/password-changed-2.svg';
-import image3 from '../../../images/password-changed-3.svg';
+import image1 from '../../../images/password-changed-1.png';
+import image2 from '../../../images/password-changed-2.png';
+import image3 from '../../../images/password-changed-3.png';
 import styles from './ChangePassword.module.scss';
 
 const ChangePassword: React.FC = () => {
@@ -49,9 +49,10 @@ const ChangePassword: React.FC = () => {
         const randomNumber = getRandomNumber(1, 3);
         dispatch(
           openInfo({
-            title: 'Пароль изменён',
+            title: 'Пароль изменен',
             text: 'Сделай свои вещи уникальными с помощью стикеров на виниловой пленке.',
-            buttonText: 'Начать!',
+            buttonText: 'Перейти к заказу',
+            onClick: () => navigate(ADD_STICKERS),
             image: randomNumber === 1 ? image1 : randomNumber === 2 ? image2 : image3,
           }),
         );
