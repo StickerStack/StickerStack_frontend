@@ -19,18 +19,14 @@ const VerifyEmail: React.FC = () => {
         navigate('/');
       })
       .then(() =>
-        setTimeout(
-          () =>
-            dispatch(
-              openInfo({
-                title: 'Почта подтверждена',
-                text: 'Сделай свои вещи уникальными с помощью стикеров на виниловой пленке.',
-                buttonText: 'Перейти к заказу',
-                onClick: () => navigate(ADD_STICKERS),
-                image: image,
-              }),
-            ),
-          1000,
+        dispatch(
+          openInfo({
+            title: 'Почта подтверждена',
+            text: 'Сделай свои вещи уникальными с помощью стикеров на виниловой пленке.',
+            buttonText: 'Перейти к заказу',
+            onClick: () => navigate(ADD_STICKERS),
+            image: image,
+          }),
         ),
       )
       .catch(() => navigate(PAGE_404));

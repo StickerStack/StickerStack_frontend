@@ -43,8 +43,6 @@ const ChangePassword: React.FC = () => {
   const onSubmit = (formData: FieldValues) => {
     dispatch(resetPassword({ token: token, password: formData.password })).then((res) => {
       if (res.meta.requestStatus === 'fulfilled') {
-        navigate('/');
-
         dispatch(closePopup());
         const randomNumber = getRandomNumber(1, 3);
         dispatch(
@@ -95,6 +93,7 @@ const ChangePassword: React.FC = () => {
           option={registerPassword}
           name='password'
           type={statePassword ? 'text' : 'password'}
+          className={dirtyFields['password'] && !statePassword ? styles.password : ''}
           autoComplete='current-password'
           error={errors.password}
           button={
@@ -122,6 +121,7 @@ const ChangePassword: React.FC = () => {
           }}
           name='repeat-password'
           type={stateRepeatPassword ? 'text' : 'password'}
+          className={dirtyFields['repeat-password'] && !stateRepeatPassword ? styles.password : ''}
           autoComplete='repeat-password'
           error={errors['repeat-password']}
           button={
