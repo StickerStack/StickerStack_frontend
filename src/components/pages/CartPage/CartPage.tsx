@@ -57,7 +57,6 @@ const CartPage: React.FC = () => {
         cropping: cart.cropping,
         stickers: cart.items.map((item) => {
           return {
-            image:
              image: item.image.startsWith('data:image/png;base64,')
               ? item.image.replace('data:image/png;base64,', '')
               : item.image.startsWith('data:image/jpeg;base64,')
