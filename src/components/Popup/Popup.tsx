@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -17,7 +16,7 @@ import styles from './Popup.module.scss';
 
 const Popup: React.FC = () => {
   const dispatch = useAppDispatch();
-  const location = useLocation();
+
   const { blockScroll, unblockScroll } = useBlockScroll();
   const { form, preview, info, order, isOpen } = useSelector(
     (state: { popup: IPopupState }) => state.popup,
@@ -27,11 +26,6 @@ const Popup: React.FC = () => {
     isOpen ? blockScroll() : unblockScroll();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
-
-  useEffect(() => {
-    dispatch(closePopup());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [location]);
 
   useEffect(() => {
     const handleKeyDown = (evn: KeyboardEvent) => {

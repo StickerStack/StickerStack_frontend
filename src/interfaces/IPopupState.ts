@@ -17,6 +17,9 @@ export interface IPopupState {
     title: string;
     text: string;
     buttonText: string;
+    buttonSecondText?: string;
+    onClick?: () => void;
+    onClickSecond?: () => void;
     src: string;
   };
 

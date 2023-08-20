@@ -1,4 +1,7 @@
 import cn from 'classnames';
+
+import { ReactComponent as CartSvg } from '../../../images/icons/cart.svg';
+import { ReactComponent as PersonSvg } from '../../../images/icons/profile-icon.svg';
 import styles from './ButtonCustom.module.scss';
 
 type ButtonType = 'close' | 'person' | 'cart' | 'delete' | 'arrow' | 'more';
@@ -16,7 +19,10 @@ const ButtonCustom: React.FC<IProps> = ({ type, className, label, onClick }: IPr
       className={cn(styles.button, styles[`button_${type}`], className)}
       aria-label={label}
       onClick={onClick}
-    />
+    >
+      {type === 'cart' && <CartSvg className={styles.button_image} />}
+      {type === 'person' && <PersonSvg className={styles.button_image} />}
+    </button>
   );
 };
 

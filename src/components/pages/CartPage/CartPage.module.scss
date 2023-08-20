@@ -5,7 +5,7 @@
 
   &_container {
     padding-top: 80px;
-    padding-bottom: calc(100vh / 7);
+    padding-bottom: 80px;
     text-align: left;
     @include flex(column, center, start);
     gap: 30px;
@@ -18,6 +18,14 @@
   width: 100%;
 }
 
+.image {
+  width: 350px;
+  height: 250px;
+  margin-top: 20px;
+  background: url('../../../images/empty-cart.png') no-repeat;
+  background-size: contain;
+}
+
 .flex {
   @include flex(row, start, start);
   flex-wrap: wrap;
@@ -28,7 +36,7 @@
 .banner {
   max-width: 445px;
   background-color: $popup-bg-color;
-  box-shadow: 3px 3px 10px rgba(26, 50, 99, 0.2);
+  box-shadow: 3px 3px 10px 0px rgba(212, 73, 0, 0.1);
   border-radius: 10px;
   box-sizing: border-box;
   @include flex(column, center, start);

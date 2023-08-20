@@ -10,23 +10,23 @@
 }
 
 .move {
-  width: 400px;
-  height: 400px;
+  width: 280px;
+  height: 330px;
   animation: 700ms infinite alternate move;
 }
 
 .rocket {
-  width: 300px;
-  height: 400px;
+  width: 230px;
+  height: 330px;
   transform: rotate(68deg);
 
   &_flameless {
     transform: rotate(34deg);
-    background-image: url('../../../images/rocket-animation/rocket-flameless.svg');
+    background-image: url('../../../images/rocket-animation/rocket-flameless.png');
     background-size: contain;
     background-repeat: no-repeat;
-    width: 300px;
-    height: 400px;
+    width: 230px;
+    height: 330px;
     position: relative;
     z-index: 5;
   }
@@ -34,8 +34,8 @@
   &_flame {
     transform: rotate(56deg);
     position: absolute;
-    top: 69%;
-    left: 32%;
+    top: 64%;
+    left: 29%;
     z-index: 1;
     background-size: contain;
     background-repeat: no-repeat;
@@ -43,28 +43,26 @@
     &_red {
       transform: rotate(64deg);
       background-image: url('../../../images/rocket-animation/flame-red.svg');
-      top: 69%;
-      left: 32%;
-      width: 100px;
-      height: 130px;
+      width: 85px;
+      height: 110px;
       animation: 600ms forwards infinite alternate burn-left;
     }
 
     &_orange {
       transform: rotate(56deg);
       background-image: url('../../../images/rocket-animation/flame-orange.svg');
-      width: 90px;
-      height: 130px;
+      width: 75px;
+      height: 110px;
       animation: 700ms forwards infinite alternate burn-right;
     }
 
     &_yellow {
       transform: rotate(64deg);
       background-image: url('../../../images/rocket-animation/flame-yellow.svg');
-      top: 68%;
-      left: 32%;
-      width: 70px;
-      height: 130px;
+      top: 62%;
+      left: 30%;
+      width: 55px;
+      height: 110px;
       animation: 600ms forwards infinite alternate burn-left;
     }
   }
