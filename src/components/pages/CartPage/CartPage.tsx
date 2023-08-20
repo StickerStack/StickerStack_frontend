@@ -58,9 +58,13 @@ const CartPage: React.FC = () => {
         stickers: cart.items.map((item) => {
           return {
             image:
-              item.image.replace('data:image/png;base64,', '') ||
-              item.image.replace('data:image/jpeg;base64,', '') ||
-              item.image.replace('data:image/jpg;base64,', ''),
+             image: item.image.startsWith('data:image/png;base64,')
+              ? item.image.replace('data:image/png;base64,', '')
+              : item.image.startsWith('data:image/jpeg;base64,')
+              ? item.image.replace('data:image/jpeg;base64,', '')
+              : item.image.startsWith('data:image/jpg;base64,')
+              ? item.image.replace('data:image/jpg;base64,', '')
+              : '',
             shape: item.shape,
             amount: item.amount,
             width: Math.round(converter.pxToCm(item.size.width)),
