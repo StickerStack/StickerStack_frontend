@@ -1,0 +1,30 @@
+@import '../../utils/_scss-variables.scss';
+
+.navigation {
+  padding: 20px 0 0;
+  margin: 0;
+  @include flex(row, flex-start, flex-start);
+  list-style: none;
+  gap: 20px;
+  background-color: $main-bg-color;
+
+  .link {
+    text-decoration: none;
+    cursor: pointer;
+    @include font(16px, 22px, 500);
+    font-size: $main-text-desktop-size;
+    color: $main-text-color;
+
+    &_active {
+      &::after {
+        content: '';
+        display: block;
+        margin-top: 8px;
+        width: 100%;
+        height: 1.5px;
+        background: $element-active-color;
+        transition: width 0.3s;
+      }
+    }
+  }
+}
