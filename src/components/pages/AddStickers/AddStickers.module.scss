@@ -22,6 +22,10 @@
 
 .motion {
   width: 100%;
+
+  &_inactive {
+    display: none !important;
+  }
 }
 
 .info {
