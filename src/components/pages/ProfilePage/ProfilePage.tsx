@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import cn from 'classnames';
@@ -6,7 +6,7 @@ import cn from 'classnames';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { IUserState } from '../../../interfaces';
 import { sendVerificationCode } from '../../../store/authSlice';
-import { openMessage } from '../../../store/popupSlice';
+import { openInfo, openMessage } from '../../../store/popupSlice';
 import { updateUser } from '../../../store/userSlice';
 import { profileName, registerEmail } from '../../../utils/registersRHF';
 import { ImagePick } from '../../ImagePick/ImagePick';
@@ -14,8 +14,12 @@ import { ButtonWithText, Container, TextUnderline, TitlePage } from '../../UI';
 import { InputWithButton } from '../../UI/InputWithButton/InputWithButton';
 import { InputField } from '../../UI/InputField/InputField';
 import { InputError } from '../../UI/InputError/InputError';
+import { getRandomNumber } from '../../../utils/constants';
 
-import EmptyAvatarImage from '../../../images/empty-avatar.svg';
+import EmptyAvatarImage from '../../../images/empty-avatar.png';
+import mail1 from '../../../images/check-your-mail-1.png';
+import mail2 from '../../../images/check-your-mail-2.png';
+import mail3 from '../../../images/check-your-mail-3.png';
 import styles from './ProfilePage.module.scss';
 
 const FIRSTNAME_INPUT_LABEL = 'firstName';
@@ -24,6 +28,7 @@ const EMAIL_INPUT_LABEL = 'email';
 
 const ProfilePage: React.FC = () => {
   const user = useSelector((state: { user: IUserState }) => state.user);
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -63,35 +68,46 @@ const ProfilePage: React.FC = () => {
   const lastname = watch(LASTNAME_INPUT_LABEL);
   const email = watch(EMAIL_INPUT_LABEL);
 
-  const fieldsUnchanged =
-    user.firstName === firstname && user.lastName === lastname && user.email === email;
+  const fieldsUnchanged = user.firstName === firstname && user.lastName === lastname && user.email === email;
   const validOrInvalid = isValid || !isValid;
 
   const onSubmit = () => {
     const emailChanged = user.email !== email;
+    setLoading(true);
     dispatch(
       updateUser({
         email: email,
         firstName: firstname,
         lastName: lastname,
-      }),
-    ).then((res) => {
-      if (res.meta.requestStatus === 'fulfilled') {
+      })
+    )
+      .unwrap()
+      .then(() => {
         dispatch(openMessage({ text: 'Успешно изменено', isError: false }));
         if (emailChanged) {
           dispatch(sendVerificationCode());
+          const randomNumber = getRandomNumber(1, 3);
+          dispatch(
+            openInfo({
+              title: 'Подтвердите новую почту',
+              text: 'Мы направили письмо на новую электронную почту. Для подтверждения перейдите по ссылке в письме.',
+              buttonText: 'Понятно!',
+              image: require(`../../../images/check-your-mail-${randomNumber}.png`),
+            })
+          );
         }
-      }
-
-      if (res.meta.requestStatus === 'rejected') {
-        dispatch(
-          openMessage({
-            text: 'Ошибка. Информация профиля не изменана',
-            isError: true,
-          }),
-        );
-      }
-    });
+      })
+      .catch((err) => {
+        if (err.message) {
+          dispatch(
+            openMessage({
+              text: 'Ошибка. Информация профиля не изменана',
+              isError: true,
+            })
+          );
+        }
+      })
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -111,7 +127,7 @@ const ProfilePage: React.FC = () => {
                       setValue('firstName', value.target.value.trim());
                       setValue(
                         'firstName',
-                        value.target.value[0].toUpperCase() + value.target.value.slice(1),
+                        value.target.value[0].toUpperCase() + value.target.value.slice(1)
                       );
                     },
                   }}
@@ -136,10 +152,7 @@ const ProfilePage: React.FC = () => {
                     ...profileName,
                     onBlur: (value: React.FocusEvent<HTMLInputElement>) => {
                       setValue('lastName', value.target.value.trim());
-                      setValue(
-                        'lastName',
-                        value.target.value[0].toUpperCase() + value.target.value.slice(1),
-                      );
+                      setValue('lastName', value.target.value[0].toUpperCase() + value.target.value.slice(1));
                     },
                   }}
                   name={LASTNAME_INPUT_LABEL}
@@ -184,20 +197,34 @@ const ProfilePage: React.FC = () => {
                 className={styles.button}
                 type='submit'
                 disabled={(fieldsUnchanged && validOrInvalid) || !isValid}
+                loading={loading}
               >
                 Сохранить
               </ButtonWithText>
             </form>
             {!user.isVerified && (
-              <>
-                <p>Не пришло письмо подтверждения электронной почты?</p>
+              <div className={styles.additional}>
+                <span className={styles.additional_text}>
+                  Не пришло письмо подтверждения электронной почты?
+                </span>
                 <TextUnderline
                   className={styles.underline}
-                  onClick={() => dispatch(sendVerificationCode())}
+                  onClick={() => {
+                    dispatch(sendVerificationCode());
+                    const randomNumber = getRandomNumber(1, 3);
+                    dispatch(
+                      openInfo({
+                        title: 'Подтвердите почту',
+                        text: 'Мы направили письмо на вашу электронную почту. Для подтверждения перейдите по ссылке в письме.',
+                        buttonText: 'Понятно!',
+                        image: randomNumber === 1 ? mail1 : randomNumber === 2 ? mail2 : mail3,
+                      })
+                    );
+                  }}
                 >
                   Выслать повторно
                 </TextUnderline>
-              </>
+              </div>
             )}
           </div>
         </section>

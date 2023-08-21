@@ -1,0 +1,67 @@
+@import '../../../utils/_scss-variables.scss';
+
+.policy {
+  flex: 1;
+
+  &_container {
+    padding-bottom: 80px;
+    background-color: $main-bg-color;
+    @include flex(row, flex-start, flex-start);
+    gap: 30px;
+  }
+}
+
+.content {
+  height: 100%;
+  position: relative;
+}
+
+.nav {
+  position: sticky;
+  top: 112px;
+  z-index: 3;
+}
+
+.image {
+  margin: 70px auto 10px;
+  width: 100%;
+  height: 200px;
+  background: url('../../../images/policy-img.png') no-repeat;
+  background-size: contain;
+  background-position: center bottom;
+}
+
+.title {
+  font-size: 25px;
+  margin-bottom: 15px;
+  &_section {
+    font-size: 20px;
+  }
+}
+
+.text {
+  text-align: justify;
+}
+
+.menu {
+  position: sticky;
+  top: 135px;
+  z-index: 3;
+  height: 100%;
+  width: fit-content;
+  min-width: 350px;
+  border-left: 1px solid $element-active-color;
+  @include flex(column, flex-start, flex-start);
+  gap: 18px;
+
+  &_item {
+    height: fit-content;
+    width: fit-content;
+    padding: 0 0 0 30px;
+    font-weight: 500;
+  }
+
+  @media screen and (max-width: 1180px) {
+    display: none;
+  }
+}

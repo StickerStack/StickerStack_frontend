@@ -1,5 +1,6 @@
 $nunito-path: './Nunito';
 $montserrat-path: './Montserrat';
+$sen-path: './Sen';
 
 @font-face {
   font-family: 'Nunito';
@@ -35,4 +36,10 @@ $montserrat-path: './Montserrat';
   font-family: 'Montserrat';
   font-weight: 700;
   src: url('#{$montserrat-path}/Montserrat-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Sen';
+  font-weight: 700;
+  src: url('#{$sen-path}/Sen-Bold.ttf') format('truetype');
 }

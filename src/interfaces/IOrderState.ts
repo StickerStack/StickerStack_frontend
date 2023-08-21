@@ -15,6 +15,7 @@ export interface IOrderState {
   number_of_sheets: number;
   cropping: boolean;
   created_at: string;
+  status: string;
   stickers: Array<Sticker>;
 }
 

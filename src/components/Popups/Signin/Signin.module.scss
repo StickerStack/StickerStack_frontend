@@ -9,6 +9,11 @@
     gap: 40px;
   }
 
+  .password {
+    font-weight: 700;
+    font-family: Verdana;
+  }
+
   .reset {
     margin: 0;
     &::after {
@@ -17,7 +22,6 @@
   }
 
   .link {
-    color: $span-text-color;
     text-align: center;
   }
 

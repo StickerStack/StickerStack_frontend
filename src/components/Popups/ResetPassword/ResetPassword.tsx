@@ -9,9 +9,10 @@ import { InputError } from '../../UI/InputError/InputError';
 
 import { useAppDispatch } from '../../../hooks/hooks';
 import { forgotPassword } from '../../../store/authSlice';
-import { openPopup } from '../../../store/popupSlice';
+import { openMessage, openPopup } from '../../../store/popupSlice';
 import { registerEmail } from '../../../utils/registersRHF';
 import styles from './ResetPassword.module.scss';
+import { motion } from 'framer-motion';
 
 const ResetPassword: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -25,14 +26,45 @@ const ResetPassword: React.FC = () => {
   });
 
   const onSubmit = (data: FieldValues) => {
-    dispatch(forgotPassword({ email: data.email })).then(() => {
-      localStorage.setItem('email', data.email);
-      dispatch(openPopup(ResetPasswordInfo));
-    });
+    dispatch(forgotPassword({ email: data.email }))
+      .unwrap()
+      .then(() => {
+        localStorage.setItem('email', data.email);
+        dispatch(openPopup(ResetPasswordInfo));
+      })
+      .catch((err) => {
+        if (err.message) {
+          dispatch(
+            openMessage({
+              text: 'Что-то пошло не так',
+              isError: true,
+            })
+          );
+        }
+      });
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={styles.resetpassword}>
+    <motion.form
+      onSubmit={handleSubmit(onSubmit)}
+      className={styles.resetpassword}
+      initial={{
+        opacity: 0.1,
+      }}
+      animate={{
+        transition: {
+          duration: 0.5,
+        },
+        opacity: 1,
+      }}
+      exit={{
+        opacity: 0.2,
+
+        transition: {
+          duration: 0.5,
+        },
+      }}
+    >
       <TitlePopup>Восстановление пароля</TitlePopup>
       <InputField className='email'>
         <Label>Электронная почта</Label>
@@ -51,9 +83,7 @@ const ResetPassword: React.FC = () => {
         />
         <InputError error={errors.email} />
       </InputField>
-      <TextForm>
-        В течение 5 минут на указанную почту придет ссылка для восстановления пароля
-      </TextForm>
+      <TextForm>В течение 5 минут на указанную почту придет ссылка для восстановления пароля</TextForm>
       <ButtonWithText type='submit' className={styles.button} disabled={!isValid}>
         Восстановить пароль
       </ButtonWithText>
@@ -65,7 +95,7 @@ const ResetPassword: React.FC = () => {
           Зарегистрироваться
         </TextUnderline>
       </div>
-    </form>
+    </motion.form>
   );
 };
 

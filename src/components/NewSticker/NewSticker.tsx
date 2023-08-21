@@ -3,15 +3,7 @@ import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 
-import {
-  ButtonCustom,
-  Error,
-  Input,
-  RadioButton,
-  TooltipCustom,
-  InputField,
-  InputError,
-} from '../UI';
+import { ButtonCustom, Input, RadioButton, TooltipCustom, InputField, InputError } from '../UI';
 import { Shape } from '../Shape/Shape';
 import { DragAndDrop } from '../';
 import { InfoBox } from '../InfoBox/InfoBox';
@@ -95,12 +87,14 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
         card.size.width === card.optimalSize.width && card.size.height === card.optimalSize.height
           ? 'optimal'
           : 'custom',
+      width: card.size.width,
+      height: card.size.height,
     },
   });
   const watchAllFields = watch();
 
   useEffect(() => {
-    if (isValid) {
+    if (isValid && card.image) {
       dispatch(setValid({ id: card.id, valid: true }));
       dispatch(checkValidation());
       cart.items.length !== 0 && dispatch(addItem(card));
@@ -108,7 +102,7 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
     dispatch(checkValidation());
     watchAllFields && cart.items.length !== 0 && dispatch(updateItem(card));
     // eslint-disable-next-line
-  }, [isValid, watchAllFields, card.image]);
+  }, [isValid, watchAllFields]);
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const number = Number(e.target.value);
@@ -167,40 +161,72 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
     }
   };
 
+  // При редактировании своего размера
+
   useEffect(() => {
     const widthValue = getValues('width');
     const heightValue = getValues('height');
-    if (card.shape === 'circle' && customVisible) {
-      if (heightValue > widthValue) {
-        setValue('height', widthValue);
-        if (sizeValidate(widthValue)) {
-          dispatch(
-            updateSize({
-              id: card.id,
-              height: converter.cmToPx(Number(widthValue)),
-              width: converter.cmToPx(Number(widthValue)),
-            }),
-          );
+    if (customVisible) {
+      if (card.shape === 'circle') {
+        if (heightValue > widthValue) {
+          setValue('height', widthValue);
+          if (sizeValidate(widthValue)) {
+            dispatch(
+              updateSize({
+                id: card.id,
+                height: converter.cmToPx(Number(widthValue)),
+                width: converter.cmToPx(Number(widthValue)),
+              }),
+            );
+          }
         }
-      }
-      if (widthValue > heightValue) {
-        setValue('width', heightValue);
-        if (sizeValidate(heightValue)) {
-          dispatch(
-            updateSize({
-              id: card.id,
-              height: converter.cmToPx(Number(heightValue)),
-              width: converter.cmToPx(Number(heightValue)),
-            }),
-          );
+        if (widthValue > heightValue) {
+          setValue('width', heightValue);
+          if (sizeValidate(heightValue)) {
+            dispatch(
+              updateSize({
+                id: card.id,
+                height: converter.cmToPx(Number(heightValue)),
+                width: converter.cmToPx(Number(heightValue)),
+              }),
+            );
+          }
         }
-      }
+      } else setValue('width', Math.round(converter.pxToCm(card.size.width)));
+      setValue('height', Math.round(converter.pxToCm(card.size.height)));
     }
-  }, [card.id, card.shape, dispatch, getValues, setValue, customVisible]);
+
+    // eslint-disable-next-line
+  }, [card.shape, customVisible]);
+
+  // При оптимальном размере
 
   useEffect(() => {
     if (!customVisible) {
-      setValue('width', Math.round(converter.pxToCm(card.optimalSize.width)));
+      if (card.shape === 'circle') {
+        if (card.optimalSize.height > card.optimalSize.width) {
+          setValue('width', Math.round(converter.pxToCm(card.optimalSize.width)));
+          setValue('height', Math.round(converter.pxToCm(card.optimalSize.width)));
+          dispatch(
+            updateSize({
+              id: card.id,
+              height: card.optimalSize.width,
+              width: card.optimalSize.width,
+            }),
+          );
+        }
+        if (card.optimalSize.width > card.optimalSize.height) {
+          setValue('width', Math.round(converter.pxToCm(card.optimalSize.height)));
+          setValue('height', Math.round(converter.pxToCm(card.optimalSize.height)));
+          dispatch(
+            updateSize({
+              id: card.id,
+              height: card.optimalSize.height,
+              width: card.optimalSize.height,
+            }),
+          );
+        }
+      } else setValue('width', Math.round(converter.pxToCm(card.optimalSize.width)));
       setValue('height', Math.round(converter.pxToCm(card.optimalSize.height)));
       dispatch(
         updateSize({
@@ -209,34 +235,16 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
           width: card.optimalSize.width,
         }),
       );
-    } else {
-      setValue('width', Math.round(converter.pxToCm(card.size.width)));
-      setValue('height', Math.round(converter.pxToCm(card.size.height)));
     }
+
     // eslint-disable-next-line
-  }, [customVisible]);
-
-  const onChangeSizeType = (showCustomSize: boolean) => {
-    if (showCustomSize) {
-      card.size.width && setValue('width', Math.round(converter.pxToCm(card.optimalSize.width)));
-      card.size.height && setValue('height', Math.round(converter.pxToCm(card.optimalSize.height)));
-    }
-
-    setCustomVisible(showCustomSize);
-  };
+  }, [card.shape, card.image, customVisible]);
 
   return (
     <section className={styles.card}>
       <form className={styles.info}>
         <div className={styles.image}>
-          <DragAndDrop
-            register={register}
-            name='dnd'
-            option={{
-              required: 'Загрузите изображение',
-            }}
-            card={card}
-          />
+          <DragAndDrop register={register} name='dnd' card={card} />
         </div>
         <fieldset className={cn(styles.flex, styles.flex_shapes)}>
           <label className={styles.category} htmlFor='shape'>
@@ -301,7 +309,7 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
               register={register}
               name='size'
               value='optimal'
-              onClick={() => onChangeSizeType(false)}
+              onClick={() => setCustomVisible(false)}
             >
               Оптимальный размер
               <TooltipCustom text={tooltipText} />
@@ -312,7 +320,7 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
                 name='size'
                 value='custom'
                 className={styles.size}
-                onClick={() => onChangeSizeType(true)}
+                onClick={() => setCustomVisible(true)}
               >
                 Свой размер
               </RadioButton>

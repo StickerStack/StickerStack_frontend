@@ -7,7 +7,7 @@
   box-sizing: border-box;
   background-color: $popup-bg-color;
   padding: 40px 40px 40px 30px;
-  box-shadow: 3px 3px 10px rgba(32, 62, 124, 0.2);
+  box-shadow: 3px 3px 10px 0px rgba(212, 73, 0, 0.1);
   border-radius: 10px;
 }
 
@@ -130,6 +130,6 @@
 .color_sample {
   width: 19px;
   height: 19px;
-  box-shadow: 1px 1px 3px rgba(45, 56, 68, 0.25);
+  box-shadow: 1px 1px 4px 0px rgba(105, 37, 1, 0.25);
   border-radius: 3px;
 }

@@ -6,7 +6,7 @@ export { Signin } from './Popups/Signin/Signin';
 export { Signup } from './Popups/Signup/Signup';
 export { MainPage } from './pages/MainPage/MainPage';
 export { PopupForm } from './Popups/PopupForm/PopupForm';
-export { Navigation } from './Navigation/Navigation';
+export { PolicyNavigation } from './PolicyNavigation/PolicyNavigation';
 export { VerifyEmail } from './pages/VerifyEmail/VerifyEmail';
 export { MessagePopup } from './MessagePopup/MessagePopup';
 export { ResetPassword } from './Popups/ResetPassword/ResetPassword';
