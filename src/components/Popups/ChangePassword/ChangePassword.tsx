@@ -18,9 +18,6 @@ import { resetPassword } from '../../../store/authSlice';
 import { registerPassword, registerRepeatPassword } from '../../../utils/registersRHF';
 import { ADD_STICKERS, getRandomNumber } from '../../../utils/constants';
 
-import image1 from '../../../images/password-changed-1.png';
-import image2 from '../../../images/password-changed-2.png';
-import image3 from '../../../images/password-changed-3.png';
 import styles from './ChangePassword.module.scss';
 
 const ChangePassword: React.FC = () => {
@@ -39,10 +36,13 @@ const ChangePassword: React.FC = () => {
 
   const [statePassword, setStatePasswod] = useState(false);
   const [stateRepeatPassword, setStateRepeatPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = (formData: FieldValues) => {
-    dispatch(resetPassword({ token: token, password: formData.password })).then((res) => {
-      if (res.meta.requestStatus === 'fulfilled') {
+    setLoading(true);
+    dispatch(resetPassword({ token: token, password: formData.password }))
+      .unwrap()
+      .then(() => {
         dispatch(closePopup());
         const randomNumber = getRandomNumber(1, 3);
         dispatch(
@@ -51,26 +51,29 @@ const ChangePassword: React.FC = () => {
             text: 'Сделай свои вещи уникальными с помощью стикеров на виниловой пленке.',
             buttonText: 'Перейти к заказу',
             onClick: () => navigate(ADD_STICKERS),
-            image: randomNumber === 1 ? image1 : randomNumber === 2 ? image2 : image3,
+            image: require(`../../../images/password-changed-${randomNumber}.png`),
           }),
         );
         localStorage.removeItem('change-password-token');
-      } else if (res.meta.requestStatus === 'rejected' && res.payload === 422) {
-        dispatch(
-          openMessage({
-            text: 'Новый пароль не должен совпадать со старым',
-            isError: true,
-          }),
-        );
-      } else if (res.meta.requestStatus === 'rejected') {
-        dispatch(
-          openMessage({
-            text: 'Ошибка при попытке сменить пароль',
-            isError: true,
-          }),
-        );
-      }
-    });
+      })
+      .catch((err) => {
+        if (err.message === '422') {
+          dispatch(
+            openMessage({
+              text: 'Ошибка при заполнении полей. Попробуйте поменять значения.',
+              isError: true,
+            }),
+          );
+        } else if (err) {
+          dispatch(
+            openMessage({
+              text: 'Что-то пошло не так. Попробуйте еще раз.',
+              isError: true,
+            }),
+          );
+        }
+      })
+      .finally(() => setLoading(false));
   };
 
   useEffect(() => {
@@ -134,7 +137,7 @@ const ChangePassword: React.FC = () => {
         />
         <InputError error={errors['repeat-password']} />
       </InputField>
-      <ButtonWithText type='submit' className={styles.button} disabled={!isValid}>
+      <ButtonWithText type='submit' className={styles.button} disabled={!isValid} loading={loading}>
         Изменить пароль
       </ButtonWithText>
     </form>
