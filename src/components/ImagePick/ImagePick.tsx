@@ -34,7 +34,7 @@ const ImagePick: React.FC<IProps> = ({ image, className }: IProps) => {
 
   useEffect(() => {
     if (user) {
-      dispatch(getProfileImage()).then(() => console.log(user.avatar));
+      dispatch(getProfileImage()).then((res) => console.log(res));
     }
   }, []);
 

@@ -103,22 +103,9 @@ const userSlice = createSlice({
       state.isLogged = true;
     });
 
-    builder.addCase(getProfileImage.fulfilled, (state, action: { payload: FormData }) => {
-      // const file: File | string | null = action.payload.get('file');
-      // if (file instanceof File) {
-      //   const reader = new FileReader();
-      //   reader.readAsDataURL(file);
-      //   reader.onloadend = () => {
-      //     if (typeof reader.result === 'string') {
-      //       state.avatar = reader.result;
-      //     }
-      //   };
-      // }
+    builder.addCase(getProfileImage.fulfilled, (state, action: { payload: string }) => {
+      state.avatar = action.payload;
     });
-
-    // builder.addCase(updateProfileImage.fulfilled, (state, action: { payload: FormData }) => {
-
-    // });
 
     builder.addCase(
       getUserOrders.fulfilled,
