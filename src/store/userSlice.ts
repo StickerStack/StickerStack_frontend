@@ -42,27 +42,21 @@ const updateProfileImage = createAsyncThunk(
   },
 );
 
-const getProfileImage = createAsyncThunk(
-  'user/getProfileImage',
-  async (data, { rejectWithValue }) => {
-    try {
-      return userApi.getProfileImage();
-    } catch (err) {
-      return rejectWithValue(err);
-    }
-  },
-);
+const getProfileImage = createAsyncThunk('user/getProfileImage', async () => {
+  try {
+    return userApi.getProfileImage();
+  } catch (err) {
+    return err;
+  }
+});
 
-const deleteProfileImage = createAsyncThunk(
-  'user/deleteProfileImage',
-  async (data, { rejectWithValue }) => {
-    try {
-      return userApi.deleteProfileImage();
-    } catch (err) {
-      return rejectWithValue(err);
-    }
-  },
-);
+const deleteProfileImage = createAsyncThunk('user/deleteProfileImage', async () => {
+  try {
+    return userApi.deleteProfileImage();
+  } catch (err) {
+    return err;
+  }
+});
 
 const getUserOrders = createAsyncThunk('user/getUserOrders', async (data, { rejectWithValue }) => {
   try {
@@ -109,18 +103,17 @@ const userSlice = createSlice({
       state.isLogged = true;
     });
 
-    builder.addCase(getProfileImage.fulfilled, (state, action) => {
-      const file: File | string | null = action.payload.get('file');
-
-      if (file instanceof File) {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onloadend = () => {
-          if (typeof reader.result === 'string') {
-            state.avatar = reader.result;
-          }
-        };
-      }
+    builder.addCase(getProfileImage.fulfilled, (state, action: { payload: FormData }) => {
+      // const file: File | string | null = action.payload.get('file');
+      // if (file instanceof File) {
+      //   const reader = new FileReader();
+      //   reader.readAsDataURL(file);
+      //   reader.onloadend = () => {
+      //     if (typeof reader.result === 'string') {
+      //       state.avatar = reader.result;
+      //     }
+      //   };
+      // }
     });
 
     // builder.addCase(updateProfileImage.fulfilled, (state, action: { payload: FormData }) => {

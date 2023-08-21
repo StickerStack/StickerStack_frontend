@@ -10,10 +10,8 @@ import { useSelector } from 'react-redux';
 import { IUserState } from '../../interfaces';
 
 interface IProps {
-  image?: string | ArrayBuffer | null;
+  image?: string;
   className?: string;
-  // onLoadImage?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  // deleteImage?: () => void;
 }
 
 const ImagePick: React.FC<IProps> = ({ image, className }: IProps) => {
@@ -36,7 +34,7 @@ const ImagePick: React.FC<IProps> = ({ image, className }: IProps) => {
 
   useEffect(() => {
     if (user) {
-      dispatch(getProfileImage()).then((res) => console.log(user.avatar));
+      dispatch(getProfileImage()).then(() => console.log(user.avatar));
     }
   }, []);
 
@@ -46,7 +44,7 @@ const ImagePick: React.FC<IProps> = ({ image, className }: IProps) => {
 
   return (
     <div className={cn(styles.pic, className)}>
-      <img className={styles.image} alt='Загруженное изображение' src={user.avatar} />
+      <img className={styles.image} alt='Загруженное изображение' src={user.avatar || image} />
       <PicOverlay className={styles.overlay} onLoadImage={onLoadImage} deleteImage={deleteImage} />
     </div>
   );
