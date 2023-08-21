@@ -1,7 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-
 import { userApi } from '../utils/api/UserApi';
-import { authApi } from '../utils/api/AuthApi';
 import { IOrderState, IUserState } from '../interfaces';
 
 const initialState: IUserState = {
@@ -37,7 +35,7 @@ const updateProfileImage = createAsyncThunk(
   'user/updateProfileImage',
   async (data: FormData, { rejectWithValue }) => {
     try {
-      return authApi.uploadProfileImage(data);
+      return userApi.uploadProfileImage(data);
     } catch (err) {
       return rejectWithValue(err);
     }
@@ -48,7 +46,18 @@ const getProfileImage = createAsyncThunk(
   'user/getProfileImage',
   async (data, { rejectWithValue }) => {
     try {
-      return authApi.getProfileImage();
+      return userApi.getProfileImage();
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
+const deleteProfileImage = createAsyncThunk(
+  'user/deleteProfileImage',
+  async (data, { rejectWithValue }) => {
+    try {
+      return userApi.deleteProfileImage();
     } catch (err) {
       return rejectWithValue(err);
     }
@@ -101,12 +110,22 @@ const userSlice = createSlice({
     });
 
     builder.addCase(getProfileImage.fulfilled, (state, action) => {
-      state.avatar = action.payload;
+      const file: File | string | null = action.payload.get('file');
+
+      if (file instanceof File) {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+          if (typeof reader.result === 'string') {
+            state.avatar = reader.result;
+          }
+        };
+      }
     });
 
-    builder.addCase(updateProfileImage.fulfilled, (state, action) => {
-      state.avatar = action.payload;
-    });
+    // builder.addCase(updateProfileImage.fulfilled, (state, action: { payload: FormData }) => {
+
+    // });
 
     builder.addCase(
       getUserOrders.fulfilled,
@@ -131,5 +150,6 @@ export {
   updateStatus,
   updateProfileImage,
   getProfileImage,
+  deleteProfileImage,
   getUserOrders,
 };

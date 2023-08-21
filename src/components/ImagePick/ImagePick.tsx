@@ -4,7 +4,7 @@ import { PicOverlay } from '../PicOverlay/PicOverlay';
 import { useAppDispatch } from '../../hooks/hooks';
 
 import styles from './ImagePick.module.scss';
-import { getProfileImage, updateProfileImage } from '../../store/userSlice';
+import { deleteProfileImage, getProfileImage, updateProfileImage } from '../../store/userSlice';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { IUserState } from '../../interfaces';
@@ -28,7 +28,6 @@ const ImagePick: React.FC<IProps> = ({ image, className }: IProps) => {
 
     if (files && allowedTypeFile.includes(files[0].type)) {
       const file = files[0];
-      console.log(file); // выводится файл
       const data = new FormData();
       data.append('file', file);
       dispatch(updateProfileImage(data));
@@ -36,23 +35,19 @@ const ImagePick: React.FC<IProps> = ({ image, className }: IProps) => {
   };
 
   useEffect(() => {
-    if (localStorage.getItem('token')) {
-      dispatch(getProfileImage());
+    if (user) {
+      dispatch(getProfileImage()).then((res) => console.log(user.avatar));
     }
   }, []);
 
-  //const deleteImage = () => {};
+  const deleteImage = () => {
+    dispatch(deleteProfileImage()).then(() => console.log('Deleted'));
+  };
 
   return (
     <div className={cn(styles.pic, className)}>
-      <img className={styles.image} alt='Загруженное изображение' src={`${image}`} />
-
-      <PicOverlay
-        className={styles.overlay}
-        onLoadImage={onLoadImage}
-
-        //    deleteImage={deleteImage}
-      />
+      <img className={styles.image} alt='Загруженное изображение' src={user.avatar} />
+      <PicOverlay className={styles.overlay} onLoadImage={onLoadImage} deleteImage={deleteImage} />
     </div>
   );
 };

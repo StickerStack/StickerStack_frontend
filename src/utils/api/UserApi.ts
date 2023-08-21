@@ -46,7 +46,7 @@ class UserApi extends Api {
       method: 'POST',
       credentials: 'include',
       headers: {
-        'Content-Type': 'multipart/form-data',
+        Accept: 'application/json',
       },
       body: formData,
     });
