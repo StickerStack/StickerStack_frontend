@@ -21,17 +21,13 @@ import { useAppDispatch } from '../../../hooks/hooks';
 import { openMessage, openPopup, closePopup, openInfo } from '../../../store/popupSlice';
 import { getUser, updateStatus } from '../../../store/userSlice';
 import { signUp, signIn, sendVerificationCode } from '../../../store/authSlice';
-import {
-  registerEmail,
-  registerPassword,
-  registerRepeatPassword,
-} from '../../../utils/registersRHF';
-import { ADD_STICKERS, PRIVACY, TERMS, getRandomNumber } from '../../../utils/constants';
+import { registerEmail, registerPassword, registerRepeatPassword } from '../../../utils/registersRHF';
 
 import mail1 from '../../../images/check-your-mail-1.png';
 import mail2 from '../../../images/check-your-mail-2.png';
 import mail3 from '../../../images/check-your-mail-3.png';
 import styles from './Signup.module.scss';
+import { ADD_STICKERS, PRIVACY, TERMS } from '../../../utils/constants';
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
@@ -55,39 +51,61 @@ const Signup: React.FC = () => {
   const userPassword = getValues('password');
 
   const onSubmit = () => {
-    setLoading(true);
     dispatch(signUp({ email: userEmail, password: userPassword }))
-      .then((res) => {
-        if (res.meta.requestStatus === 'fulfilled') {
-          dispatch(sendVerificationCode());
-          dispatch(signIn({ email: userEmail, password: userPassword })).then((res) => {
-            if (res.meta.requestStatus === 'fulfilled') {
-              dispatch(getUser());
-              dispatch(updateStatus(true));
-              dispatch(closePopup());
-              navigate(ADD_STICKERS);
-              const randomNumber = getRandomNumber(1, 3);
+      .unwrap()
+      .then(() => {
+        dispatch(signIn({ email: userEmail, password: userPassword }))
+          .unwrap()
+          .then(() => {
+            dispatch(getUser());
+            dispatch(updateStatus(true));
+            dispatch(closePopup());
+            navigate(ADD_STICKERS);
+            dispatch(
+              openMessage({
+                text: 'Подтвердите почту',
+                isError: false,
+              })
+            );
+          })
+          .then(() => {
+            dispatch(sendVerificationCode());
+          })
+          .catch((err) => {
+            if (err.message === '400') {
               dispatch(
-                openInfo({
-                  title: 'Подтвердите почту',
-                  text: 'Мы направили ссылку на вашу почту, указанную при регистрации. Пожалуйста, подтвердите почту.',
-                  buttonText: 'Понятно!',
-                  image: randomNumber === 1 ? mail1 : randomNumber === 2 ? mail2 : mail3,
-                }),
+                openMessage({
+                  text: 'Неверная почта или пароль',
+                  isError: true,
+                })
+              );
+            } else {
+              dispatch(
+                openMessage({
+                  text: 'Что-то пошло не так',
+                  isError: true,
+                })
               );
             }
           });
-        }
-        if (res.meta.requestStatus === 'rejected' && res.payload === '400') {
+      })
+      .catch((err) => {
+        if (err.message === '400') {
           dispatch(
             openMessage({
               text: 'Учётная запись с такой почтой уже существует',
               isError: true,
-            }),
+            })
+          );
+        } else {
+          dispatch(
+            openMessage({
+              text: 'Что-то пошло не так',
+              isError: true,
+            })
           );
         }
-      })
-      .finally(() => setLoading(false));
+      });
   };
 
   return (
@@ -164,9 +182,7 @@ const Signup: React.FC = () => {
             }}
             placeholder='Введите пароль'
             name='repeat-password'
-            className={
-              dirtyFields['repeat-password'] && !stateRepeatPassword ? styles.password : ''
-            }
+            className={dirtyFields['repeat-password'] && !stateRepeatPassword ? styles.password : ''}
             type={stateRepeatPassword ? 'text' : 'password'}
             autoComplete='repeat-password'
             error={errors['repeat-password']}
