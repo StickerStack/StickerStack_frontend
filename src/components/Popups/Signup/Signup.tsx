@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 import {
   ButtonWithText,
@@ -17,13 +18,16 @@ import {
 import { Signin } from '../Signin/Signin';
 
 import { useAppDispatch } from '../../../hooks/hooks';
-import { openMessage, openPopup, closePopup } from '../../../store/popupSlice';
+import { openMessage, openPopup, closePopup, openInfo } from '../../../store/popupSlice';
 import { getUser, updateStatus } from '../../../store/userSlice';
 import { signUp, signIn, sendVerificationCode } from '../../../store/authSlice';
 import { registerEmail, registerPassword, registerRepeatPassword } from '../../../utils/registersRHF';
 
+import mail1 from '../../../images/check-your-mail-1.png';
+import mail2 from '../../../images/check-your-mail-2.png';
+import mail3 from '../../../images/check-your-mail-3.png';
 import styles from './Signup.module.scss';
-import { ADD_STICKERS } from '../../../utils/constants';
+import { ADD_STICKERS, PRIVACY, TERMS } from '../../../utils/constants';
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
@@ -32,7 +36,7 @@ const Signup: React.FC = () => {
     register,
     setValue,
     getValues,
-    formState: { errors, dirtyFields },
+    formState: { errors, dirtyFields, isValid },
     watch,
     handleSubmit,
   } = useForm({
@@ -41,6 +45,7 @@ const Signup: React.FC = () => {
 
   const [statePassword, setStatePasswod] = useState(false);
   const [stateRepeatPassword, setStateRepeatPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const userEmail = getValues('email');
   const userPassword = getValues('password');
@@ -55,7 +60,16 @@ const Signup: React.FC = () => {
             dispatch(getUser());
             dispatch(updateStatus(true));
             dispatch(closePopup());
-            navigate('/add-stickers');
+            navigate(ADD_STICKERS);
+            dispatch(
+              openMessage({
+                text: 'Подтвердите почту',
+                isError: false,
+              })
+            );
+          })
+          .then(() => {
+            dispatch(sendVerificationCode());
           })
           .catch((err) => {
             if (err.message === '400') {
@@ -76,7 +90,6 @@ const Signup: React.FC = () => {
           });
       })
       .catch((err) => {
-        console.log(err);
         if (err.message === '400') {
           dispatch(
             openMessage({
@@ -96,7 +109,25 @@ const Signup: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className={styles.signup}>
+    <motion.form
+      onSubmit={handleSubmit(onSubmit)}
+      className={styles.signup}
+      initial={{
+        opacity: 0.1,
+      }}
+      animate={{
+        transition: {
+          duration: 0.5,
+        },
+        opacity: 1,
+      }}
+      exit={{
+        opacity: 0.2,
+        transition: {
+          duration: 0.5,
+        },
+      }}
+    >
       <TitlePopup>Регистрация</TitlePopup>
       <div className={styles.inputs}>
         <InputField className='email'>
@@ -122,6 +153,7 @@ const Signup: React.FC = () => {
             register={register}
             option={registerPassword}
             name='password'
+            className={dirtyFields['password'] && !statePassword ? styles.password : ''}
             placeholder='Введите пароль'
             type={statePassword ? 'text' : 'password'}
             autoComplete='current-password'
@@ -150,6 +182,7 @@ const Signup: React.FC = () => {
             }}
             placeholder='Введите пароль'
             name='repeat-password'
+            className={dirtyFields['repeat-password'] && !stateRepeatPassword ? styles.password : ''}
             type={stateRepeatPassword ? 'text' : 'password'}
             autoComplete='repeat-password'
             error={errors['repeat-password']}
@@ -172,23 +205,25 @@ const Signup: React.FC = () => {
       >
         <p className={styles.checktext}>
           Я согласен с{' '}
-          <a href='#id' target='_blank' className={styles.documentLink}>
+          <a href={PRIVACY} target='_blank' rel='noreferrer' className={styles.documentLink}>
             Политикой конфиденциальности
           </a>{' '}
           и{' '}
-          <a href='#id' target='_blank' className={styles.documentLink}>
+          <a href={TERMS} target='_blank' rel='noreferrer' className={styles.documentLink}>
             Условиями использования сервиса
           </a>
         </p>
       </CheckBoxForm>
-      <ButtonWithText type='submit'>Зарегистрироваться</ButtonWithText>
+      <ButtonWithText type='submit' disabled={!isValid} loading={loading}>
+        Зарегистрироваться
+      </ButtonWithText>
       <span className={styles.link}>
         Уже есть аккаунт?{' '}
         <TextUnderline type='button' onClick={() => dispatch(openPopup(Signin))}>
           Войти
         </TextUnderline>
       </span>
-    </form>
+    </motion.form>
   );
 };
 

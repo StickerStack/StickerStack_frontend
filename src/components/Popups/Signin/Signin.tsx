@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
+import cn from 'classnames';
 
 import {
   ButtonWithText,
@@ -21,6 +22,8 @@ import { getUser, signInMockUser, updateStatus } from '../../../store/userSlice'
 import { signIn } from '../../../store/authSlice';
 import { registerEmail, registerPassword } from '../../../utils/registersRHF';
 import styles from './Signin.module.scss';
+import { motion } from 'framer-motion';
+import { ADD_STICKERS } from '../../../utils/constants';
 
 const Signin: React.FC = () => {
   const location = useLocation();
@@ -30,13 +33,14 @@ const Signin: React.FC = () => {
     register,
     getValues,
     setValue,
-    formState: { errors, dirtyFields },
+    formState: { errors, dirtyFields, isValid },
     handleSubmit,
   } = useForm({
     mode: 'onBlur',
   });
 
   const [statePassword, setStatePasswod] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = () => {
     const userEmail = getValues('email');
@@ -49,14 +53,20 @@ const Signin: React.FC = () => {
       localStorage.setItem('token', 'moc');
       return;
     }
-
+    setLoading(true);
     dispatch(signIn({ email: userEmail, password: userPassword }))
       .unwrap()
       .then(() => {
         dispatch(getUser());
         dispatch(updateStatus(true));
         dispatch(closePopup());
-        navigate('/add-stickers');
+        navigate(ADD_STICKERS);
+        dispatch(
+          openMessage({
+            text: 'Подтвердите почту',
+            isError: false,
+          })
+        );
       })
       .catch((err) => {
         if (err.message === '400') {
@@ -74,11 +84,31 @@ const Signin: React.FC = () => {
             })
           );
         }
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
   return (
-    <form className={styles.signin} onSubmit={handleSubmit(onSubmit)}>
+    <motion.form
+      className={cn(styles.signin)}
+      onSubmit={handleSubmit(onSubmit)}
+      initial={{
+        opacity: 0.1,
+      }}
+      animate={{
+        transition: {
+          duration: 0.5,
+        },
+        opacity: 1,
+      }}
+      exit={{
+        opacity: 0.2,
+
+        transition: {
+          duration: 0.5,
+        },
+      }}
+    >
       <TitlePopup>Вход</TitlePopup>
       <div className={styles.inputs}>
         <InputField className='email'>
@@ -110,6 +140,7 @@ const Signin: React.FC = () => {
             register={register}
             option={registerPassword}
             name='password'
+            className={dirtyFields['password'] && !statePassword ? styles.password : ''}
             type={statePassword ? 'text' : 'password'}
             autoComplete='current-password'
             error={errors.password}
@@ -124,7 +155,9 @@ const Signin: React.FC = () => {
           <InputError error={errors.password} />
         </InputField>
       </div>
-      <ButtonWithText type='submit'>Войти</ButtonWithText>
+      <ButtonWithText type='submit' disabled={!isValid} loading={loading}>
+        Войти
+      </ButtonWithText>
       {!location.pathname.startsWith('/api/auth/verifyemail') ? (
         <span className={styles.link}>
           Нет аккаунта?{' '}
@@ -133,7 +166,7 @@ const Signin: React.FC = () => {
           </TextUnderline>
         </span>
       ) : null}
-    </form>
+    </motion.form>
   );
 };
 

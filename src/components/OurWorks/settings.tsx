@@ -44,8 +44,9 @@ const settings = {
   slidesToShow: 4,
   slidesToScroll: 1,
   autoplay: true,
-  speed: 500,
-  autoplaySpeed: 6000,
+  speed: 400,
+  autoplaySpeed: 10000,
+  cssEase: 'linear',
   infinite: true,
   responsive: [
     {
