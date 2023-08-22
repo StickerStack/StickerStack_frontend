@@ -68,7 +68,8 @@ const ProfilePage: React.FC = () => {
   const lastname = watch(LASTNAME_INPUT_LABEL);
   const email = watch(EMAIL_INPUT_LABEL);
 
-  const fieldsUnchanged = user.firstName === firstname && user.lastName === lastname && user.email === email;
+  const fieldsUnchanged =
+    user.firstName === firstname && user.lastName === lastname && user.email === email;
   const validOrInvalid = isValid || !isValid;
 
   const onSubmit = () => {
@@ -79,7 +80,7 @@ const ProfilePage: React.FC = () => {
         email: email,
         firstName: firstname,
         lastName: lastname,
-      })
+      }),
     )
       .unwrap()
       .then(() => {
@@ -93,7 +94,7 @@ const ProfilePage: React.FC = () => {
               text: 'Мы направили письмо на новую электронную почту. Для подтверждения перейдите по ссылке в письме.',
               buttonText: 'Понятно!',
               image: require(`../../../images/check-your-mail-${randomNumber}.png`),
-            })
+            }),
           );
         }
       })
@@ -103,7 +104,7 @@ const ProfilePage: React.FC = () => {
             openMessage({
               text: 'Ошибка. Информация профиля не изменана',
               isError: true,
-            })
+            }),
           );
         }
       })
@@ -115,7 +116,7 @@ const ProfilePage: React.FC = () => {
       <Container className={styles.profile_container}>
         <TitlePage type='main-title'>Мои данные</TitlePage>
         <section className={styles.section}>
-          <ImagePick image={EmptyAvatarImage} />
+          <ImagePick />
           <div className={styles.profile_data}>
             <form className={styles.inputs} onSubmit={handleSubmit(onSubmit)}>
               <InputField>
@@ -127,7 +128,7 @@ const ProfilePage: React.FC = () => {
                       setValue('firstName', value.target.value.trim());
                       setValue(
                         'firstName',
-                        value.target.value[0].toUpperCase() + value.target.value.slice(1)
+                        value.target.value[0].toUpperCase() + value.target.value.slice(1),
                       );
                     },
                   }}
@@ -152,7 +153,10 @@ const ProfilePage: React.FC = () => {
                     ...profileName,
                     onBlur: (value: React.FocusEvent<HTMLInputElement>) => {
                       setValue('lastName', value.target.value.trim());
-                      setValue('lastName', value.target.value[0].toUpperCase() + value.target.value.slice(1));
+                      setValue(
+                        'lastName',
+                        value.target.value[0].toUpperCase() + value.target.value.slice(1),
+                      );
                     },
                   }}
                   name={LASTNAME_INPUT_LABEL}
@@ -218,7 +222,7 @@ const ProfilePage: React.FC = () => {
                         text: 'Мы направили письмо на вашу электронную почту. Для подтверждения перейдите по ссылке в письме.',
                         buttonText: 'Понятно!',
                         image: randomNumber === 1 ? mail1 : randomNumber === 2 ? mail2 : mail3,
-                      })
+                      }),
                     );
                   }}
                 >

@@ -42,14 +42,6 @@ const updateProfileImage = createAsyncThunk(
   },
 );
 
-const getProfileImage = createAsyncThunk('user/getProfileImage', async () => {
-  try {
-    return userApi.getProfileImage();
-  } catch (err) {
-    return err;
-  }
-});
-
 const deleteProfileImage = createAsyncThunk('user/deleteProfileImage', async () => {
   try {
     return userApi.deleteProfileImage();
@@ -103,10 +95,6 @@ const userSlice = createSlice({
       state.isLogged = true;
     });
 
-    builder.addCase(getProfileImage.fulfilled, (state, action: { payload: string }) => {
-      state.avatar = action.payload;
-    });
-
     builder.addCase(
       getUserOrders.fulfilled,
       (state, action: { payload: Array<IOrderState>; type: string }) => {
@@ -129,7 +117,6 @@ export {
   signInMockUser,
   updateStatus,
   updateProfileImage,
-  getProfileImage,
   deleteProfileImage,
   getUserOrders,
 };
