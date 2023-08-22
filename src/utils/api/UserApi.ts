@@ -35,9 +35,10 @@ class UserApi extends Api {
     const data = await fetch(`${this.url}/user/profile-image`, {
       method: 'GET',
       credentials: 'include',
-      headers: this.headers,
+      headers: {
+        Accept: 'image/*',
+      },
     });
-
     return this.checkResponse(data);
   }
 

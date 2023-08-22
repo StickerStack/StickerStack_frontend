@@ -44,7 +44,16 @@ const ImagePick: React.FC<IProps> = ({ image, className }: IProps) => {
 
   return (
     <div className={cn(styles.pic, className)}>
-      <img className={styles.image} alt='Загруженное изображение' src={user.avatar || image} />
+      <img
+        className={styles.image}
+        alt='Загруженное изображение'
+        crossOrigin='use-credentials'
+        src='https://api.stickerstack.ru/v1/user/profile-image'
+        onError={(event: React.SyntheticEvent<HTMLImageElement, Event>) => {
+          const target = event.target as HTMLImageElement;
+          target.src = image ?? '';
+        }}
+      />
       <PicOverlay className={styles.overlay} onLoadImage={onLoadImage} deleteImage={deleteImage} />
     </div>
   );
