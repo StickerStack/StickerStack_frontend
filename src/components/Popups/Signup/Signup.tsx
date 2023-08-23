@@ -165,7 +165,7 @@ const Signup: React.FC = () => {
             register={register}
             option={registerPassword}
             name='password'
-            className={dirtyFields['password'] && !statePassword ? styles.password : ''}
+            className={watch('password') !== '' && !statePassword ? styles.password : ''}
             placeholder='Введите пароль'
             type={statePassword ? 'text' : 'password'}
             autoComplete='current-password'
@@ -174,7 +174,7 @@ const Signup: React.FC = () => {
               <EyeButton
                 onClick={() => setStatePasswod(!statePassword)}
                 shown={statePassword}
-                visible={dirtyFields?.password && true}
+                visible={dirtyFields?.password && watch('password') !== '' && true}
               />
             }
           />
@@ -195,7 +195,7 @@ const Signup: React.FC = () => {
             placeholder='Введите пароль'
             name='repeat-password'
             className={
-              dirtyFields['repeat-password'] && !stateRepeatPassword ? styles.password : ''
+              watch('repeat-password') !== '' && !stateRepeatPassword ? styles.password : ''
             }
             type={stateRepeatPassword ? 'text' : 'password'}
             autoComplete='repeat-password'
@@ -204,7 +204,7 @@ const Signup: React.FC = () => {
               <EyeButton
                 onClick={() => setStateRepeatPassword(!stateRepeatPassword)}
                 shown={stateRepeatPassword}
-                visible={dirtyFields['repeat-password'] && true}
+                visible={dirtyFields['repeat-password'] && watch('repeat-password') !== '' && true}
               />
             }
           />

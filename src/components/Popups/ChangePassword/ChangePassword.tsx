@@ -96,14 +96,14 @@ const ChangePassword: React.FC = () => {
           option={registerPassword}
           name='password'
           type={statePassword ? 'text' : 'password'}
-          className={dirtyFields['password'] && !statePassword ? styles.password : ''}
+          className={watch('password') !== '' && !statePassword ? styles.password : ''}
           autoComplete='current-password'
           error={errors.password}
           button={
             <EyeButton
               onClick={() => setStatePasswod(!statePassword)}
               shown={statePassword}
-              visible={dirtyFields?.password && true}
+              visible={dirtyFields?.password && watch('password') !== '' && true}
             />
           }
         />
@@ -124,14 +124,14 @@ const ChangePassword: React.FC = () => {
           }}
           name='repeat-password'
           type={stateRepeatPassword ? 'text' : 'password'}
-          className={dirtyFields['repeat-password'] && !stateRepeatPassword ? styles.password : ''}
+          className={watch('repeat-password') !== '' && !stateRepeatPassword ? styles.password : ''}
           autoComplete='repeat-password'
           error={errors['repeat-password']}
           button={
             <EyeButton
               onClick={() => setStateRepeatPassword(!stateRepeatPassword)}
               shown={stateRepeatPassword}
-              visible={dirtyFields['repeat-password'] && true}
+              visible={dirtyFields['repeat-password'] && watch('repeat-password') !== '' && true}
             />
           }
         />

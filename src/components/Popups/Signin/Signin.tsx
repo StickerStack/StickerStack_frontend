@@ -35,6 +35,7 @@ const Signin: React.FC = () => {
     getValues,
     setValue,
     formState: { errors, dirtyFields, isValid },
+    watch,
     setError,
     handleSubmit,
   } = useForm({
@@ -110,8 +111,9 @@ const Signin: React.FC = () => {
     >
       <TitlePopup>Вход</TitlePopup>
       <div className={styles.inputs}>
-        {errors.email?.type === 'custom' ||
-          (errors.password?.type === 'custom' && <Error>Неверная почта и/или пароль</Error>)}
+        {(errors.email?.type === 'custom' || errors.password?.type === 'custom') && (
+          <Error>Неверная почта и/или пароль</Error>
+        )}
         <InputField className='email'>
           <Label htmlFor='email'>Электронная почта</Label>
           <Input
@@ -144,7 +146,7 @@ const Signin: React.FC = () => {
             register={register}
             option={registerPassword}
             name='password'
-            className={dirtyFields['password'] && !statePassword ? styles.password : ''}
+            className={watch('password') !== '' && !statePassword ? styles.password : ''}
             type={statePassword ? 'text' : 'password'}
             autoComplete='current-password'
             error={errors.password}
@@ -152,7 +154,7 @@ const Signin: React.FC = () => {
               <EyeButton
                 onClick={() => setStatePasswod(!statePassword)}
                 shown={statePassword}
-                visible={dirtyFields?.password && true}
+                visible={dirtyFields?.password && watch('password') !== '' && true}
               />
             }
           />
