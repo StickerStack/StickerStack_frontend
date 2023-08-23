@@ -1,18 +1,18 @@
 import { Api } from './Api';
-import {API_URL} from "../constants";
+import { API_URL } from '../constants';
 
 class AuthApi extends Api {
   constructor(url: string, headers: HeadersInit) {
     super(url, headers);
   }
-  
+
   private _formatingData(email: string, password: string) {
     const data = new URLSearchParams();
     data.append('username', email);
     data.append('password', password);
     return data;
   }
-  
+
   public async signUp(email: string, password: string) {
     const data = await fetch(`${this.url}/auth/register`, {
       method: 'POST',
@@ -26,7 +26,7 @@ class AuthApi extends Api {
 
     return this.checkResponse(data);
   }
-  
+
   public async signIn(email: string, password: string) {
     const data = await fetch(`${this.url}/auth/login`, {
       method: 'POST',
@@ -40,7 +40,7 @@ class AuthApi extends Api {
 
     return this.checkResponse(data);
   }
-  
+
   public async logOut() {
     const data = await fetch(`${this.url}/auth/logout`, {
       method: 'POST',
@@ -50,7 +50,7 @@ class AuthApi extends Api {
 
     return this.checkResponse(data);
   }
-  
+
   public async forgotPassword(email: string) {
     const data = await fetch(`${this.url}/auth/forgot-password`, {
       method: 'POST',
@@ -63,7 +63,7 @@ class AuthApi extends Api {
 
     return this.checkResponse(data);
   }
-  
+
   public async resetPassword(token: string, newPassword: string) {
     const data = await fetch(`${this.url}/auth/reset-password`, {
       method: 'POST',
@@ -77,7 +77,7 @@ class AuthApi extends Api {
 
     return this.checkResponse(data);
   }
-  
+
   public async verifyEmail(token: string) {
     const data = await fetch(`${this.url}/auth/verify-email`, {
       method: 'POST',
@@ -99,28 +99,7 @@ class AuthApi extends Api {
 
     return this.checkResponse(data);
   }
-
-  // TODO: Проверить нужен ли uploadProfileImage?
-  public async uploadProfileImage(formData: FormData) {
-    const data = await fetch(`{this._url}/auth/uploadprofileimage`, {
-      method: 'POST',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-      body: formData,
-    });
-
-    return this.checkResponse(data);
-  }
-
-  public async getProfileImage() {
-    const data = await fetch(`${this.url}/auth/profileimage`);
-
-    return this.checkResponse(data);
-  }
 }
-
 
 export const authApi = new AuthApi(API_URL, {
   'Content-Type': 'application/json',

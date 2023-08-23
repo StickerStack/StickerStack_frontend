@@ -82,24 +82,24 @@ const ProfilePage: React.FC = () => {
         lastName: lastname,
       }),
     )
-      .then((res) => {
-        if (res.meta.requestStatus === 'fulfilled') {
-          dispatch(openMessage({ text: 'Успешно изменено', isError: false }));
-          if (emailChanged) {
-            dispatch(sendVerificationCode());
-            const randomNumber = getRandomNumber(1, 3);
-            dispatch(
-              openInfo({
-                title: 'Подтвердите новую почту',
-                text: 'Мы направили письмо на новую электронную почту. Для подтверждения перейдите по ссылке в письме.',
-                buttonText: 'Понятно!',
-                image: randomNumber === 1 ? mail1 : randomNumber === 2 ? mail2 : mail3,
-              }),
-            );
-          }
+      .unwrap()
+      .then(() => {
+        dispatch(openMessage({ text: 'Успешно изменено', isError: false }));
+        if (emailChanged) {
+          dispatch(sendVerificationCode());
+          const randomNumber = getRandomNumber(1, 3);
+          dispatch(
+            openInfo({
+              title: 'Подтвердите новую почту',
+              text: 'Мы направили письмо на новую электронную почту. Для подтверждения перейдите по ссылке в письме.',
+              buttonText: 'Понятно!',
+              image: require(`../../../images/check-your-mail-${randomNumber}.png`),
+            }),
+          );
         }
-
-        if (res.meta.requestStatus === 'rejected') {
+      })
+      .catch((err) => {
+        if (err.message) {
           dispatch(
             openMessage({
               text: 'Ошибка. Информация профиля не изменана',
@@ -116,7 +116,7 @@ const ProfilePage: React.FC = () => {
       <Container className={styles.profile_container}>
         <TitlePage type='main-title'>Мои данные</TitlePage>
         <section className={styles.section}>
-          <ImagePick image={EmptyAvatarImage} />
+          <ImagePick />
           <div className={styles.profile_data}>
             <form className={styles.inputs} onSubmit={handleSubmit(onSubmit)}>
               <InputField>

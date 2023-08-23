@@ -23,6 +23,7 @@ import { signIn } from '../../../store/authSlice';
 import { registerEmail, registerPassword } from '../../../utils/registersRHF';
 import styles from './Signin.module.scss';
 import { motion } from 'framer-motion';
+import { ADD_STICKERS } from '../../../utils/constants';
 
 const Signin: React.FC = () => {
   const location = useLocation();
@@ -54,25 +55,35 @@ const Signin: React.FC = () => {
     }
     setLoading(true);
     dispatch(signIn({ email: userEmail, password: userPassword }))
-      .then((res) => {
-        if (res.meta.requestStatus === 'fulfilled') {
-          dispatch(getUser());
-          dispatch(updateStatus(true));
-          dispatch(closePopup());
-          navigate('/add-stickers');
-        }
-
-        if (res.meta.requestStatus === 'rejected') {
+      .unwrap()
+      .then(() => {
+        dispatch(getUser());
+        dispatch(updateStatus(true));
+        dispatch(closePopup());
+        navigate(ADD_STICKERS);
+        dispatch(
+          openMessage({
+            text: 'Подтвердите почту',
+            isError: false,
+          })
+        );
+      })
+      .catch((err) => {
+        if (err.message === '400') {
           dispatch(
             openMessage({
               text: 'Неверная почта или пароль',
               isError: true,
-            }),
+            })
+          );
+        } else {
+          dispatch(
+            openMessage({
+              text: 'Что-то пошло не так',
+              isError: true,
+            })
           );
         }
-      })
-      .catch((err) => {
-        console.log(err);
       })
       .finally(() => setLoading(false));
   };
@@ -120,10 +131,7 @@ const Signin: React.FC = () => {
         <InputField className='password'>
           <Label htmlFor='password'>
             Пароль
-            <TextUnderline
-              onClick={() => dispatch(openPopup(ResetPassword))}
-              className={styles.reset}
-            >
+            <TextUnderline onClick={() => dispatch(openPopup(ResetPassword))} className={styles.reset}>
               Забыли пароль?
             </TextUnderline>
           </Label>
