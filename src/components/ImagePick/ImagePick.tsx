@@ -5,7 +5,8 @@ import { PicOverlay } from '../PicOverlay/PicOverlay';
 import { useAppDispatch } from '../../hooks/hooks';
 import { deleteProfileImage, updateProfileImage } from '../../store/userSlice';
 import { openMessage } from '../../store/popupSlice';
-import { API_URL } from '../../utils/constants';
+import { useSelector } from 'react-redux';
+import { IUserState } from '../../interfaces';
 
 import EmptyAvatarImage from '../../images/empty-avatar.png';
 import styles from './ImagePick.module.scss';
@@ -17,6 +18,7 @@ interface IProps {
 const ImagePick: React.FC<IProps> = ({ className }: IProps) => {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
+  const user = useSelector((state: { user: IUserState }) => state.user);
 
   const allowedTypeFile = ['image/png', 'image/jpeg', 'image/jpg'];
 
@@ -29,6 +31,7 @@ const ImagePick: React.FC<IProps> = ({ className }: IProps) => {
       const data = new FormData();
       data.append('file', file);
       setLoading(true);
+      dispatch(deleteProfileImage());
       dispatch(updateProfileImage(data))
         .unwrap()
         .then(() => {
@@ -87,7 +90,7 @@ const ImagePick: React.FC<IProps> = ({ className }: IProps) => {
           className={styles.image}
           alt='Аватар пользователя'
           crossOrigin='use-credentials'
-          src={`${API_URL}/user/profile-image`}
+          src={user.avatar}
           onError={(event: React.SyntheticEvent<HTMLImageElement, Event>) => {
             const target = event.target as HTMLImageElement;
             target.src = EmptyAvatarImage ?? '';
