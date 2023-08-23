@@ -56,7 +56,7 @@ const MessagePopup: React.FC = () => {
             },
           }}
         >
-          <motion.p
+          <motion.div
             className={`${styles.message} ${message.isError && styles.error} ${
               message.isOpen ? styles.message_opened : ''
             }`}
@@ -75,7 +75,7 @@ const MessagePopup: React.FC = () => {
               label='Закрыть'
               onClick={() => handleCloseMessage()}
             />
-          </motion.p>
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>
