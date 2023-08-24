@@ -21,10 +21,7 @@ import { useAppDispatch } from '../../../hooks/hooks';
 import { openMessage, openPopup, closePopup, openInfo } from '../../../store/popupSlice';
 import { getUser, updateStatus } from '../../../store/userSlice';
 import { signUp, signIn, sendVerificationCode } from '../../../store/authSlice';
-import {
-  registerEmail,
-  registerPassword,
-} from '../../../utils/registersRHF';
+import { registerEmail, registerPassword } from '../../../utils/registersRHF';
 import { ADD_STICKERS, PRIVACY, TERMS, getRandomNumber } from '../../../utils/constants';
 
 import styles from './Signup.module.scss';
@@ -164,7 +161,11 @@ const Signup: React.FC = () => {
             register={register}
             option={registerPassword}
             name='password'
-            className={watch('password') !== '' && !statePassword ? styles.password : ''}
+            className={
+              dirtyFields?.password && watch('password') !== '' && !statePassword
+                ? styles.password
+                : ''
+            }
             placeholder='Введите пароль'
             type={statePassword ? 'text' : 'password'}
             autoComplete='current-password'
@@ -193,7 +194,11 @@ const Signup: React.FC = () => {
             placeholder='Введите пароль'
             name='repeat-password'
             className={
-              watch('repeat-password') !== '' && !stateRepeatPassword ? styles.password : ''
+              dirtyFields['repeat-password'] &&
+              watch('repeat-password') !== '' &&
+              !stateRepeatPassword
+                ? styles.password
+                : ''
             }
             type={stateRepeatPassword ? 'text' : 'password'}
             autoComplete='repeat-password'
