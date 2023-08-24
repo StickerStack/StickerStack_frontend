@@ -24,7 +24,6 @@ import { signUp, signIn, sendVerificationCode } from '../../../store/authSlice';
 import {
   registerEmail,
   registerPassword,
-  registerRepeatPassword,
 } from '../../../utils/registersRHF';
 import { ADD_STICKERS, PRIVACY, TERMS, getRandomNumber } from '../../../utils/constants';
 
@@ -185,7 +184,6 @@ const Signup: React.FC = () => {
           <InputWithButton
             register={register}
             option={{
-              ...registerRepeatPassword,
               validate: (val: string) => {
                 if (val !== watch('password')) {
                   return 'Пароли не совпадают';

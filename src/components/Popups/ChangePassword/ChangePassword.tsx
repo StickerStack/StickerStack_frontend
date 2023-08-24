@@ -15,7 +15,7 @@ import {
 import { closePopup, openInfo, openMessage } from '../../../store/popupSlice';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { resetPassword } from '../../../store/authSlice';
-import { registerPassword, registerRepeatPassword } from '../../../utils/registersRHF';
+import { registerPassword } from '../../../utils/registersRHF';
 import { ADD_STICKERS, getRandomNumber } from '../../../utils/constants';
 
 import styles from './ChangePassword.module.scss';
@@ -115,7 +115,6 @@ const ChangePassword: React.FC = () => {
           register={register}
           placeholder='Введите пароль'
           option={{
-            ...registerRepeatPassword,
             validate: (val: string) => {
               if (val !== watch('password')) {
                 return 'Пароли не совпадают';
