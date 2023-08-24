@@ -96,7 +96,11 @@ const ChangePassword: React.FC = () => {
           option={registerPassword}
           name='password'
           type={statePassword ? 'text' : 'password'}
-          className={watch('password') !== '' && !statePassword ? styles.password : ''}
+          className={
+            dirtyFields?.password && watch('password') !== '' && !statePassword
+              ? styles.password
+              : ''
+          }
           autoComplete='current-password'
           error={errors.password}
           button={
@@ -123,7 +127,13 @@ const ChangePassword: React.FC = () => {
           }}
           name='repeat-password'
           type={stateRepeatPassword ? 'text' : 'password'}
-          className={watch('repeat-password') !== '' && !stateRepeatPassword ? styles.password : ''}
+          className={
+            dirtyFields['repeat-password'] &&
+            watch('repeat-password') !== '' &&
+            !stateRepeatPassword
+              ? styles.password
+              : ''
+          }
           autoComplete='repeat-password'
           error={errors['repeat-password']}
           button={

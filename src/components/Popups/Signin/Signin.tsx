@@ -146,7 +146,11 @@ const Signin: React.FC = () => {
             register={register}
             option={registerPassword}
             name='password'
-            className={watch('password') !== '' && !statePassword ? styles.password : ''}
+            className={
+              dirtyFields?.password && watch('password') !== '' && !statePassword
+                ? styles.password
+                : ''
+            }
             type={statePassword ? 'text' : 'password'}
             autoComplete='current-password'
             error={errors.password}
