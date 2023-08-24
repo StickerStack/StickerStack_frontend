@@ -120,7 +120,7 @@ const ProfilePage: React.FC = () => {
       <Container className={styles.profile_container}>
         <TitlePage type='main-title'>Мои данные</TitlePage>
         <section className={styles.section}>
-          <ImagePick image={EmptyAvatarImage} />
+          <ImagePick />
           <div className={styles.profile_data}>
             <form className={styles.inputs} onSubmit={handleSubmit(onSubmit)}>
               <InputField>

@@ -1,13 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-
 import { userApi } from '../utils/api/UserApi';
-import { authApi } from '../utils/api/AuthApi';
 import { IOrderState, IUserState } from '../interfaces';
 
 const initialState: IUserState = {
   email: '',
   firstName: '',
   lastName: '',
+  avatar: '',
   orders: [],
   isLogged: false,
   isVerified: false,
@@ -34,25 +33,22 @@ const updateUser = createAsyncThunk(
 
 const updateProfileImage = createAsyncThunk(
   'user/updateProfileImage',
-  async (data: { formData: FormData }, { rejectWithValue }) => {
+  async (data: FormData, { rejectWithValue }) => {
     try {
-      return authApi.uploadProfileImage(data.formData);
+      return userApi.uploadProfileImage(data);
     } catch (err) {
       return rejectWithValue(err);
     }
   },
 );
 
-const getProfileImage = createAsyncThunk(
-  'user/getProfileImage',
-  async (data, { rejectWithValue }) => {
-    try {
-      return authApi.getProfileImage();
-    } catch (err) {
-      return rejectWithValue(err);
-    }
-  },
-);
+const deleteProfileImage = createAsyncThunk('user/deleteProfileImage', async () => {
+  try {
+    return userApi.deleteProfileImage();
+  } catch (err) {
+    return err;
+  }
+});
 
 const getUserOrders = createAsyncThunk('user/getUserOrders', async (data, { rejectWithValue }) => {
   try {
@@ -121,6 +117,6 @@ export {
   signInMockUser,
   updateStatus,
   updateProfileImage,
-  getProfileImage,
+  deleteProfileImage,
   getUserOrders,
 };
