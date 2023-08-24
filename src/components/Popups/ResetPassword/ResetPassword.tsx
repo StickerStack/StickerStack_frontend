@@ -1,4 +1,6 @@
 import { FieldValues, useForm } from 'react-hook-form';
+import { motion } from 'framer-motion';
+import { useState } from 'react';
 
 import { Signin, Signup } from '../..';
 import { ButtonWithText, TextForm, TextUnderline, TitlePopup, Input } from '../../UI';
@@ -12,7 +14,6 @@ import { forgotPassword } from '../../../store/authSlice';
 import { openMessage, openPopup } from '../../../store/popupSlice';
 import { registerEmail } from '../../../utils/registersRHF';
 import styles from './ResetPassword.module.scss';
-import { motion } from 'framer-motion';
 
 const ResetPassword: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -24,8 +25,10 @@ const ResetPassword: React.FC = () => {
   } = useForm({
     mode: 'onBlur',
   });
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = (data: FieldValues) => {
+    setLoading(true);
     dispatch(forgotPassword({ email: data.email }))
       .unwrap()
       .then(() => {
@@ -36,12 +39,13 @@ const ResetPassword: React.FC = () => {
         if (err.message) {
           dispatch(
             openMessage({
-              text: 'Что-то пошло не так',
+              text: 'Что-то пошло не так. Попробуйте еще раз.',
               isError: true,
-            })
+            }),
           );
         }
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -83,8 +87,10 @@ const ResetPassword: React.FC = () => {
         />
         <InputError error={errors.email} />
       </InputField>
-      <TextForm>В течение 5 минут на указанную почту придет ссылка для восстановления пароля</TextForm>
-      <ButtonWithText type='submit' className={styles.button} disabled={!isValid}>
+      <TextForm>
+        В течение 5 минут на указанную почту придет ссылка для восстановления пароля
+      </TextForm>
+      <ButtonWithText type='submit' className={styles.button} disabled={!isValid} loading={loading}>
         Восстановить пароль
       </ButtonWithText>
       <div className={styles.buttons}>

@@ -57,7 +57,7 @@ const CartPage: React.FC = () => {
         cropping: cart.cropping,
         stickers: cart.items.map((item) => {
           return {
-             image: item.image.startsWith('data:image/png;base64,')
+            image: item.image.startsWith('data:image/png;base64,')
               ? item.image.replace('data:image/png;base64,', '')
               : item.image.startsWith('data:image/jpeg;base64,')
               ? item.image.replace('data:image/jpeg;base64,', '')
@@ -72,24 +72,37 @@ const CartPage: React.FC = () => {
         }),
       }),
     )
-      .then((res) => {
-        if (res.meta.requestStatus === 'fulfilled') {
-          dispatch(cleanCards());
-          dispatch(cleanCart());
+      .unwrap()
+      .then(() => {
+        dispatch(cleanCards());
+        dispatch(cleanCart());
+        dispatch(
+          openInfo({
+            title: 'Заказ оформлен!',
+            text: 'Вся информация по заказу отправлена на почту. Следите за статусом его готовности в личном кабинете',
+            buttonText: 'Заказать еще',
+            onClick: () => navigate(ADD_STICKERS),
+            buttonSecondText: 'Перейти к заказам',
+            onClickSecond: () => navigate(ORDERS),
+            image: image,
+          }),
+        );
+      })
+      .catch((err) => {
+        if (err.message === '413') {
           dispatch(
-            openInfo({
-              title: 'Заказ оформлен!',
-              text: 'Вся информация по заказу отправлена на почту. Следите за статусом его готовности в личном кабинете',
-              buttonText: 'Заказать еще',
-              onClick: () => navigate(ADD_STICKERS),
-              buttonSecondText: 'Перейти к заказам',
-              onClickSecond: () => navigate(ORDERS),
-              image: image,
+            openMessage({
+              text: 'Слишком большой запрос для загрузки.',
+              isError: true,
             }),
           );
-        }
-        if (res.meta.requestStatus === 'rejected') {
-          dispatch(openMessage({ text: 'Не удалось оформить заказ', isError: true }));
+        } else if (err.message) {
+          dispatch(
+            openMessage({
+              text: 'Что-то пошло не так. Попробуйте еще раз.',
+              isError: true,
+            }),
+          );
         }
       })
       .finally(() => setLoading(false));

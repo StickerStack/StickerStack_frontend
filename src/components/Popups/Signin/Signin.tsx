@@ -8,6 +8,7 @@ import {
   TitlePopup,
   TextUnderline,
   Input,
+  Error,
   EyeButton,
   Label,
   InputField,
@@ -34,6 +35,8 @@ const Signin: React.FC = () => {
     getValues,
     setValue,
     formState: { errors, dirtyFields, isValid },
+    watch,
+    setError,
     handleSubmit,
   } = useForm({
     mode: 'onBlur',
@@ -61,27 +64,24 @@ const Signin: React.FC = () => {
         dispatch(updateStatus(true));
         dispatch(closePopup());
         navigate(ADD_STICKERS);
-        dispatch(
-          openMessage({
-            text: 'Подтвердите почту',
-            isError: false,
-          })
-        );
       })
       .catch((err) => {
         if (err.message === '400') {
+          setError('email', { type: 'custom', message: '' });
+          setError('password', { type: 'custom', message: '' });
+        } else if (err.message === '422') {
           dispatch(
             openMessage({
-              text: 'Неверная почта или пароль',
+              text: 'Ошибка при заполнении полей. Попробуйте поменять значения.',
               isError: true,
-            })
+            }),
           );
         } else {
           dispatch(
             openMessage({
-              text: 'Что-то пошло не так',
+              text: 'Что-то пошло не так. Попробуйте еще раз.',
               isError: true,
-            })
+            }),
           );
         }
       })
@@ -111,6 +111,9 @@ const Signin: React.FC = () => {
     >
       <TitlePopup>Вход</TitlePopup>
       <div className={styles.inputs}>
+        {(errors.email?.type === 'custom' || errors.password?.type === 'custom') && (
+          <Error>Неверная почта и/или пароль</Error>
+        )}
         <InputField className='email'>
           <Label htmlFor='email'>Электронная почта</Label>
           <Input
@@ -131,7 +134,10 @@ const Signin: React.FC = () => {
         <InputField className='password'>
           <Label htmlFor='password'>
             Пароль
-            <TextUnderline onClick={() => dispatch(openPopup(ResetPassword))} className={styles.reset}>
+            <TextUnderline
+              onClick={() => dispatch(openPopup(ResetPassword))}
+              className={styles.reset}
+            >
               Забыли пароль?
             </TextUnderline>
           </Label>
@@ -140,7 +146,7 @@ const Signin: React.FC = () => {
             register={register}
             option={registerPassword}
             name='password'
-            className={dirtyFields['password'] && !statePassword ? styles.password : ''}
+            className={watch('password') !== '' && !statePassword ? styles.password : ''}
             type={statePassword ? 'text' : 'password'}
             autoComplete='current-password'
             error={errors.password}
@@ -148,7 +154,7 @@ const Signin: React.FC = () => {
               <EyeButton
                 onClick={() => setStatePasswod(!statePassword)}
                 shown={statePassword}
-                visible={dirtyFields?.password && true}
+                visible={dirtyFields?.password && watch('password') !== '' && true}
               />
             }
           />

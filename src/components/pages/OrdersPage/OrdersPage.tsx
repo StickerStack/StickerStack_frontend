@@ -25,14 +25,11 @@ const OrdersPage: React.FC = () => {
     setLoading(true);
 
     dispatch(getUserOrders())
-      .then((res) => {
-        if (res.meta.requestStatus === 'fulfilled') {
-          setError(false);
-        }
-        if (res.meta.requestStatus === 'rejected') {
-          setError(true);
-        }
+      .unwrap()
+      .then(() => {
+        setError(false);
       })
+      .catch(() => setError(true))
       .finally(() => setLoading(false));
 
     // eslint-disable-next-line

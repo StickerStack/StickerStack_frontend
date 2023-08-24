@@ -21,13 +21,14 @@ import { useAppDispatch } from '../../../hooks/hooks';
 import { openMessage, openPopup, closePopup, openInfo } from '../../../store/popupSlice';
 import { getUser, updateStatus } from '../../../store/userSlice';
 import { signUp, signIn, sendVerificationCode } from '../../../store/authSlice';
-import { registerEmail, registerPassword, registerRepeatPassword } from '../../../utils/registersRHF';
+import {
+  registerEmail,
+  registerPassword,
+  registerRepeatPassword,
+} from '../../../utils/registersRHF';
+import { ADD_STICKERS, PRIVACY, TERMS, getRandomNumber } from '../../../utils/constants';
 
-import mail1 from '../../../images/check-your-mail-1.png';
-import mail2 from '../../../images/check-your-mail-2.png';
-import mail3 from '../../../images/check-your-mail-3.png';
 import styles from './Signup.module.scss';
-import { ADD_STICKERS, PRIVACY, TERMS } from '../../../utils/constants';
 
 const Signup: React.FC = () => {
   const navigate = useNavigate();
@@ -37,6 +38,7 @@ const Signup: React.FC = () => {
     setValue,
     getValues,
     formState: { errors, dirtyFields, isValid },
+    setError,
     watch,
     handleSubmit,
   } = useForm({
@@ -51,6 +53,7 @@ const Signup: React.FC = () => {
   const userPassword = getValues('password');
 
   const onSubmit = () => {
+    setLoading(true);
     dispatch(signUp({ email: userEmail, password: userPassword }))
       .unwrap()
       .then(() => {
@@ -61,11 +64,14 @@ const Signup: React.FC = () => {
             dispatch(updateStatus(true));
             dispatch(closePopup());
             navigate(ADD_STICKERS);
+            const randomNumber = getRandomNumber(1, 3);
             dispatch(
-              openMessage({
-                text: 'Подтвердите почту',
-                isError: false,
-              })
+              openInfo({
+                title: 'Добро пожаловать!',
+                text: 'Мы направили письмо на вашу электронную почту. Для подтверждения профиля перейдите по ссылке в письме.',
+                buttonText: 'Понятно!',
+                image: require(`../../../images/check-your-mail-${randomNumber}.png`),
+              }),
             );
           })
           .then(() => {
@@ -77,35 +83,41 @@ const Signup: React.FC = () => {
                 openMessage({
                   text: 'Неверная почта или пароль',
                   isError: true,
-                })
+                }),
               );
             } else {
               dispatch(
                 openMessage({
-                  text: 'Что-то пошло не так',
+                  text: 'Что-то пошло не так. Попробуйте еще раз.',
                   isError: true,
-                })
+                }),
               );
             }
           });
       })
       .catch((err) => {
         if (err.message === '400') {
+          setError('email', {
+            type: 'custom',
+            message: 'Учетная запись с такой почтой уже существует',
+          });
+        } else if (err.message === '422') {
           dispatch(
             openMessage({
-              text: 'Учётная запись с такой почтой уже существует',
+              text: 'Ошибка при заполнении полей. Попробуйте поменять значения.',
               isError: true,
-            })
+            }),
           );
         } else {
           dispatch(
             openMessage({
-              text: 'Что-то пошло не так',
+              text: 'Что-то пошло не так. Попробуйте еще раз.',
               isError: true,
-            })
+            }),
           );
         }
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -153,7 +165,7 @@ const Signup: React.FC = () => {
             register={register}
             option={registerPassword}
             name='password'
-            className={dirtyFields['password'] && !statePassword ? styles.password : ''}
+            className={watch('password') !== '' && !statePassword ? styles.password : ''}
             placeholder='Введите пароль'
             type={statePassword ? 'text' : 'password'}
             autoComplete='current-password'
@@ -162,7 +174,7 @@ const Signup: React.FC = () => {
               <EyeButton
                 onClick={() => setStatePasswod(!statePassword)}
                 shown={statePassword}
-                visible={dirtyFields?.password && true}
+                visible={dirtyFields?.password && watch('password') !== '' && true}
               />
             }
           />
@@ -182,7 +194,9 @@ const Signup: React.FC = () => {
             }}
             placeholder='Введите пароль'
             name='repeat-password'
-            className={dirtyFields['repeat-password'] && !stateRepeatPassword ? styles.password : ''}
+            className={
+              watch('repeat-password') !== '' && !stateRepeatPassword ? styles.password : ''
+            }
             type={stateRepeatPassword ? 'text' : 'password'}
             autoComplete='repeat-password'
             error={errors['repeat-password']}
@@ -190,7 +204,7 @@ const Signup: React.FC = () => {
               <EyeButton
                 onClick={() => setStateRepeatPassword(!stateRepeatPassword)}
                 shown={stateRepeatPassword}
-                visible={dirtyFields['repeat-password'] && true}
+                visible={dirtyFields['repeat-password'] && watch('repeat-password') !== '' && true}
               />
             }
           />
