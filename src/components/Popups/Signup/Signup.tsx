@@ -24,7 +24,6 @@ import { signUp, signIn, sendVerificationCode } from '../../../store/authSlice';
 import {
   registerEmail,
   registerPassword,
-  registerRepeatPassword,
 } from '../../../utils/registersRHF';
 import { ADD_STICKERS, PRIVACY, TERMS, getRandomNumber } from '../../../utils/constants';
 
