@@ -1,12 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { userApi } from '../utils/api/UserApi';
 import { IOrderState, IUserState } from '../interfaces';
+import { API_URL } from '../utils/constants';
 
 const initialState: IUserState = {
   email: '',
   firstName: '',
   lastName: '',
-  avatar: '',
+  avatar: `${API_URL}/user/profile-image`,
   orders: [],
   isLogged: false,
   isVerified: false,
