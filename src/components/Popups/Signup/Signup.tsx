@@ -185,7 +185,6 @@ const Signup: React.FC = () => {
           <InputWithButton
             register={register}
             option={{
-              ...registerRepeatPassword,
               validate: (val: string) => {
                 if (val !== watch('password')) {
                   return 'Пароли не совпадают';
