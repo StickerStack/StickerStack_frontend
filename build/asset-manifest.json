@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.91330329.css",
-    "main.js": "/static/js/main.e51e0257.js",
+    "main.css": "/static/css/main.29efc7f2.css",
+    "main.js": "/static/js/main.1c056e83.js",
     "static/media/empty-avatar.png": "/static/media/empty-avatar.0883ab0d828d9f168705.png",
     "static/media/image-stikerstack.png": "/static/media/image-stikerstack.e5c1634f52cf6aa57d5d.png",
     "static/media/Montserrat-SemiBold.ttf": "/static/media/Montserrat-SemiBold.d5e0cc788cba9ced1fb9.ttf",
@@ -62,11 +62,11 @@
     "static/media/circle.svg": "/static/media/circle.38ef7fb4d3784f269c200c23c74c7386.svg",
     "static/media/rect_rounded.svg": "/static/media/rect_rounded.9602985d1ad8a99be0c5f1e514a4af11.svg",
     "static/media/rect.svg": "/static/media/rect.278d1c8fb88ac3a3d2a33601441a6403.svg",
-    "main.91330329.css.map": "/static/css/main.91330329.css.map",
-    "main.e51e0257.js.map": "/static/js/main.e51e0257.js.map"
+    "main.29efc7f2.css.map": "/static/css/main.29efc7f2.css.map",
+    "main.1c056e83.js.map": "/static/js/main.1c056e83.js.map"
   },
   "entrypoints": [
-    "static/css/main.91330329.css",
-    "static/js/main.e51e0257.js"
+    "static/css/main.29efc7f2.css",
+    "static/js/main.1c056e83.js"
   ]
 }
