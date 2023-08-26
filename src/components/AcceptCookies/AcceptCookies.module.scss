@@ -1,0 +1,16 @@
+.container {
+  width: 500px;
+  position: fixed;
+  bottom: 0;
+  padding: 40px 40px 40px 30px;
+  display: flex;
+  flex-direction: column;
+  background-color: aliceblue;
+  border-radius: 15px;
+
+  .close {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+  }
+}

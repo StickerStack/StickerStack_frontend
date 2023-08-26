@@ -35,6 +35,7 @@ import { getUser, signInMockUser } from '../../store/userSlice';
 import styles from './App.module.scss';
 import { OrdersPage } from '../pages/OrdersPage/OrdersPage';
 import { PolicyPage } from '../pages/PolicyPage/PolicyPage';
+import { AcceptCookies } from '../AcceptCookies/AcceptCookies';
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -107,6 +108,7 @@ const App: React.FC = () => {
           <Footer />
           <MessagePopup />
           <Popup />
+          <AcceptCookies />
         </div>
       )}
     </>
