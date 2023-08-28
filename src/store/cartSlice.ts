@@ -4,6 +4,8 @@ import { CartItem } from '../interfaces';
 import { api } from '../utils/api/Api';
 import { OrderItem } from '../interfaces/OrderItem';
 import { pagePrice } from '../utils/constants';
+import { cartApi } from '../utils/api/CartApi';
+import { ISticker } from '../interfaces/ISticker';
 
 const initialState: CartState = {
   cost: 0,
@@ -13,6 +15,39 @@ const initialState: CartState = {
   cropping: false,
   items: [],
 };
+
+const addSticker = createAsyncThunk(
+  'cart/add_sticker',
+  async (data: ISticker, { rejectWithValue }) => {
+    try {
+      const response = await cartApi.addSticker(data);
+      return { data: response.data };
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
+
+const getCart = createAsyncThunk('cart', async () => {
+  try {
+    const response = await cartApi.getCart();
+    return { data: response.data };
+  } catch (err) {
+    return err;
+  }
+});
+
+const deleteSticker = createAsyncThunk(
+  'cart/delete_sticker',
+  async (data: string, { rejectWithValue }) => {
+    try {
+      const response = await cartApi.deleteSticker(data);
+      return { data: response.data };
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
 
 const uploadOrder = createAsyncThunk(
   'add_order',
@@ -27,7 +62,7 @@ const uploadOrder = createAsyncThunk(
     { rejectWithValue },
   ) => {
     try {
-      const response = await api.uploadOrder(
+      const response = await cartApi.uploadOrder(
         data.cost,
         data.address,
         data.number,
