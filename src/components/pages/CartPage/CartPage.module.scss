@@ -14,14 +14,14 @@
 
 .box {
   @include flex(column, center, center);
-  gap: 30px;
+  gap: 15px;
   width: 100%;
 }
 
 .image {
   width: 350px;
   height: 250px;
-  margin-top: 20px;
+  margin-bottom: 30px;
   background: url('../../../images/empty-cart.png') no-repeat;
   background-size: contain;
 }
