@@ -13,11 +13,12 @@ import { openPreview } from '../../../store/popupSlice';
 import { pagePrice, pageSizePx, CART, CARDS_MAXIMUM } from '../../../utils/constants';
 import { CartState, ICardsState } from '../../../interfaces';
 import { addCard, setActive } from '../../../store/cardsSlice';
-import { addItems, updateCropping, updateSheets } from '../../../store/cartSlice';
+import { addItems, addSticker, updateCropping, updateSheets } from '../../../store/cartSlice';
 import { generateRandomNumber } from '../../../utils/generateRandomNumber';
 import { calculateStickerOnList } from '../../../utils/calculateStickerOnList';
 
 import styles from './AddStickers.module.scss';
+import { converter } from '../../../utils/converter';
 
 const AddStickers: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -135,14 +136,14 @@ const AddStickers: React.FC = () => {
                     },
                   }}
                 >
-                  <Sticker card={card} onClick={() => dispatch(setActive(card.id))} />
+                  <Sticker onClick={() => dispatch(setActive(card.id))} />
                 </motion.div>
               )}
             </AnimatePresence>
           ))}
         </div>
         {cards.length < CARDS_MAXIMUM && (
-          <ButtonWithText theme='transparent' onClick={handleAddCard}>
+          <ButtonWithText theme='transparent' onClick={handleAddCard} disabled={!validation}>
             Добавить стикер
           </ButtonWithText>
         )}
@@ -190,7 +191,23 @@ const AddStickers: React.FC = () => {
             theme='filled'
             className={styles.button}
             onClick={() => {
-              dispatch(addItems(cards));
+              cards.forEach((card) => {
+                dispatch(
+                  addSticker({
+                    amount: card.amount,
+                    image: card.image.startsWith('data:image/png;base64,')
+                      ? card.image.replace('data:image/png;base64,', '')
+                      : card.image.startsWith('data:image/jpeg;base64,')
+                      ? card.image.replace('data:image/jpeg;base64,', '')
+                      : card.image.startsWith('data:image/jpg;base64,')
+                      ? card.image.replace('data:image/jpg;base64,', '')
+                      : '',
+                    shape: card.shape,
+                    height: card.size.height,
+                    width: card.size.width,
+                  }),
+                );
+              });
               navigate(CART);
             }}
             disabled={!validation}

@@ -1,13 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { CartState } from '../interfaces/CartState';
-import { CartItem } from '../interfaces';
-import { api } from '../utils/api/Api';
 import { OrderItem } from '../interfaces/OrderItem';
 import { pagePrice } from '../utils/constants';
 import { cartApi } from '../utils/api/CartApi';
 import { ISticker } from '../interfaces/ISticker';
+import { ICart } from '../interfaces/ICart';
 
-const initialState: CartState = {
+const initialState: ICart = {
   cost: 0,
   totalAmount: 0,
   address: '',
@@ -28,12 +26,11 @@ const addSticker = createAsyncThunk(
   },
 );
 
-const getCart = createAsyncThunk('cart', async () => {
+const getCart = createAsyncThunk('get_cart', async (data, { rejectWithValue }) => {
   try {
-    const response = await cartApi.getCart();
-    return { data: response.data };
+    return await cartApi.getCart();
   } catch (err) {
-    return err;
+    return rejectWithValue(err);
   }
 });
 
@@ -41,8 +38,7 @@ const deleteSticker = createAsyncThunk(
   'cart/delete_sticker',
   async (data: string, { rejectWithValue }) => {
     try {
-      const response = await cartApi.deleteSticker(data);
-      return { data: response.data };
+      await cartApi.deleteSticker(data);
     } catch (err) {
       return rejectWithValue(err);
     }
@@ -80,28 +76,29 @@ const cartSlice = createSlice({
   name: 'cartSlice',
   initialState,
   reducers: {
-    addItems(state, action: { payload: Array<CartItem>; type: string }) {
+    addItems(state, action: { payload: Array<ISticker>; type: string }) {
       state.items.push(...action.payload);
     },
-    addItem(state, action: { payload: CartItem; type: string }) {
+    addItem(state, action: { payload: ISticker; type: string }) {
       const indexCard = state.items.find((card) => card.id === action.payload.id);
       if (!indexCard) {
         state.items.push({ ...action.payload });
       }
     },
-    deleteItem(state, action: { payload: number; type: string }) {
+    deleteItem(state, action: { payload: string; type: string }) {
       state.items = state.items.filter((card) => card.id !== action.payload);
     },
     cleanCart(state) {
       state.items = [];
     },
-    updateItem(state, action: { payload: CartItem; type: string }) {
-      const { id, shape, amount, size, image } = action.payload;
+    updateItem(state, action: { payload: ISticker; type: string }) {
+      const { id, shape, amount, width, height, image } = action.payload;
       const indexCard = state.items.find((card) => card.id === id);
       if (indexCard) {
         indexCard.shape = shape;
         indexCard.amount = amount;
-        indexCard.size = size;
+        indexCard.width = width;
+        indexCard.height = height;
         indexCard.image = image;
       }
     },
@@ -126,6 +123,10 @@ const cartSlice = createSlice({
     builder.addCase(uploadOrder.fulfilled, (state, action) => {
       console.log(action.payload.data);
     });
+    builder.addCase(getCart.fulfilled, (state, action: { payload: Array<ISticker> }) => {
+      console.log(action.payload);
+      state.items = action.payload;
+    });
   },
 });
 
@@ -144,6 +145,9 @@ const {
 
 export {
   cartSliceReducer,
+  getCart,
+  addSticker,
+  deleteSticker,
   addItems,
   addItem,
   deleteItem,

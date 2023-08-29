@@ -11,21 +11,28 @@ import { ADD_STICKERS, ORDERS } from '../../../utils/constants';
 import { Sticker } from '../../Sticker/Sticker';
 import { ICardsState, CartState } from '../../../interfaces';
 import { InfoBox } from '../../InfoBox/InfoBox';
-import { cleanCart, countTotal, updateAddress, uploadOrder } from '../../../store/cartSlice';
+import {
+  cleanCart,
+  countTotal,
+  getCart,
+  updateAddress,
+  uploadOrder,
+} from '../../../store/cartSlice';
 import { cleanCards } from '../../../store/cardsSlice';
 import { converter } from '../../../utils/converter';
 
 import image from '../../../images/cart-dog.png';
 import { ReactComponent as WriteSvg } from '../../../images/icons/write-icon.svg';
 import styles from './CartPage.module.scss';
+import { ICart } from '../../../interfaces/ICart';
 
 const CartPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
-  const cart = useSelector((state: { cart: CartState }) => state.cart);
+  //const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
+  const cart = useSelector((state: { cart: ICart }) => state.cart);
 
   const {
     register,
@@ -44,6 +51,9 @@ const CartPage: React.FC = () => {
 
   useEffect(() => {
     dispatch(countTotal());
+    dispatch(getCart()).then((res) => {
+      console.log(res);
+    });
     // eslint-disable-next-line
   }, [cart.items]);
 
@@ -57,25 +67,19 @@ const CartPage: React.FC = () => {
         cropping: cart.cropping,
         stickers: cart.items.map((item) => {
           return {
-            image: item.image.startsWith('data:image/png;base64,')
-              ? item.image.replace('data:image/png;base64,', '')
-              : item.image.startsWith('data:image/jpeg;base64,')
-              ? item.image.replace('data:image/jpeg;base64,', '')
-              : item.image.startsWith('data:image/jpg;base64,')
-              ? item.image.replace('data:image/jpg;base64,', '')
-              : '',
+            image: item.image,
             shape: item.shape,
             amount: item.amount,
-            width: Math.round(converter.pxToCm(item.size.width)),
-            height: Math.round(converter.pxToCm(item.size.height)),
+            width: Math.round(converter.pxToCm(item.width)),
+            height: Math.round(converter.pxToCm(item.height)),
           };
         }),
       }),
     )
       .unwrap()
       .then(() => {
-        dispatch(cleanCards());
-        dispatch(cleanCart());
+        // dispatch(cleanCards());
+        // dispatch(cleanCart());
         dispatch(
           openInfo({
             title: 'Заказ оформлен!',
@@ -114,9 +118,11 @@ const CartPage: React.FC = () => {
         <TitlePage type='main-title'>Корзина</TitlePage>
         {cart.items.length === 0 ? (
           <div className={styles.box}>
-            <span className={styles.text}>Ваша корзина пуста</span>
-            <ButtonWithText onClick={() => navigate(ADD_STICKERS)}>Заказать стикеры</ButtonWithText>
             <div className={styles.image} />
+            <span className={styles.text}>Ваша корзина пуста</span>
+            <ButtonWithText onClick={() => navigate(ADD_STICKERS)} color='contrast'>
+              Заказать стикеры
+            </ButtonWithText>
           </div>
         ) : (
           <div className={styles.flex}>

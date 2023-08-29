@@ -3,6 +3,7 @@
 .card {
   position: relative;
   width: 100%;
+  max-height: 140px;
   box-sizing: border-box;
   background-color: $popup-bg-color;
 
@@ -26,6 +27,7 @@
   display: grid;
   margin: 0;
   padding: 0;
+  max-height: 140px;
   grid-template-columns: 255px minmax(100px, 200px) 1fr;
   grid-template-rows: repeat(3, min-content);
   row-gap: 20px;
@@ -44,6 +46,7 @@
 }
 
 .border {
+  max-height: 140px;
   box-sizing: border-box;
   background-color: #fff;
   box-shadow: 1px 1px 4px 0px rgba(105, 37, 1, 0.2);

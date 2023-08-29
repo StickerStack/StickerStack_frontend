@@ -21,7 +21,7 @@ import {
 import { CartState, ICard, ICardsState } from '../../interfaces';
 import { TCardShape } from '../../interfaces/ICard';
 import { registerAmount, registerSize } from '../../utils/registersRHF';
-import { addItem, deleteItem, updateItem } from '../../store/cartSlice';
+import { addItem, addSticker, deleteItem, updateItem } from '../../store/cartSlice';
 import {
   AMOUNT_INPUT_MAX_LENGTH,
   AMOUNT_INPUT_MIN_LENGTH,
@@ -61,7 +61,7 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
   const handleDelete = () => {
     dispatch(deleteCard(card.id));
     if (cart.items.length !== 0) {
-      dispatch(deleteItem(card.id));
+      //  dispatch(deleteItem(card.id));
     }
   };
 
@@ -97,10 +97,19 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
     if (isValid && card.image) {
       dispatch(setValid({ id: card.id, valid: true }));
       dispatch(checkValidation());
-      cart.items.length !== 0 && dispatch(addItem(card));
+      // dispatch(
+      //   addSticker({
+      //     amount: card.amount,
+      //     image: card.image,
+      //     shape: card.shape,
+      //     height: card.size.height,
+      //     width: card.size.width,
+      //   }),
+      // );
+      //   cart.items.length !== 0 && dispatch(addItem(card));
     } else dispatch(setValid({ id: card.id, valid: false }));
     dispatch(checkValidation());
-    watchAllFields && cart.items.length !== 0 && dispatch(updateItem(card));
+    //  watchAllFields && cart.items.length !== 0 && dispatch(updateItem(card));
     // eslint-disable-next-line
   }, [isValid, watchAllFields]);
 
