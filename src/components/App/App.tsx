@@ -36,10 +36,14 @@ import { PolicyPage } from '../pages/PolicyPage/PolicyPage';
 import { getCart } from '../../store/cartSlice';
 import { getUser, signInMockUser } from '../../store/userSlice';
 import styles from './App.module.scss';
+import { useSelector } from 'react-redux';
+import { CartState } from '../../interfaces';
+import { setCardsFromCart } from '../../store/cardsSlice';
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { items } = useSelector((state: { cart: CartState }) => state.cart);
 
   useScrollToTop();
 
@@ -57,9 +61,15 @@ const App: React.FC = () => {
     dispatch(getCart()).then((res) => {
       console.log(res);
     });
-
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    if(items.length !== 0) {
+      dispatch(setCardsFromCart(items));
+    }
+    // eslint-disable-next-line
+  }, [items])
 
   return (
     <>

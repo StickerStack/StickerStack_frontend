@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TCardShape } from '../interfaces/ICard';
-import { ICard, ICardsState } from '../interfaces';
+import { CartItem, ICard, ICardsState } from '../interfaces';
 import { generateRandomNumber } from '../utils/generateRandomNumber';
 import { api } from '../utils/api/Api';
 
@@ -142,7 +142,32 @@ const cardsSlice = createSlice({
         foundCard.size.height = height;
       }
     },
+
+    setCardsFromCart(state, action) {
+      const newCards = action.payload.map((card: any, index: number) => {
+        const newCard: ICard = {
+          image: card.image,
+          shape: card.shape,
+          amount: card.amount,
+          size: { width:  card.width, height: card.height },
+          optimalSize: { width: 27, height: 27 },
+          id: card.id,
+          active: false,
+          valid: false,
+        };
+        newCard.active = false;
+
+        if(index === 0) {
+          newCard.active = true;
+        }
+
+        return { ...newCard };
+      });
+      console.log(newCards)
+      state.cards = newCards;
+    }
   },
+
   extraReducers: (builder) => {
     builder.addCase(removeBackground.fulfilled, (state, action) => {
       console.log(
@@ -168,6 +193,7 @@ const {
   updateShape,
   updateAmount,
   updateSize,
+  setCardsFromCart
 } = cardsSlice.actions;
 
 export {
@@ -184,4 +210,5 @@ export {
   removeBackground,
   updateCard,
   updateSize,
+  setCardsFromCart
 };
