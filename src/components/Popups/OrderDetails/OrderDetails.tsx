@@ -68,9 +68,9 @@ const OrderDetails: React.FC<IProps> = ({ order, onClose }: IProps) => {
                 >
                   Повторить заказ
                 </ButtonWithText>
-                <ButtonWithText theme='transparent' className={styles.button} onClick={onClose}>
+                {/* <ButtonWithText theme='transparent' className={styles.button} onClick={onClose}>
                   Удалить
-                </ButtonWithText>
+                </ButtonWithText> */}
               </div>
             </ul>
           </div>
