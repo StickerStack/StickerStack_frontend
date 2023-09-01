@@ -119,7 +119,11 @@ const Sticker: React.FC<IProps> = ({ card, onClick }: IProps) => {
             >
               <img
                 className={cn(styles.image, styles[`image_${card.shape}`])}
-                src={`data:image/png;base64,${card.image}`}
+                src={
+                  card.image.startsWith('data:image/png;base64,')
+                    ? `${card.image}`
+                    : `data:image/png;base64,${card.image}`
+                }
                 alt='Изображение стикера'
               />
             </div>
@@ -141,9 +145,13 @@ const Sticker: React.FC<IProps> = ({ card, onClick }: IProps) => {
           <li className={styles.flex}>
             <InfoBox type='size' description='Размер'>
               {isUploadpageCard(card)
-                ? `${card.size.width}*${card.size.height}`
+                ? `${Math.round(converter.pxToCm(card.size.width))}*${Math.round(
+                    converter.pxToCm(card.size.height),
+                  )}`
                 : isCartpageCard(card)
-                ? `${card.width}*${card.height}`
+                ? `${Math.round(converter.pxToCm(card.width))}*${Math.round(
+                    converter.pxToCm(card.height),
+                  )}`
                 : ''}
             </InfoBox>
           </li>
