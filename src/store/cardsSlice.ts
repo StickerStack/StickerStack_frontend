@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { TCardShape } from '../interfaces/ICard';
-import { CartItem, ICard, ICardsState } from '../interfaces';
+import { ICard, ICardsState } from '../interfaces';
 import { generateRandomNumber } from '../utils/generateRandomNumber';
 import { api } from '../utils/api/Api';
 

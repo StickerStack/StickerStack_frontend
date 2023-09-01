@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { ButtonCustom } from '../UI';
 import { useAppDispatch } from '../../hooks/hooks';
 import { deleteCard } from '../../store/cardsSlice';
-import { CartItem, ICard, ISticker } from '../../interfaces';
+import { ICard, ISticker } from '../../interfaces';
 import { deleteItem, deleteSticker } from '../../store/cartSlice';
 import { ADD_STICKERS, CART, stickerWhiteBorder } from '../../utils/constants';
 import { InfoBox } from '../InfoBox/InfoBox';

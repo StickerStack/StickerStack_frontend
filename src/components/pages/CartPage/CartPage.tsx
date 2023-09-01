@@ -9,7 +9,6 @@ import { openInfo, openMessage } from '../../../store/popupSlice';
 import { TitlePage, Container, ButtonWithText, TextUnderline, Input } from '../../UI';
 import { ADD_STICKERS, ORDERS } from '../../../utils/constants';
 import { Sticker } from '../../Sticker/Sticker';
-import { ICardsState, CartState } from '../../../interfaces';
 import { InfoBox } from '../../InfoBox/InfoBox';
 import {
   cleanCart,
@@ -18,13 +17,13 @@ import {
   updateAddress,
   uploadOrder,
 } from '../../../store/cartSlice';
+import { ICart } from '../../../interfaces/ICart';
 import { cleanCards } from '../../../store/cardsSlice';
 import { converter } from '../../../utils/converter';
 
 import image from '../../../images/cart-dog.png';
 import { ReactComponent as WriteSvg } from '../../../images/icons/write-icon.svg';
 import styles from './CartPage.module.scss';
-import { ICart } from '../../../interfaces/ICart';
 
 const CartPage: React.FC = () => {
   const dispatch = useAppDispatch();

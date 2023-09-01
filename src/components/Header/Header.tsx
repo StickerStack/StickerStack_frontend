@@ -5,7 +5,9 @@ import cn from 'classnames';
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAppDispatch } from '../../hooks/hooks';
-import { CartState, IUserState } from '../../interfaces';
+import { IUserState } from '../../interfaces';
+import { Signin } from '../Popups/Signin/Signin';
+import { ICart } from '../../interfaces/ICart';
 import { openPopup } from '../../store/popupSlice';
 import { CART, PAGE_404 } from '../../utils/constants';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
@@ -14,7 +16,6 @@ import { ButtonCustom, ButtonWithText, Container } from '../UI';
 
 import logo from '../../images/logo.svg';
 import styles from './Header.module.scss';
-import { Signin } from '../Popups/Signin/Signin';
 
 const Header: React.FC = () => {
   const isLogged = useSelector((state: { user: IUserState }) => state.user.isLogged);
@@ -22,7 +23,7 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [isMenuShow, setIsMenuShow] = useState(false);
-  const cart = useSelector((state: { cart: CartState }) => state.cart);
+  const cart = useSelector((state: { cart: ICart }) => state.cart);
   const [y, setY] = useState(window.scrollY);
   const [visibleBorder, setVisibleBorder] = useState(false);
 

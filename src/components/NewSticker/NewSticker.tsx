@@ -18,7 +18,8 @@ import {
   updateShape,
   updateSize,
 } from '../../store/cardsSlice';
-import { CartState, ICard, ICardsState } from '../../interfaces';
+import { ICard, ICardsState } from '../../interfaces';
+import { ICart } from '../../interfaces/ICart';
 import { TCardShape } from '../../interfaces/ICard';
 import { registerAmount, registerSize } from '../../utils/registersRHF';
 import { addItem, addSticker, deleteItem, deleteSticker, updateItem } from '../../store/cartSlice';
@@ -56,7 +57,7 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
   );
 
   const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
-  const cart = useSelector((state: { cart: CartState }) => state.cart);
+  const cart = useSelector((state: { cart: ICart }) => state.cart);
 
   const handleDelete = () => {
     dispatch(deleteCard(card.id));

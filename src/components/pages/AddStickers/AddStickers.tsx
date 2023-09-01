@@ -11,7 +11,8 @@ import { NewSticker } from '../../index';
 import { InfoBox } from '../../InfoBox/InfoBox';
 import { openPreview } from '../../../store/popupSlice';
 import { pagePrice, pageSizePx, CART, CARDS_MAXIMUM } from '../../../utils/constants';
-import { CartState, ICardsState } from '../../../interfaces';
+import { ICardsState } from '../../../interfaces';
+import { ICart } from '../../../interfaces/ICart';
 import { addCard, setActive } from '../../../store/cardsSlice';
 import { addItems, addSticker, updateCropping, updateSheets } from '../../../store/cartSlice';
 import { generateRandomNumber } from '../../../utils/generateRandomNumber';
@@ -24,7 +25,7 @@ const AddStickers: React.FC = () => {
   const navigate = useNavigate();
 
   const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
-  const cart = useSelector((state: { cart: CartState }) => state.cart);
+  const cart = useSelector((state: { cart: ICart }) => state.cart);
   const validation = useSelector((state: { cards: ICardsState }) => state.cards.valid);
 
   const fullPrice = pagePrice * cart.number_of_sheets;
