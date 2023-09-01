@@ -121,7 +121,7 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
     if ((shape as TCardShape) === 'contour') {
       const formData = new FormData();
       formData.append('file', card.image);
-      dispatch(removeBackground({ data: formData, id: card.id }));
+      //  dispatch(removeBackground({ data: formData, id: card.id }));
     }
     dispatch(updateShape({ id: card.id, shape: shape }));
   };

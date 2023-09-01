@@ -11,7 +11,7 @@ export interface ICard {
     width: number;
     height: number;
   };
-  id: number;
+  id: string;
   active?: boolean;
   valid: boolean;
 }

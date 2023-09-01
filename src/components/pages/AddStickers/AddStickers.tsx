@@ -18,7 +18,6 @@ import { generateRandomNumber } from '../../../utils/generateRandomNumber';
 import { calculateStickerOnList } from '../../../utils/calculateStickerOnList';
 
 import styles from './AddStickers.module.scss';
-import { converter } from '../../../utils/converter';
 
 const AddStickers: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -62,7 +61,7 @@ const AddStickers: React.FC = () => {
         amount: 1,
         size: { width: 0, height: 0 },
         optimalSize: { width: 0, height: 0 },
-        id: generateRandomNumber(),
+        id: `${generateRandomNumber()}`,
         active: true,
         valid: false,
       }),
@@ -109,31 +108,33 @@ const AddStickers: React.FC = () => {
         <div className={styles.cards}>
           {cards.map((card) => (
             <AnimatePresence key={card.id}>
-              <motion.div
-                className={card.active ? styles.motion : styles.motion_inactive}
-                initial={{
-                  opacity: 0.4,
-                  height: 0,
-                }}
-                animate={{
-                  transition: {
-                    height: { duration: 0.4 },
-                    opacity: { duration: 0.25, delay: 0.15 },
-                  },
-                  opacity: 1,
-                  height: 'auto',
-                }}
-                exit={{
-                  opacity: 0,
-                  height: 0,
-                  transition: {
-                    height: { duration: 0.4 },
-                    opacity: { duration: 0.25 },
-                  },
-                }}
-              >
-                <NewSticker key={card.id} card={card} />
-              </motion.div>
+              {card.active && (
+                <motion.div
+                  className={card.active ? styles.motion : styles.motion_inactive}
+                  initial={{
+                    opacity: 0.4,
+                    height: 0,
+                  }}
+                  animate={{
+                    transition: {
+                      height: { duration: 0.4 },
+                      opacity: { duration: 0.25, delay: 0.15 },
+                    },
+                    opacity: 1,
+                    height: 'auto',
+                  }}
+                  exit={{
+                    opacity: 0,
+                    height: 0,
+                    transition: {
+                      height: { duration: 0.4 },
+                      opacity: { duration: 0.25 },
+                    },
+                  }}
+                >
+                  <NewSticker key={card.id} card={card} />
+                </motion.div>
+              )}
               {!card.active && (
                 <motion.div
                   className={styles.motion}
