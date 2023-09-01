@@ -13,7 +13,7 @@ import { converter } from '../../utils/converter';
 import styles from './Sticker.module.scss';
 
 interface IProps {
-  card?: ISticker;
+  card: ISticker | ICard;
   onClick?: () => void;
 }
 
@@ -21,16 +21,38 @@ const Sticker: React.FC<IProps> = ({ card, onClick }: IProps) => {
   const dispatch = useAppDispatch();
   const location = useLocation();
 
+  const isUploadpageCard = (obj: any): obj is ICard => {
+    return (
+      'id' in obj &&
+      'amount' in obj &&
+      'image' in obj &&
+      'shape' in obj &&
+      'size' in obj &&
+      'valid' in obj
+    );
+  };
+
+  const isCartpageCard = (obj: any): obj is ISticker => {
+    return (
+      'id' in obj &&
+      'amount' in obj &&
+      'image' in obj &&
+      'shape' in obj &&
+      'height' in obj &&
+      'width' in obj
+    );
+  };
+
   const borderInPx = converter.mmToPx(stickerWhiteBorder);
 
   const handleDelete = () => {
-    if (card && card.id) {
+    if (card.id && isCartpageCard(card)) {
       dispatch(deleteSticker(card.id));
     }
   };
 
   const translateShape = () => {
-    switch (card && card.shape) {
+    switch (card.shape) {
       case 'square':
         return 'квадрат';
 
@@ -59,19 +81,41 @@ const Sticker: React.FC<IProps> = ({ card, onClick }: IProps) => {
           {card.image ? (
             <div
               className={cn(styles.border, styles[`border_${card.shape}`])}
-              style={{
-                width:
-                  card.width / card.height >= 1
-                    ? 140
-                    : (converter.cmToPx(card.width) / converter.cmToPx(card.height)) * 140,
-                height:
-                  card.height / card.width >= 1
-                    ? 140
-                    : (converter.cmToPx(card.height) / converter.cmToPx(card.width)) * 140,
-                maxHeight: 140,
-                maxWidth: 140,
-                padding: (borderInPx / converter.cmToPx(card.width)) * 140,
-              }}
+              style={
+                isUploadpageCard(card)
+                  ? {
+                      width:
+                        card.size.width / card.size.height >= 1
+                          ? 140
+                          : (converter.cmToPx(card.size.width) /
+                              converter.cmToPx(card.size.height)) *
+                            140,
+                      height:
+                        card.size.height / card.size.width >= 1
+                          ? 140
+                          : (converter.cmToPx(card.size.height) /
+                              converter.cmToPx(card.size.width)) *
+                            140,
+                      maxHeight: 140,
+                      maxWidth: 140,
+                      padding: (borderInPx / converter.cmToPx(card.size.width)) * 140,
+                    }
+                  : isCartpageCard(card)
+                  ? {
+                      width:
+                        card.width / card.height >= 1
+                          ? 140
+                          : (converter.cmToPx(card.width) / converter.cmToPx(card.height)) * 140,
+                      height:
+                        card.height / card.width >= 1
+                          ? 140
+                          : (converter.cmToPx(card.height) / converter.cmToPx(card.width)) * 140,
+                      maxHeight: 140,
+                      maxWidth: 140,
+                      padding: (borderInPx / converter.cmToPx(card.width)) * 140,
+                    }
+                  : {}
+              }
             >
               <img
                 className={cn(styles.image, styles[`image_${card.shape}`])}
@@ -96,7 +140,11 @@ const Sticker: React.FC<IProps> = ({ card, onClick }: IProps) => {
 
           <li className={styles.flex}>
             <InfoBox type='size' description='Размер'>
-              {card.width}*{card.height}
+              {isUploadpageCard(card)
+                ? `${card.size.width}*${card.size.height}`
+                : isCartpageCard(card)
+                ? `${card.width}*${card.height}`
+                : ''}
             </InfoBox>
           </li>
 

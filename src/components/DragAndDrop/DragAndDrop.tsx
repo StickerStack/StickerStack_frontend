@@ -128,7 +128,7 @@ const DragAndDrop: React.FC<IProps> = ({ card, name, option, register, onLoad }:
               card.size.height / card.size.width >= 1
                 ? 262
                 : (card.size.height / card.size.width) * 262,
-            padding: (borderInPx / card.size.width) * 255,
+            padding: borderInPx / card.size.width,
           }}
         >
           <img

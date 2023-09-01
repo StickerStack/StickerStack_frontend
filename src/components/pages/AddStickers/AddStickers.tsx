@@ -33,6 +33,27 @@ const AddStickers: React.FC = () => {
   const itemPrice = Math.round((pagePrice * cart.number_of_sheets) / fullAmount);
 
   const handleAddCard = () => {
+    const cardLast = cards[cards.length - 1];
+
+    dispatch(
+      addSticker({
+        amount: cardLast.amount,
+        image: cardLast.image.startsWith('data:image/png;base64,')
+          ? cardLast.image.replace('data:image/png;base64,', '')
+          : cardLast.image.startsWith('data:image/jpeg;base64,')
+          ? cardLast.image.replace('data:image/jpeg;base64,', '')
+          : cardLast.image.startsWith('data:image/jpg;base64,')
+          ? cardLast.image.replace('data:image/jpg;base64,', '')
+          : '',
+        shape: cardLast.shape,
+        height: cardLast.size.height,
+        width: cardLast.size.width,
+      }),
+    )
+      .unwrap()
+      .then(() => console.log('Успешно'))
+      .catch(() => console.log('Ошибка'));
+
     dispatch(
       addCard({
         image: '',
@@ -136,7 +157,7 @@ const AddStickers: React.FC = () => {
                     },
                   }}
                 >
-                  <Sticker onClick={() => dispatch(setActive(card.id))} />
+                  <Sticker card={card} onClick={() => dispatch(setActive(card.id))} />
                 </motion.div>
               )}
             </AnimatePresence>
@@ -191,23 +212,6 @@ const AddStickers: React.FC = () => {
             theme='filled'
             className={styles.button}
             onClick={() => {
-              cards.forEach((card) => {
-                dispatch(
-                  addSticker({
-                    amount: card.amount,
-                    image: card.image.startsWith('data:image/png;base64,')
-                      ? card.image.replace('data:image/png;base64,', '')
-                      : card.image.startsWith('data:image/jpeg;base64,')
-                      ? card.image.replace('data:image/jpeg;base64,', '')
-                      : card.image.startsWith('data:image/jpg;base64,')
-                      ? card.image.replace('data:image/jpg;base64,', '')
-                      : '',
-                    shape: card.shape,
-                    height: card.size.height,
-                    width: card.size.width,
-                  }),
-                );
-              });
               navigate(CART);
             }}
             disabled={!validation}

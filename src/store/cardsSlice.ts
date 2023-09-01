@@ -149,7 +149,7 @@ const cardsSlice = createSlice({
           image: card.image,
           shape: card.shape,
           amount: card.amount,
-          size: { width:  card.width, height: card.height },
+          size: { width: card.width, height: card.height },
           optimalSize: { width: 27, height: 27 },
           id: card.id,
           active: false,
@@ -157,15 +157,14 @@ const cardsSlice = createSlice({
         };
         newCard.active = false;
 
-        if(index === 0) {
+        if (index === 0) {
           newCard.active = true;
         }
 
         return { ...newCard };
       });
-      console.log(newCards)
       state.cards = newCards;
-    }
+    },
   },
 
   extraReducers: (builder) => {
@@ -193,7 +192,7 @@ const {
   updateShape,
   updateAmount,
   updateSize,
-  setCardsFromCart
+  setCardsFromCart,
 } = cardsSlice.actions;
 
 export {
@@ -210,5 +209,5 @@ export {
   removeBackground,
   updateCard,
   updateSize,
-  setCardsFromCart
+  setCardsFromCart,
 };
