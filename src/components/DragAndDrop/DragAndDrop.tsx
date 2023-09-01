@@ -134,7 +134,11 @@ const DragAndDrop: React.FC<IProps> = ({ card, name, option, register, onLoad }:
           <img
             className={cn(styles.image, styles[`image_${card.shape}`])}
             alt='Загруженное изображение'
-            src={`${card.image}`}
+            src={
+              card.image.startsWith('data:image/png;base64,')
+                ? `${card.image}`
+                : `data:image/png;base64,${card.image}`
+            }
           />
         </div>
       ) : (

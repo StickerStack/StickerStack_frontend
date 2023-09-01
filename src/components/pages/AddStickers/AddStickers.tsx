@@ -34,25 +34,26 @@ const AddStickers: React.FC = () => {
 
   const handleAddCard = () => {
     const cardLast = cards[cards.length - 1];
-
-    dispatch(
-      addSticker({
-        amount: cardLast.amount,
-        image: cardLast.image.startsWith('data:image/png;base64,')
-          ? cardLast.image.replace('data:image/png;base64,', '')
-          : cardLast.image.startsWith('data:image/jpeg;base64,')
-          ? cardLast.image.replace('data:image/jpeg;base64,', '')
-          : cardLast.image.startsWith('data:image/jpg;base64,')
-          ? cardLast.image.replace('data:image/jpg;base64,', '')
-          : '',
-        shape: cardLast.shape,
-        height: cardLast.size.height,
-        width: cardLast.size.width,
-      }),
-    )
-      .unwrap()
-      .then(() => console.log('Успешно'))
-      .catch(() => console.log('Ошибка'));
+    if (cards.length > cart.items.length) {
+      dispatch(
+        addSticker({
+          amount: cardLast.amount,
+          image: cardLast.image.startsWith('data:image/png;base64,')
+            ? cardLast.image.replace('data:image/png;base64,', '')
+            : cardLast.image.startsWith('data:image/jpeg;base64,')
+            ? cardLast.image.replace('data:image/jpeg;base64,', '')
+            : cardLast.image.startsWith('data:image/jpg;base64,')
+            ? cardLast.image.replace('data:image/jpg;base64,', '')
+            : '',
+          shape: cardLast.shape,
+          height: cardLast.size.height,
+          width: cardLast.size.width,
+        }),
+      )
+        .unwrap()
+        .then(() => console.log('Успешно'))
+        .catch(() => console.log('Ошибка'));
+    }
 
     dispatch(
       addCard({

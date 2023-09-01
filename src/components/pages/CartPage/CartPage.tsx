@@ -51,9 +51,7 @@ const CartPage: React.FC = () => {
 
   useEffect(() => {
     dispatch(countTotal());
-    dispatch(getCart()).then((res) => {
-      console.log(res);
-    });
+
     // eslint-disable-next-line
   }, [cart.items]);
 
