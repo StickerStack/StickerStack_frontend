@@ -28,6 +28,8 @@ import {
   ORDERS,
   privacy,
   terms,
+  COOKIE,
+  cookie,
 } from '../../utils/constants';
 import { useAppDispatch } from '../../hooks/hooks';
 import { useScrollToTop } from '../../hooks/useScrollToTop';
@@ -35,6 +37,7 @@ import { getUser, signInMockUser } from '../../store/userSlice';
 import styles from './App.module.scss';
 import { OrdersPage } from '../pages/OrdersPage/OrdersPage';
 import { PolicyPage } from '../pages/PolicyPage/PolicyPage';
+import { AcceptCookies } from '../AcceptCookies/AcceptCookies';
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -103,10 +106,12 @@ const App: React.FC = () => {
             <Route path='/' element={<MainPage />} />
             <Route path={PRIVACY} element={<PolicyPage policy={privacy} />} />
             <Route path={TERMS} element={<PolicyPage policy={terms} />} />
+            <Route path={COOKIE} element={<PolicyPage policy={cookie} />} />
           </Routes>
           <Footer />
           <MessagePopup />
           <Popup />
+          <AcceptCookies />
         </div>
       )}
     </>
