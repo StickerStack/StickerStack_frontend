@@ -28,6 +28,8 @@ import {
   ORDERS,
   privacy,
   terms,
+  COOKIE,
+  cookie,
 } from '../../utils/constants';
 import { useAppDispatch } from '../../hooks/hooks';
 import { useScrollToTop } from '../../hooks/useScrollToTop';
@@ -104,6 +106,7 @@ const App: React.FC = () => {
             <Route path='/' element={<MainPage />} />
             <Route path={PRIVACY} element={<PolicyPage policy={privacy} />} />
             <Route path={TERMS} element={<PolicyPage policy={terms} />} />
+            <Route path={COOKIE} element={<PolicyPage policy={cookie} />} />
           </Routes>
           <Footer />
           <MessagePopup />
