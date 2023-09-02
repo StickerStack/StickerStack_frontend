@@ -1,16 +1,28 @@
 .container {
-  width: 500px;
+  width: 100%;
   position: fixed;
   bottom: 0;
-  padding: 40px 40px 40px 30px;
+  padding: 40px 100px 30px;
+  box-sizing: border-box;
   display: flex;
-  flex-direction: column;
-  background-color: aliceblue;
-  border-radius: 15px;
+  justify-content: space-between;
+  background-color: #fff;
+  align-items: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 
-  .close {
-    position: absolute;
-    top: 15px;
-    right: 15px;
+  .buttons {
+    display: flex;
+    gap: 16px
+  }
+
+  .button {
+    padding: 14px 42px;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
   }
 }
