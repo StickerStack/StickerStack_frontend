@@ -28,6 +28,8 @@ import {
   ORDERS,
   privacy,
   terms,
+  COOKIE,
+  cookie,
 } from '../../utils/constants';
 import { useAppDispatch } from '../../hooks/hooks';
 import { useScrollToTop } from '../../hooks/useScrollToTop';
@@ -39,7 +41,8 @@ import { useSelector } from 'react-redux';
 import { setCardsFromCart } from '../../store/cardsSlice';
 import { ICart } from '../../interfaces/ICart';
 import { ICardsState, IUserState } from '../../interfaces';
-
+import { AcceptCookies } from '../AcceptCookies/AcceptCookies';
+        
 import styles from './App.module.scss';
 
 const App: React.FC = () => {
@@ -156,10 +159,12 @@ const App: React.FC = () => {
             <Route path='/' element={<MainPage />} />
             <Route path={PRIVACY} element={<PolicyPage policy={privacy} />} />
             <Route path={TERMS} element={<PolicyPage policy={terms} />} />
+            <Route path={COOKIE} element={<PolicyPage policy={cookie} />} />
           </Routes>
           <Footer />
           <MessagePopup />
           <Popup />
+          <AcceptCookies />
         </div>
       )}
     </>

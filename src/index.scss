@@ -4,8 +4,9 @@
 
 body {
   margin: 0;
-  background-color: $main-bg-color;
-  color: $main-text-color;
+  color-scheme: only light;
+  background-color: $main-bg-color !important;
+  color: $main-text-color !important;
   font-family: 'Montserrat', 'Nunito', sans-serif;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;

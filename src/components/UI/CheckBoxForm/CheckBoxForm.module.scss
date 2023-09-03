@@ -28,6 +28,12 @@
     border: 1px solid $main-text-color;
     border-radius: 3px;
     content: '';
+    cursor: pointer;
+    transition: border-color 0.2s ease-in-out;
+
+    &:hover {
+      border-color: $active-field-color;
+    }
 
     &_svg {
       position: absolute;

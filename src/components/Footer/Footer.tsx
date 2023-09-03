@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import cn from 'classnames';
 
-import { PAGE_404, PRIVACY, TERMS } from '../../utils/constants';
+import { COOKIE, PAGE_404, PRIVACY, TERMS } from '../../utils/constants';
 import { Container, TextUnderline } from '../UI';
 
 import logo from '../../images/logo.svg';
@@ -61,6 +61,11 @@ const Footer: React.FC = () => {
             <li className={styles.text}>
               <TextUnderline theme='contrast' type='link' link={TERMS}>
                 Условия использования сервиса
+              </TextUnderline>
+            </li>
+            <li className={styles.text}>
+              <TextUnderline theme='contrast' type='link' link={COOKIE}>
+                Политика использования cookie-файлов
               </TextUnderline>
             </li>
           </ul>

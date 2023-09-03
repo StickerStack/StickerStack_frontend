@@ -9,7 +9,7 @@ import { IUserState } from '../../interfaces';
 import { Signin } from '../Popups/Signin/Signin';
 import { ICart } from '../../interfaces/ICart';
 import { openPopup } from '../../store/popupSlice';
-import { CART, PAGE_404 } from '../../utils/constants';
+import { CART, COOKIE, PAGE_404, PRIVACY, TERMS } from '../../utils/constants';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 import { ProfileMenu } from '../ProfileMenu/ProfileMenu';
 import { ButtonCustom, ButtonWithText, Container } from '../UI';
@@ -69,7 +69,10 @@ const Header: React.FC = () => {
     }, []),
   );
 
-  return location.pathname !== PAGE_404 ? (
+  return location.pathname !== PAGE_404 &&
+    location.pathname !== PRIVACY &&
+    location.pathname !== TERMS &&
+    location.pathname !== COOKIE ? (
     <header
       className={cn(
         styles.header,
