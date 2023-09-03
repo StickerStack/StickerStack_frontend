@@ -199,7 +199,7 @@ const AddStickers: React.FC = () => {
               const cardLast = cards[cards.length - 1];
 
               cards.forEach((card) => {
-                if (card.id !== cardLast.id)
+                if (card.id !== cardLast.id) {
                   dispatch(
                     addSticker({
                       amount: card.amount,
@@ -215,7 +215,7 @@ const AddStickers: React.FC = () => {
                       width: card.size.width,
                     }),
                   );
-                else
+                } else {
                   dispatch(
                     addSticker({
                       amount: card.amount,
@@ -245,6 +245,7 @@ const AddStickers: React.FC = () => {
                       ),
                     )
                     .finally(() => setLoading(false));
+                }
               });
             }}
             disabled={!validation}

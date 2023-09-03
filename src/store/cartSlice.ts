@@ -124,7 +124,6 @@ const cartSlice = createSlice({
       console.log(action.payload.data);
     });
     builder.addCase(getCart.fulfilled, (state, action: { payload: Array<ISticker> }) => {
-      console.log(action.payload);
       state.items = action.payload;
     });
   },

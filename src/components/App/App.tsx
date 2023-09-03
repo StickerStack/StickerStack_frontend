@@ -84,6 +84,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     isLogged &&
+      items.length !== 0 &&
       cards.forEach((card) => {
         const added = items.find((item) => item.id === card.id);
 
