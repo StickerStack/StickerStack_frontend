@@ -18,6 +18,7 @@ const initialState: ICardsState = {
     },
   ],
   valid: false,
+  processing: false,
 };
 
 const removeBackground = createAsyncThunk(
@@ -56,6 +57,9 @@ const cardsSlice = createSlice({
       } else if (valid === false && indexCard) {
         indexCard.valid = false;
       }
+    },
+    setProcessing(state, action) {
+      state.processing = action.payload;
     },
     checkValidation(state) {
       const indexCard = state.cards.find((card) => card.valid === false);
@@ -185,6 +189,7 @@ const {
   deleteCard,
   cleanCards,
   setActive,
+  setProcessing,
   setValid,
   checkValidation,
   updatePicture,
@@ -201,6 +206,7 @@ export {
   deleteCard,
   cleanCards,
   setActive,
+  setProcessing,
   setValid,
   checkValidation,
   updatePicture,

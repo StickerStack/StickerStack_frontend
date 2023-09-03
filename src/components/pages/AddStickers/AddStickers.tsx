@@ -13,8 +13,8 @@ import { openMessage, openPreview } from '../../../store/popupSlice';
 import { pagePrice, pageSizePx, CART, CARDS_MAXIMUM } from '../../../utils/constants';
 import { ICardsState } from '../../../interfaces';
 import { ICart } from '../../../interfaces/ICart';
-import { addCard, setActive } from '../../../store/cardsSlice';
-import { addSticker, updateCropping, updateSheets } from '../../../store/cartSlice';
+import { addCard, setActive, setProcessing } from '../../../store/cardsSlice';
+import { addSticker, getCart, updateCropping, updateSheets } from '../../../store/cartSlice';
 import { generateRandomNumber } from '../../../utils/generateRandomNumber';
 import { calculateStickerOnList } from '../../../utils/calculateStickerOnList';
 
@@ -195,6 +195,7 @@ const AddStickers: React.FC = () => {
             className={styles.button}
             loading={loading}
             onClick={() => {
+              dispatch(setProcessing(true));
               setLoading(true);
               const cardLast = cards[cards.length - 1];
 
@@ -234,7 +235,9 @@ const AddStickers: React.FC = () => {
                     .unwrap()
                     .then(() => {
                       console.log('Успешно');
+                      dispatch(getCart());
                       navigate(CART);
+                      setTimeout(() => dispatch(setProcessing(false)), 3000);
                     })
                     .catch(() =>
                       dispatch(
@@ -244,7 +247,9 @@ const AddStickers: React.FC = () => {
                         }),
                       ),
                     )
-                    .finally(() => setLoading(false));
+                    .finally(() => {
+                      setLoading(false);
+                    });
                 }
               });
             }}

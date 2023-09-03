@@ -48,7 +48,7 @@ const App: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const isLogged = useSelector((state: { user: IUserState }) => state.user.isLogged);
-  const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
+  const cards = useSelector((state: { cards: ICardsState }) => state.cards);
   const { items } = useSelector((state: { cart: ICart }) => state.cart);
 
   useScrollToTop();
@@ -84,8 +84,8 @@ const App: React.FC = () => {
 
   useEffect(() => {
     isLogged &&
-      items.length !== 0 &&
-      cards.forEach((card) => {
+      !cards.processing &&
+      cards.cards.forEach((card) => {
         const added = items.find((item) => item.id === card.id);
 
         !added &&
