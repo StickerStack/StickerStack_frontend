@@ -86,10 +86,12 @@ const ResetPassword: React.FC = () => {
           error={errors.email}
         />
         <InputError error={errors.email} />
+        <p className={styles.text}>
+          В&nbsp;течение 5&nbsp;минут на&nbsp;указанную почту придет ссылка для восстановления
+          пароля
+        </p>
       </InputField>
-      <TextForm>
-        В течение 5 минут на указанную почту придет ссылка для восстановления пароля
-      </TextForm>
+
       <ButtonWithText type='submit' className={styles.button} disabled={!isValid} loading={loading}>
         Восстановить пароль
       </ButtonWithText>

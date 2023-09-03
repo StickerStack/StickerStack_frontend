@@ -30,7 +30,11 @@ const ResetPasswordInfo: React.FC = () => {
     >
       <TitlePopup>Восстановление пароля</TitlePopup>
       <TextForm>Перейдите на почту {email}, чтобы восстановить пароль</TextForm>
-      <TextUnderline type='button' onClick={() => dispatch(openPopup(ResetPassword))}>
+      <TextUnderline
+        type='button'
+        className={styles.button}
+        onClick={() => dispatch(openPopup(ResetPassword))}
+      >
         Ввести другую почту
       </TextUnderline>
     </motion.div>

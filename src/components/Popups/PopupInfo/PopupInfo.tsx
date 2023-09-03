@@ -16,7 +16,7 @@ const PopupInfo: React.FC = () => {
   return (
     <div className={styles.container}>
       {info.src && <img className={styles.image} src={info.src} alt='Декоративное изображение' />}
-      <TitlePopup>{info.title}</TitlePopup>
+      <TitlePopup className={styles.title}>{info.title}</TitlePopup>
       <TextForm>{info.text}</TextForm>
       {!info.buttonSecondText ? (
         <ButtonWithText
