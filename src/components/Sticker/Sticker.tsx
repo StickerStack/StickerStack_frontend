@@ -1,6 +1,7 @@
 import cn from 'classnames';
 import { useLocation } from 'react-router-dom';
-
+import { useState } from 'react';
+import { openMessage } from '../../store/popupSlice';
 import { ButtonCustom } from '../UI';
 import { useAppDispatch } from '../../hooks/hooks';
 import { deleteCard } from '../../store/cardsSlice';
@@ -20,6 +21,7 @@ interface IProps {
 const Sticker: React.FC<IProps> = ({ card, onClick }: IProps) => {
   const dispatch = useAppDispatch();
   const location = useLocation();
+  const [loading, setLoading] = useState(false);
 
   const isUploadpageCard = (obj: any): obj is ICard => {
     return (
@@ -46,8 +48,23 @@ const Sticker: React.FC<IProps> = ({ card, onClick }: IProps) => {
   const borderInPx = converter.mmToPx(stickerWhiteBorder);
 
   const handleDelete = () => {
+    setLoading(true);
     if (card.id && isCartpageCard(card)) {
-      dispatch(deleteSticker(card.id));
+      dispatch(deleteSticker(card.id))
+        .unwrap()
+        .then(() => {
+          card.id && dispatch(deleteItem(card.id));
+          card.id && dispatch(deleteCard(card.id));
+        })
+        .catch(() =>
+          dispatch(
+            openMessage({
+              text: 'Что-то пошло не так. Попробуйте еще раз.',
+              isError: true,
+            }),
+          ),
+        )
+        .finally(() => setLoading(false));
     }
   };
 
@@ -71,11 +88,13 @@ const Sticker: React.FC<IProps> = ({ card, onClick }: IProps) => {
     <section
       className={cn(
         styles.card,
+        loading && styles.card_loading,
         location.pathname === CART && styles.card_cart,
         location.pathname === ADD_STICKERS && styles.card_add,
       )}
       onClick={onClick}
     >
+      {loading && <div className={styles.loader} />}
       {card && (
         <ul className={cn(styles.info, location.pathname === CART && styles.info_cart)}>
           {card.image ? (
@@ -174,8 +193,9 @@ const Sticker: React.FC<IProps> = ({ card, onClick }: IProps) => {
       {location.pathname === CART ? (
         <ButtonCustom
           type='delete'
-          className={styles.delete}
+          className={cn(styles.delete, loading && styles.delete_loading)}
           label='Удалить'
+          disabled={loading}
           onClick={handleDelete}
         />
       ) : null}

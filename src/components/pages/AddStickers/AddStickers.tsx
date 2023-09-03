@@ -9,12 +9,12 @@ import { Sticker } from '../../Sticker/Sticker';
 import { RadioButton, TextUnderline, ButtonWithText, TitlePage, Container } from '../../UI';
 import { NewSticker } from '../../index';
 import { InfoBox } from '../../InfoBox/InfoBox';
-import { openPreview } from '../../../store/popupSlice';
+import { openMessage, openPreview } from '../../../store/popupSlice';
 import { pagePrice, pageSizePx, CART, CARDS_MAXIMUM } from '../../../utils/constants';
 import { ICardsState } from '../../../interfaces';
 import { ICart } from '../../../interfaces/ICart';
 import { addCard, setActive } from '../../../store/cardsSlice';
-import { addItems, addSticker, updateCropping, updateSheets } from '../../../store/cartSlice';
+import { addSticker, updateCropping, updateSheets } from '../../../store/cartSlice';
 import { generateRandomNumber } from '../../../utils/generateRandomNumber';
 import { calculateStickerOnList } from '../../../utils/calculateStickerOnList';
 
@@ -23,6 +23,7 @@ import styles from './AddStickers.module.scss';
 const AddStickers: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
   const cart = useSelector((state: { cart: ICart }) => state.cart);
@@ -33,28 +34,6 @@ const AddStickers: React.FC = () => {
   const itemPrice = Math.round((pagePrice * cart.number_of_sheets) / fullAmount);
 
   const handleAddCard = () => {
-    const cardLast = cards[cards.length - 1];
-    if (cards.length > cart.items.length) {
-      dispatch(
-        addSticker({
-          amount: cardLast.amount,
-          image: cardLast.image.startsWith('data:image/png;base64,')
-            ? cardLast.image.replace('data:image/png;base64,', '')
-            : cardLast.image.startsWith('data:image/jpeg;base64,')
-            ? cardLast.image.replace('data:image/jpeg;base64,', '')
-            : cardLast.image.startsWith('data:image/jpg;base64,')
-            ? cardLast.image.replace('data:image/jpg;base64,', '')
-            : '',
-          shape: cardLast.shape,
-          height: cardLast.size.height,
-          width: cardLast.size.width,
-        }),
-      )
-        .unwrap()
-        .then(() => console.log('Успешно'))
-        .catch(() => console.log('Ошибка'));
-    }
-
     dispatch(
       addCard({
         image: '',
@@ -214,8 +193,59 @@ const AddStickers: React.FC = () => {
           <ButtonWithText
             theme='filled'
             className={styles.button}
+            loading={loading}
             onClick={() => {
-              navigate(CART);
+              setLoading(true);
+              const cardLast = cards[cards.length - 1];
+
+              cards.forEach((card) => {
+                if (card.id !== cardLast.id)
+                  dispatch(
+                    addSticker({
+                      amount: card.amount,
+                      image: card.image.startsWith('data:image/png;base64,')
+                        ? card.image.replace('data:image/png;base64,', '')
+                        : card.image.startsWith('data:image/jpeg;base64,')
+                        ? card.image.replace('data:image/jpeg;base64,', '')
+                        : card.image.startsWith('data:image/jpg;base64,')
+                        ? card.image.replace('data:image/jpg;base64,', '')
+                        : '',
+                      shape: card.shape,
+                      height: card.size.height,
+                      width: card.size.width,
+                    }),
+                  );
+                else
+                  dispatch(
+                    addSticker({
+                      amount: card.amount,
+                      image: card.image.startsWith('data:image/png;base64,')
+                        ? card.image.replace('data:image/png;base64,', '')
+                        : card.image.startsWith('data:image/jpeg;base64,')
+                        ? card.image.replace('data:image/jpeg;base64,', '')
+                        : card.image.startsWith('data:image/jpg;base64,')
+                        ? card.image.replace('data:image/jpg;base64,', '')
+                        : '',
+                      shape: card.shape,
+                      height: card.size.height,
+                      width: card.size.width,
+                    }),
+                  )
+                    .unwrap()
+                    .then(() => {
+                      console.log('Успешно');
+                      navigate(CART);
+                    })
+                    .catch(() =>
+                      dispatch(
+                        openMessage({
+                          text: 'Что-то пошло не так. Попробуйте еще раз.',
+                          isError: true,
+                        }),
+                      ),
+                    )
+                    .finally(() => setLoading(false));
+              });
             }}
             disabled={!validation}
           >

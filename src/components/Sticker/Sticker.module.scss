@@ -5,6 +5,7 @@
   width: 100%;
   box-sizing: border-box;
   background-color: $popup-bg-color;
+  transition: opacity 0.3s ease-in-out;
 
   &_add {
     padding: 20px 30px;
@@ -19,6 +20,10 @@
 
   &_cart {
     padding: 0 50px 0 20px;
+  }
+
+  &_loading :not(.loader) {
+    opacity: 0.6;
   }
 }
 
@@ -118,4 +123,50 @@
   position: absolute;
   top: 0;
   right: 15px;
+
+  &_loading {
+    cursor: auto;
+  }
+}
+
+.loader {
+  width: 44px;
+  height: 44px;
+  top: 35%;
+  left: 50%;
+  position: absolute;
+  border-radius: 50%;
+  background: conic-gradient(from 86deg at 48.07% 50%, #1a3263 0deg, rgba(219, 231, 255, 0) 360deg);
+  background-repeat: no-repeat;
+  //background-size: 50% 51.8%;
+  overflow: hidden;
+  animation: 2s linear infinite rotate;
+
+  &::before {
+    content: '';
+    position: absolute;
+    background-color: $other-button-text-color;
+    border-radius: 50%;
+    width: 7px;
+    height: 7px;
+    right: 0;
+    top: 17px;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    background: $main-bg-color;
+    border-radius: 50%;
+    top: 15%;
+    bottom: 15%;
+    left: 16%;
+    right: 15%;
+  }
+}
+
+@keyframes rotate {
+  to {
+    transform: rotate(-1turn);
+  }
 }

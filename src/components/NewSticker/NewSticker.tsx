@@ -11,7 +11,6 @@ import { useAppDispatch } from '../../hooks/hooks';
 import {
   checkValidation,
   deleteCard,
-  removeBackground,
   setActive,
   setValid,
   updateAmount,
@@ -23,6 +22,7 @@ import { ICart } from '../../interfaces/ICart';
 import { TCardShape } from '../../interfaces/ICard';
 import { registerAmount, registerSize } from '../../utils/registersRHF';
 import { addItem, addSticker, deleteItem, deleteSticker, updateItem } from '../../store/cartSlice';
+import { openMessage } from '../../store/popupSlice';
 import {
   AMOUNT_INPUT_MAX_LENGTH,
   AMOUNT_INPUT_MIN_LENGTH,
@@ -60,9 +60,21 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
   const cart = useSelector((state: { cart: ICart }) => state.cart);
 
   const handleDelete = () => {
-    dispatch(deleteCard(card.id));
     if (cart.items.length !== 0 && typeof card.id === 'string') {
-      dispatch(deleteSticker(card.id));
+      dispatch(deleteSticker(card.id))
+        .unwrap()
+        .then(() => {
+          dispatch(deleteCard(card.id));
+          dispatch(deleteItem(card.id));
+        })
+        .catch(() =>
+          dispatch(
+            openMessage({
+              text: 'Что-то пошло не так. Попробуйте еще раз.',
+              isError: true,
+            }),
+          ),
+        );
     }
   };
 
