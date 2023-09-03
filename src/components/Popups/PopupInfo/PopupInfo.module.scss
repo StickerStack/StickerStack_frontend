@@ -3,6 +3,7 @@
 .container {
   @include flex(column, start, center);
   width: min-content;
+  min-width: 330px;
   gap: 20px;
 }
 
