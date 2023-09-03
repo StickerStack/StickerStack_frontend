@@ -1,17 +1,47 @@
 @import '../../utils/_scss-variables.scss';
 
+.works {
+  background-color: $secondary-bg-color;
+}
+
 .container {
-  padding-bottom: calc(100vh / 9);
+  padding-top: 80px;
+  padding-bottom: 80px;
   box-sizing: border-box;
   @include flex(column, center, center);
   gap: 25px;
+  background-color: $secondary-bg-color;
+}
+
+.title,
+.point,
+.text {
+  color: $contrast-text-color;
+}
+
+.point,
+.text {
+  width: 100%;
+  margin: 0;
+  line-height: 22px;
+}
+
+.point {
+  @include flex(row, start, start);
+  gap: 25px;
+  text-align: left;
 }
 
 .text {
-  margin: 0;
-  max-width: 730px;
   text-align: center;
-  font-size: 16px;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  // border: 1px solid $contrast-text-color;
+  // border-radius: 50%;
+  // padding: 2px;
 }
 
 .image {
@@ -78,6 +108,7 @@
 
 .slider {
   margin-top: 30px;
+  margin-bottom: 50px;
   max-width: 1120px;
   height: 313px;
 

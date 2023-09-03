@@ -54,7 +54,10 @@ const OrderDetails: React.FC<IProps> = ({ order, onClose }: IProps) => {
               <li className={styles.info_item}>
                 {order.stickers.reduce((acc, item) => acc + item.amount, 0)} шт на{' '}
                 {order.number_of_sheets}{' '}
-                {order.number_of_sheets.toString().endsWith('1') ? 'листе' : 'листах'}
+                {order.number_of_sheets.toString().endsWith('1') &&
+                !order.number_of_sheets.toString().endsWith('11')
+                  ? 'листе'
+                  : 'листах'}
               </li>
               <li className={styles.info_item}>
                 {order.cropping ? 'Вырезать по контуру' : 'Оставить на листе'}

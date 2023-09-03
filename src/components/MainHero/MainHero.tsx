@@ -12,6 +12,11 @@ import cocktail from '../../images/main-page/cocktail.png';
 import ufo from '../../images/main-page/ufo.png';
 import no_but from '../../images/main-page/no-but-yes.png';
 import astronaut from '../../images/main-page/astronaut.png';
+
+import spok from '../../images/main-page/spok.png';
+import sticker_ufo from '../../images/main-page/sticker-ufo.png';
+import starwars from '../../images/main-page/starwars.png';
+import space from '../../images/main-page/space-sticker.png';
 import styles from './MainHero.module.scss';
 
 const MainHero: React.FC = () => {
@@ -39,9 +44,9 @@ const MainHero: React.FC = () => {
       <AnimatePresence>
         <motion.div className={styles.images}>
           <motion.img
-            src={cocktail}
+            src={spok}
             className={styles.image}
-            style={{ top: 0, left: 160 }}
+            style={{ top: 0, left: 180 }}
             initial={{
               opacity: 0,
               translateY: 170,
@@ -56,9 +61,9 @@ const MainHero: React.FC = () => {
             }}
           />
           <motion.img
-            src={ufo}
+            src={sticker_ufo}
             className={styles.image}
-            style={{ top: 35, left: 310 }}
+            style={{ top: 105, left: 260 }}
             initial={{
               opacity: 0,
               translateY: 170,
@@ -73,26 +78,9 @@ const MainHero: React.FC = () => {
             }}
           />
           <motion.img
-            src={no_but}
+            src={space}
             className={styles.image}
-            style={{ top: 90, left: 130 }}
-            initial={{
-              opacity: 0,
-              translateY: 170,
-            }}
-            animate={{
-              transition: {
-                opacity: { duration: 0.35, delay: 0.45 },
-                translateY: { duration: 0.7, delay: 0.3 },
-              },
-              opacity: 1,
-              translateY: 0,
-            }}
-          />
-          <motion.img
-            src={astronaut}
-            className={styles.image}
-            style={{ top: 65, left: 0 }}
+            style={{ top: 115, left: -50 }}
             initial={{
               opacity: 0,
               translateY: 170,
@@ -101,6 +89,23 @@ const MainHero: React.FC = () => {
               transition: {
                 opacity: { duration: 0.35, delay: 0.6 },
                 translateY: { duration: 0.7, delay: 0.45 },
+              },
+              opacity: 1,
+              translateY: 0,
+            }}
+          />{' '}
+          <motion.img
+            src={starwars}
+            className={styles.image}
+            style={{ top: 280, left: 160, rotate: '-20deg' }}
+            initial={{
+              opacity: 0,
+              translateY: 170,
+            }}
+            animate={{
+              transition: {
+                opacity: { duration: 0.35, delay: 0.45 },
+                translateY: { duration: 0.7, delay: 0.3 },
               },
               opacity: 1,
               translateY: 0,

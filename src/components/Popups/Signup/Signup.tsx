@@ -63,7 +63,7 @@ const Signup: React.FC = () => {
             const randomNumber = getRandomNumber(1, 3);
             dispatch(
               openInfo({
-                title: 'Добро пожаловать!',
+                title: 'Подтвердите почту',
                 text: 'Мы направили письмо на вашу электронную почту. Для подтверждения профиля перейдите по ссылке в письме.',
                 buttonText: 'Понятно!',
                 image: require(`../../../images/check-your-mail-${randomNumber}.png`),
