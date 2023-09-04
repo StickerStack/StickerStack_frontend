@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes, Navigate, useLocation } from 'react-router-dom';
 
 import {
   Header,
@@ -33,15 +33,26 @@ import {
 } from '../../utils/constants';
 import { useAppDispatch } from '../../hooks/hooks';
 import { useScrollToTop } from '../../hooks/useScrollToTop';
-import { getUser, signInMockUser } from '../../store/userSlice';
-import styles from './App.module.scss';
 import { OrdersPage } from '../pages/OrdersPage/OrdersPage';
 import { PolicyPage } from '../pages/PolicyPage/PolicyPage';
+import { addSticker, getCart } from '../../store/cartSlice';
+import { getUser, signInMockUser } from '../../store/userSlice';
+import { useSelector } from 'react-redux';
+import { setCardsFromCart } from '../../store/cardsSlice';
+import { ICart } from '../../interfaces/ICart';
+import { ICardsState, IUserState } from '../../interfaces';
 import { AcceptCookies } from '../AcceptCookies/AcceptCookies';
+        
+import styles from './App.module.scss';
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
+  const location = useLocation();
   const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const isLogged = useSelector((state: { user: IUserState }) => state.user.isLogged);
+  const cards = useSelector((state: { cards: ICardsState }) => state.cards);
+  const { items } = useSelector((state: { cart: ICart }) => state.cart);
 
   useScrollToTop();
 
@@ -58,6 +69,48 @@ const App: React.FC = () => {
 
     // eslint-disable-next-line
   }, []);
+
+  useEffect(() => {
+    isLogged &&
+      dispatch(getCart()).then((res) => {
+        console.log(res);
+      });
+    // eslint-disable-next-line
+  }, [location, isLogged]);
+
+  useEffect(() => {
+    if (items.length !== 0) {
+      dispatch(setCardsFromCart(items));
+    }
+    // eslint-disable-next-line
+  }, [items]);
+
+  useEffect(() => {
+    isLogged &&
+      !cards.processing &&
+      cards.cards.forEach((card) => {
+        const added = items.find((item) => item.id === card.id);
+
+        !added &&
+          dispatch(
+            addSticker({
+              amount: card.amount,
+              image: card.image.startsWith('data:image/png;base64,')
+                ? card.image.replace('data:image/png;base64,', '')
+                : card.image.startsWith('data:image/jpeg;base64,')
+                ? card.image.replace('data:image/jpeg;base64,', '')
+                : card.image.startsWith('data:image/jpg;base64,')
+                ? card.image.replace('data:image/jpg;base64,', '')
+                : '',
+              shape: card.shape,
+              height: card.size.height,
+              width: card.size.width,
+            }),
+          );
+      });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname]);
 
   return (
     <>

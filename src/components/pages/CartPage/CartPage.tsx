@@ -9,9 +9,15 @@ import { openInfo, openMessage } from '../../../store/popupSlice';
 import { TitlePage, Container, ButtonWithText, TextUnderline, Input } from '../../UI';
 import { ADD_STICKERS, ORDERS } from '../../../utils/constants';
 import { Sticker } from '../../Sticker/Sticker';
-import { ICardsState, CartState } from '../../../interfaces';
 import { InfoBox } from '../../InfoBox/InfoBox';
-import { cleanCart, countTotal, updateAddress, uploadOrder } from '../../../store/cartSlice';
+import {
+  cleanCart,
+  countTotal,
+  getCart,
+  updateAddress,
+  uploadOrder,
+} from '../../../store/cartSlice';
+import { ICart } from '../../../interfaces/ICart';
 import { cleanCards } from '../../../store/cardsSlice';
 import { converter } from '../../../utils/converter';
 
@@ -24,8 +30,8 @@ const CartPage: React.FC = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
-  const cart = useSelector((state: { cart: CartState }) => state.cart);
+  //const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
+  const cart = useSelector((state: { cart: ICart }) => state.cart);
 
   const {
     register,
@@ -44,6 +50,7 @@ const CartPage: React.FC = () => {
 
   useEffect(() => {
     dispatch(countTotal());
+
     // eslint-disable-next-line
   }, [cart.items]);
 
@@ -57,25 +64,19 @@ const CartPage: React.FC = () => {
         cropping: cart.cropping,
         stickers: cart.items.map((item) => {
           return {
-            image: item.image.startsWith('data:image/png;base64,')
-              ? item.image.replace('data:image/png;base64,', '')
-              : item.image.startsWith('data:image/jpeg;base64,')
-              ? item.image.replace('data:image/jpeg;base64,', '')
-              : item.image.startsWith('data:image/jpg;base64,')
-              ? item.image.replace('data:image/jpg;base64,', '')
-              : '',
+            image: item.image,
             shape: item.shape,
             amount: item.amount,
-            width: Math.round(converter.pxToCm(item.size.width)),
-            height: Math.round(converter.pxToCm(item.size.height)),
+            width: Math.round(converter.pxToCm(item.width)),
+            height: Math.round(converter.pxToCm(item.height)),
           };
         }),
       }),
     )
       .unwrap()
       .then(() => {
-        dispatch(cleanCards());
-        dispatch(cleanCart());
+        // dispatch(cleanCards());
+        // dispatch(cleanCart());
         dispatch(
           openInfo({
             title: 'Заказ оформлен!',
