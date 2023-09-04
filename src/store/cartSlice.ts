@@ -14,17 +14,17 @@ const initialState: ICart = {
   items: [],
 };
 
-const addSticker = createAsyncThunk(
-  'cart/add_sticker',
-  async (data: ISticker, { rejectWithValue }) => {
-    try {
-      const response = await cartApi.addSticker(data);
-      return { data: response.data };
-    } catch (err) {
-      return rejectWithValue(err);
-    }
-  },
-);
+// const addSticker = createAsyncThunk(
+//   'cart/add_sticker',
+//   async (data: ISticker, { rejectWithValue }) => {
+//     try {
+//       const response = await cartApi.addSticker(data);
+//       return { data: response.data };
+//     } catch (err) {
+//       return rejectWithValue(err);
+//     }
+//   },
+// );
 
 const getCart = createAsyncThunk('get_cart', async (data, { rejectWithValue }) => {
   try {
@@ -145,7 +145,7 @@ const {
 export {
   cartSliceReducer,
   getCart,
-  addSticker,
+  // addSticker,
   deleteSticker,
   addItems,
   addItem,

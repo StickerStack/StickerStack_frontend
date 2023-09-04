@@ -1,6 +1,6 @@
 import { Api } from './Api';
 import { API_URL } from '../constants';
-import { ISticker } from '../../interfaces';
+import { IServerSticker, ISticker, IUploadSticker } from '../../interfaces/ISticker-new';
 
 class CartApi extends Api {
   constructor(url: string, headers: HeadersInit) {
@@ -16,8 +16,8 @@ class CartApi extends Api {
         image: sticker.image,
         amount: sticker.amount,
         shape: sticker.shape,
-        height: sticker.height,
-        width: sticker.width,
+        height: sticker.size.height,
+        width: sticker.size.width,
       }),
     });
 
@@ -47,12 +47,13 @@ class CartApi extends Api {
     return this.checkResponse(data);
   }
 
+// https://scriptdev.ru/guide/045/#omit-t-k  -- если будут вопросы по типу Omit
   public async uploadOrder(
     cost: number,
     address: string,
     number: number,
     cropping: boolean,
-    stickers: Array<ISticker>,
+    stickers: Array<IUploadSticker>,
   ) {
     const data = await fetch(`${this.url}/orders/add_order`, {
       method: 'POST',
