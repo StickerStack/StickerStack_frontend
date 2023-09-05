@@ -165,7 +165,7 @@ const Signin: React.FC = () => {
           <InputError error={errors.password} />
         </InputField>
       </div>
-      <ButtonWithText type='submit' disabled={!isValid} loading={loading}>
+      <ButtonWithText type='submit' className={styles.button} disabled={!isValid} loading={loading}>
         Войти
       </ButtonWithText>
       {!location.pathname.startsWith('/api/auth/verifyemail') ? (

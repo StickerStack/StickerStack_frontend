@@ -80,7 +80,7 @@ const Header: React.FC = () => {
         style={
           window.innerHeight / document.body.clientHeight < 0.6 && visibleBorder
             ? {
-                opacity: 0.6,
+                opacity: 0.8,
                 width:
                   ((scrollY +
                     window.innerHeight *
@@ -94,7 +94,7 @@ const Header: React.FC = () => {
       <Container className={styles.header_container}>
         <Link to='/' className={styles.logo}>
           <img className={styles.logo_image} src={logo} alt='Логотип StickerStack' />
-          StickerStack
+          <span className={styles.logo_text}>StickerStack</span>
         </Link>
         <AnimatePresence>
           {isMenuShow && (
@@ -138,6 +138,7 @@ const Header: React.FC = () => {
           <ButtonWithText
             type='button'
             theme='transparent'
+            className={styles.button}
             onClick={() => dispatch(openPopup(Signin))}
           >
             Войти

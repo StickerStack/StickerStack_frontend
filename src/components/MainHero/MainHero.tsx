@@ -37,7 +37,12 @@ const MainHero: React.FC = () => {
       <section className={styles.section}>
         <h1 className={styles.title}>StickerStack</h1>
         <h2 className={styles.description}>Кастомные стикеры: создавай и заказывай онлайн!</h2>
-        <ButtonWithText type='button' color='contrast' onClick={() => onClickTry()}>
+        <ButtonWithText
+          type='button'
+          color='contrast'
+          className={styles.button}
+          onClick={() => onClickTry()}
+        >
           {isLogged ? 'Заказать' : 'Попробовать'}
         </ButtonWithText>
       </section>
@@ -46,7 +51,6 @@ const MainHero: React.FC = () => {
           <motion.img
             src={spok}
             className={styles.image}
-            style={{ top: 0, left: 180 }}
             initial={{
               opacity: 0,
               translateY: 170,
@@ -63,7 +67,6 @@ const MainHero: React.FC = () => {
           <motion.img
             src={sticker_ufo}
             className={styles.image}
-            style={{ top: 105, left: 260 }}
             initial={{
               opacity: 0,
               translateY: 170,
@@ -80,7 +83,6 @@ const MainHero: React.FC = () => {
           <motion.img
             src={space}
             className={styles.image}
-            style={{ top: 115, left: -50 }}
             initial={{
               opacity: 0,
               translateY: 170,
@@ -93,11 +95,10 @@ const MainHero: React.FC = () => {
               opacity: 1,
               translateY: 0,
             }}
-          />{' '}
+          />
           <motion.img
             src={starwars}
             className={styles.image}
-            style={{ top: 280, left: 160, rotate: '-20deg' }}
             initial={{
               opacity: 0,
               translateY: 170,

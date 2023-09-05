@@ -65,6 +65,8 @@ const settings = {
       breakpoint: 600,
       settings: {
         slidesToShow: 1,
+        dots: true,
+        dotsClass: cn('slick-dots', styles.dots),
       },
     },
   ],

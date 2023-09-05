@@ -10,45 +10,144 @@
   gap: 50px;
 
   @media screen and (max-width: 1010px) {
+    min-height: calc(100vh - 90px);
     flex-direction: column-reverse;
+    padding-bottom: 0;
     gap: 10px;
   }
 }
 .section {
   margin-top: 90px;
+  @media screen and (max-width: 1010px) {
+    margin-top: 30px;
+    @include flex(column, center, center);
+    text-align: center;
+  }
+  @media screen and (max-width: 768px) {
+    margin-top: 5px;
+  }
 }
 .title {
   font-family: Sen;
-  @include font(48px, 65px, 700);
+  @include font(48px, 52px, 700);
   letter-spacing: 0.48px;
-  margin: 0 0 30px;
+  margin: 0 0 15px;
+
+  @media screen and (max-width: 560px) {
+    margin-bottom: 12px;
+  }
 }
 
 .description {
   max-width: 445px;
   @include font(24px, 24px, 500);
-  margin: 0 0 60px;
+  margin: 0 0 52px;
+  @media screen and (max-width: 560px) {
+    font-size: 16px;
+    margin-bottom: 28px;
+  }
 }
 
-.links {
-  margin: 45px auto 0 8px;
-  display: flex;
-  gap: 20px;
-}
-
-.link {
-  width: fit-content;
-  margin: 0;
-  font-size: 18px;
+.button {
+  @media screen and (max-width: 420px) {
+    width: 100%;
+  }
 }
 
 .images {
-  min-width: 595px;
-  min-height: 500px;
+  width: 100%;
+  max-width: 590px;
+  height: 500px;
   position: relative;
   margin: 0 auto;
+
+  @media screen and (max-width: 1280px) {
+    max-width: 500px;
+    height: 450px;
+  }
+
+  @media screen and (max-width: 560px) {
+    max-width: 315px;
+    height: 330px;
+  }
 }
 
 .image {
   position: absolute;
+  object-fit: contain;
+
+  &:first-child {
+    top: 5px;
+    left: 180px;
+    transform: rotate(10deg) !important;
+  }
+
+  &:nth-child(2) {
+    top: 105px;
+    left: 285px;
+    transform: rotate(10deg) !important;
+  }
+
+  &:nth-child(3) {
+    top: 115px;
+    left: 0;
+    transform: rotate(-15deg) !important;
+  }
+
+  &:nth-child(4) {
+    top: 310px;
+    left: 160px;
+    transform: rotate(-10deg) !important;
+  }
+
+  @media screen and (max-width: 1280px) {
+    &:first-child {
+      left: 140px;
+      width: 200px;
+    }
+
+    &:nth-child(2) {
+      top: 105px;
+      left: 230px;
+      width: 280px;
+    }
+
+    &:nth-child(3) {
+      top: 115px;
+      width: 250px;
+    }
+
+    &:nth-child(4) {
+      top: 270px;
+      left: 110px;
+      width: 320px;
+    }
+  }
+
+  @media screen and (max-width: 560px) {
+    &:first-child {
+      left: 70px;
+      width: 150px;
+    }
+
+    &:nth-child(2) {
+      top: 65px;
+      left: 150px;
+      width: 175px;
+      transform: rotate(5deg) !important;
+    }
+
+    &:nth-child(3) {
+      top: 100px;
+      left: -8px;
+      width: 185px;
+    }
+
+    &:nth-child(4) {
+      top: 200px;
+      left: 80px;
+      width: 230px;
+      transform: rotate(-18deg) !important;
+    }
+  }
 }

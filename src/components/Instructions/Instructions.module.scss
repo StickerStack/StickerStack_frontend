@@ -6,6 +6,12 @@
   box-sizing: border-box;
   @include flex(column, center, center);
   gap: 45px;
+
+  @media screen and (max-width: 768px) {
+    padding-top: 50px;
+    padding-bottom: 10px;
+    gap: 25px;
+  }
 }
 
 .list {
@@ -20,19 +26,37 @@
 .step {
   @include flex(row, start, start);
   gap: 35px;
+  @media screen and (max-width: 768px) {
+    max-width: 100%;
+    flex-direction: column;
+    gap: 15px;
+
+    &:nth-child(2) {
+      flex-direction: column-reverse;
+    }
+  }
 }
 
 .content {
   max-width: 500px;
   @include flex(column, start, start);
+  @media screen and (max-width: 768px) {
+    max-width: 100%;
+  }
 }
 
 .title {
   font-weight: 500;
+  margin: 0;
 }
 
 .image {
-  width: 500px;
+  max-width: 500px;
   max-height: 260px;
   object-fit: contain;
+  object-position: center;
+  margin: 0 auto;
+  @media screen and (max-width: 768px) {
+    max-width: 280px;
+  }
 }

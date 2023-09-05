@@ -11,6 +11,12 @@
   @include flex(column, center, center);
   gap: 25px;
   background-color: $secondary-bg-color;
+
+  @media screen and (max-width: 768px) {
+    font-size: 16px;
+    padding-top: 50px;
+    padding-bottom: 70px;
+  }
 }
 
 .title,
@@ -30,6 +36,10 @@
   @include flex(row, start, start);
   gap: 25px;
   text-align: left;
+
+  @media screen and (max-width: 768px) {
+    gap: 10px;
+  }
 }
 
 .text {
@@ -71,8 +81,8 @@
   @media screen and (max-width: 880px) {
     transform: translate(calc(100vw * 0.65), 550%);
   }
-  @media screen and (max-width: 530px) {
-    transform: translate(calc(100vw * 0.55), 550%);
+  @media screen and (max-width: 600px) {
+    display: none !important;
   }
 
   &::before {
@@ -82,6 +92,11 @@
 }
 .next_arrow {
   transform: translate(-65%, 550%);
+
+  @media screen and (max-width: 600px) {
+    display: none !important;
+  }
+
   &::before {
     background: url(../../images/icons/arrow-simple.svg) no-repeat center;
   }
@@ -100,15 +115,43 @@
     height: 24px;
     background-color: transparent;
     opacity: 1;
+
+    @media screen and (max-width: 600px) {
+      display: none;
+    }
   }
   &:hover::before {
     opacity: 0.7;
   }
 }
 
+.dots {
+  bottom: -36px;
+}
+
+.dots li {
+  min-width: 8px;
+  width: 8px;
+  margin: 0 3px;
+}
+.dots li button::before {
+  content: '';
+  min-width: 7px;
+  width: 7px;
+  height: 7px;
+  box-sizing: border-box;
+  background-color: #fff;
+  border-radius: 50%;
+  opacity: 0.8;
+}
+.dots :global(li.slick-active) button::before {
+  background-color: #fff;
+  opacity: 1;
+}
+
 .slider {
-  margin-top: 30px;
-  margin-bottom: 50px;
+  margin-top: 5px;
+  margin-bottom: 40px;
   max-width: 1120px;
   height: 313px;
 
@@ -122,6 +165,10 @@
 
   @media screen and (max-width: 768px) {
     max-width: calc(100vw - 80px);
+  }
+
+  @media screen and (max-width: 600px) {
+    height: 213px;
   }
 
   @media screen and (max-width: 460px) {

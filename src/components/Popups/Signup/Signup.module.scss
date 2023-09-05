@@ -1,15 +1,21 @@
 @import '../../../utils/_scss-variables.scss';
 
 .signup {
-  @include flex(column, _, _);
+  @include flex(column, center, center);
   gap: 25px;
   box-sizing: border-box;
   position: relative;
 
   .inputs {
+    width: 100%;
     margin: 15px 0 5px;
     @include flex(column, flex-start, flex-start);
     gap: 25px;
+
+    @media screen and (max-width: 768px) {
+      gap: 16px;
+      margin: 0;
+    }
   }
 
   .password {
@@ -30,7 +36,16 @@
 
   .link {
     @include font(16px, 19px, 400);
-
     text-align: center;
+
+    @media screen and (max-width: 768px) {
+      @include flex(column, center, center);
+      gap: 4px;
+    }
+  }
+
+  .button {
+    padding: 14px 15px;
+    width: 100%;
   }
 }

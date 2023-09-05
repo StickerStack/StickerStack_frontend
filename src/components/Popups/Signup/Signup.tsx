@@ -231,7 +231,7 @@ const Signup: React.FC = () => {
           </a>
         </p>
       </CheckBoxForm>
-      <ButtonWithText type='submit' disabled={!isValid} loading={loading}>
+      <ButtonWithText type='submit' disabled={!isValid} loading={loading} className={styles.button}>
         Зарегистрироваться
       </ButtonWithText>
       <span className={styles.link}>
