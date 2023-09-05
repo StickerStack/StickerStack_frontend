@@ -11,7 +11,7 @@
 
   @media screen and (max-width: 1010px) {
     min-height: calc(100vh - 80px);
-    min-height: calc(100dvh - 80px);
+    min-height: calc(100svh - 80px);
     flex-direction: column-reverse;
     padding-bottom: 40px;
     gap: 10px;
