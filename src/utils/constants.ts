@@ -19,6 +19,7 @@ const API_URL = 'https://api.stickerstack.ru/v1';
 const PROFILE = '/profile';
 const PRIVACY = '/privacy';
 const TERMS = '/terms';
+const COOKIE = '/cookie';
 const PAGE_404 = '/page-not-found';
 const ADD_STICKERS = '/add-stickers';
 const CART = '/cart';
@@ -855,6 +856,54 @@ const terms = {
   ],
 };
 
+const cookie = {
+  title: 'Политика использования файлов cookie',
+  sections: [
+    {
+      id: generateRandomNumber(),
+      title: '',
+      paragraphs: [
+        {
+          id: generateRandomNumber(),
+          text: 'Наш сайт, как и большинство других, использует файлы cookie, чтобы предоставлять услуги, наиболее отвечающие Вашим интересам и потребностям, а также собирать статистическую и маркетинговую информацию для анализа и совершенствования наших услуг и сайтов. ',
+        },
+        {
+          id: generateRandomNumber(),
+          text: 'Cookies - это небольшие файлы, которые сохраняются на вашем компьютере при посещении сайта. Они позволяют сайту запоминать ваши предпочтения и настройки, а также собирать информацию о том, как вы используете сайт.',
+        },
+        {
+          id: generateRandomNumber(),
+          text: 'Мы используем cookies для следующих целей:',
+        },
+        {
+          id: generateRandomNumber(),
+          text: '1. Улучшение функциональности сайта: мы используем cookies, чтобы запомнить ваши предпочтения и настройки, например, язык сайта или размер шрифта.',
+        },
+        {
+          id: generateRandomNumber(),
+          text: '2. Анализ использования сайта: мы используем cookies, чтобы собирать информацию о том, как вы используете наш сайт. Это позволяет нам оптимизировать работу сайта и улучшить пользовательский опыт.',
+        },
+        {
+          id: generateRandomNumber(),
+          text: '3. Реклама: мы можем использовать cookies, чтобы показывать вам более релевантную рекламу на нашем сайте и на других сайтах.',
+        },
+        {
+          id: generateRandomNumber(),
+          text: 'Вы можете отключить использование cookies в настройках вашего браузера. Однако, это может привести к ограничению функциональности сайта и ухудшению пользовательского опыта.',
+        },
+        {
+          id: generateRandomNumber(),
+          text: 'Мы не передаем информацию, собранную через cookies, третьим лицам, кроме случаев, когда это необходимо для обеспечения работы сайта или соблюдения законодательства. ',
+        },
+        {
+          id: generateRandomNumber(),
+          text: 'Продолжая использовать наш сайт, вы соглашаетесь с использованием cookies в соответствии с нашей политикой конфиденциальности.',
+        },
+      ],
+    },
+  ],
+};
+
 const orders = [
   {
     order_id: 1,
@@ -922,6 +971,7 @@ export {
   PROFILE,
   PRIVACY,
   TERMS,
+  COOKIE,
   ORDERS,
   PAGE_404,
   ADD_STICKERS,
@@ -937,6 +987,7 @@ export {
   orders,
   privacy,
   terms,
+  cookie,
   questions,
   pagePrice,
   pageSize,

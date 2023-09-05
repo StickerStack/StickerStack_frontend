@@ -9,11 +9,12 @@ import { Sticker } from '../../Sticker/Sticker';
 import { RadioButton, TextUnderline, ButtonWithText, TitlePage, Container } from '../../UI';
 import { NewSticker } from '../../index';
 import { InfoBox } from '../../InfoBox/InfoBox';
-import { openPreview } from '../../../store/popupSlice';
+import { openMessage, openPreview } from '../../../store/popupSlice';
 import { pagePrice, pageSizePx, CART, CARDS_MAXIMUM } from '../../../utils/constants';
-import { CartState, ICardsState } from '../../../interfaces';
-import { addCard, setActive } from '../../../store/cardsSlice';
-import { addItems, updateCropping, updateSheets } from '../../../store/cartSlice';
+import { ICardsState } from '../../../interfaces';
+import { ICart } from '../../../interfaces/ICart';
+import { addCard, setActive, setProcessing } from '../../../store/cardsSlice';
+import { addSticker, getCart, updateCropping, updateSheets } from '../../../store/cartSlice';
 import { generateRandomNumber } from '../../../utils/generateRandomNumber';
 import { calculateStickerOnList } from '../../../utils/calculateStickerOnList';
 
@@ -22,9 +23,10 @@ import styles from './AddStickers.module.scss';
 const AddStickers: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
-  const cart = useSelector((state: { cart: CartState }) => state.cart);
+  const cart = useSelector((state: { cart: ICart }) => state.cart);
   const validation = useSelector((state: { cards: ICardsState }) => state.cards.valid);
 
   const fullPrice = pagePrice * cart.number_of_sheets;
@@ -39,7 +41,7 @@ const AddStickers: React.FC = () => {
         amount: 1,
         size: { width: 0, height: 0 },
         optimalSize: { width: 0, height: 0 },
-        id: generateRandomNumber(),
+        id: `${generateRandomNumber()}`,
         active: true,
         valid: false,
       }),
@@ -86,31 +88,33 @@ const AddStickers: React.FC = () => {
         <div className={styles.cards}>
           {cards.map((card) => (
             <AnimatePresence key={card.id}>
-              <motion.div
-                className={card.active ? styles.motion : styles.motion_inactive}
-                initial={{
-                  opacity: 0.4,
-                  height: 0,
-                }}
-                animate={{
-                  transition: {
-                    height: { duration: 0.4 },
-                    opacity: { duration: 0.25, delay: 0.15 },
-                  },
-                  opacity: 1,
-                  height: 'auto',
-                }}
-                exit={{
-                  opacity: 0,
-                  height: 0,
-                  transition: {
-                    height: { duration: 0.4 },
-                    opacity: { duration: 0.25 },
-                  },
-                }}
-              >
-                <NewSticker key={card.id} card={card} />
-              </motion.div>
+              {card.active && (
+                <motion.div
+                  className={card.active ? styles.motion : styles.motion_inactive}
+                  initial={{
+                    opacity: 0.4,
+                    height: 0,
+                  }}
+                  animate={{
+                    transition: {
+                      height: { duration: 0.4 },
+                      opacity: { duration: 0.25, delay: 0.15 },
+                    },
+                    opacity: 1,
+                    height: 'auto',
+                  }}
+                  exit={{
+                    opacity: 0,
+                    height: 0,
+                    transition: {
+                      height: { duration: 0.4 },
+                      opacity: { duration: 0.25 },
+                    },
+                  }}
+                >
+                  <NewSticker key={card.id} card={card} />
+                </motion.div>
+              )}
               {!card.active && (
                 <motion.div
                   className={styles.motion}
@@ -142,7 +146,7 @@ const AddStickers: React.FC = () => {
           ))}
         </div>
         {cards.length < CARDS_MAXIMUM && (
-          <ButtonWithText theme='transparent' onClick={handleAddCard}>
+          <ButtonWithText theme='transparent' onClick={handleAddCard} disabled={!validation}>
             Добавить стикер
           </ButtonWithText>
         )}
@@ -189,9 +193,65 @@ const AddStickers: React.FC = () => {
           <ButtonWithText
             theme='filled'
             className={styles.button}
+            loading={loading}
             onClick={() => {
-              dispatch(addItems(cards));
-              navigate(CART);
+              dispatch(setProcessing(true));
+              setLoading(true);
+              const cardLast = cards[cards.length - 1];
+
+              cards.forEach((card) => {
+                if (card.id !== cardLast.id) {
+                  dispatch(
+                    addSticker({
+                      amount: card.amount,
+                      image: card.image.startsWith('data:image/png;base64,')
+                        ? card.image.replace('data:image/png;base64,', '')
+                        : card.image.startsWith('data:image/jpeg;base64,')
+                        ? card.image.replace('data:image/jpeg;base64,', '')
+                        : card.image.startsWith('data:image/jpg;base64,')
+                        ? card.image.replace('data:image/jpg;base64,', '')
+                        : '',
+                      shape: card.shape,
+                      height: card.size.height,
+                      width: card.size.width,
+                    }),
+                  );
+                } else {
+                  dispatch(
+                    addSticker({
+                      amount: card.amount,
+                      image: card.image.startsWith('data:image/png;base64,')
+                        ? card.image.replace('data:image/png;base64,', '')
+                        : card.image.startsWith('data:image/jpeg;base64,')
+                        ? card.image.replace('data:image/jpeg;base64,', '')
+                        : card.image.startsWith('data:image/jpg;base64,')
+                        ? card.image.replace('data:image/jpg;base64,', '')
+                        : '',
+                      shape: card.shape,
+                      height: card.size.height,
+                      width: card.size.width,
+                    }),
+                  )
+                    .unwrap()
+                    .then(() => {
+                      console.log('Успешно');
+                      dispatch(getCart());
+                      navigate(CART);
+                      setTimeout(() => dispatch(setProcessing(false)), 3000);
+                    })
+                    .catch(() =>
+                      dispatch(
+                        openMessage({
+                          text: 'Что-то пошло не так. Попробуйте еще раз.',
+                          isError: true,
+                        }),
+                      ),
+                    )
+                    .finally(() => {
+                      setLoading(false);
+                    });
+                }
+              });
             }}
             disabled={!validation}
           >

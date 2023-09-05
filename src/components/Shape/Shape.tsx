@@ -43,7 +43,7 @@ const Shape: React.FC<IProps> = ({
       case 'square':
         return 'Квадрат';
       case 'rounded_square':
-        return 'Закругленный вадрат';
+        return 'Закругленный квадрат';
       case 'circle':
         return 'Круг';
       case 'contour':

@@ -12,12 +12,13 @@ const initialState: ICardsState = {
       amount: 1,
       size: { width: 0, height: 0 },
       optimalSize: { width: 0, height: 0 },
-      id: generateRandomNumber(),
+      id: `${generateRandomNumber()}`,
       active: true,
       valid: false,
     },
   ],
   valid: false,
+  processing: false,
 };
 
 const removeBackground = createAsyncThunk(
@@ -39,7 +40,7 @@ const cardsSlice = createSlice({
     addCard(state, action: { payload: ICard; type: string }) {
       state.cards.push({ ...action.payload });
     },
-    setActive(state, action: { payload: number; type: string }) {
+    setActive(state, action: { payload: string; type: string }) {
       state.cards = state.cards.map((card) => {
         if (card.id !== action.payload) {
           card.active = false;
@@ -47,7 +48,7 @@ const cardsSlice = createSlice({
         return card;
       });
     },
-    setValid(state, action: { payload: { id: number; valid: boolean }; type: string }) {
+    setValid(state, action: { payload: { id: string; valid: boolean }; type: string }) {
       const { id, valid } = action.payload;
       const indexCard = state.cards.find((card) => card.id === id);
 
@@ -57,6 +58,9 @@ const cardsSlice = createSlice({
         indexCard.valid = false;
       }
     },
+    setProcessing(state, action) {
+      state.processing = action.payload;
+    },
     checkValidation(state) {
       const indexCard = state.cards.find((card) => card.valid === false);
 
@@ -64,7 +68,7 @@ const cardsSlice = createSlice({
         state.valid = false;
       } else state.valid = true;
     },
-    deleteCard(state, action: { payload: number; type: string }) {
+    deleteCard(state, action: { payload: string; type: string }) {
       state.cards = state.cards.filter((card) => card.id !== action.payload);
       if (state.cards.length === 0) {
         state.cards = [
@@ -74,7 +78,7 @@ const cardsSlice = createSlice({
             amount: 1,
             size: { width: 0, height: 0 },
             optimalSize: { width: 0, height: 0 },
-            id: generateRandomNumber(),
+            id: `${generateRandomNumber()}`,
             active: true,
             valid: false,
           },
@@ -93,7 +97,7 @@ const cardsSlice = createSlice({
         state.cards[indexCard] = updatedCard;
       }
     },
-    updateShape(state, action: { payload: { id: number; shape: TCardShape }; type: string }) {
+    updateShape(state, action: { payload: { id: string; shape: TCardShape }; type: string }) {
       const { id, shape } = action.payload;
       const indexCard = state.cards.find((card) => card.id === id);
 
@@ -101,7 +105,7 @@ const cardsSlice = createSlice({
         indexCard.shape = shape;
       }
     },
-    updateAmount(state, action: { payload: { id: number; amount: number }; type: string }) {
+    updateAmount(state, action: { payload: { id: string; amount: number }; type: string }) {
       const { id, amount } = action.payload;
       const indexCard = state.cards.find((card) => card.id === id);
 
@@ -113,7 +117,7 @@ const cardsSlice = createSlice({
       state,
       action: {
         payload: {
-          id: number;
+          id: string;
           image: string;
           size: { width: number; height: number };
           optimalSize: { width: number; height: number };
@@ -132,7 +136,7 @@ const cardsSlice = createSlice({
     },
     updateSize(
       state,
-      action: { payload: { id: number; width: number; height: number }; type: string },
+      action: { payload: { id: string; width: number; height: number }; type: string },
     ) {
       const { id, width, height } = action.payload;
       const foundCard = state.cards.find((card) => card.id === id);
@@ -142,7 +146,31 @@ const cardsSlice = createSlice({
         foundCard.size.height = height;
       }
     },
+
+    setCardsFromCart(state, action) {
+      const newCards = action.payload.map((card: any, index: number) => {
+        const newCard: ICard = {
+          image: card.image,
+          shape: card.shape,
+          amount: card.amount,
+          size: { width: card.width, height: card.height },
+          optimalSize: { width: 27, height: 27 },
+          id: card.id,
+          active: false,
+          valid: false,
+        };
+        newCard.active = false;
+
+        if (index === 0) {
+          newCard.active = true;
+        }
+
+        return { ...newCard };
+      });
+      state.cards = newCards;
+    },
   },
+
   extraReducers: (builder) => {
     builder.addCase(removeBackground.fulfilled, (state, action) => {
       console.log(
@@ -161,6 +189,7 @@ const {
   deleteCard,
   cleanCards,
   setActive,
+  setProcessing,
   setValid,
   checkValidation,
   updatePicture,
@@ -168,6 +197,7 @@ const {
   updateShape,
   updateAmount,
   updateSize,
+  setCardsFromCart,
 } = cardsSlice.actions;
 
 export {
@@ -176,6 +206,7 @@ export {
   deleteCard,
   cleanCards,
   setActive,
+  setProcessing,
   setValid,
   checkValidation,
   updatePicture,
@@ -184,4 +215,5 @@ export {
   removeBackground,
   updateCard,
   updateSize,
+  setCardsFromCart,
 };

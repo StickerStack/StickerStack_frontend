@@ -10,14 +10,16 @@ interface IProps {
   type: ButtonType;
   className?: string;
   label: string;
+  disabled?: boolean;
   onClick?: () => void;
 }
 
-const ButtonCustom: React.FC<IProps> = ({ type, className, label, onClick }: IProps) => {
+const ButtonCustom: React.FC<IProps> = ({ type, disabled, className, label, onClick }: IProps) => {
   return (
     <button
       className={cn(styles.button, styles[`button_${type}`], className)}
       aria-label={label}
+      disabled={disabled}
       onClick={onClick}
     >
       {type === 'cart' && <CartSvg className={styles.button_image} />}

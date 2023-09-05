@@ -11,17 +11,18 @@ import { useAppDispatch } from '../../hooks/hooks';
 import {
   checkValidation,
   deleteCard,
-  removeBackground,
   setActive,
   setValid,
   updateAmount,
   updateShape,
   updateSize,
 } from '../../store/cardsSlice';
-import { CartState, ICard, ICardsState } from '../../interfaces';
+import { ICard, ICardsState } from '../../interfaces';
+import { ICart } from '../../interfaces/ICart';
 import { TCardShape } from '../../interfaces/ICard';
 import { registerAmount, registerSize } from '../../utils/registersRHF';
-import { addItem, deleteItem, updateItem } from '../../store/cartSlice';
+import { addItem, addSticker, deleteItem, deleteSticker, updateItem } from '../../store/cartSlice';
+import { openMessage } from '../../store/popupSlice';
 import {
   AMOUNT_INPUT_MAX_LENGTH,
   AMOUNT_INPUT_MIN_LENGTH,
@@ -56,12 +57,24 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
   );
 
   const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
-  const cart = useSelector((state: { cart: CartState }) => state.cart);
+  const cart = useSelector((state: { cart: ICart }) => state.cart);
 
   const handleDelete = () => {
-    dispatch(deleteCard(card.id));
-    if (cart.items.length !== 0) {
-      dispatch(deleteItem(card.id));
+    if (cart.items.length !== 0 && typeof card.id === 'string') {
+      dispatch(deleteSticker(card.id))
+        .unwrap()
+        .then(() => {
+          dispatch(deleteCard(card.id));
+          dispatch(deleteItem(card.id));
+        })
+        .catch(() =>
+          dispatch(
+            openMessage({
+              text: 'Что-то пошло не так. Попробуйте еще раз.',
+              isError: true,
+            }),
+          ),
+        );
     }
   };
 
@@ -97,10 +110,9 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
     if (isValid && card.image) {
       dispatch(setValid({ id: card.id, valid: true }));
       dispatch(checkValidation());
-      cart.items.length !== 0 && dispatch(addItem(card));
     } else dispatch(setValid({ id: card.id, valid: false }));
     dispatch(checkValidation());
-    watchAllFields && cart.items.length !== 0 && dispatch(updateItem(card));
+    //  watchAllFields && cart.items.length !== 0 && dispatch(updateItem(card));
     // eslint-disable-next-line
   }, [isValid, watchAllFields]);
 
@@ -122,7 +134,7 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
     if ((shape as TCardShape) === 'contour') {
       const formData = new FormData();
       formData.append('file', card.image);
-      dispatch(removeBackground({ data: formData, id: card.id }));
+      //  dispatch(removeBackground({ data: formData, id: card.id }));
     }
     dispatch(updateShape({ id: card.id, shape: shape }));
   };

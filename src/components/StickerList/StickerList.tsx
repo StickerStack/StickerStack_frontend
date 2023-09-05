@@ -50,7 +50,14 @@ const StickerList: React.FC<IProps> = ({ cards }: IProps) => {
             }}
             key={card.id}
           >
-            <img className={cn(styles.image, styles[`image_${card.shape}`])} src={card.image} />
+            <img
+              className={cn(styles.image, styles[`image_${card.shape}`])}
+              src={
+                card.image.startsWith('data:image/png;base64,')
+                  ? card.image
+                  : `data:image/png;base64,${card.image}`
+              }
+            />
           </div>
         );
       })}
