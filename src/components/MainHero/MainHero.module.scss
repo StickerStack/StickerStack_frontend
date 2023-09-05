@@ -10,16 +10,21 @@
   gap: 50px;
 
   @media screen and (max-width: 1010px) {
-    min-height: calc(100vh - 90px);
+    min-height: calc(100vh - 80px);
+    min-height: calc(100dvh - 80px);
     flex-direction: column-reverse;
-    padding-bottom: 0;
+    padding-bottom: 40px;
     gap: 10px;
+  }
+
+  @media screen and (max-width: 370px) {
+    overflow: hidden;
   }
 }
 .section {
   margin-top: 90px;
   @media screen and (max-width: 1010px) {
-    margin-top: 30px;
+    margin-top: 10px;
     @include flex(column, center, center);
     text-align: center;
   }
@@ -42,9 +47,12 @@
   max-width: 445px;
   @include font(24px, 24px, 500);
   margin: 0 0 52px;
+
+  @media screen and (max-width: 1010px) {
+    margin-bottom: 28px;
+  }
   @media screen and (max-width: 560px) {
     font-size: 16px;
-    margin-bottom: 28px;
   }
 }
 
@@ -109,7 +117,7 @@
     &:nth-child(2) {
       top: 105px;
       left: 230px;
-      width: 280px;
+      width: 270px;
     }
 
     &:nth-child(3) {
