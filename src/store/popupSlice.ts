@@ -23,6 +23,7 @@ const initialState: IPopupState = {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     onClickSecond: () => {},
     src: '',
+    imageAbsolute: false,
   },
   message: {
     isOpen: false,
@@ -70,6 +71,7 @@ const popupSlice = createSlice({
           onClick?: () => void;
           onClickSecond?: () => void;
           image: string;
+          imageAbsolute?: boolean;
         };
         type: string;
       },
@@ -83,6 +85,7 @@ const popupSlice = createSlice({
       state.info.onClick = action.payload.onClick;
       state.info.onClickSecond = action.payload.onClickSecond;
       state.info.src = action.payload.image;
+      state.info.imageAbsolute = action.payload.imageAbsolute;
     },
 
     openOrder(state, action: { payload: IOrderState; type: string }) {

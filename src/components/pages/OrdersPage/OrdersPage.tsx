@@ -9,6 +9,7 @@ import { getUserOrders } from '../../../store/userSlice';
 import { useEffect, useState } from 'react';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { IUserState } from '../../../interfaces';
+import { orders } from '../../../utils/content/profile';
 
 import styles from './OrdersPage.module.scss';
 
@@ -38,14 +39,14 @@ const OrdersPage: React.FC = () => {
   return (
     <main className={styles.orders}>
       <Container className={styles.orders_container}>
-        <TitlePage type='main-title'>Заказы</TitlePage>
-        {error && <Error>Не удалось прогрузить ваши заказы</Error>}
+        <TitlePage type='main-title'>{orders.title}</TitlePage>
+        {error && <Error>{orders.error}</Error>}
         {loading ? (
           <Ufo />
         ) : userOrders.length === 0 ? (
           <div className={styles.empty}>
             <div className={styles.ufo} />
-            <span>У вас пока нет заказов.</span>
+            <span>{orders.empty}</span>
             <ButtonWithText color='contrast' onClick={() => navigate(ADD_STICKERS)}>
               Заказать стикеры
             </ButtonWithText>

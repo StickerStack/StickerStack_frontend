@@ -23,7 +23,7 @@ import { getUser, updateStatus } from '../../../store/userSlice';
 import { signUp, signIn, sendVerificationCode } from '../../../store/authSlice';
 import { registerEmail, registerPassword } from '../../../utils/registersRHF';
 import { ADD_STICKERS, PRIVACY, TERMS, getRandomNumber } from '../../../utils/constants';
-import { messages, signup } from '../../../utils/content/popups';
+import { messages, signup, verifyPlease } from '../../../utils/content/popups';
 
 import styles from './Signup.module.scss';
 
@@ -64,9 +64,9 @@ const Signup: React.FC = () => {
             const randomNumber = getRandomNumber(1, 3);
             dispatch(
               openInfo({
-                title: 'Подтвердите вашу почту',
-                text: 'Мы направили письмо на вашу электронную почту, оно придет в течение 5 минут. Для подтверждения профиля перейдите по ссылке в письме.',
-                buttonText: 'Понятно!',
+                title: `${verifyPlease.title}`,
+                text: `${verifyPlease.text}`,
+                buttonText: `${verifyPlease.buttonText}`,
                 image: require(`../../../images/check-your-mail-${randomNumber}.png`),
               }),
             );

@@ -17,6 +17,8 @@ import { addCard, setActive, setProcessing } from '../../../store/cardsSlice';
 import { addSticker, getCart, updateCropping, updateSheets } from '../../../store/cartSlice';
 import { generateRandomNumber } from '../../../utils/generateRandomNumber';
 import { calculateStickerOnList } from '../../../utils/calculateStickerOnList';
+import { messages } from '../../../utils/content/popups';
+import { addpage } from '../../../utils/content/stickerspage';
 
 import styles from './AddStickers.module.scss';
 
@@ -84,7 +86,7 @@ const AddStickers: React.FC = () => {
   return (
     <main className={styles.add}>
       <Container className={styles.add_container}>
-        <TitlePage type='main-title'>Заказать стикеры</TitlePage>
+        <TitlePage type='main-title'>{addpage.title}</TitlePage>
         <div className={styles.cards}>
           {cards.map((card) => (
             <AnimatePresence key={card.id}>
@@ -147,12 +149,12 @@ const AddStickers: React.FC = () => {
         </div>
         {cards.length < CARDS_MAXIMUM && (
           <ButtonWithText theme='transparent' onClick={handleAddCard} disabled={!validation}>
-            Добавить стикер
+            {addpage.addSicker}
           </ButtonWithText>
         )}
         <section className={styles.info}>
           <div className={styles.info_pages}>
-            <InfoBox type='number' description='Количество листов'>
+            <InfoBox type='number' description={addpage.pages}>
               {cart.number_of_sheets}
             </InfoBox>
             <TextUnderline
@@ -160,11 +162,11 @@ const AddStickers: React.FC = () => {
               className={styles.preview}
               onClick={() => dispatch(openPreview())}
             >
-              Предпросмотр страницы
+              {addpage.preview}
             </TextUnderline>
           </div>
           <div className={styles.flex}>
-            <span className={styles.text}>Стоимость</span>
+            <span className={styles.text}>{addpage.price}</span>
             <div className={styles.prices}>
               <span className={styles.price}>{fullPrice} ₽</span>
               <span className={styles.price_small}>{itemPrice}₽/ за шт</span>
@@ -177,7 +179,7 @@ const AddStickers: React.FC = () => {
               register={register}
               onClick={() => dispatch(updateCropping(false))}
             >
-              Оставить стикеры на листе
+              {addpage.options.page}
             </RadioButton>
             <RadioButton
               name='cut'
@@ -185,7 +187,7 @@ const AddStickers: React.FC = () => {
               register={register}
               onClick={() => dispatch(updateCropping(true))}
             >
-              Вырезать стикеры по контуру
+              {addpage.options.crop}
             </RadioButton>
           </form>
         </section>
@@ -242,7 +244,7 @@ const AddStickers: React.FC = () => {
                     .catch(() =>
                       dispatch(
                         openMessage({
-                          text: 'Что-то пошло не так. Попробуйте еще раз.',
+                          text: `${messages.somethingWrong}`,
                           isError: true,
                         }),
                       ),
@@ -255,11 +257,11 @@ const AddStickers: React.FC = () => {
             }}
             disabled={!validation}
           >
-            Добавить в корзину
+            {addpage.button.add}
           </ButtonWithText>
         ) : (
           <ButtonWithText theme='filled' className={styles.button} onClick={() => navigate(CART)}>
-            Перейти в корзину
+            {addpage.button.cart}
           </ButtonWithText>
         )}
       </Container>

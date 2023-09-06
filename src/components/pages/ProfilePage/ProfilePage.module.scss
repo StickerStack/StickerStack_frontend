@@ -26,7 +26,7 @@
   width: fit-content;
   @media screen and (max-width: 605px) {
     flex-direction: column;
-    gap: 36px;
+
     width: 100%;
   }
 }
@@ -69,6 +69,11 @@
   @include flex(column, flex-start, start);
   margin-bottom: 45px;
   gap: 25px;
+
+  @media screen and (max-width: 605px) {
+    gap: 20px;
+    margin-bottom: 19px;
+  }
 }
 
 .input_container {

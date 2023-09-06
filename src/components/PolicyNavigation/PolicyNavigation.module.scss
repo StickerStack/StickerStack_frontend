@@ -6,7 +6,8 @@
   @include flex(row, flex-start, flex-start);
   flex-wrap: wrap;
   list-style: none;
-  gap: 20px;
+  column-gap: 20px;
+  row-gap: 14px;
   background-color: $main-bg-color;
 
   .link {

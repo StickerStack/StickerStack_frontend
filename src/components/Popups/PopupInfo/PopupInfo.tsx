@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux';
+import cn from 'classnames';
 
 import { IPopupState } from '../../../interfaces/IPopupState';
 import { ButtonWithText, TextForm, TitlePopup } from '../../UI';
@@ -15,7 +16,13 @@ const PopupInfo: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      {info.src && <img className={styles.image} src={info.src} alt='Декоративное изображение' />}
+      {info.src && (
+        <img
+          className={cn(styles.image, info.imageAbsolute && styles.image_absolute)}
+          src={info.src}
+          alt='Декоративное изображение'
+        />
+      )}
       <TitlePopup className={styles.title}>{info.title}</TitlePopup>
       <TextForm>{info.text}</TextForm>
       {!info.buttonSecondText ? (

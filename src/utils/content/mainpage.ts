@@ -2,6 +2,7 @@ import image from '../../images/image-stikerstack.png';
 import image1 from '../../images/policy-img.png';
 import image2 from '../../images/cart-dog.png';
 import image3 from '../../images/empty-cart.png';
+import { pagePrice } from '../constants';
 
 export const hero = {
   title: 'StickerStack',
@@ -26,7 +27,7 @@ export const benefits = {
   title: 'Почему заказать стикеры в StickerStack удобно и выгодно?',
   items: [
     {
-      item: 'Вы платите фиксированную цену за печатный лист, а не за каждый отдельный стикер. Набросайте много картинок на лист и общая стоимость останется прежней! Два стикера на листе – это 290 рублей, 22 стикера на одном листе – все еще 290 рублей.',
+      item: `Вы платите фиксированную цену за печатный лист, а не за каждый отдельный стикер. Набросайте много картинок на лист и общая стоимость останется прежней! Два стикера на листе – это ${pagePrice} рублей, 22 стикера на одном листе – все еще ${pagePrice} рублей.`,
       id: 1,
       alt: 'Пример работы',
     },

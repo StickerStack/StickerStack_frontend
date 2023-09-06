@@ -17,7 +17,7 @@ import { useAppDispatch } from '../../../hooks/hooks';
 import { resetPassword } from '../../../store/authSlice';
 import { registerPassword } from '../../../utils/registersRHF';
 import { ADD_STICKERS, getRandomNumber } from '../../../utils/constants';
-import { changePassword, messages } from '../../../utils/content/popups';
+import { changePassword, messages, passwordChanged } from '../../../utils/content/popups';
 
 import styles from './ChangePassword.module.scss';
 
@@ -48,9 +48,9 @@ const ChangePassword: React.FC = () => {
         const randomNumber = getRandomNumber(1, 3);
         dispatch(
           openInfo({
-            title: 'Пароль изменен',
-            text: 'Сделай свои вещи уникальными с помощью стикеров на виниловой пленке.',
-            buttonText: 'Перейти к заказу',
+            title: `${passwordChanged.title}`,
+            text: `${passwordChanged.text}`,
+            buttonText: `${passwordChanged.buttonText}`,
             onClick: () => navigate(ADD_STICKERS),
             image: require(`../../../images/password-changed-${randomNumber}.png`),
           }),
@@ -125,7 +125,7 @@ const ChangePassword: React.FC = () => {
             option={{
               validate: (val: string) => {
                 if (val !== watch('password')) {
-                  return 'Пароли не совпадают';
+                  return changePassword.errorMatch;
                 }
               },
             }}

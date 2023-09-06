@@ -10,6 +10,12 @@
     text-align: left;
     @include flex(column, center, start);
     gap: 30px;
+
+    @media screen and (max-width: 768px) {
+      padding-top: 24px;
+      padding-bottom: 64px;
+      margin: 0 auto;
+    }
   }
 }
 
@@ -20,9 +26,8 @@
 }
 
 .image {
-  width: 350px;
-  height: 250px;
-  margin-bottom: 30px;
+  width: 300px;
+  height: 230px;
   background: url('../../../images/empty-cart.png') no-repeat;
   background-size: contain;
 }

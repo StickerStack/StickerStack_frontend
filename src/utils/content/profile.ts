@@ -15,6 +15,8 @@ export const profile = {
 
 export const orders = {
   title: 'Заказы',
+  empty: 'У вас пока нет заказов.',
+  error: 'Не удалось прогрузить ваши заказы',
   orderId: 'Номер заказа:',
   material: 'Белая виниловая пленка',
   repeat: 'Повторить заказ',

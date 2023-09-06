@@ -16,6 +16,7 @@ import { InputField } from '../../UI/InputField/InputField';
 import { InputError } from '../../UI/InputError/InputError';
 import { getRandomNumber } from '../../../utils/constants';
 import { profile } from '../../../utils/content/profile';
+import { messages, verifyChanged, verifyPlease } from '../../../utils/content/popups';
 
 import styles from './ProfilePage.module.scss';
 
@@ -87,9 +88,9 @@ const ProfilePage: React.FC = () => {
           const randomNumber = getRandomNumber(1, 3);
           dispatch(
             openInfo({
-              title: 'Подтвердите новую почту',
-              text: 'Мы направили письмо на новую электронную почту, оно придет в течение 5 минут. Для подтверждения перейдите по ссылке в письме.',
-              buttonText: 'Понятно!',
+              title: `${verifyChanged.title}`,
+              text: `${verifyChanged.text}`,
+              buttonText: `${verifyChanged.buttonText}`,
               image: require(`../../../images/check-your-mail-${randomNumber}.png`),
             }),
           );
@@ -99,14 +100,14 @@ const ProfilePage: React.FC = () => {
         if (err.message === '422') {
           dispatch(
             openMessage({
-              text: 'Ошибка при заполнении полей. Попробуйте поменять значения.',
+              text: `${messages.fieldsError}`,
               isError: true,
             }),
           );
         } else if (err) {
           dispatch(
             openMessage({
-              text: 'Что-то пошло не так. Попробуйте еще раз.',
+              text: `${messages.somethingWrong}`,
               isError: true,
             }),
           );
@@ -200,7 +201,6 @@ const ProfilePage: React.FC = () => {
                 />
                 <InputError error={errors[EMAIL_INPUT_LABEL]} />
               </InputField>
-
               <ButtonWithText
                 className={styles.button}
                 type='submit'
@@ -220,9 +220,9 @@ const ProfilePage: React.FC = () => {
                     const randomNumber = getRandomNumber(1, 3);
                     dispatch(
                       openInfo({
-                        title: 'Подтвердите почту',
-                        text: 'Мы направили письмо на вашу электронную почту, оно придет в течение 5 минут. Для подтверждения перейдите по ссылке в письме.',
-                        buttonText: 'Понятно!',
+                        title: `${verifyPlease.title}`,
+                        text: `${verifyPlease.text}`,
+                        buttonText: `${verifyPlease.buttonText}`,
                         image: require(`../../../images/check-your-mail-${randomNumber}.png`),
                       }),
                     );

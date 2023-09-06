@@ -24,6 +24,7 @@ const PolicyPage: React.FC<Props> = ({ policy }: Props) => {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const navRef = useRef<HTMLDivElement>();
   const sectionRef = useRef<Array<HTMLDivElement>>([]);
   useEffect(() => {
     sectionRef.current = sectionRef.current.slice(0, policy.sections.length);
@@ -90,9 +91,10 @@ const PolicyPage: React.FC<Props> = ({ policy }: Props) => {
                     className={styles.menu_item}
                     onClick={() => {
                       sectionRef.current &&
+                        navRef.current &&
                         window.scrollTo({
                           behavior: 'smooth',
-                          top: sectionRef.current[i].offsetTop - 55,
+                          top: sectionRef.current[i].offsetTop - navRef.current.clientHeight - 10,
                         });
                       setMenuOpen(false);
                     }}
@@ -108,7 +110,7 @@ const PolicyPage: React.FC<Props> = ({ policy }: Props) => {
       <Container className={styles.policy_container}>
         <div className={styles.content}>
           {
-            <div className={styles.nav}>
+            <div ref={(nav: HTMLDivElement) => (navRef.current = nav)} className={styles.nav}>
               <PolicyNavigation />
             </div>
           }
@@ -143,9 +145,10 @@ const PolicyPage: React.FC<Props> = ({ policy }: Props) => {
               key={section.id}
               onClick={() => {
                 sectionRef.current &&
+                  navRef.current &&
                   window.scrollTo({
                     behavior: 'smooth',
-                    top: sectionRef.current[i].offsetTop - 55,
+                    top: sectionRef.current[i].offsetTop - navRef.current.clientHeight - 10,
                   });
               }}
             >
