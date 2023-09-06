@@ -1,13 +1,14 @@
 import { Api } from './Api';
 import { API_URL } from '../constants';
 import { IServerSticker, ISticker, IUploadSticker } from '../../interfaces/ISticker-new';
+import { OrderItem } from '../../interfaces';
 
 class CartApi extends Api {
   constructor(url: string, headers: HeadersInit) {
     super(url, headers);
   }
 
-  public async addSticker(sticker: ISticker) {
+  public async addSticker(sticker: OrderItem) {
     const data = await fetch(`${this.url}/cart/add_sticker`, {
       method: 'POST',
       credentials: 'include',
@@ -16,8 +17,8 @@ class CartApi extends Api {
         image: sticker.image,
         amount: sticker.amount,
         shape: sticker.shape,
-        height: sticker.size.height,
-        width: sticker.size.width,
+        height: sticker.height,
+        width: sticker.width,
       }),
     });
 

@@ -3,6 +3,7 @@ import { IStickersState } from '../interfaces/IStickersState';
 import { cartApi } from '../utils/api/CartApi';
 import { IServerSticker, ISticker, IUploadSticker } from '../interfaces/ISticker-new';
 import { TCardShape } from '../interfaces/ICard';
+import { OrderItem } from '../interfaces';
 
 export const initialState: IStickersState = {
   items: [
@@ -23,7 +24,7 @@ export const initialState: IStickersState = {
 
 export const addSticker = createAsyncThunk(
   'stickers/add_sticker',
-  async (data: ISticker, { rejectWithValue }) => {
+  async (data: OrderItem, { rejectWithValue }) => {
     try {
       const response = await cartApi.addSticker(data);
       return { data: response.data };

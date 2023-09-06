@@ -13,18 +13,17 @@ const initialState: ICart = {
   cropping: false,
   items: [],
 };
-
-// const addSticker = createAsyncThunk(
-//   'cart/add_sticker',
-//   async (data: ISticker, { rejectWithValue }) => {
-//     try {
-//       const response = await cartApi.addSticker(data);
-//       return { data: response.data };
-//     } catch (err) {
-//       return rejectWithValue(err);
-//     }
-//   },
-// );
+export const addSticker = createAsyncThunk(
+  'cart/add_sticker',
+  async (data: OrderItem, { rejectWithValue }) => {
+    try {
+      const response = await cartApi.addSticker(data);
+      return { data: response.data };
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
 
 const getCart = createAsyncThunk('get_cart', async (data, { rejectWithValue }) => {
   try {
