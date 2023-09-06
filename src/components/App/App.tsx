@@ -26,11 +26,9 @@ import {
   VERIFY_EMAIL,
   VERIFY_FORGOT_PASSWORD,
   ORDERS,
-  privacy,
-  terms,
   COOKIE,
-  cookie,
 } from '../../utils/constants';
+import { cookie, privacy, terms } from '../../utils/content/policy';
 import { useAppDispatch } from '../../hooks/hooks';
 import { useScrollToTop } from '../../hooks/useScrollToTop';
 import { OrdersPage } from '../pages/OrdersPage/OrdersPage';
@@ -42,7 +40,7 @@ import { setCardsFromCart } from '../../store/cardsSlice';
 import { ICart } from '../../interfaces/ICart';
 import { ICardsState, IUserState } from '../../interfaces';
 import { AcceptCookies } from '../AcceptCookies/AcceptCookies';
-        
+
 import styles from './App.module.scss';
 
 const App: React.FC = () => {

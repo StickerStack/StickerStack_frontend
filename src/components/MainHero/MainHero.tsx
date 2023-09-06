@@ -7,11 +7,17 @@ import { useAppDispatch } from '../../hooks/hooks';
 import { IUserState } from '../../interfaces';
 import { openPopup } from '../../store/popupSlice';
 import { Signin } from '../Popups/Signin/Signin';
+import { hero } from '../../utils/content/mainpage';
 
-import cocktail from '../../images/main-page/cocktail.png';
-import ufo from '../../images/main-page/ufo.png';
-import no_but from '../../images/main-page/no-but-yes.png';
-import astronaut from '../../images/main-page/astronaut.png';
+// import cocktail from '../../images/main-page/cocktail.png';
+// import ufo from '../../images/main-page/ufo.png';
+// import no_but from '../../images/main-page/no-but-yes.png';
+// import astronaut from '../../images/main-page/astronaut.png';
+
+import spok from '../../images/main-page/spok.png';
+import sticker_ufo from '../../images/main-page/sticker-ufo.png';
+import starwars from '../../images/main-page/starwars.png';
+import space from '../../images/main-page/space-sticker.png';
 import styles from './MainHero.module.scss';
 
 const MainHero: React.FC = () => {
@@ -30,18 +36,22 @@ const MainHero: React.FC = () => {
   return (
     <Container className={styles.container}>
       <section className={styles.section}>
-        <h1 className={styles.title}>StickerStack</h1>
-        <h2 className={styles.description}>Кастомные стикеры: создавай и заказывай онлайн!</h2>
-        <ButtonWithText type='button' color='contrast' onClick={() => onClickTry()}>
-          {isLogged ? 'Заказать' : 'Попробовать'}
+        <h1 className={styles.title}>{hero.title}</h1>
+        <h2 className={styles.description}>{hero.text}</h2>
+        <ButtonWithText
+          type='button'
+          color='contrast'
+          className={styles.button}
+          onClick={() => onClickTry()}
+        >
+          {isLogged ? hero.buttonLogged : hero.buttonGuest}
         </ButtonWithText>
       </section>
       <AnimatePresence>
         <motion.div className={styles.images}>
           <motion.img
-            src={cocktail}
+            src={spok}
             className={styles.image}
-            style={{ top: 0, left: 160 }}
             initial={{
               opacity: 0,
               translateY: 170,
@@ -56,9 +66,8 @@ const MainHero: React.FC = () => {
             }}
           />
           <motion.img
-            src={ufo}
+            src={sticker_ufo}
             className={styles.image}
-            style={{ top: 35, left: 310 }}
             initial={{
               opacity: 0,
               translateY: 170,
@@ -73,26 +82,8 @@ const MainHero: React.FC = () => {
             }}
           />
           <motion.img
-            src={no_but}
+            src={space}
             className={styles.image}
-            style={{ top: 90, left: 130 }}
-            initial={{
-              opacity: 0,
-              translateY: 170,
-            }}
-            animate={{
-              transition: {
-                opacity: { duration: 0.35, delay: 0.45 },
-                translateY: { duration: 0.7, delay: 0.3 },
-              },
-              opacity: 1,
-              translateY: 0,
-            }}
-          />
-          <motion.img
-            src={astronaut}
-            className={styles.image}
-            style={{ top: 65, left: 0 }}
             initial={{
               opacity: 0,
               translateY: 170,
@@ -101,6 +92,22 @@ const MainHero: React.FC = () => {
               transition: {
                 opacity: { duration: 0.35, delay: 0.6 },
                 translateY: { duration: 0.7, delay: 0.45 },
+              },
+              opacity: 1,
+              translateY: 0,
+            }}
+          />
+          <motion.img
+            src={starwars}
+            className={styles.image}
+            initial={{
+              opacity: 0,
+              translateY: 170,
+            }}
+            animate={{
+              transition: {
+                opacity: { duration: 0.35, delay: 0.45 },
+                translateY: { duration: 0.7, delay: 0.3 },
               },
               opacity: 1,
               translateY: 0,

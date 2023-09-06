@@ -23,6 +23,7 @@ import { getUser, updateStatus } from '../../../store/userSlice';
 import { signUp, signIn, sendVerificationCode } from '../../../store/authSlice';
 import { registerEmail, registerPassword } from '../../../utils/registersRHF';
 import { ADD_STICKERS, PRIVACY, TERMS, getRandomNumber } from '../../../utils/constants';
+import { messages, signup, verifyPlease } from '../../../utils/content/popups';
 
 import styles from './Signup.module.scss';
 
@@ -63,9 +64,9 @@ const Signup: React.FC = () => {
             const randomNumber = getRandomNumber(1, 3);
             dispatch(
               openInfo({
-                title: 'Добро пожаловать!',
-                text: 'Мы направили письмо на вашу электронную почту. Для подтверждения профиля перейдите по ссылке в письме.',
-                buttonText: 'Понятно!',
+                title: `${verifyPlease.title}`,
+                text: `${verifyPlease.text}`,
+                buttonText: `${verifyPlease.buttonText}`,
                 image: require(`../../../images/check-your-mail-${randomNumber}.png`),
               }),
             );
@@ -84,7 +85,7 @@ const Signup: React.FC = () => {
             } else {
               dispatch(
                 openMessage({
-                  text: 'Что-то пошло не так. Попробуйте еще раз.',
+                  text: `${messages.somethingWrong}`,
                   isError: true,
                 }),
               );
@@ -95,19 +96,19 @@ const Signup: React.FC = () => {
         if (err.message === '400') {
           setError('email', {
             type: 'custom',
-            message: 'Учетная запись с такой почтой уже существует',
+            message: `${signup.error}`,
           });
         } else if (err.message === '422') {
           dispatch(
             openMessage({
-              text: 'Ошибка при заполнении полей. Попробуйте поменять значения.',
+              text: `${messages.fieldsError}`,
               isError: true,
             }),
           );
         } else {
           dispatch(
             openMessage({
-              text: 'Что-то пошло не так. Попробуйте еще раз.',
+              text: `${messages.somethingWrong}`,
               isError: true,
             }),
           );
@@ -136,13 +137,13 @@ const Signup: React.FC = () => {
         },
       }}
     >
-      <TitlePopup>Регистрация</TitlePopup>
+      <TitlePopup>{signup.title}</TitlePopup>
       <div className={styles.inputs}>
         <InputField className='email'>
-          <Label htmlFor='email'>Электронная почта</Label>
+          <Label htmlFor='email'>{signup.email.emailLabel}</Label>
           <Input
             autoComplete='email'
-            placeholder='example@gmail.com'
+            placeholder={signup.email.emailPlaceholder}
             register={register}
             option={{
               ...registerEmail,
@@ -156,7 +157,7 @@ const Signup: React.FC = () => {
           <InputError error={errors.email} />
         </InputField>
         <InputField className='password'>
-          <Label htmlFor='password'>Пароль</Label>
+          <Label htmlFor='password'>{signup.password.passwordLabel}</Label>
           <InputWithButton
             register={register}
             option={registerPassword}
@@ -166,7 +167,7 @@ const Signup: React.FC = () => {
                 ? styles.password
                 : ''
             }
-            placeholder='Введите пароль'
+            placeholder={signup.password.passwordPlaceholder}
             type={statePassword ? 'text' : 'password'}
             autoComplete='current-password'
             error={errors.password}
@@ -181,17 +182,17 @@ const Signup: React.FC = () => {
           <InputError error={errors.password} />
         </InputField>
         <InputField className='password'>
-          <Label htmlFor='repeat-password'>Подтвердить пароль</Label>
+          <Label htmlFor='repeat-password'>{signup.passwordRepeat.passwordRepeatLabel}</Label>
           <InputWithButton
             register={register}
             option={{
               validate: (val: string) => {
                 if (val !== watch('password')) {
-                  return 'Пароли не совпадают';
+                  return signup.errorMatch;
                 }
               },
             }}
-            placeholder='Введите пароль'
+            placeholder={signup.passwordRepeat.passwordRepeatPlaceholder}
             name='repeat-password'
             className={
               dirtyFields['repeat-password'] &&
@@ -231,13 +232,13 @@ const Signup: React.FC = () => {
           </a>
         </p>
       </CheckBoxForm>
-      <ButtonWithText type='submit' disabled={!isValid} loading={loading}>
-        Зарегистрироваться
+      <ButtonWithText type='submit' disabled={!isValid} loading={loading} className={styles.button}>
+        {signup.button}
       </ButtonWithText>
       <span className={styles.link}>
-        Уже есть аккаунт?{' '}
+        {signup.link.label}{' '}
         <TextUnderline type='button' onClick={() => dispatch(openPopup(Signin))}>
-          Войти
+          {signup.link.text}
         </TextUnderline>
       </span>
     </motion.form>

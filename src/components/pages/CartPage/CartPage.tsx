@@ -10,16 +10,11 @@ import { TitlePage, Container, ButtonWithText, TextUnderline, Input } from '../.
 import { ADD_STICKERS, ORDERS } from '../../../utils/constants';
 import { Sticker } from '../../Sticker/Sticker';
 import { InfoBox } from '../../InfoBox/InfoBox';
-import {
-  cleanCart,
-  countTotal,
-  getCart,
-  updateAddress,
-  uploadOrder,
-} from '../../../store/cartSlice';
+import { countTotal, getCart, updateAddress, uploadOrder } from '../../../store/cartSlice';
 import { ICart } from '../../../interfaces/ICart';
-import { cleanCards } from '../../../store/cardsSlice';
 import { converter } from '../../../utils/converter';
+import { messages, orderPlaced } from '../../../utils/content/popups';
+import { cartpage } from '../../../utils/content/stickerspage';
 
 import image from '../../../images/cart-dog.png';
 import { ReactComponent as WriteSvg } from '../../../images/icons/write-icon.svg';
@@ -79,11 +74,11 @@ const CartPage: React.FC = () => {
         // dispatch(cleanCart());
         dispatch(
           openInfo({
-            title: 'Заказ оформлен!',
-            text: 'Вся информация по заказу отправлена на почту. Следите за статусом его готовности в личном кабинете',
-            buttonText: 'Заказать еще',
+            title: `${orderPlaced.title}`,
+            text: `${orderPlaced.text}`,
+            buttonText: `${orderPlaced.buttonText}`,
+            buttonSecondText: `${orderPlaced.buttonSecondText}`,
             onClick: () => navigate(ADD_STICKERS),
-            buttonSecondText: 'Перейти к заказам',
             onClickSecond: () => navigate(ORDERS),
             image: image,
           }),
@@ -93,14 +88,14 @@ const CartPage: React.FC = () => {
         if (err.message === '413') {
           dispatch(
             openMessage({
-              text: 'Слишком большой запрос для загрузки.',
+              text: `${messages.itemTooBig}`,
               isError: true,
             }),
           );
         } else if (err.message) {
           dispatch(
             openMessage({
-              text: 'Что-то пошло не так. Попробуйте еще раз.',
+              text: `${messages.somethingWrong}`,
               isError: true,
             }),
           );
@@ -112,11 +107,11 @@ const CartPage: React.FC = () => {
   return (
     <main className={styles.cart}>
       <Container className={styles.cart_container}>
-        <TitlePage type='main-title'>Корзина</TitlePage>
+        <TitlePage type='main-title'>{cartpage.title}</TitlePage>
         {cart.items.length === 0 ? (
           <div className={styles.box}>
             <div className={styles.image} />
-            <span className={styles.text}>Ваша корзина пуста</span>
+            <span className={styles.text}>{cartpage.empty}</span>
             <ButtonWithText onClick={() => navigate(ADD_STICKERS)} color='contrast'>
               Заказать стикеры
             </ButtonWithText>
@@ -131,27 +126,27 @@ const CartPage: React.FC = () => {
             <form className={cn(styles.banner, styles.info)} onSubmit={handleSubmit(onSubmit)}>
               <InfoBox
                 type='number'
-                description='Количество листов'
+                description={cartpage.pages}
                 descriptionClass={styles.description}
               >
                 {cart.number_of_sheets}
               </InfoBox>
-              {cart.cropping && <span>Вырезать по контуру</span>}
+              {cart.cropping && <span>{cartpage.cropping}</span>}
               <InfoBox
                 type='number'
-                description='Количество стикеров'
+                description={cartpage.stickers}
                 descriptionClass={styles.description}
               >
                 {cart.totalAmount}
               </InfoBox>
               <InfoBox
                 type='simple'
-                description='Способ доставки'
+                description={cartpage.delivery}
                 descriptionClass={styles.description}
               >
                 Самовывоз
               </InfoBox>
-              <InfoBox type='simple' description='Адрес' className={styles.address_box}>
+              <InfoBox type='simple' description={cartpage.address} className={styles.address_box}>
                 <div className={styles.address_box}>
                   <Input
                     register={register}
@@ -175,10 +170,10 @@ const CartPage: React.FC = () => {
               </InfoBox>
               <div className={styles.buttons}>
                 <TextUnderline theme='secondary' onClick={() => navigate(ADD_STICKERS)}>
-                  Редактировать заказ
+                  {cartpage.link}
                 </TextUnderline>
                 <ButtonWithText className={styles.button} type='submit' loading={loading}>
-                  Оформить заказ
+                  {cartpage.button}
                 </ButtonWithText>
               </div>
             </form>

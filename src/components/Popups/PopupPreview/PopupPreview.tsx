@@ -22,7 +22,12 @@ const PopupPreview: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Так будет выглядеть набор на листе</h2>
+      <h2 className={styles.title}>
+        Так будет выглядеть набор на{' '}
+        {pagesCards.length.toString().endsWith('1') && !pagesCards.length.toString().endsWith('11')
+          ? 'листе'
+          : 'листах'}
+      </h2>
       {pagesCards.length > 0 && (
         <Slider {...settings}>
           {pagesCards.map((elementsPage) => {

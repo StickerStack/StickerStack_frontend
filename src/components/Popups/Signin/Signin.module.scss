@@ -1,12 +1,19 @@
 @import '../../../utils/_scss-variables.scss';
 
 .signin {
-  @include flex(column, _, _);
+  @include flex(column, center, center);
   gap: 25px;
 
   .inputs {
+    width: 100%;
+    margin: 15px 0;
     @include flex(column, flex-start, flex-start);
-    gap: 40px;
+    gap: 25px;
+
+    @media screen and (max-width: 768px) {
+      gap: 16px;
+      margin: 0;
+    }
   }
 
   .password {
@@ -15,6 +22,7 @@
   }
 
   .reset {
+    font-size: 14px;
     margin: 0;
     &::after {
       margin-top: 0;
@@ -23,9 +31,13 @@
 
   .link {
     text-align: center;
+    @media screen and (max-width: 768px) {
+      @include flex(column, center, center);
+      gap: 4px;
+    }
   }
 
   .button {
-    margin-top: 20px;
+    width: 100%;
   }
 }

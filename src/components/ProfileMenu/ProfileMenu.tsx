@@ -8,6 +8,7 @@ import { IUserState } from '../../interfaces';
 import { logOut } from '../../store/authSlice';
 import { ButtonWithText } from '../UI';
 import { ADD_STICKERS, ORDERS, PROFILE } from '../../utils/constants';
+import { profileMenu } from '../../utils/content/profile';
 
 import EmptyAvatarImage from '../../images/empty-avatar.png';
 import styles from './ProfileMenu.module.scss';
@@ -59,7 +60,7 @@ const ProfileMenu = forwardRef<HTMLHeadingElement>((props, ref) => {
         color='contrast'
         onClick={() => navigate(ADD_STICKERS)}
       >
-        Заказать стикеры
+        {profileMenu.button}
       </ButtonWithText>
 
       <ul className={styles.list}>
@@ -69,12 +70,12 @@ const ProfileMenu = forwardRef<HTMLHeadingElement>((props, ref) => {
             className={styles.link}
             onClick={() => navigate(ORDERS)}
           >
-            Заказы
+            {profileMenu.orders}
           </ButtonWithText>
         </li>
         <li>
           <ButtonWithText theme='no-border' className={styles.link} onClick={() => onLogOut()}>
-            Выход
+            {profileMenu.signout}
           </ButtonWithText>
         </li>
       </ul>

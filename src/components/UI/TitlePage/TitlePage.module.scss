@@ -3,7 +3,15 @@
 .title {
   margin: 0;
   padding: 0;
-  @include font(28px, 33px, 500);
+  @include font(24px, 26px, 500);
   letter-spacing: -0.01em;
   color: $main-text-color;
+
+  @media screen and (max-width: 768px) {
+    @include font(20px, 22px, 500);
+
+    &_section {
+      font-weight: 600;
+    }
+  }
 }

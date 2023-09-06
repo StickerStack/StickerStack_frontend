@@ -6,6 +6,7 @@ interface Sticker {
   shape: TCardShape;
   height: number;
   width: number;
+  id: string;
 }
 
 export interface IOrderState {
