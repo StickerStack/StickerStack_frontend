@@ -7,13 +7,15 @@
   @include flex(column, center, center);
   z-index: 4;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
+  height: 100dvh;
 
   background-color: rgba(0, 0, 0, 0.4);
 
   .background {
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
+    height: 100dvh;
     position: fixed;
   }
 
