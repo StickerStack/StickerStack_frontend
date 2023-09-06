@@ -17,6 +17,7 @@ import { useAppDispatch } from '../../../hooks/hooks';
 import { resetPassword } from '../../../store/authSlice';
 import { registerPassword } from '../../../utils/registersRHF';
 import { ADD_STICKERS, getRandomNumber } from '../../../utils/constants';
+import { changePassword, messages } from '../../../utils/content/popups';
 
 import styles from './ChangePassword.module.scss';
 
@@ -60,14 +61,14 @@ const ChangePassword: React.FC = () => {
         if (err.message === '422') {
           dispatch(
             openMessage({
-              text: 'Ошибка при заполнении полей. Попробуйте поменять значения.',
+              text: `${messages.fieldsError}`,
               isError: true,
             }),
           );
         } else if (err) {
           dispatch(
             openMessage({
-              text: 'Что-то пошло не так. Попробуйте еще раз.',
+              text: `${messages.somethingWrong}`,
               isError: true,
             }),
           );
@@ -87,13 +88,13 @@ const ChangePassword: React.FC = () => {
 
   return (
     <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-      <TitlePopup>Смена пароля</TitlePopup>
+      <TitlePopup>{changePassword.title}</TitlePopup>
       <div className={styles.inputs}>
         <InputField className='password'>
-          <Label htmlFor='password'>Новый пароль</Label>
+          <Label htmlFor='password'>{changePassword.password.passwordLabel}</Label>
           <InputWithButton
             register={register}
-            placeholder='Введите пароль'
+            placeholder={changePassword.password.passwordPlaceholder}
             option={registerPassword}
             name='password'
             type={statePassword ? 'text' : 'password'}
@@ -115,10 +116,12 @@ const ChangePassword: React.FC = () => {
           <InputError error={errors.password} />
         </InputField>
         <InputField className='password'>
-          <Label htmlFor='repeat-password'>Повторите пароль</Label>
+          <Label htmlFor='repeat-password'>
+            {changePassword.passwordRepeat.passwordRepeatLabel}
+          </Label>
           <InputWithButton
             register={register}
-            placeholder='Введите пароль'
+            placeholder={changePassword.passwordRepeat.passwordRepeatPlaceholder}
             option={{
               validate: (val: string) => {
                 if (val !== watch('password')) {
@@ -149,7 +152,7 @@ const ChangePassword: React.FC = () => {
         </InputField>
       </div>
       <ButtonWithText type='submit' className={styles.button} disabled={!isValid} loading={loading}>
-        Изменить пароль
+        {changePassword.button}
       </ButtonWithText>
     </form>
   );

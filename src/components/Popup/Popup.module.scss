@@ -32,7 +32,7 @@
   overflow-y: scroll !important;
 
   @media screen and (max-width: 768px) {
-    padding: 30px 16px 40px;
+    padding: 40px 16px 40px;
   }
 
   &::-webkit-scrollbar {
@@ -40,17 +40,25 @@
   }
 
   .button {
-    position: absolute;
-    right: 25px;
-    top: 25px;
     width: 24px;
     height: 24px;
-
     @media screen and (max-width: 768px) {
-      right: 16px;
-      top: 12px;
-      width: 22px;
-      height: 22px;
+      width: 18px;
+      height: 18px;
+    }
+
+    &_box {
+      position: absolute;
+      right: 25px;
+      top: 25px;
+      width: 24px;
+      height: 24px;
+
+      @media screen and (max-width: 768px) {
+        right: 16px;
+        top: 12px;
+        @include flex(column, center, center);
+      }
     }
   }
 }

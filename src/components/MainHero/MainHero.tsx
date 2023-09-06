@@ -7,11 +7,12 @@ import { useAppDispatch } from '../../hooks/hooks';
 import { IUserState } from '../../interfaces';
 import { openPopup } from '../../store/popupSlice';
 import { Signin } from '../Popups/Signin/Signin';
+import { hero } from '../../utils/content/mainpage';
 
-import cocktail from '../../images/main-page/cocktail.png';
-import ufo from '../../images/main-page/ufo.png';
-import no_but from '../../images/main-page/no-but-yes.png';
-import astronaut from '../../images/main-page/astronaut.png';
+// import cocktail from '../../images/main-page/cocktail.png';
+// import ufo from '../../images/main-page/ufo.png';
+// import no_but from '../../images/main-page/no-but-yes.png';
+// import astronaut from '../../images/main-page/astronaut.png';
 
 import spok from '../../images/main-page/spok.png';
 import sticker_ufo from '../../images/main-page/sticker-ufo.png';
@@ -35,15 +36,15 @@ const MainHero: React.FC = () => {
   return (
     <Container className={styles.container}>
       <section className={styles.section}>
-        <h1 className={styles.title}>StickerStack</h1>
-        <h2 className={styles.description}>Кастомные стикеры: создавай и заказывай онлайн!</h2>
+        <h1 className={styles.title}>{hero.title}</h1>
+        <h2 className={styles.description}>{hero.text}</h2>
         <ButtonWithText
           type='button'
           color='contrast'
           className={styles.button}
           onClick={() => onClickTry()}
         >
-          {isLogged ? 'Заказать' : 'Попробовать'}
+          {isLogged ? hero.buttonLogged : hero.buttonGuest}
         </ButtonWithText>
       </section>
       <AnimatePresence>

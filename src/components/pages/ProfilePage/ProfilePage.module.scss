@@ -4,17 +4,31 @@
   flex: 1;
 
   &_container {
+    max-width: fit-content;
     padding-top: 80px;
     padding-bottom: 80px;
+    margin: 0;
     background-color: $main-bg-color;
     @include flex(column, flex-start, flex-start);
     gap: 20px;
+
+    @media screen and (max-width: 768px) {
+      padding-top: 24px;
+      padding-bottom: 64px;
+      margin: 0 auto;
+    }
   }
 }
 
 .section {
   @include flex(row, flex-start, flex-start);
   gap: 29px;
+  width: fit-content;
+  @media screen and (max-width: 605px) {
+    flex-direction: column;
+    gap: 36px;
+    width: 100%;
+  }
 }
 
 .profile_data {
@@ -45,6 +59,10 @@
   letter-spacing: -0.01em;
   padding: 10px 23px;
   border-radius: 10px;
+
+  @media screen and (max-width: 420px) {
+    width: 100%;
+  }
 }
 
 .inputs {

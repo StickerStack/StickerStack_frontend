@@ -22,9 +22,11 @@ import { useAppDispatch } from '../../../hooks/hooks';
 import { getUser, signInMockUser, updateStatus } from '../../../store/userSlice';
 import { signIn } from '../../../store/authSlice';
 import { registerEmail, registerPassword } from '../../../utils/registersRHF';
-import styles from './Signin.module.scss';
 import { motion } from 'framer-motion';
 import { ADD_STICKERS } from '../../../utils/constants';
+import { messages, signin } from '../../../utils/content/popups';
+
+import styles from './Signin.module.scss';
 
 const Signin: React.FC = () => {
   const location = useLocation();
@@ -72,14 +74,14 @@ const Signin: React.FC = () => {
         } else if (err.message === '422') {
           dispatch(
             openMessage({
-              text: 'Ошибка при заполнении полей. Попробуйте поменять значения.',
+              text: `${messages.fieldsError}`,
               isError: true,
             }),
           );
         } else {
           dispatch(
             openMessage({
-              text: 'Что-то пошло не так. Попробуйте еще раз.',
+              text: `${messages.somethingWrong}`,
               isError: true,
             }),
           );
@@ -109,15 +111,15 @@ const Signin: React.FC = () => {
         },
       }}
     >
-      <TitlePopup>Вход</TitlePopup>
+      <TitlePopup>{signin.title}</TitlePopup>
       <div className={styles.inputs}>
         {(errors.email?.type === 'custom' || errors.password?.type === 'custom') && (
-          <Error>Неверная почта и/или пароль</Error>
+          <Error>{signin.error}</Error>
         )}
         <InputField className='email'>
-          <Label htmlFor='email'>Электронная почта</Label>
+          <Label htmlFor='email'>{signin.email.emailLabel}</Label>
           <Input
-            placeholder='example@gmail.com'
+            placeholder={signin.email.emailPlaceholder}
             autoComplete='email'
             register={register}
             option={{
@@ -133,16 +135,16 @@ const Signin: React.FC = () => {
         </InputField>
         <InputField className='password'>
           <Label htmlFor='password'>
-            Пароль
+            {signin.password.passwordLabel}
             <TextUnderline
               onClick={() => dispatch(openPopup(ResetPassword))}
               className={styles.reset}
             >
-              Забыли пароль?
+              {signin.password.forgotPassword}
             </TextUnderline>
           </Label>
           <InputWithButton
-            placeholder='Введите пароль'
+            placeholder={signin.password.passwordPlaceholder}
             register={register}
             option={registerPassword}
             name='password'
@@ -166,13 +168,13 @@ const Signin: React.FC = () => {
         </InputField>
       </div>
       <ButtonWithText type='submit' className={styles.button} disabled={!isValid} loading={loading}>
-        Войти
+        {signin.button}
       </ButtonWithText>
       {!location.pathname.startsWith('/api/auth/verifyemail') ? (
         <span className={styles.link}>
-          Нет аккаунта?{' '}
+          {signin.link.label}{' '}
           <TextUnderline onClick={() => dispatch(openPopup(Signup))} type='button'>
-            Зарегистрироваться
+            {signin.link.text}
           </TextUnderline>
         </span>
       ) : null}

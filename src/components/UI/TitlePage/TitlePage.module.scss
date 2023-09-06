@@ -8,6 +8,10 @@
   color: $main-text-color;
 
   @media screen and (max-width: 768px) {
-    @include font(20px, 22px, 600);
+    @include font(20px, 22px, 500);
+
+    &_section {
+      font-weight: 600;
+    }
   }
 }

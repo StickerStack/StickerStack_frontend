@@ -108,12 +108,14 @@ const Popup: React.FC = () => {
               ) : info.isOpen ? (
                 <PopupInfo />
               ) : null}
-              <ButtonCustom
-                className={styles.button}
-                type='close'
-                label='Закрыть'
-                onClick={() => dispatch(closePopup())}
-              />
+              <div className={styles.button_box}>
+                <ButtonCustom
+                  className={styles.button}
+                  type='close'
+                  label='Закрыть'
+                  onClick={() => dispatch(closePopup())}
+                />
+              </div>
             </div>
           </motion.div>
         </motion.div>

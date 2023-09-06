@@ -26,19 +26,24 @@
 .step {
   @include flex(row, start, start);
   gap: 35px;
+  &:nth-child(2) {
+    flex-direction: row-reverse;
+  }
+
   @media screen and (max-width: 768px) {
     max-width: 100%;
     flex-direction: column;
     gap: 15px;
 
     &:nth-child(2) {
-      flex-direction: column-reverse;
+      flex-direction: column;
     }
   }
 }
 
 .content {
   max-width: 500px;
+
   @include flex(column, start, start);
   @media screen and (max-width: 768px) {
     max-width: 100%;

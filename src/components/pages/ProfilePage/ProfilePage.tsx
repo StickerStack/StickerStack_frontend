@@ -15,8 +15,8 @@ import { InputWithButton } from '../../UI/InputWithButton/InputWithButton';
 import { InputField } from '../../UI/InputField/InputField';
 import { InputError } from '../../UI/InputError/InputError';
 import { getRandomNumber } from '../../../utils/constants';
+import { profile } from '../../../utils/content/profile';
 
-import EmptyAvatarImage from '../../../images/empty-avatar.png';
 import styles from './ProfilePage.module.scss';
 
 const FIRSTNAME_INPUT_LABEL = 'firstName';
@@ -118,7 +118,7 @@ const ProfilePage: React.FC = () => {
   return (
     <main className={styles.profile}>
       <Container className={styles.profile_container}>
-        <TitlePage type='main-title'>Мои данные</TitlePage>
+        <TitlePage type='main-title'>{profile.title}</TitlePage>
         <section className={styles.section}>
           <ImagePick />
           <div className={styles.profile_data}>
@@ -138,7 +138,7 @@ const ProfilePage: React.FC = () => {
                   }}
                   name={FIRSTNAME_INPUT_LABEL}
                   error={errors[FIRSTNAME_INPUT_LABEL]}
-                  placeholder='Имя'
+                  placeholder={profile.namePlaceholder}
                   className='profile'
                   button={
                     <button
@@ -164,7 +164,7 @@ const ProfilePage: React.FC = () => {
                     },
                   }}
                   name={LASTNAME_INPUT_LABEL}
-                  placeholder='Фамилия'
+                  placeholder={profile.lastNamePlaceholder}
                   className='profile'
                   error={errors[LASTNAME_INPUT_LABEL]}
                   button={
@@ -195,7 +195,7 @@ const ProfilePage: React.FC = () => {
                     />
                   }
                   name={EMAIL_INPUT_LABEL}
-                  placeholder='Электронная почта'
+                  placeholder={profile.emailPlaceholder}
                   className='profile'
                 />
                 <InputError error={errors[EMAIL_INPUT_LABEL]} />
@@ -207,14 +207,12 @@ const ProfilePage: React.FC = () => {
                 disabled={(fieldsUnchanged && validOrInvalid) || !isValid}
                 loading={loading}
               >
-                Сохранить
+                {profile.button}
               </ButtonWithText>
             </form>
             {!user.isVerified && (
               <div className={styles.additional}>
-                <span className={styles.additional_text}>
-                  Не пришло письмо подтверждения электронной почты?
-                </span>
+                <span className={styles.additional_text}>{profile.link.label}</span>
                 <TextUnderline
                   className={styles.underline}
                   onClick={() => {
@@ -230,7 +228,7 @@ const ProfilePage: React.FC = () => {
                     );
                   }}
                 >
-                  Выслать повторно
+                  {profile.link.text}
                 </TextUnderline>
               </div>
             )}
