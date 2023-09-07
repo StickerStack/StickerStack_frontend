@@ -131,7 +131,7 @@ const Sticker: React.FC<IProps> = ({ card, onClick }: IProps) => {
                           : (converter.cmToPx(card.height) / converter.cmToPx(card.width)) * 140,
                       maxHeight: 140,
                       maxWidth: 140,
-                      padding: (borderInPx / converter.cmToPx(card.width)) * 140,
+                      padding: (borderInPx / card.width) * 140,
                     }
                   : {}
               }

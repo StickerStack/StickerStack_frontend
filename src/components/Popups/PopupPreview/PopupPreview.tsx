@@ -27,7 +27,7 @@ const PopupPreview: React.FC = () => {
         Так будет выглядеть набор на{' '}
         {pagesCards.length.toString().endsWith('1') && !pagesCards.length.toString().endsWith('11')
           ? 'листе'
-          : 'листах'}{' '}
+          : 'листах'}
         <TooltipCustom
           text='Учитывайте, что данные изображения предоставляются для ознакомления с приблизительным видом
         листов и могут иметь искажения в зависимости от используемого монитора. Окончательные макеты
@@ -47,10 +47,6 @@ const PopupPreview: React.FC = () => {
           })}
         </Slider>
       )}
-      <span
-        className={styles.warn}
-        style={{ maxWidth: pageSizePxSmall.widthPage + pageSizePxSmall.paddingList.right * 2 }}
-      ></span>
     </div>
   );
 };
