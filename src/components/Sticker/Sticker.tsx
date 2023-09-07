@@ -117,7 +117,7 @@ const Sticker: React.FC<IProps> = ({ card, onClick }: IProps) => {
                             140,
                       maxHeight: 140,
                       maxWidth: 140,
-                      padding: (borderInPx / converter.cmToPx(card.size.width)) * 140,
+                      padding: (borderInPx / card.size.width) * 140,
                     }
                   : isCartpageCard(card)
                   ? {
