@@ -5,6 +5,7 @@ import { converter } from '../../utils/converter';
 import { pageSizePx, stickerWhiteBorder } from '../../utils/constants';
 
 import styles from './StickerList.module.scss';
+import { generateRandomNumber } from '../../utils/generateRandomNumber';
 
 interface IProps {
   cards: ICard[];
@@ -40,6 +41,7 @@ const StickerList: React.FC<IProps> = ({ cards }: IProps) => {
       {cards.map((card) => {
         return (
           <div
+            key={generateRandomNumber()}
             className={cn(styles.border, styles[`border_${card.shape}`])}
             style={{
               width: card.size.width / 2,
@@ -48,7 +50,6 @@ const StickerList: React.FC<IProps> = ({ cards }: IProps) => {
               gridRow: `span ${Math.ceil(card.size.height / 2 + pageSizePxSmall.gapY)}`,
               gridColumn: `span ${Math.ceil(card.size.width / 2 + pageSizePxSmall.gapX)}`,
             }}
-            key={card.id}
           >
             <img
               className={cn(styles.image, styles[`image_${card.shape}`])}

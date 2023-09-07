@@ -30,20 +30,22 @@ import {
   terms,
   COOKIE,
   cookie,
+  pageSizePx,
 } from '../../utils/constants';
 import { useAppDispatch } from '../../hooks/hooks';
 import { useScrollToTop } from '../../hooks/useScrollToTop';
 import { OrdersPage } from '../pages/OrdersPage/OrdersPage';
 import { PolicyPage } from '../pages/PolicyPage/PolicyPage';
-import { addSticker, getCart } from '../../store/cartSlice';
+import { addSticker, getCart, updateSheets } from '../../store/cartSlice';
 import { getUser, signInMockUser } from '../../store/userSlice';
 import { useSelector } from 'react-redux';
-import { setCardsFromCart } from '../../store/cardsSlice';
+import { setCardsFromCart, setPreviewCards } from '../../store/cardsSlice';
 import { ICart } from '../../interfaces/ICart';
 import { ICardsState, IUserState } from '../../interfaces';
 import { AcceptCookies } from '../AcceptCookies/AcceptCookies';
-        
+
 import styles from './App.module.scss';
+import { calculateStickerOnList } from '../../utils/calculateStickerOnList';
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -86,6 +88,26 @@ const App: React.FC = () => {
   }, [items]);
 
   useEffect(() => {
+    if (cards.cards.length !== 0) {
+      const cardsPrewiev = calculateStickerOnList(cards.cards, {
+        paddingList: {
+          top: pageSizePx.paddingList.top,
+          right: pageSizePx.paddingList.right,
+          bottom: pageSizePx.paddingList.bottom,
+          left: pageSizePx.paddingList.left,
+        },
+        gapX: pageSizePx.gapX,
+        gapY: pageSizePx.gapY,
+        widthPage: pageSizePx.widthPage,
+        heightPage: pageSizePx.heightPage,
+      });
+      dispatch(setPreviewCards(cardsPrewiev));
+      dispatch(updateSheets(cardsPrewiev.length));
+    }
+    // eslint-disable-next-line
+  }, [cards.cards]);
+
+  useEffect(() => {
     isLogged &&
       !cards.processing &&
       cards.cards.forEach((card) => {
@@ -105,7 +127,7 @@ const App: React.FC = () => {
               shape: card.shape,
               height: card.size.height,
               width: card.size.width,
-            }),
+            })
           );
       });
 
