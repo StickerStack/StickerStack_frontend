@@ -4,15 +4,15 @@
   flex: 1;
 
   &_container {
-    max-width: fit-content;
+    
     padding-top: 80px;
     padding-bottom: 80px;
-    margin: 0;
     background-color: $main-bg-color;
     @include flex(column, flex-start, flex-start);
     gap: 20px;
 
     @media screen and (max-width: 768px) {
+      max-width: fit-content;
       padding-top: 24px;
       padding-bottom: 64px;
       margin: 0 auto;
