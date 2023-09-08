@@ -1,6 +1,5 @@
 import { Api } from './Api';
 import { API_URL } from '../constants';
-import { IServerSticker, ISticker, IUploadSticker } from '../../interfaces/ISticker-new';
 import { OrderItem } from '../../interfaces';
 
 class CartApi extends Api {
@@ -54,7 +53,7 @@ class CartApi extends Api {
     address: string,
     number: number,
     cropping: boolean,
-    stickers: Array<IUploadSticker>,
+    stickers: Array<OrderItem>,
   ) {
     const data = await fetch(`${this.url}/orders/add_order`, {
       method: 'POST',
