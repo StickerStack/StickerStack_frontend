@@ -5,6 +5,11 @@
   top: 0;
   position: sticky;
   z-index: 4;
+  background-color: $main-bg-color;
+
+  @media screen and (max-width: 768px) {
+    height: 80px;
+  }
 
   &_border {
     border-radius: 0px 0px 10px 10px;
@@ -27,25 +32,50 @@
   }
 
   .logo {
-    text-decoration: none;
-    color: $main-text-color;
-    font-family: 'Sen';
-    font-weight: 700;
-    font-size: 24px;
-    line-height: 33px;
     display: flex;
     align-items: center;
     gap: 10px;
-
+    text-decoration: none;
     &_image {
       width: 96px;
       height: 96px;
+
+      @media screen and (max-width: 768px) {
+        width: 64px;
+        height: 64px;
+      }
+    }
+
+    &_text {
+      color: $main-text-color;
+      font-family: 'Sen';
+      font-weight: 700;
+      font-size: 24px;
+      line-height: 33px;
+
+      @media screen and (max-width: 600px) {
+        display: none;
+      }
     }
   }
 
   .buttons {
     display: flex;
     gap: 25px;
+  }
+
+  .button {
+    padding: 10px 35px;
+    font-size: 16px;
+    font-weight: 500;
+    height: 41px;
+
+    @media screen and (max-width: 768px) {
+      padding: 7px 10px;
+      font-size: 14px;
+      font-weight: 400;
+      height: 34px;
+    }
   }
 
   .cart {

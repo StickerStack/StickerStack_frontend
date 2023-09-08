@@ -31,7 +31,7 @@ const Dropdown: React.FC<IProps> = ({ heading, content, id }: IProps) => {
           <motion.div
             style={{ overflow: 'hidden' }}
             initial={{
-              opacity: 0.4,
+              opacity: 0.3,
               height: 0,
             }}
             animate={{

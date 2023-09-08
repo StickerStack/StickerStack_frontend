@@ -3,6 +3,8 @@ import { TCardShape } from '../interfaces/ICard';
 import { ICard, ICardsState } from '../interfaces';
 import { generateRandomNumber } from '../utils/generateRandomNumber';
 import { api } from '../utils/api/Api';
+import { converter } from '../utils/converter';
+import { SIZE_INPUT_MAX_LENGTH } from '../utils/constants';
 
 const initialState: ICardsState = {
   cards: [
@@ -152,17 +154,41 @@ const cardsSlice = createSlice({
     },
 
     setCardsFromCart(state, action) {
+      const maxSize = converter.cmToPx(SIZE_INPUT_MAX_LENGTH);
       const newCards = action.payload.map((card: any, index: number) => {
+        const image = new Image();
+        image.src = `data:image/png;base64,${card.image}`;
+        const optimalWidth = Math.round(converter.pxToOptimalPx(image.naturalWidth));
+        const optimalHeight = Math.round(converter.pxToOptimalPx(image.naturalHeight));
+
         const newCard: ICard = {
           image: card.image,
           shape: card.shape,
           amount: card.amount,
-          size: { width: card.width, height: card.height },
-          optimalSize: { width: 27, height: 27 },
+          size: { width: 1, height: 1 },
+          optimalSize: { width: 1, height: 1 },
           id: card.id,
           active: false,
           valid: false,
         };
+
+        if (optimalWidth <= maxSize && optimalHeight <= maxSize) {
+          newCard.size.width = optimalWidth;
+          newCard.size.height = optimalHeight;
+          newCard.optimalSize.width = optimalWidth;
+          newCard.optimalSize.height = optimalHeight;
+        } else if (optimalWidth > optimalHeight) {
+          newCard.size.width = maxSize;
+          newCard.size.height = (optimalHeight / optimalWidth) * maxSize;
+          newCard.optimalSize.width = maxSize;
+          newCard.optimalSize.height = (optimalHeight / optimalWidth) * maxSize;
+        } else {
+          newCard.size.width = (optimalWidth / optimalHeight) * maxSize;
+          newCard.size.height = maxSize;
+          newCard.optimalSize.width = (optimalWidth / optimalHeight) * maxSize;
+          newCard.optimalSize.height = maxSize;
+        }
+
         newCard.active = false;
 
         if (index === 0) {

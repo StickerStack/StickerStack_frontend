@@ -4,11 +4,18 @@
   flex: 1;
 
   &_container {
+    position: relative;
     padding-top: 80px;
     padding-bottom: 80px;
     text-align: left;
     @include flex(column, center, start);
     gap: 30px;
+
+    @media screen and (max-width: 768px) {
+      padding-top: 24px;
+      padding-bottom: 64px;
+      margin: 0 auto;
+    }
   }
 }
 
@@ -19,9 +26,8 @@
 }
 
 .image {
-  width: 350px;
-  height: 250px;
-  margin-bottom: 30px;
+  width: 300px;
+  height: 230px;
   background: url('../../../images/empty-cart.png') no-repeat;
   background-size: contain;
 }
@@ -51,6 +57,8 @@
 
 .info {
   padding: 40px 30px;
+  top: 140px;
+  position: sticky;
 }
 
 .description {

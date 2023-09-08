@@ -4,6 +4,8 @@ import { TextUnderline, TextForm, TitlePopup } from '../../UI';
 import { openPopup } from '../../../store/popupSlice';
 
 import { useAppDispatch } from '../../../hooks/hooks';
+import { resetInfo } from '../../../utils/content/popups';
+
 import styles from './ResetPasswordInfo.module.scss';
 
 const ResetPasswordInfo: React.FC = () => {
@@ -28,10 +30,18 @@ const ResetPasswordInfo: React.FC = () => {
         },
       }}
     >
-      <TitlePopup>Восстановление пароля</TitlePopup>
-      <TextForm>Перейдите на почту {email}, чтобы восстановить пароль</TextForm>
-      <TextUnderline type='button' onClick={() => dispatch(openPopup(ResetPassword))}>
-        Ввести другую почту
+      <TitlePopup>{resetInfo.title}</TitlePopup>
+      <TextForm>
+        {resetInfo.text}
+        {email}
+        {resetInfo.tectCont}
+      </TextForm>
+      <TextUnderline
+        type='button'
+        className={styles.button}
+        onClick={() => dispatch(openPopup(ResetPassword))}
+      >
+        {resetInfo.link.text}
       </TextUnderline>
     </motion.div>
   );

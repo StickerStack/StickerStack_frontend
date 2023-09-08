@@ -37,9 +37,13 @@
     border: none;
   }
 
-  &.input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 50px $popup-bg-color inset;
-    -webkit-text-fill-color: $main-text-color;
+  &.input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 50px $popup-bg-color inset !important;
+    -webkit-text-fill-color: $main-text-color !important;
+    background-clip: content-box !important;
   }
 
   &:hover {

@@ -1,7 +1,7 @@
 import Slider from 'react-slick';
 import { useState, useEffect } from 'react';
 
-import { StickerList } from '../../StickerList/StickerList';
+import { StickerList, pageSizePxSmall } from '../../StickerList/StickerList';
 import { PageElement, calculateStickerOnList } from '../../../utils/calculateStickerOnList';
 import { generateRandomNumber } from '../../../utils/generateRandomNumber';
 
@@ -12,7 +12,6 @@ import { settings } from './settings';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import styles from './PopupPreview.module.scss';
-
 
 const PopupPreview: React.FC = () => {
   const { prewiewCards } = useSelector((state: { cards: ICardsState }) => state.cards);

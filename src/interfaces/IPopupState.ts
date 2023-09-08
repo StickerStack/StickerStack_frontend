@@ -21,6 +21,7 @@ export interface IPopupState {
     onClick?: () => void;
     onClickSecond?: () => void;
     src: string;
+    imageAbsolute?: boolean;
   };
 
   message: {

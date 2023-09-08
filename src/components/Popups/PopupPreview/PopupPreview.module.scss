@@ -12,6 +12,8 @@
   margin: 0;
   font-weight: 400;
   font-size: 16px;
+  @include flex(row, center, center);
+  gap: 10px;
 }
 
 .prev_arrow {

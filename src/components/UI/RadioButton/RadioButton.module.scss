@@ -3,6 +3,7 @@
 .label {
   margin: 0;
   min-width: max-content;
+  max-width: max-content;
   @include flex(row, flex-start, flex-start);
   gap: 10px;
   font-weight: 400;

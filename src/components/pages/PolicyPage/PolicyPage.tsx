@@ -1,9 +1,13 @@
-import { ButtonWithText, Container, TitlePage } from '../../UI';
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import cn from 'classnames';
 
 import { PolicyNavigation } from '../../PolicyNavigation/PolicyNavigation';
+import { ButtonCustom, ButtonWithText, Container, TitlePage } from '../../UI';
+import { COOKIE } from '../../../utils/constants';
 
 import styles from './PolicyPage.module.scss';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface Props {
   policy: {
@@ -17,6 +21,10 @@ interface Props {
 }
 
 const PolicyPage: React.FC<Props> = ({ policy }: Props) => {
+  const location = useLocation();
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const navRef = useRef<HTMLDivElement>();
   const sectionRef = useRef<Array<HTMLDivElement>>([]);
   useEffect(() => {
     sectionRef.current = sectionRef.current.slice(0, policy.sections.length);
@@ -25,10 +33,84 @@ const PolicyPage: React.FC<Props> = ({ policy }: Props) => {
 
   return (
     <main className={styles.policy}>
+      {location.pathname === COOKIE ? null : (
+        <ButtonCustom
+          type='arrow'
+          label={!menuOpen ? 'Открыть меню' : 'Закрыть меню'}
+          className={cn(styles.button, menuOpen && styles.button_open)}
+          onClick={() => setMenuOpen(!menuOpen)}
+        />
+      )}
+      {menuOpen && (
+        <AnimatePresence>
+          <motion.div className={styles.overlay}>
+            <motion.div
+              className={styles.background}
+              initial={{
+                opacity: 0,
+              }}
+              animate={{
+                transition: {
+                  duration: 0.25,
+                },
+                opacity: 1,
+              }}
+              exit={{
+                opacity: 0,
+                transition: {
+                  opacity: { duration: 0.25 },
+                },
+              }}
+              onClick={() => setMenuOpen(false)}
+            />
+            <motion.section
+              className={styles.menu_open}
+              initial={{
+                opacity: 0,
+                transform: 'translate(340px)',
+              }}
+              style={{ overflow: 'hidden' }}
+              animate={{
+                opacity: 1,
+                transform: 'translate(0px)',
+                transition: {
+                  transform: { duration: 0.4 },
+                  opacity: { duration: 0.2 },
+                },
+              }}
+              exit={{
+                opacity: 0,
+                transform: 'translate(340px)',
+                transition: { transform: { duration: 0.4 }, opacity: { duration: 0.2 } },
+              }}
+            >
+              {policy.sections.map((section, i) => (
+                <motion.div key={section.id}>
+                  <ButtonWithText
+                    theme='no-border'
+                    className={styles.menu_item}
+                    onClick={() => {
+                      sectionRef.current &&
+                        navRef.current &&
+                        window.scrollTo({
+                          behavior: 'smooth',
+                          top: sectionRef.current[i].offsetTop - navRef.current.clientHeight - 10,
+                        });
+                      setMenuOpen(false);
+                    }}
+                  >
+                    {section.title.slice(3)}
+                  </ButtonWithText>
+                </motion.div>
+              ))}
+            </motion.section>
+          </motion.div>
+        </AnimatePresence>
+      )}
       <Container className={styles.policy_container}>
         <div className={styles.content}>
           {
-            <div className={styles.nav}>
+            <div ref={(nav: HTMLDivElement) => (navRef.current = nav)} className={styles.nav}>
               <PolicyNavigation />
             </div>
           }
@@ -63,9 +145,10 @@ const PolicyPage: React.FC<Props> = ({ policy }: Props) => {
               key={section.id}
               onClick={() => {
                 sectionRef.current &&
+                  navRef.current &&
                   window.scrollTo({
                     behavior: 'smooth',
-                    top: sectionRef.current[i].offsetTop - 55,
+                    top: sectionRef.current[i].offsetTop - navRef.current.clientHeight - 10,
                   });
               }}
             >

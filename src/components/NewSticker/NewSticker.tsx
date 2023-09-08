@@ -31,8 +31,7 @@ import {
   SIZE_INPUT_MIN_LENGTH,
 } from '../../utils/constants';
 import { converter } from '../../utils/converter';
-
-import { tooltipText } from '../../utils/texts';
+import { addpage } from '../../utils/content/stickerspage';
 
 import styles from './NewSticker.module.scss';
 
@@ -324,7 +323,7 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
               onClick={() => setCustomVisible(false)}
             >
               Оптимальный размер
-              <TooltipCustom text={tooltipText} />
+              <TooltipCustom text={addpage.tooltipOptimal} />
             </RadioButton>
             <div className={styles.option}>
               <RadioButton

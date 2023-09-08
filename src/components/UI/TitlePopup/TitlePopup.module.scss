@@ -1,8 +1,12 @@
 @import '../../../utils/_scss-variables.scss';
 
 .title {
-  margin: 0 0 10px 0;
+  margin: 0;
   padding: 0;
-  @include font(28px, 33px, 500);
+  @include font(24px, 26px, 500);
   text-align: center;
+
+  @media screen and (max-width: 768px) {
+    @include font(20px, 22px, 500);
+  }
 }

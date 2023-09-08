@@ -4,6 +4,7 @@ import { IOrderState } from '../../../interfaces';
 import { StickerCarousel } from '../../StickerCarousel/StickerCarousel';
 import { ButtonWithText } from '../../UI';
 import { CART } from '../../../utils/constants';
+import { orders } from '../../../utils/content/profile';
 
 import styles from './OrderDetails.module.scss';
 
@@ -28,7 +29,9 @@ const OrderDetails: React.FC<IProps> = ({ order, onClose }: IProps) => {
       {order && (
         <div className={styles.container}>
           <div className={styles.main}>
-            <span className={styles.id}>Номер заказа: {order.order_number}</span>
+            <span className={styles.id}>
+              {orders.orderId} {order.order_number}
+            </span>
             <span className={styles.current}>
               Создан {date.toLocaleDateString()} в {date.toLocaleTimeString().slice(0, 5)}
             </span>
@@ -54,19 +57,22 @@ const OrderDetails: React.FC<IProps> = ({ order, onClose }: IProps) => {
               <li className={styles.info_item}>
                 {order.stickers.reduce((acc, item) => acc + item.amount, 0)} шт на{' '}
                 {order.number_of_sheets}{' '}
-                {order.number_of_sheets.toString().endsWith('1') ? 'листе' : 'листах'}
+                {order.number_of_sheets.toString().endsWith('1') &&
+                !order.number_of_sheets.toString().endsWith('11')
+                  ? 'листе'
+                  : 'листах'}
               </li>
               <li className={styles.info_item}>
                 {order.cropping ? 'Вырезать по контуру' : 'Оставить на листе'}
               </li>
-              <li className={styles.info_item}>Белая виниловая пленка</li>
+              <li className={styles.info_item}>{orders.material}</li>
               <div className={styles.buttons}>
                 <ButtonWithText
                   theme='transparent'
                   className={styles.button}
                   onClick={() => navigate(CART)}
                 >
-                  Повторить заказ
+                  {orders.repeat}
                 </ButtonWithText>
                 {/* <ButtonWithText theme='transparent' className={styles.button} onClick={onClose}>
                   Удалить

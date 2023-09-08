@@ -15,8 +15,9 @@ import { InputWithButton } from '../../UI/InputWithButton/InputWithButton';
 import { InputField } from '../../UI/InputField/InputField';
 import { InputError } from '../../UI/InputError/InputError';
 import { getRandomNumber } from '../../../utils/constants';
+import { profile } from '../../../utils/content/profile';
+import { messages, verifyChanged, verifyPlease } from '../../../utils/content/popups';
 
-import EmptyAvatarImage from '../../../images/empty-avatar.png';
 import styles from './ProfilePage.module.scss';
 
 const FIRSTNAME_INPUT_LABEL = 'firstName';
@@ -87,9 +88,9 @@ const ProfilePage: React.FC = () => {
           const randomNumber = getRandomNumber(1, 3);
           dispatch(
             openInfo({
-              title: 'Подтвердите новую почту',
-              text: 'Мы направили письмо на новую электронную почту. Для подтверждения перейдите по ссылке в письме.',
-              buttonText: 'Понятно!',
+              title: `${verifyChanged.title}`,
+              text: `${verifyChanged.text}`,
+              buttonText: `${verifyChanged.buttonText}`,
               image: require(`../../../images/check-your-mail-${randomNumber}.png`),
             }),
           );
@@ -99,14 +100,14 @@ const ProfilePage: React.FC = () => {
         if (err.message === '422') {
           dispatch(
             openMessage({
-              text: 'Ошибка при заполнении полей. Попробуйте поменять значения.',
+              text: `${messages.fieldsError}`,
               isError: true,
             }),
           );
         } else if (err) {
           dispatch(
             openMessage({
-              text: 'Что-то пошло не так. Попробуйте еще раз.',
+              text: `${messages.somethingWrong}`,
               isError: true,
             }),
           );
@@ -118,7 +119,7 @@ const ProfilePage: React.FC = () => {
   return (
     <main className={styles.profile}>
       <Container className={styles.profile_container}>
-        <TitlePage type='main-title'>Мои данные</TitlePage>
+        <TitlePage type='main-title'>{profile.title}</TitlePage>
         <section className={styles.section}>
           <ImagePick />
           <div className={styles.profile_data}>
@@ -138,7 +139,7 @@ const ProfilePage: React.FC = () => {
                   }}
                   name={FIRSTNAME_INPUT_LABEL}
                   error={errors[FIRSTNAME_INPUT_LABEL]}
-                  placeholder='Имя'
+                  placeholder={profile.namePlaceholder}
                   className='profile'
                   button={
                     <button
@@ -164,7 +165,7 @@ const ProfilePage: React.FC = () => {
                     },
                   }}
                   name={LASTNAME_INPUT_LABEL}
-                  placeholder='Фамилия'
+                  placeholder={profile.lastNamePlaceholder}
                   className='profile'
                   error={errors[LASTNAME_INPUT_LABEL]}
                   button={
@@ -195,26 +196,23 @@ const ProfilePage: React.FC = () => {
                     />
                   }
                   name={EMAIL_INPUT_LABEL}
-                  placeholder='Электронная почта'
+                  placeholder={profile.emailPlaceholder}
                   className='profile'
                 />
                 <InputError error={errors[EMAIL_INPUT_LABEL]} />
               </InputField>
-
               <ButtonWithText
                 className={styles.button}
                 type='submit'
                 disabled={(fieldsUnchanged && validOrInvalid) || !isValid}
                 loading={loading}
               >
-                Сохранить
+                {profile.button}
               </ButtonWithText>
             </form>
             {!user.isVerified && (
               <div className={styles.additional}>
-                <span className={styles.additional_text}>
-                  Не пришло письмо подтверждения электронной почты?
-                </span>
+                <span className={styles.additional_text}>{profile.link.label}</span>
                 <TextUnderline
                   className={styles.underline}
                   onClick={() => {
@@ -222,15 +220,15 @@ const ProfilePage: React.FC = () => {
                     const randomNumber = getRandomNumber(1, 3);
                     dispatch(
                       openInfo({
-                        title: 'Подтвердите почту',
-                        text: 'Мы направили письмо на вашу электронную почту. Для подтверждения перейдите по ссылке в письме.',
-                        buttonText: 'Понятно!',
+                        title: `${verifyPlease.title}`,
+                        text: `${verifyPlease.text}`,
+                        buttonText: `${verifyPlease.buttonText}`,
                         image: require(`../../../images/check-your-mail-${randomNumber}.png`),
                       }),
                     );
                   }}
                 >
-                  Выслать повторно
+                  {profile.link.text}
                 </TextUnderline>
               </div>
             )}
