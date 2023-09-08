@@ -3,6 +3,10 @@ class Converter {
     return value / 38;
   }
 
+  pxToOptimalPx(value: number): number {
+    return value / 3.11;
+  }
+
   pxToMm(value: number): number {
     return value / 3.8;
   }

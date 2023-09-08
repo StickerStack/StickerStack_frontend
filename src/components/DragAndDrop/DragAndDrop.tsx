@@ -9,7 +9,7 @@ import { Error } from '../UI';
 import { ICard } from '../../interfaces';
 import { useAppDispatch } from '../../hooks/hooks';
 import { updatePicture } from '../../store/cardsSlice';
-import { openMessage } from '../../store/popupSlice';
+import { sticker } from '../../utils/content/stickerspage';
 
 import styles from './DragAndDrop.module.scss';
 
@@ -58,28 +58,31 @@ const DragAndDrop: React.FC<IProps> = ({ card, name, option, register, onLoad }:
             image.src = reader.result;
             image.onload = () => {
               if (typeof file.urlFilePreview === 'string') {
-                if (image.naturalWidth <= maxSize && image.naturalHeight <= maxSize) {
+                const optimalWidth = Math.round(converter.pxToOptimalPx(image.naturalWidth));
+                const optimalHeight = Math.round(converter.pxToOptimalPx(image.naturalHeight));
+
+                if (optimalWidth <= maxSize && optimalHeight <= maxSize) {
                   dispatch(
                     updatePicture({
                       id: card.id,
                       image: file.urlFilePreview,
-                      size: { width: image.naturalWidth, height: image.naturalHeight },
-                      optimalSize: { width: image.naturalWidth, height: image.naturalHeight },
+                      size: { width: optimalWidth, height: optimalHeight },
+                      optimalSize: { width: optimalWidth, height: optimalHeight },
                     }),
                   );
                 } else {
-                  if (image.naturalWidth > image.naturalHeight) {
+                  if (optimalWidth > optimalHeight) {
                     dispatch(
                       updatePicture({
                         id: card.id,
                         image: file.urlFilePreview,
                         size: {
                           width: maxSize,
-                          height: (image.naturalHeight / image.naturalWidth) * maxSize,
+                          height: (optimalHeight / optimalWidth) * maxSize,
                         },
                         optimalSize: {
                           width: maxSize,
-                          height: (image.naturalHeight / image.naturalWidth) * maxSize,
+                          height: (optimalHeight / optimalWidth) * maxSize,
                         },
                       }),
                     );
@@ -89,11 +92,11 @@ const DragAndDrop: React.FC<IProps> = ({ card, name, option, register, onLoad }:
                         id: card.id,
                         image: file.urlFilePreview,
                         size: {
-                          width: (image.naturalWidth / image.naturalHeight) * maxSize,
+                          width: (optimalWidth / optimalHeight) * maxSize,
                           height: maxSize,
                         },
                         optimalSize: {
-                          width: (image.naturalWidth / image.naturalHeight) * maxSize,
+                          width: (optimalWidth / optimalHeight) * maxSize,
                           height: maxSize,
                         },
                       }),
@@ -128,7 +131,7 @@ const DragAndDrop: React.FC<IProps> = ({ card, name, option, register, onLoad }:
               card.size.height / card.size.width >= 1
                 ? 262
                 : (card.size.height / card.size.width) * 262,
-            padding: borderInPx / card.size.width,
+            padding: (borderInPx / card.size.width) * 262,
           }}
         >
           <img
@@ -144,8 +147,8 @@ const DragAndDrop: React.FC<IProps> = ({ card, name, option, register, onLoad }:
       ) : (
         <div className={styles.dnd}>
           <div className={styles.text}>
-            <span className={styles.main}>Перетащите фото или выберите файл</span>
-            <span className={styles.sub}>Допустимые форматы: .jpg, .jpeg, .png</span>
+            <span className={styles.main}>{sticker.image}</span>
+            <span className={styles.sub}>{sticker.imageFormat}</span>
           </div>
         </div>
       )}
@@ -164,9 +167,7 @@ const DragAndDrop: React.FC<IProps> = ({ card, name, option, register, onLoad }:
           label='stickerFile'
         />
       )}
-      {error && (
-        <Error className={styles.error}>Максимально допустимый размер картинки - до 1Мб!</Error>
-      )}
+      {error && <Error className={styles.error}>{sticker.errorImageSize}</Error>}
     </div>
   );
 };

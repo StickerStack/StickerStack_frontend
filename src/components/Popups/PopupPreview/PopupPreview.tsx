@@ -1,7 +1,7 @@
 import Slider from 'react-slick';
 import { useState, useEffect } from 'react';
 
-import { StickerList } from '../../StickerList/StickerList';
+import { StickerList, pageSizePxSmall } from '../../StickerList/StickerList';
 import { PageElement } from '../../../utils/calculateStickerOnList';
 import { generateRandomNumber } from '../../../utils/generateRandomNumber';
 
@@ -9,6 +9,7 @@ import { settings } from './settings';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import styles from './PopupPreview.module.scss';
+import { TooltipCustom } from '../../UI';
 
 const PopupPreview: React.FC = () => {
   const [pagesCards, setPagesCards] = useState<PageElement[][]>([]);
@@ -27,6 +28,11 @@ const PopupPreview: React.FC = () => {
         {pagesCards.length.toString().endsWith('1') && !pagesCards.length.toString().endsWith('11')
           ? 'листе'
           : 'листах'}
+        <TooltipCustom
+          text='Учитывайте, что данные изображения предоставляются для ознакомления с приблизительным видом
+        листов и могут иметь искажения в зависимости от используемого монитора. Окончательные макеты
+        будут тщательно проработаны нашими специалистами перед отправкой в печать.'
+        />
       </h2>
       {pagesCards.length > 0 && (
         <Slider {...settings}>

@@ -9,21 +9,19 @@ import styles from './StickerList.module.scss';
 interface IProps {
   cards: ICard[];
 }
-
+export const pageSizePxSmall = {
+  widthPage: pageSizePx.widthPage / 2,
+  heightPage: pageSizePx.heightPage / 2,
+  paddingList: {
+    top: pageSizePx.paddingList.top / 2,
+    right: pageSizePx.paddingList.right / 2,
+    bottom: pageSizePx.paddingList.bottom / 2,
+    left: pageSizePx.paddingList.left / 2,
+  },
+  gapX: pageSizePx.gapX / 2,
+  gapY: pageSizePx.gapY / 2,
+};
 const StickerList: React.FC<IProps> = ({ cards }: IProps) => {
-  const pageSizePxSmall = {
-    widthPage: pageSizePx.widthPage / 2,
-    heightPage: pageSizePx.heightPage / 2,
-    paddingList: {
-      top: pageSizePx.paddingList.top / 2,
-      right: pageSizePx.paddingList.right / 2,
-      bottom: pageSizePx.paddingList.bottom / 2,
-      left: pageSizePx.paddingList.left / 2,
-    },
-    gapX: pageSizePx.gapX / 2,
-    gapY: pageSizePx.gapY / 2,
-  };
-
   const borderInPx = converter.mmToPx(stickerWhiteBorder);
 
   return (
