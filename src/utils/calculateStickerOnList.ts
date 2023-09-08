@@ -5,7 +5,7 @@ export interface PageElement {
   count: number;
 }
 
-export const calculateStickerOnList = (arr: ICard[], options: IOptions): void => {
+export const calculateStickerOnList = (arr: ICard[], options: IOptions): PageElement[][] => {
   const page = document.createElement('div');
   page.className = 'pageWithStickers';
   document.body.appendChild(page);
@@ -37,7 +37,6 @@ export const calculateStickerOnList = (arr: ICard[], options: IOptions): void =>
     let pageElement = { card: imageObject, count: 0 };
     while (imageObject.amount > 0) {
       const images = document.createElement('img');
-      images.src = imageObject.image;
       images.className = 'sticker';
       images.width = imageObject.size.width;
       images.height = imageObject.size.height;
@@ -65,6 +64,6 @@ export const calculateStickerOnList = (arr: ICard[], options: IOptions): void =>
   }
 
   allPages.push(currentPage);
-  localStorage.setItem('pagesWithStickers', JSON.stringify(allPages));
   document.body.removeChild(page);
+  return allPages;
 };

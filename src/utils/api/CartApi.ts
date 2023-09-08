@@ -1,13 +1,13 @@
 import { Api } from './Api';
 import { API_URL } from '../constants';
-import { ISticker } from '../../interfaces';
+import { OrderItem } from '../../interfaces';
 
 class CartApi extends Api {
   constructor(url: string, headers: HeadersInit) {
     super(url, headers);
   }
 
-  public async addSticker(sticker: ISticker) {
+  public async addSticker(sticker: OrderItem) {
     const data = await fetch(`${this.url}/cart/add_sticker`, {
       method: 'POST',
       credentials: 'include',
@@ -47,12 +47,13 @@ class CartApi extends Api {
     return this.checkResponse(data);
   }
 
+// https://scriptdev.ru/guide/045/#omit-t-k  -- если будут вопросы по типу Omit
   public async uploadOrder(
     cost: number,
     address: string,
     number: number,
     cropping: boolean,
-    stickers: Array<ISticker>,
+    stickers: Array<OrderItem>,
   ) {
     const data = await fetch(`${this.url}/orders/add_order`, {
       method: 'POST',

@@ -13,10 +13,9 @@ const initialState: ICart = {
   cropping: false,
   items: [],
 };
-
-const addSticker = createAsyncThunk(
+export const addSticker = createAsyncThunk(
   'cart/add_sticker',
-  async (data: ISticker, { rejectWithValue }) => {
+  async (data: OrderItem, { rejectWithValue }) => {
     try {
       const response = await cartApi.addSticker(data);
       return { data: response.data };
@@ -145,7 +144,7 @@ const {
 export {
   cartSliceReducer,
   getCart,
-  addSticker,
+  // addSticker,
   deleteSticker,
   addItems,
   addItem,

@@ -21,6 +21,7 @@ const initialState: ICardsState = {
   ],
   valid: false,
   processing: false,
+  prewiewCards: [],
 };
 
 const removeBackground = createAsyncThunk(
@@ -41,6 +42,9 @@ const cardsSlice = createSlice({
   reducers: {
     addCard(state, action: { payload: ICard; type: string }) {
       state.cards.push({ ...action.payload });
+    },
+    setPreviewCards(state, action) {
+      state.prewiewCards = action.payload;
     },
     setActive(state, action: { payload: string; type: string }) {
       state.cards = state.cards.map((card) => {
@@ -224,6 +228,7 @@ const {
   updateAmount,
   updateSize,
   setCardsFromCart,
+  setPreviewCards
 } = cardsSlice.actions;
 
 export {
@@ -242,4 +247,5 @@ export {
   updateCard,
   updateSize,
   setCardsFromCart,
+  setPreviewCards,
 };

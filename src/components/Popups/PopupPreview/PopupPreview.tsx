@@ -2,41 +2,36 @@ import Slider from 'react-slick';
 import { useState, useEffect } from 'react';
 
 import { StickerList, pageSizePxSmall } from '../../StickerList/StickerList';
-import { PageElement } from '../../../utils/calculateStickerOnList';
+import { PageElement, calculateStickerOnList } from '../../../utils/calculateStickerOnList';
 import { generateRandomNumber } from '../../../utils/generateRandomNumber';
 
+import { useSelector } from 'react-redux';
+import { ICardsState } from '../../../interfaces';
+import { pageSizePx } from '../../../utils/constants';
 import { settings } from './settings';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import styles from './PopupPreview.module.scss';
-import { TooltipCustom } from '../../UI';
 
 const PopupPreview: React.FC = () => {
-  const [pagesCards, setPagesCards] = useState<PageElement[][]>([]);
+  const { prewiewCards } = useSelector((state: { cards: ICardsState }) => state.cards);
 
-  useEffect(() => {
-    const pages = localStorage.getItem('pagesWithStickers');
-    if (pages) {
-      setPagesCards(JSON.parse(pages));
-    }
-  }, []);
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>
-        Так будет выглядеть набор на{' '}
-        {pagesCards.length.toString().endsWith('1') && !pagesCards.length.toString().endsWith('11')
-          ? 'листе'
-          : 'листах'}
-        <TooltipCustom
-          text='Учитывайте, что данные изображения предоставляются для ознакомления с приблизительным видом
-        листов и могут иметь искажения в зависимости от используемого монитора. Окончательные макеты
-        будут тщательно проработаны нашими специалистами перед отправкой в печать.'
-        />
-      </h2>
-      {pagesCards.length > 0 && (
-        <Slider {...settings}>
-          {pagesCards.map((elementsPage) => {
+      <h2 className={styles.title}>Так будет выглядеть набор на листе</h2>
+      {prewiewCards.length > 0 && (
+        <Slider
+          {...settings}
+          customPaging={(i: number) => {
+            return (
+              <span className={styles.page_numbers}>
+                {i + 1}/{prewiewCards.length}
+              </span>
+            );
+          }}
+        >
+          {prewiewCards.map((elementsPage) => {
             const cards = [];
             for (let i = 0; i < elementsPage.length; i++) {
               for (let j = 0; j < elementsPage[i].count; j++) {
