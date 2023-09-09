@@ -1,8 +1,6 @@
 @import '../../../utils/_scss-variables.scss';
 
 .button {
-  width: 20px;
-  height: 20px;
   background-color: transparent;
   border: none;
   background-repeat: no-repeat;
@@ -32,22 +30,36 @@
 .button_person {
   width: 32px;
   height: 32px;
+  @media screen and (max-width: 768px) {
+    width: 24px;
+    height: 24px;
+  }
   &_image {
     width: 32px;
     height: 32px;
+
+    @media screen and (max-width: 768px) {
+      width: 24px;
+      height: 24px;
+    }
   }
-  // background-image: url(../../../images/icons/profile-icon.svg);
 }
 
 .button_cart {
   width: 32px;
   height: 32px;
+  @media screen and (max-width: 768px) {
+    width: 24px;
+    height: 24px;
+  }
   &_image {
     width: 32px;
     height: 32px;
+    @media screen and (max-width: 768px) {
+      width: 24px;
+      height: 24px;
+    }
   }
-
-  // background-image: url(../../../images/icons/cart.svg);
 }
 
 .button_delete {

@@ -25,12 +25,23 @@ const PopupInfo: React.FC = () => {
           ref={(img: HTMLImageElement) => {
             imageRef.current = img;
           }}
-          className={cn(styles.image, width < 768 && styles.image_absolute)}
+          className={cn(
+            styles.image,
+            info.imageAbsolute && styles.image_absolute,
+            info.imageAbsolute && width < 768 && styles.image_absolute_small,
+          )}
           src={info.src}
           alt='Декоративное изображение'
         />
       )}
-      <TitlePopup style={{ marginTop: width < 768 ? imageRef?.current?.clientHeight : 0 }} className={styles.title}>{info.title}</TitlePopup>
+      <TitlePopup
+        style={{
+          marginTop: info.imageAbsolute && width < 768 ? imageRef?.current?.clientHeight : 0,
+        }}
+        className={styles.title}
+      >
+        {info.title}
+      </TitlePopup>
       <TextForm>{info.text}</TextForm>
       {!info.buttonSecondText ? (
         <ButtonWithText

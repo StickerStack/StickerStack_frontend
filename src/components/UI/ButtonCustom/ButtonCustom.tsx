@@ -22,8 +22,8 @@ const ButtonCustom: React.FC<IProps> = ({ type, disabled, className, label, onCl
       disabled={disabled}
       onClick={onClick}
     >
-      {type === 'cart' && <CartSvg className={styles.button_image} />}
-      {type === 'person' && <PersonSvg className={styles.button_image} />}
+      {type === 'cart' && <CartSvg className={styles.button_cart_image} />}
+      {type === 'person' && <PersonSvg className={styles.button_person_image} />}
     </button>
   );
 };

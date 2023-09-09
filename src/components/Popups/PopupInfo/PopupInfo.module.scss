@@ -14,18 +14,24 @@
 
 .image {
   max-height: 241px;
-  border-radius: 20px;
+  border-radius: 38px;
   margin-bottom: 10px;
   object-fit: contain;
 
   &_absolute {
-    top: -40px;
-    position: absolute;
-    max-height: 290px;
-    object-fit: contain;
-    margin: 0;
-    width: 330px;
-    border-radius: 0px;
+    width: 100%;
+    object-fit: cover;
+    max-height: 266px;
+
+    &_small {
+      top: -40px;
+      position: absolute;
+      max-height: 290px;
+      object-fit: contain;
+      margin: 0;
+      width: 330px;
+      border-radius: 0px;
+    }
   }
 }
 
