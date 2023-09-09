@@ -42,6 +42,8 @@ import { ICardsState, IUserState } from '../../interfaces';
 import { AcceptCookies } from '../AcceptCookies/AcceptCookies';
 
 import styles from './App.module.scss';
+import { PopupInfo } from '../Popups/PopupInfo/PopupInfo';
+import { openPopup } from '../../store/popupSlice';
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();

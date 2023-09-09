@@ -13,30 +13,25 @@
 }
 
 .image {
-  width: 100%;
-  max-height: 240px;
+  max-height: 241px;
   border-radius: 20px;
   margin-bottom: 10px;
   object-fit: contain;
 
   &_absolute {
     top: -40px;
-    //bottom: 40px;
-    position: relative;
+    position: absolute;
     max-height: 290px;
-    object-fit: cover;
-    width: 110%;
+    object-fit: contain;
     margin: 0;
-    border-radius: none;
-
-    &.container {
-      padding-top: 250px;
-    }
+    width: 330px;
+    border-radius: 0px;
   }
 }
 
 .title {
   width: max-content;
+  margin: 0;
 }
 
 .buttons {

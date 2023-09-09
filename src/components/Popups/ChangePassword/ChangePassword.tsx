@@ -45,14 +45,13 @@ const ChangePassword: React.FC = () => {
       .unwrap()
       .then(() => {
         dispatch(closePopup());
-        const randomNumber = getRandomNumber(1, 3);
         dispatch(
           openInfo({
             title: `${passwordChanged.title}`,
             text: `${passwordChanged.text}`,
             buttonText: `${passwordChanged.buttonText}`,
             onClick: () => navigate(ADD_STICKERS),
-            image: require(`../../../images/password-changed-${randomNumber}.png`),
+            image: require(`../../../images/password-changed.png`),
           }),
         );
         localStorage.removeItem('change-password-token');

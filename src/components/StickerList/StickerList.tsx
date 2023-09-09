@@ -35,7 +35,7 @@ const StickerList: React.FC<IProps> = ({ cards }: IProps) => {
         gridTemplateRows: `repeat(${Math.floor(pageSizePxSmall.heightPage)}, 1px)`,
       }}
     >
-      {cards.map((card) => {
+      {cards.map((card, index) => {
         return (
           <div
             className={cn(styles.border, styles[`border_${card.shape}`])}
@@ -46,7 +46,7 @@ const StickerList: React.FC<IProps> = ({ cards }: IProps) => {
               gridRow: `span ${Math.ceil(card.size.height / 2 + pageSizePxSmall.gapY)}`,
               gridColumn: `span ${Math.ceil(card.size.width / 2 + pageSizePxSmall.gapX)}`,
             }}
-            key={card.id}
+            key={`${card.id}${index}`}
           >
             <img
               className={cn(styles.image, styles[`image_${card.shape}`])}
