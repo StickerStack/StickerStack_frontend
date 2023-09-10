@@ -32,9 +32,9 @@ const OrderDetails: React.FC<IProps> = ({ order, onClose }: IProps) => {
             <span className={styles.id}>
               {orders.orderId} {order.order_number}
             </span>
-            <span className={styles.current}>
+            {/* <span className={styles.current}>
               Создан {date.toLocaleDateString()} в {date.toLocaleTimeString().slice(0, 5)}
-            </span>
+            </span> */}
           </div>
           <div className={styles.content}>
             <div className={styles.carousel}>
@@ -66,19 +66,19 @@ const OrderDetails: React.FC<IProps> = ({ order, onClose }: IProps) => {
                 {order.cropping ? 'Вырезать по контуру' : 'Оставить на листе'}
               </li>
               <li className={styles.info_item}>{orders.material}</li>
-              <div className={styles.buttons}>
-                <ButtonWithText
-                  theme='transparent'
-                  className={styles.button}
-                  onClick={() => navigate(CART)}
-                >
-                  {orders.repeat}
-                </ButtonWithText>
-                {/* <ButtonWithText theme='transparent' className={styles.button} onClick={onClose}>
+            </ul>
+            <div className={styles.buttons}>
+              <ButtonWithText
+                theme='transparent'
+                className={styles.button}
+                onClick={() => navigate(CART)}
+              >
+                {orders.repeat}
+              </ButtonWithText>
+              {/* <ButtonWithText theme='transparent' className={styles.button} onClick={onClose}>
                   Удалить
                 </ButtonWithText> */}
-              </div>
-            </ul>
+            </div>
           </div>
         </div>
       )}
