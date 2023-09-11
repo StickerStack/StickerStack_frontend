@@ -15,6 +15,7 @@ import {
   Preloader,
   Footer,
 } from '../';
+import { AddStickersNew } from '../pages/AddStickers-new/AddStickers';
 import { CartPage } from '../pages/CartPage/CartPage';
 import {
   PROFILE,
@@ -42,8 +43,7 @@ import { ICardsState, IUserState } from '../../interfaces';
 import { AcceptCookies } from '../AcceptCookies/AcceptCookies';
 
 import styles from './App.module.scss';
-import { PopupInfo } from '../Popups/PopupInfo/PopupInfo';
-import { openPopup } from '../../store/popupSlice';
+import { getStickers } from '../../store/stickersSlice';
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -75,6 +75,7 @@ const App: React.FC = () => {
       dispatch(getCart()).then((res) => {
         console.log(res);
       });
+      isLogged && dispatch(getStickers());
     // eslint-disable-next-line
   }, [location, isLogged]);
 
@@ -127,6 +128,14 @@ const App: React.FC = () => {
               element={
                 <ProtectedRoute redirectPath='/'>
                   <AddStickers />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path={ADD_STICKERS + '-new'}
+              element={
+                <ProtectedRoute redirectPath='/'>
+                  <AddStickersNew />
                 </ProtectedRoute>
               }
             />

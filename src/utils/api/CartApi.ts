@@ -1,5 +1,6 @@
 import { Api } from './Api';
 import { API_URL } from '../constants';
+import { ISticker as IStickerNew } from '../../interfaces/ISticker-new';
 import { ISticker } from '../../interfaces';
 
 class CartApi extends Api {
@@ -65,6 +66,26 @@ class CartApi extends Api {
         cropping: cropping,
         stickers: stickers,
       }),
+    });
+
+    return this.checkResponse(data);
+  }
+
+  public async putStickerInCart(sticker: IStickerNew) {
+    const body = {
+      image: sticker.image,
+      amount: sticker.amount,
+      shape: sticker.shape,
+      height: sticker.height,
+      width: sticker.width,
+      optimal_width: sticker.optimal_width,
+      optimal_height: sticker.optimal_height,
+    };
+    const data = await fetch(`${this.url}/cart/update_sticker/${sticker.id}`, {
+      method: 'PUT',
+      credentials: 'include',
+      headers: this.headers,
+      body: JSON.stringify(body),
     });
 
     return this.checkResponse(data);

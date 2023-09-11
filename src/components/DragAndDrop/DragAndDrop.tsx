@@ -9,7 +9,7 @@ import { Error } from '../UI';
 import { ICard } from '../../interfaces';
 import { useAppDispatch } from '../../hooks/hooks';
 import { updatePicture } from '../../store/cardsSlice';
-import { sticker } from '../../utils/content/stickerspage';
+import { stickertext } from '../../utils/content/stickerspage';
 
 import styles from './DragAndDrop.module.scss';
 
@@ -147,8 +147,8 @@ const DragAndDrop: React.FC<IProps> = ({ card, name, option, register, onLoad }:
       ) : (
         <div className={styles.dnd}>
           <div className={styles.text}>
-            <span className={styles.main}>{sticker.image}</span>
-            <span className={styles.sub}>{sticker.imageFormat}</span>
+            <span className={styles.main}>{stickertext.image}</span>
+            <span className={styles.sub}>{stickertext.imageFormat}</span>
           </div>
         </div>
       )}
@@ -167,7 +167,7 @@ const DragAndDrop: React.FC<IProps> = ({ card, name, option, register, onLoad }:
           label='stickerFile'
         />
       )}
-      {error && <Error className={styles.error}>{sticker.errorImageSize}</Error>}
+      {error && <Error className={styles.error}>{stickertext.errorImageSize}</Error>}
     </div>
   );
 };
