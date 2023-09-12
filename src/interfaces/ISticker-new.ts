@@ -1,7 +1,7 @@
 import { TShape } from "../types/TShape";
 
 export interface ISticker {
-  id: number,
+  id: string,
   image: string,
   shape: TShape,
   amount: number,

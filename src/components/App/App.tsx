@@ -75,7 +75,7 @@ const App: React.FC = () => {
       dispatch(getCart()).then((res) => {
         console.log(res);
       });
-      isLogged && dispatch(getStickers());
+    isLogged && dispatch(getStickers());
     // eslint-disable-next-line
   }, [location, isLogged]);
 
@@ -106,7 +106,10 @@ const App: React.FC = () => {
               shape: card.shape,
               height: card.size.height,
               width: card.size.width,
-            }),
+              optimal_height: 5,
+              optimal_width: 5,
+              id: '',
+            })
           );
       });
 

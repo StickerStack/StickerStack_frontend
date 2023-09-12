@@ -7,7 +7,7 @@ import { stickerWhiteBorder } from '../../utils/constants';
 import { ISticker } from '../../interfaces/ISticker-new';
 import { PicOverlay } from '../PicOverlay/PicOverlay';
 import styles from './DragAndDrop.module.scss';
-import { putStickerInCart } from '../../store/stickersSlice';
+import { putStickerInCart, updateSticker } from '../../store/stickersSlice';
 import { stickertext } from '../../utils/content/stickerspage';
 
 interface IProps {
@@ -63,15 +63,14 @@ export const DragAndDrop: FC<IProps> = ({ sticker }) => {
             if (typeof file.urlFilePreview === 'string') {
               const optimalWidth = Math.round(converter.pxToOptimalPx(image.naturalWidth));
               const optimalHeight = Math.round(converter.pxToOptimalPx(image.naturalHeight));
+              // TODO: ЗДесь логика сохранения данных в стейте!
 
-              dispatch(
-                putStickerInCart({
-                  ...sticker,
-                  image: file.urlFilePreview,
-                  optimal_height: optimalHeight,
-                  optimal_width: optimalWidth,
-                })
-              );
+              dispatch(updateSticker({
+                ...sticker,
+                image: file.urlFilePreview,
+                optimal_width: optimalWidth,
+                optimal_height: optimalHeight
+              }))
             }
           };
         }

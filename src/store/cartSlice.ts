@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { OrderItem } from '../interfaces/OrderItem';
 import { pagePrice } from '../utils/constants';
 import { cartApi } from '../utils/api/CartApi';
-import { ISticker } from '../interfaces/ISticker';
+import { ISticker } from '../interfaces/ISticker-new';
 import { ICart } from '../interfaces/ICart';
 
 const initialState: ICart = {

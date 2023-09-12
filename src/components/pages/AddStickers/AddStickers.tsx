@@ -46,7 +46,7 @@ const AddStickers: React.FC = () => {
         id: `${generateRandomNumber()}`,
         active: true,
         valid: false,
-      }),
+      })
     );
   };
 
@@ -65,9 +65,7 @@ const AddStickers: React.FC = () => {
         heightPage: pageSizePx.heightPage,
       });
 
-      dispatch(
-        updateSheets(JSON.parse(localStorage.getItem('pagesWithStickers') || '[]')?.length || 1),
-      );
+      dispatch(updateSheets(JSON.parse(localStorage.getItem('pagesWithStickers') || '[]')?.length || 1));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cards]);
@@ -157,11 +155,7 @@ const AddStickers: React.FC = () => {
             <InfoBox type='number' description={addpage.pages}>
               {cart.number_of_sheets}
             </InfoBox>
-            <TextUnderline
-              type='button'
-              className={styles.preview}
-              onClick={() => dispatch(openPreview())}
-            >
+            <TextUnderline type='button' className={styles.preview} onClick={() => dispatch(openPreview())}>
               {addpage.preview}
             </TextUnderline>
           </div>
@@ -209,14 +203,17 @@ const AddStickers: React.FC = () => {
                       image: card.image.startsWith('data:image/png;base64,')
                         ? card.image.replace('data:image/png;base64,', '')
                         : card.image.startsWith('data:image/jpeg;base64,')
-                        ? card.image.replace('data:image/jpeg;base64,', '')
-                        : card.image.startsWith('data:image/jpg;base64,')
-                        ? card.image.replace('data:image/jpg;base64,', '')
-                        : '',
+                          ? card.image.replace('data:image/jpeg;base64,', '')
+                          : card.image.startsWith('data:image/jpg;base64,')
+                            ? card.image.replace('data:image/jpg;base64,', '')
+                            : '',
                       shape: card.shape,
                       height: card.size.height,
                       width: card.size.width,
-                    }),
+                      optimal_height: 5,
+                      optimal_width: 5,
+                      id: ''
+                    })
                   );
                 } else {
                   dispatch(
@@ -225,14 +222,17 @@ const AddStickers: React.FC = () => {
                       image: card.image.startsWith('data:image/png;base64,')
                         ? card.image.replace('data:image/png;base64,', '')
                         : card.image.startsWith('data:image/jpeg;base64,')
-                        ? card.image.replace('data:image/jpeg;base64,', '')
-                        : card.image.startsWith('data:image/jpg;base64,')
-                        ? card.image.replace('data:image/jpg;base64,', '')
-                        : '',
+                          ? card.image.replace('data:image/jpeg;base64,', '')
+                          : card.image.startsWith('data:image/jpg;base64,')
+                            ? card.image.replace('data:image/jpg;base64,', '')
+                            : '',
                       shape: card.shape,
                       height: card.size.height,
                       width: card.size.width,
-                    }),
+                      optimal_height: 5,
+                      optimal_width: 5,
+                      id: ''
+                    })
                   )
                     .unwrap()
                     .then(() => {
@@ -246,8 +246,8 @@ const AddStickers: React.FC = () => {
                         openMessage({
                           text: `${messages.somethingWrong}`,
                           isError: true,
-                        }),
-                      ),
+                        })
+                      )
                     )
                     .finally(() => {
                       setLoading(false);

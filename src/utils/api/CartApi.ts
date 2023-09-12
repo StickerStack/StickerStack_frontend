@@ -8,18 +8,23 @@ class CartApi extends Api {
     super(url, headers);
   }
 
-  public async addSticker(sticker: ISticker) {
-    const data = await fetch(`${this.url}/cart/add_sticker`, {
+  public async addSticker(stickers: IStickerNew) {
+    const data = await fetch(`${this.url}/cart/add_stickers`, {
       method: 'POST',
       credentials: 'include',
       headers: this.headers,
-      body: JSON.stringify({
-        image: sticker.image,
-        amount: sticker.amount,
-        shape: sticker.shape,
-        height: sticker.height,
-        width: sticker.width,
-      }),
+      body: JSON.stringify(stickers),
+    });
+
+    return this.checkResponse(data);
+  }
+
+  public async addStickers(stickers: IStickerNew[]) {
+    const data = await fetch(`${this.url}/cart/add_stickers`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: this.headers,
+      body: JSON.stringify(stickers),
     });
 
     return this.checkResponse(data);
