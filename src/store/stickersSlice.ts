@@ -53,7 +53,7 @@ const initialState: IStickersState = {
     id: '0',
     image: '',
     shape: 'square',
-    amount: 0,
+    amount: 1,
     width: 0,
     height: 0,
     optimal_width: 0,

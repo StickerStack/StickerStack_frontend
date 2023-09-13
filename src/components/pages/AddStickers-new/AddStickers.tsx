@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useSelector } from 'react-redux';
 
 import { NewSticker } from '../../NewSticker-new/NewSticker';
@@ -7,21 +7,25 @@ import { Container, TitlePage } from '../../UI';
 import { addpage } from '../../../utils/content/stickerspage';
 import styles from './AddStickers.module.scss';
 
-
 export const AddStickersNew: FC = () => {
   const { stickers } = useSelector((state: { stickers: IStickersState }) => state.stickers);
+  const [stickerActiveId, setStickerActiveId] = useState(stickers[0].id);
+
+  const handleActiveSticker = (id: string) => setStickerActiveId(id);
 
   return (
     <main className={styles.add}>
       <Container className={styles.add_container}>
         <TitlePage type='main-title'>{addpage.title}</TitlePage>
         <section className={styles.cards}>
-          {
-            stickers.map((card) => (
-              <NewSticker key={card.id} sticker={card} />
-            ))
-          }
-
+          {stickers.map((sticker) => (
+            <NewSticker
+              key={sticker.id}
+              sticker={sticker}
+              stickerActiveId={stickerActiveId}
+              handleActiveSticker={handleActiveSticker}
+            />
+          ))}
         </section>
       </Container>
     </main>

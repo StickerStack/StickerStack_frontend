@@ -1,14 +1,15 @@
 import { FC, useState } from 'react';
 import cn from 'classnames';
 
+import { updateSticker } from '../../store/stickersSlice';
+import { stickertext } from '../../utils/content/stickerspage';
+import { Error } from '../UI';
 import { useAppDispatch } from '../../hooks/hooks';
 import { converter } from '../../utils/converter';
 import { stickerWhiteBorder } from '../../utils/constants';
 import { ISticker } from '../../interfaces/ISticker-new';
 import { PicOverlay } from '../PicOverlay/PicOverlay';
 import styles from './DragAndDrop.module.scss';
-import { putStickerInCart, updateSticker } from '../../store/stickersSlice';
-import { stickertext } from '../../utils/content/stickerspage';
 
 interface IProps {
   sticker: ISticker;
@@ -65,12 +66,14 @@ export const DragAndDrop: FC<IProps> = ({ sticker }) => {
               const optimalHeight = Math.round(converter.pxToOptimalPx(image.naturalHeight));
               // TODO: ЗДесь логика сохранения данных в стейте!
 
-              dispatch(updateSticker({
-                ...sticker,
-                image: file.urlFilePreview,
-                optimal_width: optimalWidth,
-                optimal_height: optimalHeight
-              }))
+              dispatch(
+                updateSticker({
+                  ...sticker,
+                  image: file.urlFilePreview,
+                  optimal_width: optimalWidth,
+                  optimal_height: optimalHeight,
+                })
+              );
             }
           };
         }
@@ -85,7 +88,7 @@ export const DragAndDrop: FC<IProps> = ({ sticker }) => {
           <img
             className={cn(styles.image, styles[`image_${sticker.shape}`])}
             alt='Загруженное изображение'
-            src={sticker.image.replace('dataimage/jpegbase64', 'data:image/jpeg;base64,')}
+            src={`data:image/png;base64,${sticker.image}`}
           />
         </div>
       ) : (
@@ -104,6 +107,7 @@ export const DragAndDrop: FC<IProps> = ({ sticker }) => {
         accept='.jpg, .jpeg, .png'
       />
       {sticker.image && <PicOverlay className={styles.overlay} label='stickerFile' />}
+      {error && <Error className={styles.error}>{stickertext.errorImageSize}</Error>}
     </div>
   );
 };
