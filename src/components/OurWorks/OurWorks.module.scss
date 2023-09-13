@@ -78,6 +78,7 @@
   background-color: transparent;
   transition: opacity 0.3s ease-in-out;
   cursor: pointer;
+  z-index: 2;
 
   @media screen and (max-width: 600px) {
     display: none !important;
