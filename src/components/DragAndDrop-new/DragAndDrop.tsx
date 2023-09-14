@@ -6,9 +6,11 @@ import { stickertext } from '../../utils/content/stickerspage';
 import { Error } from '../UI';
 import { useAppDispatch } from '../../hooks/hooks';
 import { converter } from '../../utils/converter';
-import { stickerWhiteBorder } from '../../utils/constants';
+import { SIZE_INPUT_MAX_LENGTH } from '../../utils/constants';
 import { ISticker } from '../../interfaces/ISticker-new';
 import { PicOverlay } from '../PicOverlay/PicOverlay';
+import { StickerImage } from '../StickerImage/StickerImage';
+
 import styles from './DragAndDrop.module.scss';
 
 interface IProps {
@@ -25,32 +27,25 @@ export const DragAndDrop: FC<IProps> = ({ sticker }) => {
 
   const allowedTypeFile = ['image/png', 'image/jpeg', 'image/jpg'];
 
-  const borderInPx = converter.mmToPx(stickerWhiteBorder);
-  const styleBorderImage = {
-    width: sticker.width / sticker.height >= 1 ? 255 : (sticker.width / sticker.height) * 255,
-    height: sticker.height / sticker.width >= 1 ? 262 : (sticker.height / sticker.width) * 262,
-    padding: borderInPx / sticker.width,
-  };
+  const maxSize = converter.cmToPx(SIZE_INPUT_MAX_LENGTH);
 
   const dispatch = useAppDispatch();
 
-  const removeImageUrl = (url: string) => {
+  const getImageUrl = (url: string) => {
     if (url.startsWith('data:image')) {
-      if(url.startsWith('data:image/png')) {
+      if (url.startsWith('data:image/png')) {
         return url.replace('data:image/png;base64,', '');
       }
 
-      if(url.startsWith('data:image/jpeg')) {
+      if (url.startsWith('data:image/jpeg')) {
         return url.replace('data:image/jpeg;base64,', '');
       }
 
-      if(url.startsWith('data:image/jpg')) {
+      if (url.startsWith('data:image/jpg')) {
         return url.replace('data:image/jpg;base64,', '');
       }
-    }
-
-    return url;
-  }
+    } else return url;
+  };
 
   const handleImageCahnge = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -80,18 +75,45 @@ export const DragAndDrop: FC<IProps> = ({ sticker }) => {
           image.src = reader.result;
           image.onload = () => {
             if (typeof file.urlFilePreview === 'string') {
-              const optimalWidth = Math.round(converter.pxToOptimalPx(image.naturalWidth));
-              const optimalHeight = Math.round(converter.pxToOptimalPx(image.naturalHeight));
-              // TODO: ЗДесь логика сохранения данных в стейте!
+              const optimalWidth = Math.round(converter.pxToOptimalCm(image.naturalWidth));
+              const optimalHeight = Math.round(converter.pxToOptimalCm(image.naturalHeight));
 
-              dispatch(
-                updateSticker({
-                  ...sticker,
-                  image: removeImageUrl(file.urlFilePreview),
-                  optimal_width: optimalWidth,
-                  optimal_height: optimalHeight,
-                })
-              );
+              if (optimalWidth <= maxSize && optimalHeight <= maxSize) {
+                dispatch(
+                  updateSticker({
+                    ...sticker,
+                    image: getImageUrl(file.urlFilePreview),
+                    width: optimalWidth,
+                    height: optimalHeight,
+                    optimal_width: optimalWidth,
+                    optimal_height: optimalHeight,
+                  }),
+                );
+              } else {
+                if (optimalWidth > optimalHeight) {
+                  dispatch(
+                    updateSticker({
+                      ...sticker,
+                      image: getImageUrl(file.urlFilePreview),
+                      width: maxSize,
+                      height: (optimalHeight / optimalWidth) * maxSize,
+                      optimal_width: maxSize,
+                      optimal_height: (optimalHeight / optimalWidth) * maxSize,
+                    }),
+                  );
+                } else {
+                  dispatch(
+                    updateSticker({
+                      ...sticker,
+                      image: getImageUrl(file.urlFilePreview),
+                      width: (optimalWidth / optimalHeight) * maxSize,
+                      height: maxSize,
+                      optimal_width: (optimalWidth / optimalHeight) * maxSize,
+                      optimal_height: maxSize,
+                    }),
+                  );
+                }
+              }
             }
           };
         }
@@ -102,13 +124,7 @@ export const DragAndDrop: FC<IProps> = ({ sticker }) => {
   return (
     <div className={styles.container}>
       {sticker.image ? (
-        <div className={cn(styles.border, styles[`border_${sticker.shape}`])} style={styleBorderImage}>
-          <img
-            className={cn(styles.image, styles[`image_${sticker.shape}`])}
-            alt='Загруженное изображение'
-            src={`data:image/png;base64,${sticker.image}`}
-          />
-        </div>
+        <StickerImage sticker={sticker} boxWidth={255} boxHeight={262} />
       ) : (
         <div className={styles.dnd}>
           <div className={styles.text}>

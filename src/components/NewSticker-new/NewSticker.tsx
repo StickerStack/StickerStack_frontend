@@ -16,11 +16,18 @@ import { ButtonCustom, Input, InputError, InputField, RadioButton, TooltipCustom
 import { addpage } from '../../utils/content/stickerspage';
 import { InfoBox } from '../InfoBox/InfoBox';
 import { useAppDispatch } from '../../hooks/hooks';
-import { addStickers, deleteSticker, getStickers, putStickerInCart, updateSticker } from '../../store/stickersSlice';
+import {
+  addStickers,
+  deleteSticker,
+  getStickers,
+  putStickerInCart,
+  updateSticker,
+} from '../../store/stickersSlice';
 import { Shape } from '../Shape-new/Shape';
 import { ISticker } from '../../interfaces/ISticker-new';
 import { DragAndDrop } from '../DragAndDrop-new/DragAndDrop';
 import styles from './NewSticker.module.scss';
+import { StickerImage } from '../StickerImage/StickerImage';
 
 interface IProps {
   sticker: ISticker;
@@ -50,13 +57,15 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
     },
   });
   const [customVisible, setCustomVisible] = useState<boolean>(
-    sticker.width === sticker.optimal_width && sticker.height === sticker.optimal_height ? false : true
+    sticker.width === sticker.optimal_width && sticker.height === sticker.optimal_height
+      ? false
+      : true,
   );
 
   const shapesType = {
     circle: 'круг',
     square: 'квадрат',
-    rounded_square: 'квадрат с закруглением',
+    rounded_square: 'закругленный квадрат',
     contour: 'контур',
   };
 
@@ -92,14 +101,13 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
 
-    if(sticker.id === 'newSticker') {
+    if (sticker.id === 'newSticker') {
       dispatch(addStickers([sticker])).finally(() => {
         dispatch(getStickers());
       });
-      
     }
 
-    if(sticker.id !== 'newSticker') {
+    if (sticker.id !== 'newSticker') {
       dispatch(putStickerInCart(sticker));
     }
   };
@@ -124,7 +132,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
           ...sticker,
           width: converter.cmToPx(Number(value)),
           height: sticker.shape === 'circle' ? converter.cmToPx(Number(value)) : sticker.height,
-        })
+        }),
       );
     }
   };
@@ -141,7 +149,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
           ...sticker,
           height: converter.cmToPx(Number(value)),
           width: sticker.shape === 'circle' ? converter.cmToPx(Number(value)) : sticker.width,
-        })
+        }),
       );
     }
   };
@@ -159,12 +167,12 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
           {stickerActiveId === sticker.id ? (
             <DragAndDrop sticker={sticker} />
           ) : (
-            <img src={`data:image/png;base64,${sticker.image}`} className={styles.image_hidden} />
+            <StickerImage sticker={sticker} boxWidth={144} boxHeight={144} />
           )}
         </div>
         <fieldset className={cn(styles.flex, styles.flex_shapes)}>
           <label className={styles.category} htmlFor='shape'>
-            Форма{' '}
+            Форма
             {sticker.id !== stickerActiveId && (
               <span className={styles.shape_hidden}> {shapesType[sticker.shape]}</span>
             )}
@@ -195,13 +203,16 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
         </fieldset>
         <fieldset className={styles.flex}>
           <label className={styles.category} htmlFor='amount'>
-            Количество стикеров{' '}
-            {sticker.id !== stickerActiveId && <span className={styles.size_hidden}>{sticker.amount}шт</span>}
+            Количество стикеров
+            {sticker.id !== stickerActiveId && (
+              <span className={styles.size_hidden}>{sticker.amount}шт</span>
+            )}
           </label>
           {sticker.id === stickerActiveId && (
             <InputField className='amount'>
               <Input
                 className='amount'
+                error={errors.amount}
                 register={register}
                 name='amount'
                 option={{ ...registerAmount, onChange: onAmountChange }}
@@ -282,10 +293,20 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
             винил
           </InfoBox>
         </div>
-        <ButtonCustom buttonType='submit' type='save' className={styles.save} label='Сохранить' />
+        <ButtonCustom
+          buttonType='submit'
+          type='save'
+          className={sticker.id === stickerActiveId ? styles.save : styles.hidden}
+          label='Сохранить'
+        />
       </form>
 
-      <ButtonCustom type='delete' className={styles.delete} label='Удалить' onClick={handleDelete} />
+      <ButtonCustom
+        type='delete'
+        className={sticker.id === stickerActiveId ? styles.delete : styles.hidden}
+        label='Удалить'
+        onClick={handleDelete}
+      />
     </article>
   );
 };
