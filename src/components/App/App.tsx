@@ -42,7 +42,6 @@ import { ICart } from '../../interfaces/ICart';
 import { ICardsState, IUserState } from '../../interfaces';
 import { AcceptCookies } from '../AcceptCookies/AcceptCookies';
 
-
 import styles from './App.module.scss';
 import { calculateStickerOnList } from '../../utils/calculateStickerOnList';
 
@@ -126,7 +125,7 @@ const App: React.FC = () => {
               shape: card.shape,
               height: card.size.height,
               width: card.size.width,
-            })
+            }),
           );
       });
 

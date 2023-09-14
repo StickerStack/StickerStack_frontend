@@ -54,6 +54,7 @@ export const changePassword = {
 export const messages = {
   itemTooBig: 'Слишком большой запрос для загрузки.',
   fieldsError: 'Ошибка при заполнении полей. Попробуйте поменять значения.',
+  success: 'Успешно изменено',
   somethingWrong: 'Что-то пошло не так. Попробуйте еще раз.',
 };
 

@@ -16,6 +16,7 @@ import { ButtonCustom, ButtonWithText, Container } from '../UI';
 
 import logo from '../../images/logo.svg';
 import styles from './Header.module.scss';
+import { ScrollBar } from '../ScrollBar/ScrollBar';
 
 const Header: React.FC = () => {
   const isLogged = useSelector((state: { user: IUserState }) => state.user.isLogged);
@@ -25,12 +26,8 @@ const Header: React.FC = () => {
   const [isMenuShow, setIsMenuShow] = useState(false);
   const cart = useSelector((state: { cart: ICart }) => state.cart);
   const [y, setY] = useState(window.scrollY);
-  const [visibleBorder, setVisibleBorder] = useState(false);
 
   const handleNavigation = useCallback(() => {
-    if (window.scrollY > 20) {
-      setVisibleBorder(true);
-    } else setVisibleBorder(false);
     setY(window.scrollY);
     // eslint-disable-next-line
   }, [y]);
@@ -76,25 +73,10 @@ const Header: React.FC = () => {
     <header
       className={cn(
         styles.header,
-        (location.pathname !== '/' || visibleBorder) && styles.header_border,
+        (location.pathname !== '/' || window.scrollY) && styles.header_border,
       )}
     >
-      <div
-        className={styles.header_bar}
-        style={
-          window.innerHeight / document.body.clientHeight < 0.6 && visibleBorder
-            ? {
-                opacity: 0.8,
-                width:
-                  ((scrollY +
-                    window.innerHeight *
-                      ((scrollY + window.innerHeight) / document.body.clientHeight)) /
-                    document.body.clientHeight) *
-                  (document.body.clientWidth - 2),
-              }
-            : {}
-        }
-      />
+      <ScrollBar />
       <Container className={styles.header_container}>
         <Link to='/' className={styles.logo}>
           <img className={styles.logo_image} src={logo} alt='Логотип StickerStack' />

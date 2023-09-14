@@ -3,9 +3,10 @@
 .policy {
   flex: 1;
   position: relative;
+  padding-bottom: 80px;
 
   &_container {
-    padding-bottom: 80px;
+    padding: 0 25px 0;
     background-color: $main-bg-color;
     @include flex(row, flex-start, flex-start);
     gap: 30px;
@@ -20,31 +21,35 @@
   position: sticky;
   top: 0px;
   z-index: 3;
+  border-bottom: 1px solid $element-active-color;
+  box-shadow: 2px 2px 4px 0px rgba(42, 39, 71, 0.15);
+  background-color: $main-bg-color;
+}
+
+.topbar {
+  position: relative;
+  height: 2px;
 }
 
 .button {
   display: none;
   z-index: 20;
-  @media screen and (max-width: 1180px) {
+  @media screen and (max-width: 1024px) {
     display: block;
     position: fixed;
-    top: 20px;
-    right: 40px;
-    min-width: 24px;
-    width: 24px;
-    min-height: 24px;
-    height: 24px;
+    top: 10px;
+    right: 10px;
+    min-width: 34px;
+    width: 34px;
+    min-height: 34px;
+    height: 34px;
     transform: rotate(90deg);
-  }
-
-  @media screen and (max-width: 768px) {
-    right: 5px;
   }
 
   transition: right 0.4s, transform 0.4s ease-in-out;
 
   &_open {
-    right: 316px;
+    right: 312px;
     transform: rotate(270deg);
   }
 }
@@ -72,27 +77,31 @@
 
 .menu {
   position: sticky;
-  top: 22px;
   z-index: 3;
   height: 100%;
   width: fit-content;
+  box-sizing: border-box;
   min-width: 350px;
-  border-left: 1px solid $element-active-color;
+  border-left: 1px solid #1a32633e;
   @include flex(column, flex-start, flex-start);
   gap: 18px;
 
   &_item {
     height: fit-content;
     width: fit-content;
-    padding: 0 0 0 30px;
+    padding-left: 30px;
     font-weight: 500;
+
+    &:first-child {
+      margin-top: 20px;
+    }
   }
 
   &_open {
     display: none;
   }
 
-  @media screen and (max-width: 1180px) {
+  @media screen and (max-width: 1024px) {
     display: none;
 
     &_open {
