@@ -16,7 +16,7 @@ import { ButtonCustom, Input, InputError, InputField, RadioButton, TooltipCustom
 import { addpage } from '../../utils/content/stickerspage';
 import { InfoBox } from '../InfoBox/InfoBox';
 import { useAppDispatch } from '../../hooks/hooks';
-import { addStickers, deleteSticker, updateSticker } from '../../store/stickersSlice';
+import { addStickers, deleteSticker, getStickers, putStickerInCart, updateSticker } from '../../store/stickersSlice';
 import { Shape } from '../Shape-new/Shape';
 import { ISticker } from '../../interfaces/ISticker-new';
 import { DragAndDrop } from '../DragAndDrop-new/DragAndDrop';
@@ -26,6 +26,7 @@ interface IProps {
   sticker: ISticker;
   stickerActiveId: string;
   handleActiveSticker: (id: string) => void;
+  type: 'add' | 'edit';
 }
 
 export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveSticker }) => {
@@ -88,8 +89,19 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
     dispatch(deleteSticker(sticker.id));
   };
 
-  const handleSubmit = () => {
-    dispatch(addStickers([sticker]));
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+
+    if(sticker.id === 'newSticker') {
+      dispatch(addStickers([sticker])).finally(() => {
+        dispatch(getStickers());
+      });
+      
+    }
+
+    if(sticker.id !== 'newSticker') {
+      dispatch(putStickerInCart(sticker));
+    }
   };
 
   const sizeValidate = (value: string): boolean => {

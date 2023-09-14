@@ -34,6 +34,24 @@ export const DragAndDrop: FC<IProps> = ({ sticker }) => {
 
   const dispatch = useAppDispatch();
 
+  const removeImageUrl = (url: string) => {
+    if (url.startsWith('data:image')) {
+      if(url.startsWith('data:image/png')) {
+        return url.replace('data:image/png;base64,', '');
+      }
+
+      if(url.startsWith('data:image/jpeg')) {
+        return url.replace('data:image/jpeg;base64,', '');
+      }
+
+      if(url.startsWith('data:image/jpg')) {
+        return url.replace('data:image/jpg;base64,', '');
+      }
+    }
+
+    return url;
+  }
+
   const handleImageCahnge = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
 
@@ -69,7 +87,7 @@ export const DragAndDrop: FC<IProps> = ({ sticker }) => {
               dispatch(
                 updateSticker({
                   ...sticker,
-                  image: file.urlFilePreview,
+                  image: removeImageUrl(file.urlFilePreview),
                   optimal_width: optimalWidth,
                   optimal_height: optimalHeight,
                 })

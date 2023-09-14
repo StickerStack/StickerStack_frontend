@@ -20,6 +20,7 @@ export const AddStickersNew: FC = () => {
         <section className={styles.cards}>
           {stickers.map((sticker) => (
             <NewSticker
+              type='edit'
               key={sticker.id}
               sticker={sticker}
               stickerActiveId={stickerActiveId}
