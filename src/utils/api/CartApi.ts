@@ -47,7 +47,17 @@ class CartApi extends Api {
     return this.checkResponse(data);
   }
 
-// https://scriptdev.ru/guide/045/#omit-t-k  -- если будут вопросы по типу Omit
+  public async clearCart() {
+    const data = await fetch(`${this.url}/cart/clear`, {
+      method: 'DELETE',
+      credentials: 'include',
+      headers: this.headers,
+    });
+
+    return this.checkResponse(data);
+  }
+
+  // https://scriptdev.ru/guide/045/#omit-t-k  -- если будут вопросы по типу Omit
   public async uploadOrder(
     cost: number,
     address: string,

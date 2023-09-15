@@ -44,6 +44,14 @@ const deleteSticker = createAsyncThunk(
   },
 );
 
+const clearCart = createAsyncThunk('clear_cart', async (data, { rejectWithValue }) => {
+  try {
+    return await cartApi.clearCart();
+  } catch (err) {
+    return rejectWithValue(err);
+  }
+});
+
 const uploadOrder = createAsyncThunk(
   'add_order',
   async (
@@ -125,6 +133,9 @@ const cartSlice = createSlice({
     builder.addCase(getCart.fulfilled, (state, action: { payload: Array<ISticker> }) => {
       state.items = action.payload;
     });
+    builder.addCase(clearCart.fulfilled, (state) => {
+      state.items = [];
+    });
   },
 });
 
@@ -144,6 +155,7 @@ const {
 export {
   cartSliceReducer,
   getCart,
+  clearCart,
   // addSticker,
   deleteSticker,
   addItems,

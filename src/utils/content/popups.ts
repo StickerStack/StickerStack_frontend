@@ -88,3 +88,10 @@ export const orderPlaced = {
   buttonText: 'Заказать еще',
   buttonSecondText: 'Перейти к заказам',
 };
+
+export const confirmCart = {
+  title: 'Очистить корзину?',
+  text: 'В вашей корзине еще остались стикеры. Чтобы повторить предыдущий заказ, их придется удалить.',
+  buttonText: 'Продолжить',
+  buttonSecondText: 'Отменить',
+};
