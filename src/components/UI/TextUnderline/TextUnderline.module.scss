@@ -9,6 +9,10 @@
   color: $main-text-color;
   @include font(16px, 19px, 500);
   cursor: pointer;
+
+  &:disabled {
+    cursor: auto;
+  }
 }
 
 .text {
@@ -45,5 +49,11 @@
 
   &:hover::after {
     width: 100%;
+  }
+
+  &_disabled {
+    &:hover::after {
+      width: 0;
+    }
   }
 }

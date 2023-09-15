@@ -9,14 +9,7 @@ import { useAppDispatch } from '../../../hooks/hooks';
 import { InfoBox } from '../../InfoBox/InfoBox';
 import { NewSticker } from '../../NewSticker/NewSticker';
 import { IStickersState } from '../../../interfaces/IStickersState';
-import {
-  ButtonWithText,
-  Container,
-  RadioButton,
-  TextUnderline,
-  TitlePage,
-  TooltipCustom,
-} from '../../UI';
+import { ButtonWithText, Container, RadioButton, TextUnderline, TitlePage } from '../../UI';
 import { addpage } from '../../../utils/content/stickerspage';
 import { openPreview } from '../../../store/popupSlice';
 import { CARDS_MAXIMUM, pagePrice } from '../../../utils/constants';
@@ -74,6 +67,8 @@ export const AddStickersNew: FC = () => {
               type='button'
               className={styles.preview}
               onClick={() => dispatch(openPreview())}
+              title={`${stickers.length < 2 ? 'Для начала положите стикер в корзину' : ''} `}
+              disabled={stickers.length < 2}
             >
               {addpage.preview}
             </TextUnderline>

@@ -102,7 +102,7 @@ const CartPage: React.FC = () => {
     <main className={styles.cart}>
       <Container className={styles.cart_container}>
         <TitlePage type='main-title'>{cartpage.title}</TitlePage>
-        {stickers.length === 1 ? (
+        {stickers.length < 2 ? (
           <div className={styles.box}>
             <div className={styles.image} />
             <span className={styles.text}>{cartpage.empty}</span>
