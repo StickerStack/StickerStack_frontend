@@ -26,6 +26,7 @@ const VerifyEmail: React.FC = () => {
             text: `${verified.text}`,
             buttonText: `${verified.buttonText}`,
             image: image,
+            imageAbsolute: true,
             onClick: () => navigate(ADD_STICKERS),
           }),
         ),

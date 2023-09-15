@@ -4,7 +4,7 @@ import { ReactComponent as CartSvg } from '../../../images/icons/cart.svg';
 import { ReactComponent as PersonSvg } from '../../../images/icons/profile-icon.svg';
 import styles from './ButtonCustom.module.scss';
 
-type ButtonType = 'close' | 'person' | 'cart' | 'delete' | 'arrow' | 'more';
+type ButtonType = 'close' | 'person' | 'cart' | 'delete' | 'arrow' | 'more' | 'save' | 'add';
 
 interface IProps {
   type: ButtonType;
@@ -12,18 +12,32 @@ interface IProps {
   label: string;
   disabled?: boolean;
   onClick?: () => void;
+  buttonType?: 'button' | 'submit' | 'reset';
 }
 
-const ButtonCustom: React.FC<IProps> = ({ type, disabled, className, label, onClick }: IProps) => {
+const ButtonCustom: React.FC<IProps> = ({
+  type,
+  disabled,
+  className,
+  label,
+  onClick,
+  buttonType = 'button',
+}: IProps) => {
   return (
     <button
-      className={cn(styles.button, styles[`button_${type}`], className)}
+      className={cn(
+        styles.button,
+        styles[`button_${type}`],
+        disabled && styles.disabled,
+        className,
+      )}
       aria-label={label}
       disabled={disabled}
       onClick={onClick}
+      type={buttonType}
     >
-      {type === 'cart' && <CartSvg className={styles.button_image} />}
-      {type === 'person' && <PersonSvg className={styles.button_image} />}
+      {type === 'cart' && <CartSvg className={styles.button_cart_image} />}
+      {type === 'person' && <PersonSvg className={styles.button_person_image} />}
     </button>
   );
 };

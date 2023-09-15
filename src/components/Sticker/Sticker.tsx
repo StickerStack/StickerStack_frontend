@@ -1,71 +1,37 @@
+import { useState } from 'react';
 import cn from 'classnames';
 import { useLocation } from 'react-router-dom';
-import { useState } from 'react';
-import { openMessage } from '../../store/popupSlice';
 import { ButtonCustom } from '../UI';
 import { useAppDispatch } from '../../hooks/hooks';
-import { deleteCard } from '../../store/cardsSlice';
-import { ICard, ISticker } from '../../interfaces';
-import { deleteItem, deleteSticker } from '../../store/cartSlice';
+import { ISticker } from '../../interfaces';
 import { ADD_STICKERS, CART, stickerWhiteBorder } from '../../utils/constants';
 import { InfoBox } from '../InfoBox/InfoBox';
 import { converter } from '../../utils/converter';
+import { deleteSticker } from '../../store/stickersSlice';
+import { openMessage } from '../../store/popupSlice';
+import { messages } from '../../utils/content/popups';
+import { Loader } from '../UI/Loader/Loader';
 
 import styles from './Sticker.module.scss';
 
 interface IProps {
-  card: ISticker | ICard;
+  card: ISticker;
   onClick?: () => void;
 }
 
+// useState ... [loading, SetLoading] Убрал при рефакторинге, нужно вернуть его обратно.
 const Sticker: React.FC<IProps> = ({ card, onClick }: IProps) => {
   const dispatch = useAppDispatch();
   const location = useLocation();
   const [loading, setLoading] = useState(false);
 
-  const isUploadpageCard = (obj: any): obj is ICard => {
-    return (
-      'id' in obj &&
-      'amount' in obj &&
-      'image' in obj &&
-      'shape' in obj &&
-      'size' in obj &&
-      'valid' in obj
-    );
-  };
-
-  const isCartpageCard = (obj: any): obj is ISticker => {
-    return (
-      'id' in obj &&
-      'amount' in obj &&
-      'image' in obj &&
-      'shape' in obj &&
-      'height' in obj &&
-      'width' in obj
-    );
-  };
-
   const borderInPx = converter.mmToPx(stickerWhiteBorder);
 
   const handleDelete = () => {
     setLoading(true);
-    if (card.id && isCartpageCard(card)) {
-      dispatch(deleteSticker(card.id))
-        .unwrap()
-        .then(() => {
-          card.id && dispatch(deleteItem(card.id));
-          card.id && dispatch(deleteCard(card.id));
-        })
-        .catch(() =>
-          dispatch(
-            openMessage({
-              text: 'Что-то пошло не так. Попробуйте еще раз.',
-              isError: true,
-            }),
-          ),
-        )
-        .finally(() => setLoading(false));
-    }
+    dispatch(deleteSticker(card.id))
+      .catch(() => dispatch(openMessage({ text: `${messages.somethingWrong}`, isError: true })))
+      .finally(() => setLoading(false));
   };
 
   const translateShape = () => {
@@ -85,56 +51,33 @@ const Sticker: React.FC<IProps> = ({ card, onClick }: IProps) => {
   };
 
   return (
-    <section
+    <article
       className={cn(
         styles.card,
-        loading && styles.card_loading,
         location.pathname === CART && styles.card_cart,
         location.pathname === ADD_STICKERS && styles.card_add,
       )}
       onClick={onClick}
     >
-      {loading && <div className={styles.loader} />}
+      {loading && <Loader loading={loading} />}
       {card && (
         <ul className={cn(styles.info, location.pathname === CART && styles.info_cart)}>
           {card.image ? (
             <div
               className={cn(styles.border, styles[`border_${card.shape}`])}
-              style={
-                isUploadpageCard(card)
-                  ? {
-                      width:
-                        card.size.width / card.size.height >= 1
-                          ? 140
-                          : (converter.cmToPx(card.size.width) /
-                              converter.cmToPx(card.size.height)) *
-                            140,
-                      height:
-                        card.size.height / card.size.width >= 1
-                          ? 140
-                          : (converter.cmToPx(card.size.height) /
-                              converter.cmToPx(card.size.width)) *
-                            140,
-                      maxHeight: 140,
-                      maxWidth: 140,
-                      padding: (borderInPx / card.size.width) * 140,
-                    }
-                  : isCartpageCard(card)
-                  ? {
-                      width:
-                        card.width / card.height >= 1
-                          ? 140
-                          : (converter.cmToPx(card.width) / converter.cmToPx(card.height)) * 140,
-                      height:
-                        card.height / card.width >= 1
-                          ? 140
-                          : (converter.cmToPx(card.height) / converter.cmToPx(card.width)) * 140,
-                      maxHeight: 140,
-                      maxWidth: 140,
-                      padding: (borderInPx / card.width) * 140,
-                    }
-                  : {}
-              }
+              style={{
+                width:
+                  card.width / card.height >= 1
+                    ? 140
+                    : (converter.cmToPx(card.width) / converter.cmToPx(card.height)) * 140,
+                height:
+                  card.height / card.width >= 1
+                    ? 140
+                    : (converter.cmToPx(card.height) / converter.cmToPx(card.width)) * 140,
+                maxHeight: 140,
+                maxWidth: 140,
+                padding: borderInPx / card.width,
+              }}
             >
               <img
                 className={cn(styles.image, styles[`image_${card.shape}`])}
@@ -163,15 +106,7 @@ const Sticker: React.FC<IProps> = ({ card, onClick }: IProps) => {
 
           <li className={styles.flex}>
             <InfoBox type='size' description='Размер'>
-              {isUploadpageCard(card)
-                ? `${Math.round(converter.pxToCm(card.size.width))}*${Math.round(
-                    converter.pxToCm(card.size.height),
-                  )}`
-                : isCartpageCard(card)
-                ? `${Math.round(converter.pxToCm(card.width))}*${Math.round(
-                    converter.pxToCm(card.height),
-                  )}`
-                : ''}
+              {`${card.width}*${card.height}`}
             </InfoBox>
           </li>
 
@@ -193,13 +128,12 @@ const Sticker: React.FC<IProps> = ({ card, onClick }: IProps) => {
       {location.pathname === CART ? (
         <ButtonCustom
           type='delete'
-          className={cn(styles.delete, loading && styles.delete_loading)}
+          className={cn(styles.delete)}
           label='Удалить'
-          disabled={loading}
           onClick={handleDelete}
         />
       ) : null}
-    </section>
+    </article>
   );
 };
 

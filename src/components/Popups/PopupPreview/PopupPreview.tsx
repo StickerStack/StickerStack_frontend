@@ -1,37 +1,43 @@
 import Slider from 'react-slick';
-import { useState, useEffect } from 'react';
-
-import { StickerList, pageSizePxSmall } from '../../StickerList/StickerList';
-import { PageElement, calculateStickerOnList } from '../../../utils/calculateStickerOnList';
-import { generateRandomNumber } from '../../../utils/generateRandomNumber';
-
 import { useSelector } from 'react-redux';
-import { ICardsState } from '../../../interfaces';
-import { pageSizePx } from '../../../utils/constants';
+
+import { StickerList } from '../../StickerList/StickerList';
+import { generateRandomNumber } from '../../../utils/generateRandomNumber';
+import { TooltipCustom } from '../../UI';
+import { IStickersState } from '../../../interfaces/IStickersState';
 import { settings } from './settings';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import styles from './PopupPreview.module.scss';
 
 const PopupPreview: React.FC = () => {
-  const { prewiewCards } = useSelector((state: { cards: ICardsState }) => state.cards);
-
+  const { pages } = useSelector((state: { stickers: IStickersState }) => state.stickers);
 
   return (
     <div className={styles.container}>
-      <h2 className={styles.title}>Так будет выглядеть набор на листе</h2>
-      {prewiewCards.length > 0 && (
+      <h2 className={styles.title}>
+        Так будет выглядеть набор на{' '}
+        {pages.length.toString().endsWith('1') && !pages.length.toString().endsWith('11')
+          ? 'листе'
+          : 'листах'}
+        <TooltipCustom
+          text='Учитывайте, что данные изображения предоставляются для ознакомления с приблизительным видом
+        листов и могут иметь искажения в зависимости от используемого монитора. Окончательные макеты
+        будут тщательно проработаны нашими специалистами перед отправкой в печать.'
+        />
+      </h2>
+      {pages.length > 0 && (
         <Slider
           {...settings}
-          customPaging={(i: number) => {
+          customPaging={function (i: number) {
             return (
               <span className={styles.page_numbers}>
-                {i + 1}/{prewiewCards.length}
+                {i + 1}/{pages.length}
               </span>
             );
           }}
         >
-          {prewiewCards.map((elementsPage) => {
+          {pages.map((elementsPage) => {
             const cards = [];
             for (let i = 0; i < elementsPage.length; i++) {
               for (let j = 0; j < elementsPage[i].count; j++) {

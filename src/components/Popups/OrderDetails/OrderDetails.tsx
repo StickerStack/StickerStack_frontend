@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { IOrderState } from '../../../interfaces';
+import { IOrder, IStickersState } from '../../../interfaces';
 import { StickerCarousel } from '../../StickerCarousel/StickerCarousel';
 import { ButtonWithText } from '../../UI';
 import { ADD_STICKERS, CART } from '../../../utils/constants';
@@ -10,23 +10,21 @@ import { closePopup, openInfo } from '../../../store/popupSlice';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { confirmCart } from '../../../utils/content/popups';
 import { useSelector } from 'react-redux';
-import { ICart } from '../../../interfaces/ICart';
-import { cleanCart, clearCart } from '../../../store/cartSlice';
+import { clearStickers } from '../../../store/stickersSlice';
 
 import image from '../../../images/main-page/sticker-ufo.png';
 import styles from './OrderDetails.module.scss';
 
 interface IProps {
-  order: IOrderState;
-  onClose: () => void;
+  order: IOrder;
 }
 
-const OrderDetails: React.FC<IProps> = ({ order, onClose }: IProps) => {
+const OrderDetails: React.FC<IProps> = ({ order }: IProps) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const date = new Date(order.created_at);
-  const cart = useSelector((state: { cart: ICart }) => state.cart);
+  const { stickers } = useSelector((state: { stickers: IStickersState }) => state.stickers);
 
   const getStatus = () => {
     switch (order.status) {
@@ -37,7 +35,7 @@ const OrderDetails: React.FC<IProps> = ({ order, onClose }: IProps) => {
 
   const confirmRepeat = () => {
     setLoading(true);
-    dispatch(clearCart())
+    dispatch(clearStickers())
       .unwrap()
       .then(() => {
         dispatch(closePopup());
@@ -48,7 +46,7 @@ const OrderDetails: React.FC<IProps> = ({ order, onClose }: IProps) => {
   const onRepeat = () => {
     dispatch(closePopup());
 
-    if (cart.items.length > 0) {
+    if (stickers.length > 0) {
       dispatch(
         openInfo({
           title: `${confirmCart.title}`,

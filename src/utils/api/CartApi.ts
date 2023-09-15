@@ -1,24 +1,29 @@
 import { Api } from './Api';
 import { API_URL } from '../constants';
-import { OrderItem } from '../../interfaces';
+import { ISticker, IStickerForOrder } from '../../interfaces/ISticker';
 
 class CartApi extends Api {
   constructor(url: string, headers: HeadersInit) {
     super(url, headers);
   }
 
-  public async addSticker(sticker: OrderItem) {
-    const data = await fetch(`${this.url}/cart/add_sticker`, {
+  public async addSticker(stickers: ISticker[]) {
+    const data = await fetch(`${this.url}/cart/add_stickers`, {
       method: 'POST',
       credentials: 'include',
       headers: this.headers,
-      body: JSON.stringify({
-        image: sticker.image,
-        amount: sticker.amount,
-        shape: sticker.shape,
-        height: sticker.height,
-        width: sticker.width,
-      }),
+      body: JSON.stringify(stickers),
+    });
+
+    return this.checkResponse(data);
+  }
+
+  public async addStickers(stickers: ISticker[]) {
+    const data = await fetch(`${this.url}/cart/add_stickers`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: this.headers,
+      body: JSON.stringify(stickers),
     });
 
     return this.checkResponse(data);
@@ -63,7 +68,7 @@ class CartApi extends Api {
     address: string,
     number: number,
     cropping: boolean,
-    stickers: Array<OrderItem>,
+    stickers: Array<IStickerForOrder>,
   ) {
     const data = await fetch(`${this.url}/orders/add_order`, {
       method: 'POST',
@@ -76,6 +81,26 @@ class CartApi extends Api {
         cropping: cropping,
         stickers: stickers,
       }),
+    });
+
+    return this.checkResponse(data);
+  }
+
+  public async putStickerInCart(sticker: ISticker) {
+    const body = {
+      image: sticker.image,
+      amount: sticker.amount,
+      shape: sticker.shape,
+      height: sticker.height,
+      width: sticker.width,
+      optimal_width: sticker.optimal_width,
+      optimal_height: sticker.optimal_height,
+    };
+    const data = await fetch(`${this.url}/cart/update_sticker/${sticker.id}`, {
+      method: 'PUT',
+      credentials: 'include',
+      headers: this.headers,
+      body: JSON.stringify(body),
     });
 
     return this.checkResponse(data);

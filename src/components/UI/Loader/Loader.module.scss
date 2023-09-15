@@ -1,16 +1,16 @@
 @import '../../../utils/_scss-variables.scss';
 
 .loader {
-  width: 44px;
-  height: 44px;
-  top: 35%;
-  left: 50%;
+  width: 54px;
+  height: 54px;
+  top: 42%;
+  left: 43%;
   position: absolute;
   border-radius: 50%;
   background: conic-gradient(from 86deg at 48.07% 50%, #1a3263 0deg, rgba(219, 231, 255, 0) 360deg);
   background-repeat: no-repeat;
-  //background-size: 50% 51.8%;
   overflow: hidden;
+  z-index: 4;
   animation: 2s linear infinite rotate;
 
   &::before {
@@ -18,10 +18,10 @@
     position: absolute;
     background-color: $other-button-text-color;
     border-radius: 50%;
-    width: 7px;
-    height: 7px;
+    width: 9px;
+    height: 9px;
     right: 0;
-    top: 17px;
+    top: 18px;
   }
 
   &::after {
@@ -33,6 +33,27 @@
     bottom: 15%;
     left: 16%;
     right: 15%;
+  }
+}
+
+.loader_block {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100%;
+  z-index: 3;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100%;
+    background-color: $popup-bg-color;
+    border-radius: 10px;
+    opacity: 0.6;
   }
 }
 

@@ -1,28 +1,8 @@
-import cn from 'classnames';
-import { useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { FC, useState, useEffect } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
+import cn from 'classnames';
 
-import { ButtonCustom, Input, RadioButton, TooltipCustom, InputField, InputError } from '../UI';
-import { Shape } from '../Shape/Shape';
-import { DragAndDrop } from '../';
-import { InfoBox } from '../InfoBox/InfoBox';
-import { useAppDispatch } from '../../hooks/hooks';
-import {
-  checkValidation,
-  deleteCard,
-  setActive,
-  setValid,
-  updateAmount,
-  updateShape,
-  updateSize,
-} from '../../store/cardsSlice';
-import { ICard, ICardsState } from '../../interfaces';
-import { ICart } from '../../interfaces/ICart';
-import { TCardShape } from '../../interfaces/ICard';
 import { registerAmount, registerSize } from '../../utils/registersRHF';
-import { addItem, addSticker, deleteItem, deleteSticker, updateItem } from '../../store/cartSlice';
-import { openMessage } from '../../store/popupSlice';
 import {
   AMOUNT_INPUT_MAX_LENGTH,
   AMOUNT_INPUT_MIN_LENGTH,
@@ -30,292 +10,269 @@ import {
   SIZE_INPUT_MAX_LENGTH,
   SIZE_INPUT_MIN_LENGTH,
 } from '../../utils/constants';
-import { converter } from '../../utils/converter';
+import { TShape } from '../../types/TShape';
+import { ButtonCustom, Input, InputError, InputField, RadioButton, TooltipCustom } from '../UI';
 import { addpage } from '../../utils/content/stickerspage';
-
+import { InfoBox } from '../InfoBox/InfoBox';
+import { useAppDispatch } from '../../hooks/hooks';
+import {
+  addStickers,
+  deleteSticker,
+  getStickers,
+  putStickerInCart,
+  updateSticker,
+} from '../../store/stickersSlice';
+import { Shape } from '../Shape/Shape';
+import { ISticker } from '../../interfaces/ISticker';
+import { DragAndDrop } from '../DragAndDrop/DragAndDrop';
 import styles from './NewSticker.module.scss';
+import { StickerImage } from '../StickerImage/StickerImage';
+import { openMessage } from '../../store/popupSlice';
+import { messages } from '../../utils/content/popups';
+import { Loader } from '../UI/Loader/Loader';
 
 interface IProps {
-  card: ICard;
+  sticker: ISticker;
+  stickerActiveId: string;
+  handleActiveSticker: (id: string) => void;
+  type: 'add' | 'edit';
 }
 
-const sizeValidate = (value: string): boolean => {
-  return (
-    REG_STICKERS.test(value) &&
-    Number(value) >= SIZE_INPUT_MIN_LENGTH &&
-    Number(value) <= SIZE_INPUT_MAX_LENGTH
-  );
-};
-
-const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
+export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveSticker }) => {
+  const {
+    register,
+    formState: { errors, isValid },
+    setValue,
+    getValues,
+    watch,
+  } = useForm<FieldValues>({
+    mode: 'onBlur',
+    defaultValues: {
+      shape: sticker.shape,
+      amount: sticker.amount,
+      size:
+        sticker.width === sticker.optimal_width && sticker.optimal_height === sticker.optimal_height
+          ? 'optimal'
+          : 'custom',
+      width: sticker.optimal_width,
+      height: sticker.optimal_height,
+    },
+  });
   const dispatch = useAppDispatch();
+  const [loading, setLoading] = useState(false);
+  const [block, setBlock] = useState(false);
   const [customVisible, setCustomVisible] = useState<boolean>(
-    card.size.width === card.optimalSize.width && card.size.height === card.optimalSize.height
+    sticker.width === sticker.optimal_width && sticker.height === sticker.optimal_height
       ? false
       : true,
   );
 
-  const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
-  const cart = useSelector((state: { cart: ICart }) => state.cart);
-
-  const handleDelete = () => {
-    if (cart.items.length !== 0 && typeof card.id === 'string') {
-      dispatch(deleteSticker(card.id))
-        .unwrap()
-        .then(() => {
-          dispatch(deleteCard(card.id));
-          dispatch(deleteItem(card.id));
-        })
-        .catch(() =>
-          dispatch(
-            openMessage({
-              text: 'Что-то пошло не так. Попробуйте еще раз.',
-              isError: true,
-            }),
-          ),
-        );
-    }
+  const shapesType = {
+    circle: 'круг',
+    square: 'квадрат',
+    rounded_square: 'закругленный квадрат',
+    contour: 'по контуру',
   };
 
-  useEffect(() => {
-    if (card.active) {
-      dispatch(setActive(card.id));
-    }
-    // eslint-disable-next-line
-  }, [card.active, card.id]);
-
-  const {
-    register,
-    watch,
-    formState: { errors, isValid },
-    setValue,
-    getValues,
-  } = useForm<FieldValues>({
-    mode: 'onBlur',
-    defaultValues: {
-      shape: card.shape,
-      amount: card.amount,
-      size:
-        card.size.width === card.optimalSize.width && card.size.height === card.optimalSize.height
-          ? 'optimal'
-          : 'custom',
-      width: card.size.width,
-      height: card.size.height,
-    },
-  });
-  const watchAllFields = watch();
-
-  useEffect(() => {
-    if (isValid && card.image) {
-      dispatch(setValid({ id: card.id, valid: true }));
-      dispatch(checkValidation());
-    } else dispatch(setValid({ id: card.id, valid: false }));
-    dispatch(checkValidation());
-    //  watchAllFields && cart.items.length !== 0 && dispatch(updateItem(card));
-    // eslint-disable-next-line
-  }, [isValid, watchAllFields]);
-
-  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const number = Number(e.target.value);
+  const onAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const number = Number(event.target.value);
 
     if (
       REG_STICKERS.test(number.toString()) &&
       number <= AMOUNT_INPUT_MAX_LENGTH &&
       number >= AMOUNT_INPUT_MIN_LENGTH
     ) {
-      dispatch(updateAmount({ id: card.id, amount: number }));
+      dispatch(updateSticker({ ...sticker, amount: number }));
+      setBlock(false);
     }
   };
 
   const onShapeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const shape = event.target.value as TCardShape;
+    const shape = event.target.value as TShape;
 
-    if ((shape as TCardShape) === 'contour') {
+    if ((shape as TShape) === 'contour') {
       const formData = new FormData();
-      formData.append('file', card.image);
-      //  dispatch(removeBackground({ data: formData, id: card.id }));
+      formData.append('file', sticker.image);
     }
-    dispatch(updateShape({ id: card.id, shape: shape }));
+
+    dispatch(updateSticker({ ...sticker, shape }));
+    setBlock(false);
   };
 
-  const onWidthChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-    setValue('width', value.trim());
-    if (card.shape === 'circle') {
-      setValue('height', value.trim());
+  const handleDelete = () => {
+    dispatch(deleteSticker(sticker.id));
+  };
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    setLoading(true);
+    if (sticker.id === 'newSticker') {
+      dispatch(addStickers([sticker]))
+        .catch(() => dispatch(openMessage({ text: `${messages.somethingWrong}`, isError: true })))
+        .finally(() => {
+          dispatch(getStickers());
+          setLoading(false);
+        });
     }
+
+    if (sticker.id !== 'newSticker') {
+      dispatch(putStickerInCart(sticker))
+        .then(() => setBlock(true))
+        .catch(() => dispatch(openMessage({ text: `${messages.somethingWrong}`, isError: true })))
+        .finally(() => setLoading(false));
+    }
+  };
+
+  const sizeValidate = (value: string): boolean => {
+    return (
+      REG_STICKERS.test(value) &&
+      Number(value) >= SIZE_INPUT_MIN_LENGTH &&
+      Number(value) <= SIZE_INPUT_MAX_LENGTH
+    );
+  };
+
+  const onWidthChange = () => {
+    const value = getValues('width').slice(0, 2);
+    setValue('width', value.replace(/\D/g, ''));
+
     if (sizeValidate(value)) {
       dispatch(
-        updateSize({
-          id: card.id,
-          width: converter.cmToPx(Number(value)),
-          height: card.shape === 'circle' ? converter.cmToPx(Number(value)) : card.size.height,
+        updateSticker({
+          ...sticker,
+          width: Number(value),
+          height: sticker.shape === 'circle' ? Number(value) : sticker.height,
         }),
       );
     }
+    setBlock(false);
   };
 
-  const onHeightChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-    setValue('height', value.trim());
-    if (card.shape === 'circle') {
-      setValue('width', value.trim());
-    }
+  const onHeightChange = () => {
+    const value = getValues('height').slice(0, 2);
+    setValue('height', value.replace(/\D/g, ''));
+
     if (sizeValidate(value)) {
       dispatch(
-        updateSize({
-          id: card.id,
-          height: converter.cmToPx(Number(value)),
-          width: card.shape === 'circle' ? converter.cmToPx(Number(value)) : card.size.width,
+        updateSticker({
+          ...sticker,
+          height: Number(value),
+          width: sticker.shape === 'circle' ? Number(value) : sticker.width,
         }),
       );
     }
+    setBlock(false);
   };
 
-  // При редактировании своего размера
+  // Проверяем, изменились ли поля формы
+  const image = watch('image');
+  const shape = watch('shape');
+  const amount = watch('amount');
+  const width = watch('width');
+  const height = watch('height');
+
+  const fieldsUnchanged =
+    sticker.shape === shape &&
+    sticker.amount === amount &&
+    sticker.width === width &&
+    sticker.height === height;
 
   useEffect(() => {
-    const widthValue = getValues('width');
-    const heightValue = getValues('height');
-    if (customVisible) {
-      if (card.shape === 'circle') {
-        if (heightValue > widthValue) {
-          setValue('height', widthValue);
-          if (sizeValidate(widthValue)) {
-            dispatch(
-              updateSize({
-                id: card.id,
-                height: converter.cmToPx(Number(widthValue)),
-                width: converter.cmToPx(Number(widthValue)),
-              }),
-            );
-          }
-        }
-        if (widthValue > heightValue) {
-          setValue('width', heightValue);
-          if (sizeValidate(heightValue)) {
-            dispatch(
-              updateSize({
-                id: card.id,
-                height: converter.cmToPx(Number(heightValue)),
-                width: converter.cmToPx(Number(heightValue)),
-              }),
-            );
-          }
-        }
-      } else setValue('width', Math.round(converter.pxToCm(card.size.width)));
-      setValue('height', Math.round(converter.pxToCm(card.size.height)));
-    }
-
-    // eslint-disable-next-line
-  }, [card.shape, customVisible]);
-
-  // При оптимальном размере
-
-  useEffect(() => {
-    if (!customVisible) {
-      if (card.shape === 'circle') {
-        if (card.optimalSize.height > card.optimalSize.width) {
-          setValue('width', Math.round(converter.pxToCm(card.optimalSize.width)));
-          setValue('height', Math.round(converter.pxToCm(card.optimalSize.width)));
-          dispatch(
-            updateSize({
-              id: card.id,
-              height: card.optimalSize.width,
-              width: card.optimalSize.width,
-            }),
-          );
-        }
-        if (card.optimalSize.width > card.optimalSize.height) {
-          setValue('width', Math.round(converter.pxToCm(card.optimalSize.height)));
-          setValue('height', Math.round(converter.pxToCm(card.optimalSize.height)));
-          dispatch(
-            updateSize({
-              id: card.id,
-              height: card.optimalSize.height,
-              width: card.optimalSize.height,
-            }),
-          );
-        }
-      } else setValue('width', Math.round(converter.pxToCm(card.optimalSize.width)));
-      setValue('height', Math.round(converter.pxToCm(card.optimalSize.height)));
-      dispatch(
-        updateSize({
-          id: card.id,
-          height: card.optimalSize.height,
-          width: card.optimalSize.width,
-        }),
-      );
-    }
-
-    // eslint-disable-next-line
-  }, [card.shape, card.image, customVisible]);
+    // const image = new File([sticker.image], 'image.png');
+    // setValue('image', image);
+    setValue('shape', sticker.shape);
+    setValue('amount', sticker.amount);
+    setValue('width', sticker.width);
+    setValue('height', sticker.height);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
-    <section className={styles.card}>
-      <form className={styles.info}>
+    <article
+      className={sticker.id === stickerActiveId ? styles.card : styles.card_unactive}
+      onClick={sticker.id === stickerActiveId ? () => null : () => handleActiveSticker(sticker.id)}
+    >
+      {loading && <Loader loading={loading} />}
+      <form
+        className={sticker.id === stickerActiveId ? styles.info : styles.info_unactive}
+        onSubmit={handleSubmit}
+      >
         <div className={styles.image}>
-          <DragAndDrop register={register} name='dnd' card={card} />
+          {/* Оставляем драгндроп с инпутом картинки, чтобы при сворачивании карточки он не размонтировался и не очищался инпут*/}
+          <DragAndDrop
+            sticker={sticker}
+            register={register}
+            name='image'
+            className={stickerActiveId !== sticker.id ? styles.hidden : ''}
+          />
+          <StickerImage
+            sticker={sticker}
+            boxWidth={144}
+            boxHeight={144}
+            className={stickerActiveId === sticker.id ? styles.hidden : ''}
+          />
         </div>
         <fieldset className={cn(styles.flex, styles.flex_shapes)}>
           <label className={styles.category} htmlFor='shape'>
             Форма
+            {sticker.id !== stickerActiveId && (
+              <span className={styles.shape_hidden}> {shapesType[sticker.shape]}</span>
+            )}
           </label>
-          <div className={styles.shapes}>
+          <div className={cn(styles.shapes, sticker.id !== stickerActiveId && styles.hidden)}>
             <Shape
               register={register}
               name='shape'
-              card={card}
+              sticker={sticker}
               value='square'
               onShapeChange={onShapeChange}
             />
             <Shape
               register={register}
               name='shape'
-              card={card}
+              sticker={sticker}
               value='rounded_square'
               onShapeChange={onShapeChange}
             />
             <Shape
               register={register}
               name='shape'
-              card={card}
+              sticker={sticker}
               value='circle'
               onShapeChange={onShapeChange}
             />
-            {/* <Shape
-              register={register}
-              name='shape'
-              card={card}
-              value='contour'
-              onShapeChange={onShapeChange}
-            /> */}
           </div>
         </fieldset>
         <fieldset className={styles.flex}>
           <label className={styles.category} htmlFor='amount'>
             Количество стикеров
+            {sticker.id !== stickerActiveId && (
+              <span className={styles.size_hidden}>{sticker.amount}шт</span>
+            )}
           </label>
-          <InputField className='amount'>
-            <Input
-              className='amount'
-              register={register}
-              option={{
-                ...registerAmount,
-                onChange: (e) => {
-                  handleAmountChange(e);
-                },
-              }}
-              name='amount'
-              error={errors.amount}
-            />
-            <InputError className='amount' error={errors.amount} />
-          </InputField>
+          {sticker.id === stickerActiveId && (
+            <InputField className='amount'>
+              <Input
+                className='amount'
+                error={errors.amount}
+                register={register}
+                name='amount'
+                option={{ ...registerAmount, onChange: onAmountChange }}
+              />
+              <InputError className='amount' error={errors.amount} />
+            </InputField>
+          )}
         </fieldset>
 
         <fieldset className={styles.flex}>
-          <p className={styles.category}>Размер</p>
-          <div className={styles.options}>
+          <p className={styles.category}>
+            Размер
+            {sticker.id !== stickerActiveId && (
+              <span className={styles.size_hidden}>
+                {getValues('width')}x{getValues('height')}см
+              </span>
+            )}
+          </p>
+          <div className={cn(styles.options, sticker.id !== stickerActiveId && styles.hidden)}>
             <RadioButton
               register={register}
               name='size'
@@ -341,26 +298,20 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
                     type='tel'
                     className='size'
                     register={register}
-                    option={{
-                      ...registerSize,
-                      onChange: onWidthChange,
-                    }}
                     name='width'
                     placeholder='ширина'
                     error={errors.width}
+                    option={{ ...registerSize, onChange: onWidthChange }}
                   />
                   x
                   <Input
                     type='tel'
                     className='size'
                     register={register}
-                    option={{
-                      ...registerSize,
-                      onChange: onHeightChange,
-                    }}
                     name='height'
                     placeholder='высота'
                     error={errors.height}
+                    option={{ ...registerSize, onChange: onHeightChange }}
                   />
                   см
                   <InputError className='size' error={errors.width || errors.height} />
@@ -383,17 +334,32 @@ const NewSticker: React.FC<IProps> = ({ card }: IProps) => {
             винил
           </InfoBox>
         </div>
+        {sticker.id === 'newSticker' ? (
+          <ButtonCustom
+            buttonType='submit'
+            type='add'
+            label='Добавить'
+            disabled={!isValid || sticker.image === ''}
+            className={sticker.id === stickerActiveId && !loading ? styles.save : styles.hidden}
+          />
+        ) : (
+          <ButtonCustom
+            buttonType='submit'
+            type='save'
+            disabled={!isValid || fieldsUnchanged || block}
+            className={sticker.id === stickerActiveId && !loading ? styles.save : styles.hidden}
+            label='Сохранить'
+          />
+        )}
       </form>
-      {cards.length > 1 && (
+      {sticker.id !== 'newSticker' && (
         <ButtonCustom
           type='delete'
-          className={styles.delete}
+          className={sticker.id === stickerActiveId ? styles.delete : styles.hidden}
           label='Удалить'
           onClick={handleDelete}
         />
       )}
-    </section>
+    </article>
   );
 };
-
-export { NewSticker };
