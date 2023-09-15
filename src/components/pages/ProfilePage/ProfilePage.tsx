@@ -82,7 +82,7 @@ const ProfilePage: React.FC = () => {
     )
       .unwrap()
       .then(() => {
-        dispatch(openMessage({ text: 'Успешно изменено', isError: false }));
+        dispatch(openMessage({ text: `${messages.success}`, isError: false }));
         if (emailChanged) {
           dispatch(sendVerificationCode());
           const randomNumber = getRandomNumber(1, 3);

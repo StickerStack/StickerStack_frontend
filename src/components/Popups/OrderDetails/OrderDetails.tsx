@@ -1,26 +1,113 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { IOrder } from '../../../interfaces';
+import { IOrder, IStickersState } from '../../../interfaces';
 import { StickerCarousel } from '../../StickerCarousel/StickerCarousel';
 import { ButtonWithText } from '../../UI';
-import { CART } from '../../../utils/constants';
+import { ADD_STICKERS, CART } from '../../../utils/constants';
 import { orders } from '../../../utils/content/profile';
+import { closePopup, openInfo, openMessage } from '../../../store/popupSlice';
+import { useAppDispatch } from '../../../hooks/hooks';
+import { confirmCart, messages } from '../../../utils/content/popups';
+import { useSelector } from 'react-redux';
+import { addStickers, clearStickers, getStickers } from '../../../store/stickersSlice';
 
+import image from '../../../images/main-page/sticker-ufo.png';
 import styles from './OrderDetails.module.scss';
 
 interface IProps {
   order: IOrder;
-  // onClose: () => void; -- Нам это нужно? 
-} 
+}
 
 const OrderDetails: React.FC<IProps> = ({ order }: IProps) => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const date = new Date(order.created_at);
+  const [loading, setLoading] = useState(false);
+
+  const { stickers } = useSelector((state: { stickers: IStickersState }) => state.stickers);
 
   const getStatus = () => {
     switch (order.status) {
       case 'placed':
         return 'Оформлен';
+    }
+  };
+
+  const confirmRepeat = () => {
+    setLoading(true);
+    dispatch(clearStickers())
+      .unwrap()
+      .then(() => {
+        dispatch(closePopup());
+        dispatch(
+          addStickers(
+            order.stickers.map((item) => {
+              return {
+                id: item.id,
+                image: item.image,
+                shape: item.shape,
+                amount: item.amount,
+                width: item.width,
+                height: item.height,
+                optimal_width: item.width,
+                optimal_height: item.height,
+              };
+            }),
+          ),
+        )
+          .then(() => {
+            dispatch(closePopup());
+            dispatch(getStickers());
+          })
+          .catch(() =>
+            dispatch(openMessage({ text: `${messages.somethingWrong}`, isError: true })),
+          );
+      })
+      .catch(() => dispatch(openMessage({ text: `${messages.somethingWrong}`, isError: true })))
+      .finally(() => setLoading(false));
+  };
+
+  const onRepeat = () => {
+    if (stickers.length > 1) {
+      dispatch(closePopup());
+      dispatch(
+        openInfo({
+          title: `${confirmCart.title}`,
+          text: `${confirmCart.text}`,
+          buttonText: `${confirmCart.buttonText}`,
+          buttonSecondText: `${confirmCart.buttonSecondText}`,
+          onClick: () => confirmRepeat(),
+          onClickSecond: () => dispatch(closePopup()),
+          image: image,
+        }),
+      );
+      navigate(CART);
+    } else {
+      setLoading(true);
+      dispatch(
+        addStickers(
+          order.stickers.map((item) => {
+            return {
+              id: item.id,
+              image: item.image,
+              shape: item.shape,
+              amount: item.amount,
+              width: item.width,
+              height: item.height,
+              optimal_width: item.width,
+              optimal_height: item.height,
+            };
+          }),
+        ),
+      )
+        .then(() => {
+          dispatch(closePopup());
+          navigate(CART);
+          dispatch(getStickers());
+        })
+        .catch(() => dispatch(openMessage({ text: `${messages.somethingWrong}`, isError: true })))
+        .finally(() => setLoading(false));
     }
   };
 
@@ -32,9 +119,6 @@ const OrderDetails: React.FC<IProps> = ({ order }: IProps) => {
             <span className={styles.id}>
               {orders.orderId} {order.order_number}
             </span>
-            {/* <span className={styles.current}>
-              Создан {date.toLocaleDateString()} в {date.toLocaleTimeString().slice(0, 5)}
-            </span> */}
           </div>
           <div className={styles.content}>
             <div className={styles.carousel}>
@@ -47,7 +131,9 @@ const OrderDetails: React.FC<IProps> = ({ order }: IProps) => {
                 <li className={styles.status}>
                   <div className={styles.flex}>
                     <span className={styles.status_title}>Оформлен</span>
-                    <span className={styles.date}>{date.toLocaleDateString()}</span>
+                    <span className={styles.date}>
+                      {`${date.toLocaleDateString()} в ${date.toLocaleTimeString().slice(0, 5)}`}
+                    </span>
                   </div>
                 </li>
                 {/* ))} */}
@@ -71,7 +157,8 @@ const OrderDetails: React.FC<IProps> = ({ order }: IProps) => {
               <ButtonWithText
                 theme='transparent'
                 className={styles.button}
-                onClick={() => navigate(CART)}
+                onClick={onRepeat}
+                loading={loading}
               >
                 {orders.repeat}
               </ButtonWithText>

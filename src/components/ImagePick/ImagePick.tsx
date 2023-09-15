@@ -7,9 +7,11 @@ import { deleteProfileImage, updateProfileImage } from '../../store/userSlice';
 import { openMessage } from '../../store/popupSlice';
 import { useSelector } from 'react-redux';
 import { IUserState } from '../../interfaces';
+import { messages } from '../../utils/content/popups';
 
 import EmptyAvatarImage from '../../images/empty-avatar.png';
 import styles from './ImagePick.module.scss';
+import { Loader } from '../UI/Loader/Loader';
 
 interface IProps {
   className?: string;
@@ -37,7 +39,7 @@ const ImagePick: React.FC<IProps> = ({ className }: IProps) => {
         .then(() => {
           dispatch(
             openMessage({
-              text: 'Успешно изменено',
+              text: `${messages.success}`,
               isError: false,
             }),
           );
@@ -46,7 +48,7 @@ const ImagePick: React.FC<IProps> = ({ className }: IProps) => {
           if (err.message) {
             dispatch(
               openMessage({
-                text: 'Что-то пошло не так. Попробуйте еще раз.',
+                text: `${messages.somethingWrong}`,
                 isError: true,
               }),
             );
@@ -63,7 +65,7 @@ const ImagePick: React.FC<IProps> = ({ className }: IProps) => {
       .then(() => {
         dispatch(
           openMessage({
-            text: 'Успешно изменено',
+            text: `${messages.success}`,
             isError: false,
           }),
         );
@@ -72,7 +74,7 @@ const ImagePick: React.FC<IProps> = ({ className }: IProps) => {
         if (err.message) {
           dispatch(
             openMessage({
-              text: 'Что-то пошло не так. Попробуйте еще раз.',
+              text: `${messages.somethingWrong}`,
               isError: true,
             }),
           );
@@ -84,7 +86,7 @@ const ImagePick: React.FC<IProps> = ({ className }: IProps) => {
   return (
     <div className={cn(styles.pic, className)}>
       {loading ? (
-        <div className={styles.loader} />
+        <Loader loading={loading} />
       ) : (
         <img
           className={styles.image}

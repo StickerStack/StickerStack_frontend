@@ -15,10 +15,11 @@ import { ICart } from '../../../interfaces/ICart';
 import { messages, orderPlaced } from '../../../utils/content/popups';
 import { cartpage } from '../../../utils/content/stickerspage';
 import { IStickersState } from '../../../interfaces/IStickersState';
+import { removeAllStickers } from '../../../store/stickersSlice';
+
 import image from '../../../images/cart-dog.png';
 import { ReactComponent as WriteSvg } from '../../../images/icons/write-icon.svg';
 import styles from './CartPage.module.scss';
-
 
 const CartPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -75,6 +76,7 @@ const CartPage: React.FC = () => {
             image: image,
           }),
         );
+        dispatch(removeAllStickers());
       })
       .catch((err) => {
         if (err.message === '413') {
@@ -100,7 +102,7 @@ const CartPage: React.FC = () => {
     <main className={styles.cart}>
       <Container className={styles.cart_container}>
         <TitlePage type='main-title'>{cartpage.title}</TitlePage>
-        {stickers.length === 1 ? (
+        {stickers.length < 2 ? (
           <div className={styles.box}>
             <div className={styles.image} />
             <span className={styles.text}>{cartpage.empty}</span>

@@ -16,6 +16,14 @@ export const getStickers = createAsyncThunk(
   },
 );
 
+export const clearStickers = createAsyncThunk('clear_cart', async (data, { rejectWithValue }) => {
+  try {
+    return await cartApi.clearCart();
+  } catch (err) {
+    return rejectWithValue(err);
+  }
+});
+
 export const putStickerInCart = createAsyncThunk(
   'sticker/putStickerInCart',
   async (sticker: ISticker, { rejectWithValue }) => {
@@ -79,6 +87,9 @@ const stickerSlice = createSlice({
         return sticker;
       });
     },
+    removeAllStickers(state) {
+      state.stickers = [];
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getStickers.fulfilled, (state, action) => {
@@ -114,6 +125,9 @@ const stickerSlice = createSlice({
         pageSizePx,
       );
     });
+    builder.addCase(clearStickers.fulfilled, (state) => {
+      state.stickers = [];
+    });
     builder.addCase(deleteSticker.fulfilled, (state, action) => {
       state.stickers = state.stickers.filter((sticker) => sticker.id !== action.payload);
 
@@ -126,4 +140,4 @@ const stickerSlice = createSlice({
 });
 
 export const stickerSliceReducer = stickerSlice.reducer;
-export const { updateSticker } = stickerSlice.actions;
+export const { updateSticker, removeAllStickers } = stickerSlice.actions;

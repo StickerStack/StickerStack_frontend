@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import cn from 'classnames';
 import { useLocation } from 'react-router-dom';
 import { ButtonCustom } from '../UI';
@@ -6,24 +7,31 @@ import { ISticker } from '../../interfaces';
 import { ADD_STICKERS, CART, stickerWhiteBorder } from '../../utils/constants';
 import { InfoBox } from '../InfoBox/InfoBox';
 import { converter } from '../../utils/converter';
+import { deleteSticker } from '../../store/stickersSlice';
+import { openMessage } from '../../store/popupSlice';
+import { messages } from '../../utils/content/popups';
+import { Loader } from '../UI/Loader/Loader';
 
 import styles from './Sticker.module.scss';
-import { deleteSticker } from '../../store/stickersSlice';
 
 interface IProps {
   card: ISticker;
   onClick?: () => void;
 }
 
-// useState ... [loading, SetLoading] Убрал при рефакторинге, нужно вернуть его обратно. 
+// useState ... [loading, SetLoading] Убрал при рефакторинге, нужно вернуть его обратно.
 const Sticker: React.FC<IProps> = ({ card, onClick }: IProps) => {
   const dispatch = useAppDispatch();
   const location = useLocation();
+  const [loading, setLoading] = useState(false);
 
   const borderInPx = converter.mmToPx(stickerWhiteBorder);
 
   const handleDelete = () => {
-    dispatch(deleteSticker(card.id));
+    setLoading(true);
+    dispatch(deleteSticker(card.id))
+      .catch(() => dispatch(openMessage({ text: `${messages.somethingWrong}`, isError: true })))
+      .finally(() => setLoading(false));
   };
 
   const translateShape = () => {
@@ -43,14 +51,15 @@ const Sticker: React.FC<IProps> = ({ card, onClick }: IProps) => {
   };
 
   return (
-    <section
+    <article
       className={cn(
         styles.card,
         location.pathname === CART && styles.card_cart,
-        location.pathname === ADD_STICKERS && styles.card_add
+        location.pathname === ADD_STICKERS && styles.card_add,
       )}
       onClick={onClick}
     >
+      {loading && <Loader loading={loading} />}
       {card && (
         <ul className={cn(styles.info, location.pathname === CART && styles.info_cart)}>
           {card.image ? (
@@ -117,9 +126,14 @@ const Sticker: React.FC<IProps> = ({ card, onClick }: IProps) => {
         </ul>
       )}
       {location.pathname === CART ? (
-        <ButtonCustom type='delete' className={cn(styles.delete)} label='Удалить' onClick={handleDelete} />
+        <ButtonCustom
+          type='delete'
+          className={cn(styles.delete)}
+          label='Удалить'
+          onClick={handleDelete}
+        />
       ) : null}
-    </section>
+    </article>
   );
 };
 

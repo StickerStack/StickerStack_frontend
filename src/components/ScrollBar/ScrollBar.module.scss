@@ -1,0 +1,10 @@
+@import '../../utils/_scss-variables.scss';
+.bar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  background-color: $contrast-color;
+  opacity: 0;
+  z-index: 5;
+}

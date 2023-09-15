@@ -13,6 +13,8 @@ interface IProps {
   link?: To;
   theme?: TextTheme;
   onClick?: () => void;
+  title?: string;
+  disabled?: boolean;
 }
 
 const TextUnderline: React.FC<IProps> = ({
@@ -21,11 +23,21 @@ const TextUnderline: React.FC<IProps> = ({
   link,
   type = 'button',
   theme = 'regular',
+  title,
+  disabled,
   onClick,
 }: IProps) => {
   return type === 'button' ? (
-    <button type='button' onClick={onClick} className={cn(styles.button, className)}>
-      <span className={cn(styles.text, className)}>{children}</span>
+    <button
+      type='button'
+      onClick={onClick}
+      className={cn(styles.button, className)}
+      title={title}
+      disabled={disabled}
+    >
+      <span className={cn(styles.text, disabled && styles.text_disabled, className)}>
+        {children}
+      </span>
     </button>
   ) : type === 'link' && link ? (
     <Link to={link} target='_blank' className={cn(styles.text, className, styles[`text_${theme}`])}>

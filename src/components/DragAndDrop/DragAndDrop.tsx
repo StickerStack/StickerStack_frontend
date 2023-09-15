@@ -144,7 +144,7 @@ export const DragAndDrop: FC<IProps> = ({ sticker, className, register, name }) 
       )}
       {name && (
         <input
-          {...(register && register(name, { required: 'Загрузите изображение' }))}
+          {...(register && register(name))}
           name={name}
           className={styles.input}
           type='file'

@@ -1,5 +1,6 @@
 import cn from 'classnames';
 import styles from './InfoBox.module.scss';
+import { TooltipCustom } from '../UI';
 
 type BoxType = 'simple' | 'number' | 'amount' | 'size';
 
@@ -10,6 +11,7 @@ interface IProps {
   descriptionClass?: string;
   children: React.ReactNode;
   numberClass?: string;
+  tooltip?: string;
 }
 
 const InfoBox: React.FC<IProps> = ({
@@ -19,10 +21,13 @@ const InfoBox: React.FC<IProps> = ({
   className,
   children,
   numberClass,
+  tooltip,
 }: IProps) => {
   return (
     <div className={cn(styles.flex, className)}>
       <span className={cn(styles.text, descriptionClass)}>{description}</span>
+
+      {tooltip && <TooltipCustom text={tooltip} />}
       <span
         className={cn(
           type === 'simple' ? styles.simple : styles.number,

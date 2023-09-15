@@ -54,6 +54,7 @@ export const changePassword = {
 export const messages = {
   itemTooBig: 'Слишком большой запрос для загрузки.',
   fieldsError: 'Ошибка при заполнении полей. Попробуйте поменять значения.',
+  success: 'Успешно изменено',
   somethingWrong: 'Что-то пошло не так. Попробуйте еще раз.',
 };
 
@@ -86,4 +87,11 @@ export const orderPlaced = {
   text: 'Вся информация по заказу отправлена на почту. Следите за статусом его готовности в личном кабинете',
   buttonText: 'Заказать еще',
   buttonSecondText: 'Перейти к заказам',
+};
+
+export const confirmCart = {
+  title: 'Очистить корзину?',
+  text: 'В вашей корзине еще остались стикеры. Чтобы повторить предыдущий заказ, их придется удалить.',
+  buttonText: 'Продолжить',
+  buttonSecondText: 'Отменить',
 };
