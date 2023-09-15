@@ -52,6 +52,7 @@ class CartApi extends Api {
     return this.checkResponse(data);
   }
 
+// https://scriptdev.ru/guide/045/#omit-t-k  -- если будут вопросы по типу Omit
   public async uploadOrder(
     cost: number,
     address: string,

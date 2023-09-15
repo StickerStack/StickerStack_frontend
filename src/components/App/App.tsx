@@ -39,6 +39,7 @@ import { getUser, signInMockUser } from '../../store/userSlice';
 import { IUserState } from '../../interfaces';
 import { AcceptCookies } from '../AcceptCookies/AcceptCookies';
 
+
 import styles from './App.module.scss';
 import { getStickers } from '../../store/stickersSlice';
 import { IStickersState } from '../../interfaces/IStickersState';

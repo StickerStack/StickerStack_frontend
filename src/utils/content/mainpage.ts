@@ -1,4 +1,4 @@
-import image from '../../images/image-stikerstack.png';
+import image from '../../images/punochka.jpg';
 import image1 from '../../images/policy-img.png';
 import image2 from '../../images/cart-dog.png';
 import image3 from '../../images/empty-cart.png';
