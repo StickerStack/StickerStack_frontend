@@ -40,7 +40,22 @@ const OrderDetails: React.FC<IProps> = ({ order }: IProps) => {
       .unwrap()
       .then(() => {
         dispatch(closePopup());
-        dispatch(addStickers(order.stickers))
+        dispatch(
+          addStickers(
+            order.stickers.map((item) => {
+              return {
+                id: item.id,
+                image: item.image,
+                shape: item.shape,
+                amount: item.amount,
+                width: item.width,
+                height: item.height,
+                optimal_width: item.width,
+                optimal_height: item.height,
+              };
+            }),
+          ),
+        )
           .then(() => {
             dispatch(closePopup());
             dispatch(getStickers());
