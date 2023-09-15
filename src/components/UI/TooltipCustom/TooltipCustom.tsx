@@ -22,7 +22,9 @@ const TooltipCustom: React.FC<IProps> = ({ className, text }: IProps) => {
   useEffect(() => {
     if (contentRef.current) {
       const offset =
-        contentRef.current.getBoundingClientRect().right + SCREEN_PADDING_RIGHT - document.body.clientWidth;
+        contentRef.current.getBoundingClientRect().right +
+        SCREEN_PADDING_RIGHT -
+        document.body.clientWidth;
       setRightOffset(offset > 0 ? offset : 0);
     }
   }, [isHovered]);

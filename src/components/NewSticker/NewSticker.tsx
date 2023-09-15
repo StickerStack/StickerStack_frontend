@@ -27,6 +27,9 @@ import { ISticker } from '../../interfaces/ISticker';
 import { DragAndDrop } from '../DragAndDrop/DragAndDrop';
 import styles from './NewSticker.module.scss';
 import { StickerImage } from '../StickerImage/StickerImage';
+import { openMessage } from '../../store/popupSlice';
+import { messages } from '../../utils/content/popups';
+import { Loader } from '../UI/Loader/Loader';
 
 interface IProps {
   sticker: ISticker;
@@ -55,6 +58,9 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
       height: sticker.optimal_height,
     },
   });
+  const dispatch = useAppDispatch();
+  const [loading, setLoading] = useState(false);
+  const [block, setBlock] = useState(false);
   const [customVisible, setCustomVisible] = useState<boolean>(
     sticker.width === sticker.optimal_width && sticker.height === sticker.optimal_height
       ? false
@@ -67,10 +73,6 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
     rounded_square: 'закругленный квадрат',
     contour: 'по контуру',
   };
-
-  const dispatch = useAppDispatch();
-
-  const [block, setBlock] = useState(false);
 
   const onAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const number = Number(event.target.value);
@@ -103,16 +105,21 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-
+    setLoading(true);
     if (sticker.id === 'newSticker') {
-      dispatch(addStickers([sticker])).finally(() => {
-        dispatch(getStickers());
-      });
+      dispatch(addStickers([sticker]))
+        .catch(() => dispatch(openMessage({ text: `${messages.somethingWrong}`, isError: true })))
+        .finally(() => {
+          dispatch(getStickers());
+          setLoading(false);
+        });
     }
 
     if (sticker.id !== 'newSticker') {
-      dispatch(putStickerInCart(sticker));
-      setBlock(true);
+      dispatch(putStickerInCart(sticker))
+        .then(() => setBlock(true))
+        .catch(() => dispatch(openMessage({ text: `${messages.somethingWrong}`, isError: true })))
+        .finally(() => setLoading(false));
     }
   };
 
@@ -184,6 +191,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
       className={sticker.id === stickerActiveId ? styles.card : styles.card_unactive}
       onClick={sticker.id === stickerActiveId ? () => null : () => handleActiveSticker(sticker.id)}
     >
+      {loading && <Loader loading={loading} />}
       <form
         className={sticker.id === stickerActiveId ? styles.info : styles.info_unactive}
         onSubmit={handleSubmit}
@@ -257,7 +265,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
 
         <fieldset className={styles.flex}>
           <p className={styles.category}>
-            Размер{' '}
+            Размер
             {sticker.id !== stickerActiveId && (
               <span className={styles.size_hidden}>
                 {getValues('width')}x{getValues('height')}см
@@ -331,15 +339,15 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
             buttonType='submit'
             type='add'
             label='Добавить'
-            disabled={!isValid}
-            className={sticker.id === stickerActiveId ? styles.save : styles.hidden}
+            disabled={!isValid || sticker.image === ''}
+            className={sticker.id === stickerActiveId && !loading ? styles.save : styles.hidden}
           />
         ) : (
           <ButtonCustom
             buttonType='submit'
             type='save'
             disabled={!isValid || fieldsUnchanged || block}
-            className={sticker.id === stickerActiveId ? styles.save : styles.hidden}
+            className={sticker.id === stickerActiveId && !loading ? styles.save : styles.hidden}
             label='Сохранить'
           />
         )}

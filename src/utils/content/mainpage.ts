@@ -1,4 +1,10 @@
-import image from '../../images/punochka.jpg';
+import work1 from '../../images/our-works/work-1.jpg';
+import work2 from '../../images/our-works/work-2.jpg';
+import work3 from '../../images/our-works/work-3.jpg';
+import work4 from '../../images/our-works/work-4.jpg';
+import work5 from '../../images/our-works/work-5.jpg';
+import work6 from '../../images/our-works/work-6.jpg';
+import work7 from '../../images/our-works/work-7.jpg';
 import image1 from '../../images/policy-img.png';
 import image2 from '../../images/cart-dog.png';
 import image3 from '../../images/empty-cart.png';
@@ -15,11 +21,17 @@ export const ourWorks = {
   title: 'Наши работы',
   text: 'Все, что вам нужно, — загрузить любимую картинку и дать нам возможность превратить ее в стикер.',
   images: [
-    { image: image, id: 1, alt: 'Пример работы' },
-    { image: image, id: 2, alt: 'Пример работы' },
-    { image: image, id: 3, alt: 'Пример работы' },
-    { image: image, id: 4, alt: 'Пример работы' },
-    { image: image, id: 5, alt: 'Пример работы' },
+    {
+      image: work1,
+      id: 1,
+      alt: 'Пример работы',
+    },
+    { image: work2, id: 2, alt: 'Пример работы' },
+    { image: work3, id: 3, alt: 'Пример работы' },
+    { image: work4, id: 4, alt: 'Пример работы' },
+    { image: work5, id: 5, alt: 'Пример работы' },
+    { image: work6, id: 3, alt: 'Пример работы' },
+    { image: work7, id: 4, alt: 'Пример работы' },
   ],
 };
 

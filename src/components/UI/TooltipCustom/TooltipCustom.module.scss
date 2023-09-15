@@ -7,14 +7,12 @@
 }
 
 .container {
-  @include flex(row, center, center);
   position: absolute;
   top: calc(100% - 1px);
   bottom: unset;
-  margin-left: 0;
-  margin-right: auto;
   max-width: 242px;
   width: max-content;
+  float: left;
 }
 
 .content {
