@@ -31,12 +31,9 @@ const getRandomNumber = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-// Мок страниц со стикерами, стоимости одной страницы
-
 const pagePrice = 290;
 const CARDS_MAXIMUM = 15;
 
-// Мок параметров страницы
 const pageSize: IOptions = {
   widthPage: 266.49,
   heightPage: 382.4,
@@ -64,7 +61,7 @@ const pageSizePx = {
 };
 
 const stickerWhiteBorder = 5;
-// Minmax ограничения инпутов
+
 const PROFILE_INPUT_MIN_LENGTH = 2;
 const PROFILE_INPUT_MAX_LENGTH = 30;
 const AMOUNT_INPUT_MIN_LENGTH = 1;

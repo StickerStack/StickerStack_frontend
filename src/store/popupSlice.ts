@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { Signin } from '../components/Popups/Signin/Signin';
-import { IPopupState, IOrderState } from '../interfaces';
+import { IPopupState, IOrder} from '../interfaces';
 
 const initialState: IPopupState = {
   isOpen: false,
@@ -88,7 +88,7 @@ const popupSlice = createSlice({
       state.info.imageAbsolute = action.payload.imageAbsolute;
     },
 
-    openOrder(state, action: { payload: IOrderState; type: string }) {
+    openOrder(state, action: { payload: IOrder; type: string }) {
       state.isOpen = true;
       state.order.isOpen = true;
       state.order.content = action.payload;

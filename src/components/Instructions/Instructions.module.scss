@@ -24,7 +24,7 @@
 }
 
 .step {
-  @include flex(row, start, start);
+  @include flex(row, flex-start, flex-start);
   gap: 35px;
   &:nth-child(2) {
     flex-direction: row-reverse;
@@ -44,7 +44,7 @@
 .content {
   max-width: 500px;
 
-  @include flex(column, start, start);
+  @include flex(column, flex-start, flex-start);
   @media screen and (max-width: 768px) {
     max-width: 100%;
   }

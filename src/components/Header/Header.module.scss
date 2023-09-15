@@ -12,7 +12,7 @@
   }
 
   &_border {
-    border-radius: 0px 0px 10px 10px;
+    border-radius: 10px 10px;
     box-shadow: 3px 3px 5px 0px rgba(212, 73, 0, 0.1);
   }
 
@@ -61,7 +61,10 @@
 
   .buttons {
     display: flex;
-    gap: 25px;
+    gap: 30px;
+    @media screen and (max-width: 768px) {
+      gap: 22px;
+    }
   }
 
   .button {
@@ -98,6 +101,12 @@
     line-height: 128.7%;
     color: $contrast-text-color;
     z-index: 6;
+
+    @media screen and (max-width: 768px) {
+      width: 14px;
+      height: 14px;
+      font-size: 10px;
+    }
   }
 }
 

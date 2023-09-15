@@ -1,0 +1,1 @@
+export type TShape = 'square' | 'rounded_square' | 'circle' | 'contour';

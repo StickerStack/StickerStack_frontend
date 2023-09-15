@@ -58,7 +58,7 @@
   }
 
   .namebox {
-    @include flex(column, start, start);
+    @include flex(column, flex-start, flex-start);
   }
 
   .name {

@@ -99,7 +99,7 @@
 .flex {
   list-style: none;
   padding: 0;
-  @include flex(row, start, center);
+  @include flex(row, flex-start, center);
   gap: 13px;
 }
 .flex_shapes {

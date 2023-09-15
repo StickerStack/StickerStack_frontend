@@ -1,4 +1,4 @@
-export const sticker = {
+export const stickertext = {
   image: 'Перетащите фото или выберите файл',
   imageFormat: 'Допустимые форматы: .jpg, .jpeg, .png',
   shape: 'Форма',

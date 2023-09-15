@@ -4,13 +4,13 @@ import { TextUnderline } from '../UI';
 import { useAppDispatch } from '../../hooks/hooks';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 import { openOrder } from '../../store/popupSlice';
-import { IOrderState } from '../../interfaces';
+import { IOrder } from '../../interfaces';
 
 import styles from './OrderOptions.module.scss';
 
 interface IProps {
   setIsOpen: (open: boolean) => void;
-  order: IOrderState;
+  order: IOrder;
 }
 
 const OrderOptions: React.FC<IProps> = ({ order, setIsOpen }: IProps) => {

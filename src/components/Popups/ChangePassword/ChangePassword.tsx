@@ -45,14 +45,14 @@ const ChangePassword: React.FC = () => {
       .unwrap()
       .then(() => {
         dispatch(closePopup());
-        const randomNumber = getRandomNumber(1, 3);
         dispatch(
           openInfo({
             title: `${passwordChanged.title}`,
             text: `${passwordChanged.text}`,
             buttonText: `${passwordChanged.buttonText}`,
+            image: require(`../../../images/password-changed.png`),
+            imageAbsolute: true,
             onClick: () => navigate(ADD_STICKERS),
-            image: require(`../../../images/password-changed-${randomNumber}.png`),
           }),
         );
         localStorage.removeItem('change-password-token');
@@ -62,6 +62,13 @@ const ChangePassword: React.FC = () => {
           dispatch(
             openMessage({
               text: `${messages.fieldsError}`,
+              isError: true,
+            }),
+          );
+        } else if (err.message === '400') {
+          dispatch(
+            openMessage({
+              text: `Срок действия ссылки истек. Попробуйте запросить восстановление пароля еще раз.`,
               isError: true,
             }),
           );

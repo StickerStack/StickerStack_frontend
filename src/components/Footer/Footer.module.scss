@@ -13,7 +13,7 @@
   }
 
   &_container {
-    @include flex(row, start, start);
+    @include flex(row, flex-start, flex-start);
     column-gap: 45px;
     row-gap: 35px;
     flex-wrap: wrap;
@@ -32,7 +32,7 @@
 .main {
   max-width: 160px;
   margin-right: 80px;
-  @include flex(column, start, start);
+  @include flex(column, flex-start, flex-start);
 
   @media screen and (max-width: 768px) {
     max-width: 250px;
@@ -50,7 +50,7 @@
 }
 
 .items {
-  @include flex(row, start, center);
+  @include flex(row, flex-start, center);
   gap: 10px;
 }
 

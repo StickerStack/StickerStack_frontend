@@ -7,7 +7,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useAppDispatch } from '../../hooks/hooks';
 import { IUserState } from '../../interfaces';
 import { Signin } from '../Popups/Signin/Signin';
-import { ICart } from '../../interfaces/ICart';
 import { openPopup } from '../../store/popupSlice';
 import { CART, COOKIE, PAGE_404, PRIVACY, TERMS } from '../../utils/constants';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
@@ -16,14 +15,15 @@ import { ButtonCustom, ButtonWithText, Container } from '../UI';
 
 import logo from '../../images/logo.svg';
 import styles from './Header.module.scss';
+import { IStickersState } from '../../interfaces/IStickersState';
 
 const Header: React.FC = () => {
   const isLogged = useSelector((state: { user: IUserState }) => state.user.isLogged);
+  const { stickers } = useSelector((state: { stickers: IStickersState }) => state.stickers);
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [isMenuShow, setIsMenuShow] = useState(false);
-  const cart = useSelector((state: { cart: ICart }) => state.cart);
   const [y, setY] = useState(window.scrollY);
   const [visibleBorder, setVisibleBorder] = useState(false);
 
@@ -127,7 +127,7 @@ const Header: React.FC = () => {
         {isLogged ? (
           <div className={styles.buttons}>
             <div className={styles.cart} onClick={() => navigate(CART)}>
-              {cart.items.length > 0 && <div className={styles.badge}>{cart.items.length}</div>}
+              {stickers.length > 1 && <div className={styles.badge}>{stickers.length - 1}</div>}
               <ButtonCustom type='cart' label='Перейти в корзину' onClick={() => navigate(CART)} />
             </div>
 

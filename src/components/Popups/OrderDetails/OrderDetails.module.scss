@@ -1,7 +1,7 @@
 @import '../../../utils/_scss-variables.scss';
 
 .container {
-  @include flex(column, start, start);
+  @include flex(column, flex-start, flex-start);
   gap: 25px;
 }
 
@@ -23,7 +23,7 @@
 
 .main {
   width: 100%;
-  @include flex(row, space-between, start);
+  @include flex(row, space-between, flex-start);
 
   @media screen and (max-width: 768px) {
     justify-content: center;
@@ -33,12 +33,12 @@
 .info {
   padding: 0 0 0 10px;
   margin: 0;
-  @include flex(column, start, start);
+  @include flex(column, flex-start, flex-start);
   gap: 10px;
 
   &_item {
     list-style-type: none;
-    @include flex(row, start, start);
+    @include flex(row, flex-start, flex-start);
     gap: 10px;
 
     &:before {
@@ -49,7 +49,7 @@
 }
 
 .buttons {
-  @include flex(column, start, start);
+  @include flex(column, flex-start, flex-start);
   gap: 10px;
 }
 
@@ -66,7 +66,7 @@
 
 .delivery {
   min-width: 180px;
-  @include flex(column, start, start);
+  @include flex(column, flex-start, flex-start);
   gap: 20px;
   grid-row: 1 / 3;
   grid-column: 2/3;
@@ -80,13 +80,13 @@
 .statuses {
   padding: 0;
   margin: 0;
-  @include flex(column, start, start);
+  @include flex(column, flex-start, flex-start);
   gap: 20px;
 }
 
 .status {
   list-style: none;
-  @include flex(row, start, start);
+  @include flex(row, flex-start, flex-start);
   gap: 12px;
 
   &_title {
@@ -105,7 +105,7 @@
 }
 
 .flex {
-  @include flex(column, start, start);
+  @include flex(column, flex-start, flex-start);
   gap: 3px;
 }
 

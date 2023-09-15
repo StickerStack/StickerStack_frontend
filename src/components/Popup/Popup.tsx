@@ -102,7 +102,7 @@ const Popup: React.FC = () => {
               {form.isOpen ? (
                 <PopupForm />
               ) : order.isOpen ? (
-                <OrderDetails order={order.content} onClose={() => dispatch(closePopup())} />
+                <OrderDetails order={order.content} />
               ) : preview.isOpen ? (
                 <PopupPreview />
               ) : info.isOpen ? (
