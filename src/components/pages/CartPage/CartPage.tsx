@@ -15,10 +15,11 @@ import { ICart } from '../../../interfaces/ICart';
 import { messages, orderPlaced } from '../../../utils/content/popups';
 import { cartpage } from '../../../utils/content/stickerspage';
 import { IStickersState } from '../../../interfaces/IStickersState';
+import { removeAllStickers } from '../../../store/stickersSlice';
+
 import image from '../../../images/cart-dog.png';
 import { ReactComponent as WriteSvg } from '../../../images/icons/write-icon.svg';
 import styles from './CartPage.module.scss';
-
 
 const CartPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -75,6 +76,7 @@ const CartPage: React.FC = () => {
             image: image,
           }),
         );
+        dispatch(removeAllStickers());
       })
       .catch((err) => {
         if (err.message === '413') {

@@ -6,11 +6,11 @@ import { StickerCarousel } from '../../StickerCarousel/StickerCarousel';
 import { ButtonWithText } from '../../UI';
 import { ADD_STICKERS, CART } from '../../../utils/constants';
 import { orders } from '../../../utils/content/profile';
-import { closePopup, openInfo } from '../../../store/popupSlice';
+import { closePopup, openInfo, openMessage } from '../../../store/popupSlice';
 import { useAppDispatch } from '../../../hooks/hooks';
-import { confirmCart } from '../../../utils/content/popups';
+import { confirmCart, messages } from '../../../utils/content/popups';
 import { useSelector } from 'react-redux';
-import { clearStickers } from '../../../store/stickersSlice';
+import { addStickers, clearStickers, getStickers } from '../../../store/stickersSlice';
 
 import image from '../../../images/main-page/sticker-ufo.png';
 import styles from './OrderDetails.module.scss';
@@ -22,8 +22,9 @@ interface IProps {
 const OrderDetails: React.FC<IProps> = ({ order }: IProps) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
   const date = new Date(order.created_at);
+  const [loading, setLoading] = useState(false);
+
   const { stickers } = useSelector((state: { stickers: IStickersState }) => state.stickers);
 
   const getStatus = () => {
@@ -39,14 +40,22 @@ const OrderDetails: React.FC<IProps> = ({ order }: IProps) => {
       .unwrap()
       .then(() => {
         dispatch(closePopup());
+        dispatch(addStickers(order.stickers))
+          .then(() => {
+            dispatch(closePopup());
+            dispatch(getStickers());
+          })
+          .catch(() =>
+            dispatch(openMessage({ text: `${messages.somethingWrong}`, isError: true })),
+          );
       })
+      .catch(() => dispatch(openMessage({ text: `${messages.somethingWrong}`, isError: true })))
       .finally(() => setLoading(false));
   };
 
   const onRepeat = () => {
-    dispatch(closePopup());
-
-    if (stickers.length > 0) {
+    if (stickers.length > 1) {
+      dispatch(closePopup());
       dispatch(
         openInfo({
           title: `${confirmCart.title}`,
@@ -58,10 +67,33 @@ const OrderDetails: React.FC<IProps> = ({ order }: IProps) => {
           image: image,
         }),
       );
+      navigate(CART);
     } else {
-      // здесь будет ссылка на функцию повторного добавления заказа в корзину, если она пуста
+      setLoading(true);
+      dispatch(
+        addStickers(
+          order.stickers.map((item) => {
+            return {
+              id: item.id,
+              image: item.image,
+              shape: item.shape,
+              amount: item.amount,
+              width: item.width,
+              height: item.height,
+              optimal_width: item.width,
+              optimal_height: item.height,
+            };
+          }),
+        ),
+      )
+        .then(() => {
+          dispatch(closePopup());
+          navigate(CART);
+          dispatch(getStickers());
+        })
+        .catch(() => dispatch(openMessage({ text: `${messages.somethingWrong}`, isError: true })))
+        .finally(() => setLoading(false));
     }
-    navigate(CART);
   };
 
   return (

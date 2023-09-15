@@ -87,6 +87,9 @@ const stickerSlice = createSlice({
         return sticker;
       });
     },
+    removeAllStickers(state) {
+      state.stickers = [];
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getStickers.fulfilled, (state, action) => {
@@ -137,4 +140,4 @@ const stickerSlice = createSlice({
 });
 
 export const stickerSliceReducer = stickerSlice.reducer;
-export const { updateSticker } = stickerSlice.actions;
+export const { updateSticker, removeAllStickers } = stickerSlice.actions;
