@@ -11,4 +11,10 @@ export interface ISticker {
   optimal_height: number
 }
 
-export type IStickerForOrder = Omit<ISticker, 'id'>;
+export interface IStickerForOrder {
+  image: string,
+  shape: TShape,
+  amount: number,
+  width: number,
+  height: number,
+}

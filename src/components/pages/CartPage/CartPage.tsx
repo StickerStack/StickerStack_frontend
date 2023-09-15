@@ -52,15 +52,13 @@ const CartPage: React.FC = () => {
         address: cart.address,
         number: cart.number_of_sheets,
         cropping: cart.cropping,
-        stickers: stickers.map((item) => {
+        stickers: stickers.slice(0, stickers.length - 1).map((item) => {
           return {
             image: item.image,
             shape: item.shape,
             amount: item.amount,
-            width: Math.round(converter.pxToCm(item.width)),
-            height: Math.round(converter.pxToCm(item.height)),
-            optimal_height: Math.round(converter.pxToCm(item.optimal_height)),
-            optimal_width: Math.round(converter.pxToCm(item.optimal_width)),
+            width: item.width,
+            height: item.height,
           };
         }),
       }),
