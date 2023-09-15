@@ -1,7 +1,7 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import cn from 'classnames';
 
-import { PRIVACY, TERMS } from '../../utils/constants';
+import { COOKIE, PRIVACY, TERMS } from '../../utils/constants';
 
 import styles from './PolicyNavigation.module.scss';
 
@@ -25,6 +25,14 @@ const PolicyNavigation = () => {
             to={TERMS}
           >
             Условия использования
+          </NavLink>
+        </li>
+        <li>
+          <NavLink
+            className={cn(styles.link, location.pathname === COOKIE && styles.link_active)}
+            to={COOKIE}
+          >
+            Использование cookies
           </NavLink>
         </li>
       </ul>

@@ -1,103 +1,137 @@
 @import '../../utils/_scss-variables.scss';
 
+.works {
+  background-color: $secondary-bg-color;
+}
+
 .container {
-  padding-bottom: calc(100vh / 9);
+  padding-top: 80px;
+  padding-bottom: 80px;
   box-sizing: border-box;
   @include flex(column, center, center);
   gap: 25px;
+  background-color: $secondary-bg-color;
+
+  @media screen and (max-width: 768px) {
+    font-size: 16px;
+    padding-top: 50px;
+    padding-bottom: 70px;
+  }
+}
+
+.title,
+.point,
+.text {
+  color: $contrast-text-color;
+}
+
+.point,
+.text {
+  width: 100%;
+  margin: 0;
+  line-height: 22px;
+}
+
+.point {
+  @include flex(row, flex-start, flex-start);
+  gap: 25px;
+  text-align: left;
+
+  @media screen and (max-width: 768px) {
+    gap: 10px;
+  }
 }
 
 .text {
-  margin: 0;
-  max-width: 730px;
   text-align: center;
-  font-size: 16px;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
 }
 
 .image {
   width: 255px;
+  max-width: 255px;
   height: 212px;
+  max-height: 212px;
   border-radius: 15px;
-  margin: 0 auto;
   object-fit: cover;
-  box-shadow: 3px 3px 10px 0px rgba(212, 73, 0, 0.1);
+}
 
-  &_container {
-    width: 260px;
-    height: 226px;
-    margin: 0;
-  }
+.arrows {
+  display: flex;
+  gap: 24px;
+  margin: 35px 0 40px auto;
 }
 
 .prev_arrow {
-  transform: translate(1740%, 550%);
-  @media screen and (max-width: 1400px) {
-    transform: translate(1400%, 550%);
-  }
-  @media screen and (max-width: 1100px) {
-    transform: translate(calc(100vw * 0.7), 550%);
-  }
-
-  @media screen and (max-width: 880px) {
-    transform: translate(calc(100vw * 0.65), 550%);
-  }
-  @media screen and (max-width: 530px) {
-    transform: translate(calc(100vw * 0.55), 550%);
-  }
-
-  &::before {
-    background: url(../../images/icons/arrow-simple.svg) no-repeat center;
-    transform: rotate(180deg);
-  }
-}
-.next_arrow {
-  transform: translate(-65%, 550%);
-  &::before {
-    background: url(../../images/icons/arrow-simple.svg) no-repeat center;
-  }
+  transform: rotate(180deg);
 }
 
 .next_arrow,
 .prev_arrow {
   width: 56px;
   height: 24px;
+  background: url(../../images/icons/arrow-simple.svg) no-repeat center;
+  background-color: transparent;
+  transition: opacity 0.3s ease-in-out;
+  cursor: pointer;
+  z-index: 2;
 
-  &::before {
-    content: '';
-    display: block;
-    position: absolute;
-    width: 56px;
-    height: 24px;
-    background-color: transparent;
-    opacity: 1;
+  @media screen and (max-width: 600px) {
+    display: none !important;
   }
-  &:hover::before {
+
+  &:hover {
     opacity: 0.7;
   }
 }
 
+.dots {
+  bottom: -36px;
+}
+
+.dots li {
+  min-width: 8px;
+  width: 8px;
+  margin: 0 3px;
+}
+.dots li button::before {
+  content: '';
+  min-width: 7px;
+  width: 7px;
+  height: 7px;
+  box-sizing: border-box;
+  background-color: #fff;
+  border-radius: 50%;
+  opacity: 0.8;
+}
+.dots :global(li.slick-active) button::before {
+  background-color: #fff;
+  opacity: 1;
+}
+
 .slider {
-  margin-top: 30px;
+  margin-top: 5px;
   max-width: 1120px;
-  height: 313px;
-
-  @media screen and (max-width: 1400px) {
-    max-width: 920px;
-  }
-
-  @media screen and (max-width: 1100px) {
-    max-width: calc(100vw - 160px);
-  }
-
-  @media screen and (max-width: 768px) {
-    max-width: calc(100vw - 80px);
-  }
-
-  @media screen and (max-width: 460px) {
-    max-width: calc(100vw - 40px);
-  }
+  width: 100%;
+  height: 212px;
 
   & :global(:focus) {
     outline: none;
   }
+}
+
+.slider :global(.slick-slide) {
+  margin: 0 auto;
+  margin-right: 30px;
+}
+
+.slider :global(.slick-slide:not(.slick-active)) {
+  opacity: 0.8;
+  transform: scale(0.97);
+  transition: opacity 0.3s, scale 0.3s ease-in-out;
+  cursor: pointer;
 }

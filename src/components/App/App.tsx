@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes, Navigate, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import {
   Header,
@@ -11,10 +12,10 @@ import {
   ProtectedRoute,
   PageNotFound,
   ProfilePage,
-  AddStickers,
   Preloader,
   Footer,
 } from '../';
+import { AddStickersNew } from '../pages/AddStickers/AddStickers';
 import { CartPage } from '../pages/CartPage/CartPage';
 import {
   PROFILE,
@@ -26,19 +27,30 @@ import {
   VERIFY_EMAIL,
   VERIFY_FORGOT_PASSWORD,
   ORDERS,
-  privacy,
-  terms,
+  COOKIE,
 } from '../../utils/constants';
+import { cookie, privacy, terms } from '../../utils/content/policy';
 import { useAppDispatch } from '../../hooks/hooks';
 import { useScrollToTop } from '../../hooks/useScrollToTop';
-import { getUser, signInMockUser } from '../../store/userSlice';
-import styles from './App.module.scss';
 import { OrdersPage } from '../pages/OrdersPage/OrdersPage';
 import { PolicyPage } from '../pages/PolicyPage/PolicyPage';
+import { countTotal, updateSheets } from '../../store/cartSlice';
+import { getUser, signInMockUser } from '../../store/userSlice';
+import { IUserState } from '../../interfaces';
+import { AcceptCookies } from '../AcceptCookies/AcceptCookies';
+
+
+import styles from './App.module.scss';
+import { getStickers } from '../../store/stickersSlice';
+import { IStickersState } from '../../interfaces/IStickersState';
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
+  const location = useLocation();
   const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const isLogged = useSelector((state: { user: IUserState }) => state.user.isLogged);
+  const { pages, stickers } = useSelector((state: { stickers: IStickersState }) => state.stickers);
 
   useScrollToTop();
 
@@ -56,6 +68,19 @@ const App: React.FC = () => {
     // eslint-disable-next-line
   }, []);
 
+  useEffect(() => {
+    isLogged && dispatch(getStickers());
+    // eslint-disable-next-line
+  }, [location, isLogged]);
+
+  useEffect(() => {
+    if (isLogged) {
+      dispatch(updateSheets(pages.length));
+      dispatch(countTotal(stickers.slice(0, stickers.length - 1)));
+    }
+    // eslint-disable-next-line
+  }, [pages]);
+
   return (
     <>
       {isLoading ? (
@@ -70,7 +95,7 @@ const App: React.FC = () => {
               path={ADD_STICKERS}
               element={
                 <ProtectedRoute redirectPath='/'>
-                  <AddStickers />
+                  <AddStickersNew />
                 </ProtectedRoute>
               }
             />
@@ -103,10 +128,12 @@ const App: React.FC = () => {
             <Route path='/' element={<MainPage />} />
             <Route path={PRIVACY} element={<PolicyPage policy={privacy} />} />
             <Route path={TERMS} element={<PolicyPage policy={terms} />} />
+            <Route path={COOKIE} element={<PolicyPage policy={cookie} />} />
           </Routes>
           <Footer />
           <MessagePopup />
           <Popup />
+          <AcceptCookies />
         </div>
       )}
     </>

@@ -1,0 +1,43 @@
+@import '../../utils/_scss-variables.scss';
+
+.container {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  padding: 40px 100px 30px;
+  box-sizing: border-box;
+  border-radius: 10px 10px 0px 0px;
+  display: flex;
+  justify-content: space-between;
+  box-shadow: 0px -3px 7px 0px rgba(212, 73, 0, 0.01);
+  gap: 40px;
+  background-color: #fff;
+  align-items: center;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  z-index: 10;
+
+  @media screen and (max-width: 1150px) {
+    flex-direction: column;
+    padding: 40px 40px 30px;
+  }
+
+  .link {
+    color: $main-text-color;
+  }
+  .buttons {
+    display: flex;
+    gap: 16px;
+  }
+
+  .button {
+    width: 168px;
+    padding: 14px 22px;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+}

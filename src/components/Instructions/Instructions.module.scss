@@ -1,0 +1,67 @@
+@import '../../utils/_scss-variables.scss';
+
+.container {
+  padding-top: 80px;
+  padding-bottom: 80px;
+  box-sizing: border-box;
+  @include flex(column, center, center);
+  gap: 45px;
+
+  @media screen and (max-width: 768px) {
+    padding-top: 50px;
+    padding-bottom: 10px;
+    gap: 25px;
+  }
+}
+
+.list {
+  width: 100%;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  @include flex(column, center, center);
+  gap: 35px;
+}
+
+.step {
+  @include flex(row, flex-start, flex-start);
+  gap: 35px;
+  &:nth-child(2) {
+    flex-direction: row-reverse;
+  }
+
+  @media screen and (max-width: 768px) {
+    max-width: 100%;
+    flex-direction: column;
+    gap: 15px;
+
+    &:nth-child(2) {
+      flex-direction: column;
+    }
+  }
+}
+
+.content {
+  max-width: 500px;
+
+  @include flex(column, flex-start, flex-start);
+  @media screen and (max-width: 768px) {
+    max-width: 100%;
+  }
+}
+
+.title {
+  font-weight: 500;
+  margin: 0;
+}
+
+.image {
+  max-width: 500px;
+  max-height: 260px;
+  object-fit: contain;
+  object-position: center;
+  margin: 0 auto;
+  @media screen and (max-width: 768px) {
+    max-width: 280px;
+  }
+}

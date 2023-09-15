@@ -102,18 +102,20 @@ const Popup: React.FC = () => {
               {form.isOpen ? (
                 <PopupForm />
               ) : order.isOpen ? (
-                <OrderDetails order={order.content} onClose={() => dispatch(closePopup())} />
+                <OrderDetails order={order.content} />
               ) : preview.isOpen ? (
                 <PopupPreview />
               ) : info.isOpen ? (
                 <PopupInfo />
               ) : null}
-              <ButtonCustom
-                className={styles.button}
-                type='close'
-                label='Закрыть'
-                onClick={() => dispatch(closePopup())}
-              />
+              <div className={styles.button_box}>
+                <ButtonCustom
+                  className={styles.button}
+                  type='close'
+                  label='Закрыть'
+                  onClick={() => dispatch(closePopup())}
+                />
+              </div>
             </div>
           </motion.div>
         </motion.div>

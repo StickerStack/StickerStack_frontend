@@ -1,22 +1,48 @@
 @import '../../../utils/_scss-variables.scss';
 
 .container {
-  @include flex(column, start, center);
-  width: 330px;
-  gap: 25px;
+  @include flex(column, flex-start, center);
+  width: min-content;
+  min-width: 330px;
+  gap: 20px;
+  position: relative;
+
+  @media screen and (max-width: 768px) {
+    min-width: 295px;
+  }
 }
 
 .image {
-  width: 100%;
-  max-height: 240px;
-  border-radius: 20px;
-  margin-bottom: 25px;
+  max-height: 241px;
+  border-radius: 38px;
+  margin-bottom: 10px;
   object-fit: contain;
+
+  &_absolute {
+    width: 100%;
+    object-fit: cover;
+    max-height: 266px;
+
+    &_small {
+      top: -40px;
+      position: absolute;
+      max-height: 290px;
+      object-fit: contain;
+      margin: 0;
+      width: 330px;
+      border-radius: 0px;
+    }
+  }
+}
+
+.title {
+  width: max-content;
+  margin: 0;
 }
 
 .buttons {
   width: 255px;
-  @include flex(column, start, center);
+  @include flex(column, flex-start, center);
   gap: 10px;
 }
 
@@ -25,6 +51,7 @@
   width: 255px;
 
   &_wide {
+    padding: 14px 15px;
     width: 100%;
   }
 }

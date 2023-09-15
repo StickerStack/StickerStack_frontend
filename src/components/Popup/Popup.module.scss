@@ -7,13 +7,15 @@
   @include flex(column, center, center);
   z-index: 4;
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
+  height: 100dvh;
 
   background-color: rgba(0, 0, 0, 0.4);
 
   .background {
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
+    height: 100dvh;
     position: fixed;
   }
 
@@ -31,15 +33,34 @@
   max-height: 95vh;
   overflow-y: scroll !important;
 
+  @media screen and (max-width: 768px) {
+    padding: 40px 16px 40px;
+  }
+
   &::-webkit-scrollbar {
     display: none;
   }
 
   .button {
-    position: absolute;
-    right: 25px;
-    top: 25px;
     width: 24px;
     height: 24px;
+    @media screen and (max-width: 768px) {
+      width: 18px;
+      height: 18px;
+    }
+
+    &_box {
+      position: absolute;
+      right: 25px;
+      top: 25px;
+      width: 24px;
+      height: 24px;
+
+      @media screen and (max-width: 768px) {
+        right: 16px;
+        top: 12px;
+        @include flex(column, center, center);
+      }
+    }
   }
 }

@@ -29,7 +29,7 @@
   justify-self: center;
   margin: 0 auto;
 
-  &_rounded-square {
+  &_rounded_square {
     border-radius: 10px;
   }
 
@@ -45,7 +45,7 @@
   object-fit: cover;
   box-sizing: border-box;
 
-  &_rounded-square {
+  &_rounded_square {
     border-radius: 10px;
   }
 
@@ -59,6 +59,7 @@
     border-radius: 20px;
     padding: 20px;
     box-sizing: border-box;
+    @include flex(column, center, center);
   }
 }
 

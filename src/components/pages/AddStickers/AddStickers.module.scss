@@ -16,7 +16,7 @@
 .cards {
   width: 100%;
   max-width: 1110px;
-  @include flex(column, center, start);
+  @include flex(column, center, flex-start);
   gap: 30px;
 }
 
@@ -36,7 +36,7 @@
   flex-wrap: wrap;
 
   &_pages {
-    @include flex(column, start, flex-start);
+    @include flex(column, flex-start, flex-start);
   }
 }
 
@@ -62,7 +62,8 @@
 
 .prices {
   @include flex(column, center, center);
-  width: 90px;
+  gap: 5px;
+  width: 123px;
 }
 
 .price {
@@ -93,4 +94,6 @@
 
 .button {
   margin: 0 auto;
+  padding: 14px 15px;
+  width: 275px;
 }

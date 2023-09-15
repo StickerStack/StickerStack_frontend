@@ -1,10 +1,7 @@
-import { CartItem } from './';
-
-export interface CartState {
+export interface ICart {
   cost: number;
   totalAmount: number;
   address: string;
   number_of_sheets: number;
   cropping: boolean;
-  items: Array<CartItem>;
 }

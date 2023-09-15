@@ -1,169 +1,79 @@
-import { useEffect, useState } from 'react';
-import { useAppDispatch } from '../../../hooks/hooks';
+import { FC, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useForm, FieldValues } from 'react-hook-form';
+import { FieldValues, useForm } from 'react-hook-form';
 
-import { AnimatePresence, motion } from 'framer-motion';
-import { Sticker } from '../../Sticker/Sticker';
-import { RadioButton, TextUnderline, ButtonWithText, TitlePage, Container } from '../../UI';
-import { NewSticker } from '../../index';
+import { updateCropping } from '../../../store/cartSlice';
+import { ICart } from '../../../interfaces/ICart';
+import { useAppDispatch } from '../../../hooks/hooks';
 import { InfoBox } from '../../InfoBox/InfoBox';
+import { NewSticker } from '../../NewSticker/NewSticker';
+import { IStickersState } from '../../../interfaces/IStickersState';
+import { ButtonWithText, Container, RadioButton, TextUnderline, TitlePage } from '../../UI';
+import { addpage } from '../../../utils/content/stickerspage';
 import { openPreview } from '../../../store/popupSlice';
-import { pagePrice, pageSizePx, CART, CARDS_MAXIMUM } from '../../../utils/constants';
-import { CartState, ICardsState } from '../../../interfaces';
-import { addCard, setActive } from '../../../store/cardsSlice';
-import { addItems, updateCropping, updateSheets } from '../../../store/cartSlice';
-import { generateRandomNumber } from '../../../utils/generateRandomNumber';
-import { calculateStickerOnList } from '../../../utils/calculateStickerOnList';
+import { CARDS_MAXIMUM } from '../../../utils/constants';
 
 import styles from './AddStickers.module.scss';
 
-const AddStickers: React.FC = () => {
+export const AddStickersNew: FC = () => {
+  const { stickers } = useSelector((state: { stickers: IStickersState }) => state.stickers);
+  const { cropping, cost, totalAmount, number_of_sheets } = useSelector(
+    (state: { cart: ICart }) => state.cart,
+  );
+  const [stickerActiveId, setStickerActiveId] = useState(stickers[0].id);
+
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
-  const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
-  const cart = useSelector((state: { cart: CartState }) => state.cart);
-  const validation = useSelector((state: { cards: ICardsState }) => state.cards.valid);
+  const naviagate = useNavigate();
 
-  const fullPrice = pagePrice * cart.number_of_sheets;
-  const fullAmount = cards.reduce((acc, item) => acc + item.amount, 0);
-  const itemPrice = Math.round((pagePrice * cart.number_of_sheets) / fullAmount);
-
-  const handleAddCard = () => {
-    dispatch(
-      addCard({
-        image: '',
-        shape: 'square',
-        amount: 1,
-        size: { width: 0, height: 0 },
-        optimalSize: { width: 0, height: 0 },
-        id: generateRandomNumber(),
-        active: true,
-        valid: false,
-      }),
-    );
-  };
-
-  useEffect(() => {
-    if (cards) {
-      calculateStickerOnList(cards, {
-        paddingList: {
-          top: pageSizePx.paddingList.top,
-          right: pageSizePx.paddingList.right,
-          bottom: pageSizePx.paddingList.bottom,
-          left: pageSizePx.paddingList.left,
-        },
-        gapX: pageSizePx.gapX,
-        gapY: pageSizePx.gapY,
-        widthPage: pageSizePx.widthPage,
-        heightPage: pageSizePx.heightPage,
-      });
-
-      dispatch(
-        updateSheets(JSON.parse(localStorage.getItem('pagesWithStickers') || '[]')?.length || 1),
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cards]);
-
-  const cropping = () => {
-    if (cart.cropping) {
-      return 'true';
-    } else return 'false';
-  };
+  const handleActiveSticker = (id: string) => setStickerActiveId(id);
 
   const { register } = useForm<FieldValues>({
     mode: 'onBlur',
-    defaultValues: { cut: cropping() },
+    defaultValues: { cut: `${cropping}` },
   });
 
   return (
     <main className={styles.add}>
       <Container className={styles.add_container}>
-        <TitlePage type='main-title'>Заказать стикеры</TitlePage>
-        <div className={styles.cards}>
-          {cards.map((card) => (
-            <AnimatePresence key={card.id}>
-              <motion.div
-                className={card.active ? styles.motion : styles.motion_inactive}
-                initial={{
-                  opacity: 0.4,
-                  height: 0,
-                }}
-                animate={{
-                  transition: {
-                    height: { duration: 0.4 },
-                    opacity: { duration: 0.25, delay: 0.15 },
-                  },
-                  opacity: 1,
-                  height: 'auto',
-                }}
-                exit={{
-                  opacity: 0,
-                  height: 0,
-                  transition: {
-                    height: { duration: 0.4 },
-                    opacity: { duration: 0.25 },
-                  },
-                }}
-              >
-                <NewSticker key={card.id} card={card} />
-              </motion.div>
-              {!card.active && (
-                <motion.div
-                  className={styles.motion}
-                  initial={{
-                    opacity: 0.4,
-                    height: 0,
-                  }}
-                  animate={{
-                    transition: {
-                      height: { duration: 0.4 },
-                      opacity: { duration: 0.25, delay: 0.15 },
-                    },
-                    opacity: 1,
-                    height: 'auto',
-                  }}
-                  exit={{
-                    opacity: 0,
-                    height: 0,
-                    transition: {
-                      height: { duration: 0.4 },
-                      opacity: { duration: 0.25 },
-                    },
-                  }}
-                >
-                  <Sticker card={card} onClick={() => dispatch(setActive(card.id))} />
-                </motion.div>
-              )}
-            </AnimatePresence>
+        <TitlePage type='main-title'>{addpage.title}</TitlePage>
+        <section className={styles.cards}>
+          {stickers.map((sticker) => (
+            <NewSticker
+              type='edit'
+              key={sticker.id}
+              sticker={sticker}
+              stickerActiveId={stickerActiveId}
+              handleActiveSticker={handleActiveSticker}
+            />
           ))}
-        </div>
-        {cards.length < CARDS_MAXIMUM && (
+        </section>
+        {/* {stickers.length < CARDS_MAXIMUM && (
           <ButtonWithText theme='transparent' onClick={handleAddCard}>
-            Добавить стикер
+            {addpage.addSicker}
           </ButtonWithText>
-        )}
+        )} */}
         <section className={styles.info}>
           <div className={styles.info_pages}>
-            <InfoBox type='number' description='Количество листов'>
-              {cart.number_of_sheets}
+            <InfoBox type='number' description={addpage.pages}>
+              {number_of_sheets}
             </InfoBox>
             <TextUnderline
               type='button'
               className={styles.preview}
               onClick={() => dispatch(openPreview())}
             >
-              Предпросмотр страницы
+              {addpage.preview}
             </TextUnderline>
           </div>
           <div className={styles.flex}>
-            <span className={styles.text}>Стоимость</span>
+            <span className={styles.text}>{addpage.price}</span>
             <div className={styles.prices}>
-              <span className={styles.price}>{fullPrice} ₽</span>
-              <span className={styles.price_small}>{itemPrice}₽/ за шт</span>
+              <span className={styles.price}>{cost} ₽</span>
+              <span className={styles.price_small}>
+                {Math.round(cost / totalAmount)} ₽/ за стикер
+              </span>
             </div>
           </div>
           <form className={styles.options}>
@@ -173,7 +83,7 @@ const AddStickers: React.FC = () => {
               register={register}
               onClick={() => dispatch(updateCropping(false))}
             >
-              Оставить стикеры на листе
+              {addpage.options.page}
             </RadioButton>
             <RadioButton
               name='cut'
@@ -181,30 +91,14 @@ const AddStickers: React.FC = () => {
               register={register}
               onClick={() => dispatch(updateCropping(true))}
             >
-              Вырезать стикеры по контуру
+              {addpage.options.crop}
             </RadioButton>
           </form>
-        </section>
-        {cart.items.length === 0 ? (
-          <ButtonWithText
-            theme='filled'
-            className={styles.button}
-            onClick={() => {
-              dispatch(addItems(cards));
-              navigate(CART);
-            }}
-            disabled={!validation}
-          >
-            Добавить в корзину
-          </ButtonWithText>
-        ) : (
-          <ButtonWithText theme='filled' className={styles.button} onClick={() => navigate(CART)}>
+          <ButtonWithText onClick={() => naviagate('/cart')} className={styles.button}>
             Перейти в корзину
           </ButtonWithText>
-        )}
+        </section>
       </Container>
     </main>
   );
 };
-
-export { AddStickers };

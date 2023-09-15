@@ -4,9 +4,10 @@ import { useEffect } from 'react';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { verifyEmail } from '../../../store/authSlice';
 import { openInfo } from '../../../store/popupSlice';
+import { ADD_STICKERS, PAGE_404 } from '../../../utils/constants';
+import { verified } from '../../../utils/content/popups';
 
 import image from '../../../images/email-confirmed.png';
-import { ADD_STICKERS, PAGE_404 } from '../../../utils/constants';
 
 const VerifyEmail: React.FC = () => {
   const navigate = useNavigate();
@@ -21,11 +22,12 @@ const VerifyEmail: React.FC = () => {
       .then(() =>
         dispatch(
           openInfo({
-            title: 'Почта подтверждена',
-            text: 'Сделай свои вещи уникальными с помощью стикеров на виниловой пленке.',
-            buttonText: 'Перейти к заказу',
-            onClick: () => navigate(ADD_STICKERS),
+            title: `${verified.title}`,
+            text: `${verified.text}`,
+            buttonText: `${verified.buttonText}`,
             image: image,
+            imageAbsolute: true,
+            onClick: () => navigate(ADD_STICKERS),
           }),
         ),
       )

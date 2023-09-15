@@ -4,10 +4,9 @@ $main-bg-color: #fff7f3;
 $secondary-bg-color: #1a3263;
 $popup-bg-color: #fff;
 
-$fullscreen-padding: 165px;
-$desktop-padding: 70px;
-$tablet-padding: 40px;
-$mobile-padding: 20px;
+$desktop-padding: 165px;
+$tablet-padding: 60px;
+$mobile-padding: 24px;
 
 $element-color: #dbe7ff;
 $element-secondary-color: #fff7f3;
@@ -37,7 +36,7 @@ $clicked-button-color: #0d1e43;
 
 $error-text-color: #d94917;
 
-$success-color: #c7f2c6;
+$success-color: #37a611;
 
 @mixin font($size, $height, $weight) {
   font-size: $size;

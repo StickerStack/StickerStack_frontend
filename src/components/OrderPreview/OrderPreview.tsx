@@ -1,19 +1,14 @@
 import cn from 'classnames';
-import { useCallback, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
 
-import { ButtonCustom } from '../UI';
 import { useAppDispatch } from '../../hooks/hooks';
-import { useOutsideClick } from '../../hooks/useOutsideClick';
 import { openOrder } from '../../store/popupSlice';
-import { IOrderState } from '../../interfaces';
-import { OrderOptions } from '../OrderOptions/OrderOptions';
+import { IOrder } from '../../interfaces';
 import { stickerWhiteBorder } from '../../utils/constants';
 
 import styles from './OrderPreview.module.scss';
 
 interface IProps {
-  order: IOrderState;
+  order: IOrder;
 }
 
 const OrderPreview: React.FC<IProps> = ({ order }: IProps) => {

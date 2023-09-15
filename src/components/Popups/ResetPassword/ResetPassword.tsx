@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 
 import { Signin, Signup } from '../..';
-import { ButtonWithText, TextForm, TextUnderline, TitlePopup, Input } from '../../UI';
+import { ButtonWithText, TextUnderline, TitlePopup, Input } from '../../UI';
 import { ResetPasswordInfo } from '../ResetPasswordInfo/ResetPasswordInfo';
 import { InputField } from '../../UI/InputField/InputField';
 import { Label } from '../../UI/Label';
@@ -13,6 +13,8 @@ import { useAppDispatch } from '../../../hooks/hooks';
 import { forgotPassword } from '../../../store/authSlice';
 import { openMessage, openPopup } from '../../../store/popupSlice';
 import { registerEmail } from '../../../utils/registersRHF';
+import { messages, reset } from '../../../utils/content/popups';
+
 import styles from './ResetPassword.module.scss';
 
 const ResetPassword: React.FC = () => {
@@ -39,7 +41,7 @@ const ResetPassword: React.FC = () => {
         if (err.message) {
           dispatch(
             openMessage({
-              text: 'Что-то пошло не так. Попробуйте еще раз.',
+              text: `${messages.somethingWrong}`,
               isError: true,
             }),
           );
@@ -69,12 +71,12 @@ const ResetPassword: React.FC = () => {
         },
       }}
     >
-      <TitlePopup>Восстановление пароля</TitlePopup>
+      <TitlePopup>{reset.title}</TitlePopup>
       <InputField className='email'>
-        <Label>Электронная почта</Label>
+        <Label>{reset.email.emailLabel}</Label>
         <Input
           autoComplete='email'
-          placeholder='example@gmail.com'
+          placeholder={reset.email.emailPlaceholder}
           register={register}
           option={{
             ...registerEmail,
@@ -86,19 +88,17 @@ const ResetPassword: React.FC = () => {
           error={errors.email}
         />
         <InputError error={errors.email} />
+        <p className={styles.text}>{reset.text}</p>
       </InputField>
-      <TextForm>
-        В течение 5 минут на указанную почту придет ссылка для восстановления пароля
-      </TextForm>
       <ButtonWithText type='submit' className={styles.button} disabled={!isValid} loading={loading}>
-        Восстановить пароль
+        {reset.button}
       </ButtonWithText>
       <div className={styles.buttons}>
         <TextUnderline type='button' onClick={() => dispatch(openPopup(Signin))}>
-          Войти
+          {reset.links.text}
         </TextUnderline>
         <TextUnderline type='button' onClick={() => dispatch(openPopup(Signup))}>
-          Зарегистрироваться
+          {reset.links.textSecond}
         </TextUnderline>
       </div>
     </motion.form>

@@ -11,6 +11,12 @@
     text-align: left;
     @include flex(column, center, flex-start);
     gap: 30px;
+
+    @media screen and (max-width: 768px) {
+      padding-top: 24px;
+      padding-bottom: 64px;
+      margin: 0 auto;
+    }
   }
 }
 

@@ -1,11 +1,13 @@
-import { ICard, IOptions } from '../interfaces';
+import { IOptions } from '../interfaces';
+import { ISticker } from '../interfaces/ISticker';
+import { converter } from './converter';
 
 export interface PageElement {
-  card: ICard;
+  card: ISticker;
   count: number;
 }
 
-export const calculateStickerOnList = (arr: ICard[], options: IOptions): void => {
+export const calculateStickerOnList = (arr: ISticker[], options: IOptions): PageElement[][] => {
   const page = document.createElement('div');
   page.className = 'pageWithStickers';
   document.body.appendChild(page);
@@ -37,14 +39,13 @@ export const calculateStickerOnList = (arr: ICard[], options: IOptions): void =>
     let pageElement = { card: imageObject, count: 0 };
     while (imageObject.amount > 0) {
       const images = document.createElement('img');
-      images.src = imageObject.image;
       images.className = 'sticker';
-      images.width = imageObject.size.width;
-      images.height = imageObject.size.height;
+      images.width = converter.cmToPx(imageObject.width);
+      images.height = converter.cmToPx(imageObject.height);
       images.style.cssText = `
         object-fit: cover;
-        grid-row: span ${Math.ceil(imageObject.size.height + options.gapY)};
-        grid-column: span ${Math.ceil(imageObject.size.width + options.gapX)};
+        grid-row: span ${Math.ceil(converter.cmToPx(imageObject.height) + options.gapY)};
+        grid-column: span ${Math.ceil(converter.cmToPx(imageObject.width) + options.gapX)};
       `;
       page.appendChild(images);
       
@@ -65,6 +66,6 @@ export const calculateStickerOnList = (arr: ICard[], options: IOptions): void =>
   }
 
   allPages.push(currentPage);
-  localStorage.setItem('pagesWithStickers', JSON.stringify(allPages));
-  document.body.removeChild(page);
+  page.remove(); 
+  return allPages;
 };

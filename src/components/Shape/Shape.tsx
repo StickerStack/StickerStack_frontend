@@ -1,7 +1,7 @@
 import { UseFormRegister, FieldValues } from 'react-hook-form';
-import { ICard } from '../../interfaces';
-import { TCardShape } from '../../interfaces/ICard';
 
+import { TShape } from '../../types/TShape';
+import { ISticker } from '../../interfaces/ISticker';
 import { ReactComponent as RectSvg } from '../../images/icons/rect.svg';
 import { ReactComponent as RectRondedSvg } from '../../images/icons/rect_rounded.svg';
 import { ReactComponent as CircleSvg } from '../../images/icons/circle.svg';
@@ -9,18 +9,19 @@ import { ReactComponent as ContourSvg } from '../../images/icons/contour.svg';
 
 import styles from './Shape.module.scss';
 
+
 interface IProps {
   register?: UseFormRegister<FieldValues>;
   name: string;
-  card: ICard;
-  value: TCardShape;
+  sticker: ISticker;
+  value: TShape;
   onShapeChange: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 const Shape: React.FC<IProps> = ({
   register,
   name,
-  card,
+  sticker,
   value,
 
   onShapeChange,
@@ -43,7 +44,7 @@ const Shape: React.FC<IProps> = ({
       case 'square':
         return 'Квадрат';
       case 'rounded_square':
-        return 'Закругленный вадрат';
+        return 'Закругленный квадрат';
       case 'circle':
         return 'Круг';
       case 'contour':
@@ -57,12 +58,12 @@ const Shape: React.FC<IProps> = ({
         {...(register && register(name))}
         className={styles.radio}
         type='radio'
-        id={`${card.id}-shape-${value}`}
+        id={`${sticker.id}-shape-${value}`}
         name={name}
         value={value}
         onChange={onShapeChange}
       />
-      <label className={styles.label} htmlFor={`${card.id}-shape-${value}`}>
+      <label className={styles.label} htmlFor={`${sticker.id}-shape-${value}`}>
         <div className={styles.shape}>
           <div className={styles.shape_pic}>{chooseShape()}</div>
           <span className={styles.shape_title}>{translateShape()}</span>

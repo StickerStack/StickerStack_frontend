@@ -5,27 +5,28 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useForm, FieldValues } from 'react-hook-form';
 
+import { updateAddress, uploadOrder } from '../../../store/cartSlice';
 import { openInfo, openMessage } from '../../../store/popupSlice';
 import { TitlePage, Container, ButtonWithText, TextUnderline, Input } from '../../UI';
 import { ADD_STICKERS, ORDERS } from '../../../utils/constants';
 import { Sticker } from '../../Sticker/Sticker';
-import { ICardsState, CartState } from '../../../interfaces';
 import { InfoBox } from '../../InfoBox/InfoBox';
-import { cleanCart, countTotal, updateAddress, uploadOrder } from '../../../store/cartSlice';
-import { cleanCards } from '../../../store/cardsSlice';
-import { converter } from '../../../utils/converter';
-
+import { ICart } from '../../../interfaces/ICart';
+import { messages, orderPlaced } from '../../../utils/content/popups';
+import { cartpage } from '../../../utils/content/stickerspage';
+import { IStickersState } from '../../../interfaces/IStickersState';
 import image from '../../../images/cart-dog.png';
 import { ReactComponent as WriteSvg } from '../../../images/icons/write-icon.svg';
 import styles from './CartPage.module.scss';
+
 
 const CartPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
-  const cart = useSelector((state: { cart: CartState }) => state.cart);
+  const { stickers } = useSelector((state: { stickers: IStickersState }) => state.stickers);
+  const cart = useSelector((state: { cart: ICart }) => state.cart);
 
   const {
     register,
@@ -42,11 +43,6 @@ const CartPage: React.FC = () => {
     // eslint-disable-next-line
   }, []);
 
-  useEffect(() => {
-    dispatch(countTotal());
-    // eslint-disable-next-line
-  }, [cart.items]);
-
   const onSubmit = () => {
     setLoading(true);
     dispatch(
@@ -55,34 +51,26 @@ const CartPage: React.FC = () => {
         address: cart.address,
         number: cart.number_of_sheets,
         cropping: cart.cropping,
-        stickers: cart.items.map((item) => {
+        stickers: stickers.slice(0, stickers.length - 1).map((item) => {
           return {
-            image: item.image.startsWith('data:image/png;base64,')
-              ? item.image.replace('data:image/png;base64,', '')
-              : item.image.startsWith('data:image/jpeg;base64,')
-              ? item.image.replace('data:image/jpeg;base64,', '')
-              : item.image.startsWith('data:image/jpg;base64,')
-              ? item.image.replace('data:image/jpg;base64,', '')
-              : '',
+            image: item.image,
             shape: item.shape,
             amount: item.amount,
-            width: Math.round(converter.pxToCm(item.size.width)),
-            height: Math.round(converter.pxToCm(item.size.height)),
+            width: item.width,
+            height: item.height,
           };
         }),
       }),
     )
       .unwrap()
       .then(() => {
-        dispatch(cleanCards());
-        dispatch(cleanCart());
         dispatch(
           openInfo({
-            title: 'Заказ оформлен!',
-            text: 'Вся информация по заказу отправлена на почту. Следите за статусом его готовности в личном кабинете',
-            buttonText: 'Заказать еще',
+            title: `${orderPlaced.title}`,
+            text: `${orderPlaced.text}`,
+            buttonText: `${orderPlaced.buttonText}`,
+            buttonSecondText: `${orderPlaced.buttonSecondText}`,
             onClick: () => navigate(ADD_STICKERS),
-            buttonSecondText: 'Перейти к заказам',
             onClickSecond: () => navigate(ORDERS),
             image: image,
           }),
@@ -92,14 +80,14 @@ const CartPage: React.FC = () => {
         if (err.message === '413') {
           dispatch(
             openMessage({
-              text: 'Слишком большой запрос для загрузки.',
+              text: `${messages.itemTooBig}`,
               isError: true,
             }),
           );
         } else if (err.message) {
           dispatch(
             openMessage({
-              text: 'Что-то пошло не так. Попробуйте еще раз.',
+              text: `${messages.somethingWrong}`,
               isError: true,
             }),
           );
@@ -111,44 +99,46 @@ const CartPage: React.FC = () => {
   return (
     <main className={styles.cart}>
       <Container className={styles.cart_container}>
-        <TitlePage type='main-title'>Корзина</TitlePage>
-        {cart.items.length === 0 ? (
+        <TitlePage type='main-title'>{cartpage.title}</TitlePage>
+        {stickers.length === 1 ? (
           <div className={styles.box}>
-            <span className={styles.text}>Ваша корзина пуста</span>
-            <ButtonWithText onClick={() => navigate(ADD_STICKERS)}>Заказать стикеры</ButtonWithText>
             <div className={styles.image} />
+            <span className={styles.text}>{cartpage.empty}</span>
+            <ButtonWithText onClick={() => navigate(ADD_STICKERS)} color='contrast'>
+              Заказать стикеры
+            </ButtonWithText>
           </div>
         ) : (
           <div className={styles.flex}>
             <div className={cn(styles.banner, styles.cards)}>
-              {cart.items.map((card) => (
-                <Sticker key={card.id} card={card} />
+              {stickers.slice(0, stickers.length - 1).map((sticker) => (
+                <Sticker key={sticker.id} card={sticker} />
               ))}
             </div>
             <form className={cn(styles.banner, styles.info)} onSubmit={handleSubmit(onSubmit)}>
               <InfoBox
                 type='number'
-                description='Количество листов'
+                description={cartpage.pages}
                 descriptionClass={styles.description}
               >
                 {cart.number_of_sheets}
               </InfoBox>
-              {cart.cropping && <span>Вырезать по контуру</span>}
+              {cart.cropping && <span>{cartpage.cropping}</span>}
               <InfoBox
                 type='number'
-                description='Количество стикеров'
+                description={cartpage.stickers}
                 descriptionClass={styles.description}
               >
                 {cart.totalAmount}
               </InfoBox>
               <InfoBox
                 type='simple'
-                description='Способ доставки'
+                description={cartpage.delivery}
                 descriptionClass={styles.description}
               >
                 Самовывоз
               </InfoBox>
-              <InfoBox type='simple' description='Адрес' className={styles.address_box}>
+              <InfoBox type='simple' description={cartpage.address} className={styles.address_box}>
                 <div className={styles.address_box}>
                   <Input
                     register={register}
@@ -172,10 +162,10 @@ const CartPage: React.FC = () => {
               </InfoBox>
               <div className={styles.buttons}>
                 <TextUnderline theme='secondary' onClick={() => navigate(ADD_STICKERS)}>
-                  Редактировать заказ
+                  {cartpage.link}
                 </TextUnderline>
                 <ButtonWithText className={styles.button} type='submit' loading={loading}>
-                  Оформить заказ
+                  {cartpage.button}
                 </ButtonWithText>
               </div>
             </form>

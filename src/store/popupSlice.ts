@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { Signin } from '../components/Popups/Signin/Signin';
-import { IPopupState, IOrderState } from '../interfaces';
+import { IPopupState, IOrder} from '../interfaces';
 
 const initialState: IPopupState = {
   isOpen: false,
@@ -23,6 +23,7 @@ const initialState: IPopupState = {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     onClickSecond: () => {},
     src: '',
+    imageAbsolute: false,
   },
   message: {
     isOpen: false,
@@ -70,6 +71,7 @@ const popupSlice = createSlice({
           onClick?: () => void;
           onClickSecond?: () => void;
           image: string;
+          imageAbsolute?: boolean;
         };
         type: string;
       },
@@ -83,9 +85,10 @@ const popupSlice = createSlice({
       state.info.onClick = action.payload.onClick;
       state.info.onClickSecond = action.payload.onClickSecond;
       state.info.src = action.payload.image;
+      state.info.imageAbsolute = action.payload.imageAbsolute;
     },
 
-    openOrder(state, action: { payload: IOrderState; type: string }) {
+    openOrder(state, action: { payload: IOrder; type: string }) {
       state.isOpen = true;
       state.order.isOpen = true;
       state.order.content = action.payload;

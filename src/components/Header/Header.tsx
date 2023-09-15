@@ -5,24 +5,25 @@ import cn from 'classnames';
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAppDispatch } from '../../hooks/hooks';
-import { CartState, IUserState } from '../../interfaces';
+import { IUserState } from '../../interfaces';
+import { Signin } from '../Popups/Signin/Signin';
 import { openPopup } from '../../store/popupSlice';
-import { CART, PAGE_404 } from '../../utils/constants';
+import { CART, COOKIE, PAGE_404, PRIVACY, TERMS } from '../../utils/constants';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
 import { ProfileMenu } from '../ProfileMenu/ProfileMenu';
 import { ButtonCustom, ButtonWithText, Container } from '../UI';
 
 import logo from '../../images/logo.svg';
 import styles from './Header.module.scss';
-import { Signin } from '../Popups/Signin/Signin';
+import { IStickersState } from '../../interfaces/IStickersState';
 
 const Header: React.FC = () => {
   const isLogged = useSelector((state: { user: IUserState }) => state.user.isLogged);
+  const { stickers } = useSelector((state: { stickers: IStickersState }) => state.stickers);
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [isMenuShow, setIsMenuShow] = useState(false);
-  const cart = useSelector((state: { cart: CartState }) => state.cart);
   const [y, setY] = useState(window.scrollY);
   const [visibleBorder, setVisibleBorder] = useState(false);
 
@@ -68,7 +69,10 @@ const Header: React.FC = () => {
     }, []),
   );
 
-  return location.pathname !== PAGE_404 ? (
+  return location.pathname !== PAGE_404 &&
+    location.pathname !== PRIVACY &&
+    location.pathname !== TERMS &&
+    location.pathname !== COOKIE ? (
     <header
       className={cn(
         styles.header,
@@ -80,7 +84,7 @@ const Header: React.FC = () => {
         style={
           window.innerHeight / document.body.clientHeight < 0.6 && visibleBorder
             ? {
-                opacity: 0.6,
+                opacity: 0.8,
                 width:
                   ((scrollY +
                     window.innerHeight *
@@ -94,7 +98,7 @@ const Header: React.FC = () => {
       <Container className={styles.header_container}>
         <Link to='/' className={styles.logo}>
           <img className={styles.logo_image} src={logo} alt='Логотип StickerStack' />
-          StickerStack
+          <span className={styles.logo_text}>StickerStack</span>
         </Link>
         <AnimatePresence>
           {isMenuShow && (
@@ -123,7 +127,7 @@ const Header: React.FC = () => {
         {isLogged ? (
           <div className={styles.buttons}>
             <div className={styles.cart} onClick={() => navigate(CART)}>
-              {cart.items.length > 0 && <div className={styles.badge}>{cart.items.length}</div>}
+              {stickers.length > 1 && <div className={styles.badge}>{stickers.length - 1}</div>}
               <ButtonCustom type='cart' label='Перейти в корзину' onClick={() => navigate(CART)} />
             </div>
 
@@ -138,6 +142,7 @@ const Header: React.FC = () => {
           <ButtonWithText
             type='button'
             theme='transparent'
+            className={styles.button}
             onClick={() => dispatch(openPopup(Signin))}
           >
             Войти

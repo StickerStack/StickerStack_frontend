@@ -1,75 +1,42 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
-import { MouseEventHandler } from 'react';
 import cn from 'classnames';
 
 import styles from './OurWorks.module.scss';
-
-const NextArrow = (props: {
-  className: string;
-  style: object;
-  onClick: MouseEventHandler<HTMLDivElement>;
-}) => {
-  const { className, style, onClick } = props;
-
-  return (
-    <div
-      className={cn(className, styles.next_arrow)}
-      style={{
-        ...style,
-      }}
-      onClick={onClick}
-    />
-  );
-};
-
-const PrevArrow = (props: {
-  className: string;
-  style: object;
-  onClick: MouseEventHandler<HTMLDivElement>;
-}) => {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={cn(className, styles.prev_arrow)}
-      style={{
-        ...style,
-      }}
-      onClick={onClick}
-    />
-  );
-};
 
 const settings = {
   className: `${styles.slider}`,
   slidesToShow: 4,
   slidesToScroll: 1,
   autoplay: true,
+  arrows: false,
   speed: 400,
-  autoplaySpeed: 10000,
+  autoplaySpeed: 4000,
   cssEase: 'linear',
   infinite: true,
+  variableWidth: true,
   responsive: [
     {
-      breakpoint: 1400,
+      breakpoint: 1230,
       settings: {
         slidesToShow: 3,
       },
     },
+
     {
-      breakpoint: 950,
+      breakpoint: 960,
       settings: {
         slidesToShow: 2,
       },
     },
+
     {
       breakpoint: 600,
       settings: {
         slidesToShow: 1,
+        dots: true,
+        dotsClass: cn('slick-dots', styles.dots),
       },
     },
   ],
-  nextArrow: <NextArrow className={''} style={{}} onClick={() => {}} />,
-  prevArrow: <PrevArrow className={''} style={{}} onClick={() => {}} />,
 };
 
-export { NextArrow, PrevArrow, settings };
+export { settings };

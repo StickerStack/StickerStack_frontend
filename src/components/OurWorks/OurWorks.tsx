@@ -1,41 +1,52 @@
+import { useRef } from 'react';
 import Slider from 'react-slick';
 
 import { settings } from './settings';
 import { Container, TitlePage } from '../UI';
+import { ourWorks, benefits } from '../../utils/content/mainpage';
 
-import image from '../../images/image-stikerstack.png';
+import { ReactComponent as Checker } from '../../images/icons/checker-icon.svg';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import styles from './OurWorks.module.scss';
 
-const images = [
-  { image: image, id: 1, alt: 'Пример работы' },
-  { image: image, id: 2, alt: 'Пример работы' },
-  { image: image, id: 3, alt: 'Пример работы' },
-  { image: image, id: 4, alt: 'Пример работы' },
-  { image: image, id: 5, alt: 'Пример работы' },
-];
-
 const OurWorks: React.FC = () => {
+  const sliderRef = useRef<Slider | null>();
+
+  const nextSlide = () => {
+    sliderRef.current && sliderRef.current.slickNext();
+  };
+  const prevSlide = () => {
+    sliderRef.current && sliderRef.current.slickPrev();
+  };
+
   return (
-    <Container className={styles.container}>
-      <TitlePage type='section-title' className={styles.title}>
-        Примеры работ
-      </TitlePage>
-      <p className={styles.text}>
-        На странице можно увидеть наши работы и почувствовать настоящую волну вдохновения. Мы делаем
-        стикеры на разные темы, включая музыку, спорт, животных, еду и многое другое. Посмотрите на
-        наши работы и поймите, что все, что вам нужно, это загрузить свою любимую картинку и дать
-        нам возможность превратить ее в стикер.
-      </p>
-      <Slider {...settings}>
-        {images.map((image) => (
-          <div key={image.id} className={styles.image_container}>
-            <img src={image.image} alt={image.alt} className={styles.image} />
+    <section className={styles.works}>
+      <Container className={styles.container}>
+        <TitlePage type='section-title' className={styles.title}>
+          {ourWorks.title}
+        </TitlePage>
+        <p className={styles.text}>{ourWorks.text}</p>
+        <Slider ref={(slider) => (sliderRef.current = slider)} {...settings}>
+          {ourWorks.images.map((image) => (
+            <img key={image.id} src={image.image} alt={image.alt} className={styles.image} />
+          ))}
+        </Slider>
+        <div className={styles.arrows}>
+          <div className={styles.prev_arrow} onClick={() => prevSlide()} />
+          <div className={styles.next_arrow} onClick={() => nextSlide()} />
+        </div>
+        <TitlePage type='section-title' className={styles.title}>
+          {benefits.title}
+        </TitlePage>
+        {benefits.items.map((benefit) => (
+          <div className={styles.point} key={benefit.id}>
+            <Checker className={styles.icon} />
+            <p className={styles.point}>{benefit.item}</p>
           </div>
         ))}
-      </Slider>
-    </Container>
+      </Container>
+    </section>
   );
 };
 

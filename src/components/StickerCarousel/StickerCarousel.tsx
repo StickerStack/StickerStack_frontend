@@ -1,7 +1,6 @@
 import cn from 'classnames';
-import { IOrderState } from '../../interfaces';
+import { IOrder } from '../../interfaces';
 import Slider from 'react-slick';
-import { generateRandomNumber } from '../../utils/generateRandomNumber';
 import { stickerWhiteBorder } from '../../utils/constants';
 
 import { settings } from './settings';
@@ -11,7 +10,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import styles from './StickerCarousel.module.scss';
 
 interface IProps {
-  order: IOrderState;
+  order: IOrder;
 }
 
 const StickerCarousel: React.FC<IProps> = ({ order }: IProps) => {
@@ -22,6 +21,7 @@ const StickerCarousel: React.FC<IProps> = ({ order }: IProps) => {
       amount: sticker.amount,
       width: sticker.width,
       height: sticker.height,
+      id: sticker.id,
     };
   });
 
@@ -29,7 +29,7 @@ const StickerCarousel: React.FC<IProps> = ({ order }: IProps) => {
     <Slider {...settings}>
       {order &&
         stickers.map((sticker) => (
-          <div className={styles.item} key={generateRandomNumber()}>
+          <div className={styles.item} key={sticker.id}>
             {sticker.image ? (
               <div className={styles.item_box}>
                 <div
