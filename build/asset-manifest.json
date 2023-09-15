@@ -1,19 +1,25 @@
 {
   "files": {
-    "main.css": "/static/css/main.45d48e72.css",
-    "main.js": "/static/js/main.d66d5a4d.js",
+    "main.css": "/static/css/main.c3bd1715.css",
+    "main.js": "/static/js/main.e4560aee.js",
+    "static/media/work-1.jpg": "/static/media/work-1.fe9a09ad13196f5de8d3.jpg",
     "static/media/empty-avatar.png": "/static/media/empty-avatar.0883ab0d828d9f168705.png",
+    "static/media/work-2.jpg": "/static/media/work-2.b0c623e2df8594dd3219.jpg",
     "static/media/Montserrat-SemiBold.ttf": "/static/media/Montserrat-SemiBold.d5e0cc788cba9ced1fb9.ttf",
     "static/media/Montserrat-Medium.ttf": "/static/media/Montserrat-Medium.c86e3b9010ff63c99166.ttf",
     "static/media/Montserrat-Bold.ttf": "/static/media/Montserrat-Bold.2c155811b35513d5beaa.ttf",
     "static/media/Montserrat-Regular.ttf": "/static/media/Montserrat-Regular.ceb11275ab638627a643.ttf",
+    "static/media/work-4.jpg": "/static/media/work-4.2ab3184f0383cf83daf2.jpg",
     "static/media/rocket-flameless.png": "/static/media/rocket-flameless.3c3226663405724632eb.png",
     "static/media/Nunito-Regular.ttf": "/static/media/Nunito-Regular.99a3b019e7727ac19479.ttf",
     "static/media/Nunito-Bold.ttf": "/static/media/Nunito-Bold.f4338623f94e6079de97.ttf",
     "static/media/ufo.png": "/static/media/ufo.a2da12d28c6349c408df.png",
+    "static/media/work-6.jpg": "/static/media/work-6.78bf4d86f64b36f56ff5.jpg",
+    "static/media/work-5.jpg": "/static/media/work-5.a57173d635ed46977fb5.jpg",
+    "static/media/work-3.jpg": "/static/media/work-3.7583e5eb5582d7067180.jpg",
     "static/media/starwars.png": "/static/media/starwars.380904a6b635e49e1f13.png",
+    "static/media/work-7.jpg": "/static/media/work-7.ff2259b84d9c1fbe287b.jpg",
     "static/media/spok.png": "/static/media/spok.d3a46f6aaebf59546eac.png",
-    "static/media/punochka.jpg": "/static/media/punochka.609a5f78960e7f6b282b.jpg",
     "static/media/sticker-ufo.png": "/static/media/sticker-ufo.3bce8b27b5f47b779a97.png",
     "static/media/space-sticker.png": "/static/media/space-sticker.ae587e2fb122dcb813dd.png",
     "static/media/alien-dog.png": "/static/media/alien-dog.836d82822234400726f1.png",
@@ -61,11 +67,11 @@
     "static/media/circle.svg": "/static/media/circle.38ef7fb4d3784f269c200c23c74c7386.svg",
     "static/media/rect_rounded.svg": "/static/media/rect_rounded.9602985d1ad8a99be0c5f1e514a4af11.svg",
     "static/media/rect.svg": "/static/media/rect.278d1c8fb88ac3a3d2a33601441a6403.svg",
-    "main.45d48e72.css.map": "/static/css/main.45d48e72.css.map",
-    "main.d66d5a4d.js.map": "/static/js/main.d66d5a4d.js.map"
+    "main.c3bd1715.css.map": "/static/css/main.c3bd1715.css.map",
+    "main.e4560aee.js.map": "/static/js/main.e4560aee.js.map"
   },
   "entrypoints": [
-    "static/css/main.45d48e72.css",
-    "static/js/main.d66d5a4d.js"
+    "static/css/main.c3bd1715.css",
+    "static/js/main.e4560aee.js"
   ]
 }
