@@ -1,13 +1,12 @@
 import cn from 'classnames';
 
-import { ICard } from '../../interfaces';
 import { converter } from '../../utils/converter';
 import { pageSizePx, stickerWhiteBorder } from '../../utils/constants';
-
+import { ISticker } from '../../interfaces/ISticker';
 import styles from './StickerList.module.scss';
 
 interface IProps {
-  cards: ICard[];
+  cards: ISticker[];
 }
 export const pageSizePxSmall = {
   widthPage: pageSizePx.widthPage / 2,
@@ -36,15 +35,19 @@ const StickerList: React.FC<IProps> = ({ cards }: IProps) => {
       }}
     >
       {cards.map((card, index) => {
+        if (card.id === 'newSticker') {
+          return null;
+        }
+
         return (
           <div
             className={cn(styles.border, styles[`border_${card.shape}`])}
             style={{
-              width: card.size.width / 2,
-              height: card.size.height / 2,
+              width: converter.cmToPx(card.width) / 2,
+              height: converter.cmToPx(card.height) / 2,
               padding: borderInPx / 2,
-              gridRow: `span ${Math.ceil(card.size.height / 2 + pageSizePxSmall.gapY)}`,
-              gridColumn: `span ${Math.ceil(card.size.width / 2 + pageSizePxSmall.gapX)}`,
+              gridRow: `span ${Math.ceil(converter.cmToPx(card.height) / 2 + pageSizePxSmall.gapY)}`,
+              gridColumn: `span ${Math.ceil(converter.cmToPx(card.width) / 2 + pageSizePxSmall.gapX)}`,
             }}
             key={`${card.id}${index}`}
           >

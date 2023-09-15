@@ -33,7 +33,7 @@
 }
 
 .point {
-  @include flex(row, start, start);
+  @include flex(row, flex-start, flex-start);
   gap: 25px;
   text-align: left;
 

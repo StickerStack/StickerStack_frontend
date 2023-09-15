@@ -43,13 +43,6 @@ const PrevArrow = (props: {
 
 const settings = {
   className: `${styles.slider}`,
-  customPaging: function (i: number) {
-    return (
-      <span className={styles.page_numbers}>
-        {i + 1}/{JSON.parse(localStorage.getItem('pagesWithStickers') as string).length}
-      </span>
-    );
-  },
   dots: true,
   dotsClass: `slick-dots ${styles.paging}`,
   speed: 300,

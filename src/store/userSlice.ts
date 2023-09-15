@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { userApi } from '../utils/api/UserApi';
-import { IOrderState, IUserState } from '../interfaces';
+import { IUserState, IOrder } from '../interfaces';
 import { API_URL } from '../utils/constants';
 
 const initialState: IUserState = {
@@ -98,7 +98,7 @@ const userSlice = createSlice({
 
     builder.addCase(
       getUserOrders.fulfilled,
-      (state, action: { payload: Array<IOrderState>; type: string }) => {
+      (state, action: { payload: Array<IOrder>; type: string }) => {
         state.orders = action.payload;
       },
     );

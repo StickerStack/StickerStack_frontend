@@ -1,5 +1,5 @@
-import { OrderItem } from '../../interfaces';
 import { API_URL } from '../constants';
+import { IStickerForOrder } from '../../interfaces/ISticker';
 
 class Api {
   public url: string;
@@ -36,7 +36,7 @@ class Api {
     address: string,
     number: number,
     cropping: boolean,
-    stickers: Array<OrderItem>,
+    stickers: Array<IStickerForOrder>,
   ) {
     const data = await fetch(`${this.url}/add_order`, {
       method: 'POST',

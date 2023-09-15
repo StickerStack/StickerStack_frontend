@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-import { IOrderState } from '../../../interfaces';
+import { IOrder } from '../../../interfaces';
 import { StickerCarousel } from '../../StickerCarousel/StickerCarousel';
 import { ButtonWithText } from '../../UI';
 import { CART } from '../../../utils/constants';
@@ -9,11 +9,11 @@ import { orders } from '../../../utils/content/profile';
 import styles from './OrderDetails.module.scss';
 
 interface IProps {
-  order: IOrderState;
-  onClose: () => void;
-}
+  order: IOrder;
+  // onClose: () => void; -- Нам это нужно? 
+} 
 
-const OrderDetails: React.FC<IProps> = ({ order, onClose }: IProps) => {
+const OrderDetails: React.FC<IProps> = ({ order }: IProps) => {
   const navigate = useNavigate();
   const date = new Date(order.created_at);
 

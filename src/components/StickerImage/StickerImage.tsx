@@ -1,10 +1,10 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import cn from 'classnames';
 
 import { useAppDispatch } from '../../hooks/hooks';
 
-import { SIZE_INPUT_MAX_LENGTH, stickerWhiteBorder } from '../../utils/constants';
-import { ISticker } from '../../interfaces/ISticker-new';
+import { stickerWhiteBorder } from '../../utils/constants';
+import { ISticker } from '../../interfaces/ISticker';
 
 import styles from './StickerImage.module.scss';
 

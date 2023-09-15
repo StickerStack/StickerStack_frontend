@@ -1,5 +1,7 @@
-import { ISticker } from "./ISticker-new";
+import { PageElement } from "../utils/calculateStickerOnList";
+import { ISticker } from "./ISticker";
 
 export interface IStickersState {
   stickers: ISticker[],
+  pages: PageElement[][],
 }

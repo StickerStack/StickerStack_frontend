@@ -1,14 +1,13 @@
 import { Api } from './Api';
 import { API_URL } from '../constants';
-import { ISticker as IStickerNew } from '../../interfaces/ISticker-new';
-import { ISticker } from '../../interfaces';
+import { ISticker, IStickerForOrder } from '../../interfaces/ISticker';
 
 class CartApi extends Api {
   constructor(url: string, headers: HeadersInit) {
     super(url, headers);
   }
 
-  public async addSticker(stickers: IStickerNew) {
+  public async addSticker(stickers: ISticker[]) {
     const data = await fetch(`${this.url}/cart/add_stickers`, {
       method: 'POST',
       credentials: 'include',
@@ -19,7 +18,7 @@ class CartApi extends Api {
     return this.checkResponse(data);
   }
 
-  public async addStickers(stickers: IStickerNew[]) {
+  public async addStickers(stickers: ISticker[]) {
     const data = await fetch(`${this.url}/cart/add_stickers`, {
       method: 'POST',
       credentials: 'include',
@@ -58,7 +57,7 @@ class CartApi extends Api {
     address: string,
     number: number,
     cropping: boolean,
-    stickers: Array<ISticker>,
+    stickers: Array<IStickerForOrder>,
   ) {
     const data = await fetch(`${this.url}/orders/add_order`, {
       method: 'POST',
@@ -76,7 +75,7 @@ class CartApi extends Api {
     return this.checkResponse(data);
   }
 
-  public async putStickerInCart(sticker: IStickerNew) {
+  public async putStickerInCart(sticker: ISticker) {
     const body = {
       image: sticker.image,
       amount: sticker.amount,

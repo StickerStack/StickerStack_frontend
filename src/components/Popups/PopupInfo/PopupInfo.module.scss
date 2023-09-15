@@ -1,7 +1,7 @@
 @import '../../../utils/_scss-variables.scss';
 
 .container {
-  @include flex(column, start, center);
+  @include flex(column, flex-start, center);
   width: min-content;
   min-width: 330px;
   gap: 20px;
@@ -42,7 +42,7 @@
 
 .buttons {
   width: 255px;
-  @include flex(column, start, center);
+  @include flex(column, flex-start, center);
   gap: 10px;
 }
 

@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import { IOrderState } from '../../interfaces';
+import { IOrder } from '../../interfaces';
 import Slider from 'react-slick';
 import { stickerWhiteBorder } from '../../utils/constants';
 
@@ -10,7 +10,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import styles from './StickerCarousel.module.scss';
 
 interface IProps {
-  order: IOrderState;
+  order: IOrder;
 }
 
 const StickerCarousel: React.FC<IProps> = ({ order }: IProps) => {

@@ -8,7 +8,7 @@
     padding-top: 80px;
     padding-bottom: 80px;
     text-align: left;
-    @include flex(column, center, start);
+    @include flex(column, center,  flex-start);
     gap: 30px;
 
     @media screen and (max-width: 768px) {
@@ -33,7 +33,7 @@
 }
 
 .flex {
-  @include flex(row, start, start);
+  @include flex(row, flex-start, flex-start);
   flex-wrap: wrap;
   gap: 30px;
   width: 100%;
@@ -45,7 +45,7 @@
   box-shadow: 3px 3px 10px 0px rgba(212, 73, 0, 0.1);
   border-radius: 10px;
   box-sizing: border-box;
-  @include flex(column, center, start);
+  @include flex(column, center, flex-start);
   gap: 25px;
 }
 

@@ -16,14 +16,15 @@ import { ButtonCustom, ButtonWithText, Container } from '../UI';
 
 import logo from '../../images/logo.svg';
 import styles from './Header.module.scss';
+import { IStickersState } from '../../interfaces/IStickersState';
 
 const Header: React.FC = () => {
   const isLogged = useSelector((state: { user: IUserState }) => state.user.isLogged);
+  const { stickers } = useSelector((state: { stickers: IStickersState }) => state.stickers);
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [isMenuShow, setIsMenuShow] = useState(false);
-  const cart = useSelector((state: { cart: ICart }) => state.cart);
   const [y, setY] = useState(window.scrollY);
   const [visibleBorder, setVisibleBorder] = useState(false);
 
@@ -127,7 +128,7 @@ const Header: React.FC = () => {
         {isLogged ? (
           <div className={styles.buttons}>
             <div className={styles.cart} onClick={() => navigate(CART)}>
-              {cart.items.length > 0 && <div className={styles.badge}>{cart.items.length}</div>}
+              {stickers.length > 0 && <div className={styles.badge}>{stickers.length}</div>}
               <ButtonCustom type='cart' label='Перейти в корзину' onClick={() => navigate(CART)} />
             </div>
 

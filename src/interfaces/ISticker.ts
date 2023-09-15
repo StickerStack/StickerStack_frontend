@@ -1,10 +1,14 @@
-import { TCardShape } from './ICard';
+import { TShape } from "../types/TShape";
 
 export interface ISticker {
-  amount: number;
-  image: string;
-  shape: TCardShape;
-  height: number;
-  width: number;
-  id?: string;
+  id: string,
+  image: string,
+  shape: TShape,
+  amount: number,
+  width: number,
+  height: number,
+  optimal_width: number,
+  optimal_height: number
 }
+
+export type IStickerForOrder = Omit<ISticker, 'id'>;

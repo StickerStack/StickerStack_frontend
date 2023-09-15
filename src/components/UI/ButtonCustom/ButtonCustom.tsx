@@ -4,7 +4,7 @@ import { ReactComponent as CartSvg } from '../../../images/icons/cart.svg';
 import { ReactComponent as PersonSvg } from '../../../images/icons/profile-icon.svg';
 import styles from './ButtonCustom.module.scss';
 
-type ButtonType = 'close' | 'person' | 'cart' | 'delete' | 'arrow' | 'more' | 'save';
+type ButtonType = 'close' | 'person' | 'cart' | 'delete' | 'arrow' | 'more' | 'save' | 'add';
 
 interface IProps {
   type: ButtonType;

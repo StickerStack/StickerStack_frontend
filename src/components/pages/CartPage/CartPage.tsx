@@ -5,27 +5,28 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useForm, FieldValues } from 'react-hook-form';
 
+import { updateAddress, uploadOrder } from '../../../store/cartSlice';
 import { openInfo, openMessage } from '../../../store/popupSlice';
 import { TitlePage, Container, ButtonWithText, TextUnderline, Input } from '../../UI';
 import { ADD_STICKERS, ORDERS } from '../../../utils/constants';
 import { Sticker } from '../../Sticker/Sticker';
 import { InfoBox } from '../../InfoBox/InfoBox';
-import { countTotal, getCart, updateAddress, uploadOrder } from '../../../store/cartSlice';
 import { ICart } from '../../../interfaces/ICart';
 import { converter } from '../../../utils/converter';
 import { messages, orderPlaced } from '../../../utils/content/popups';
 import { cartpage } from '../../../utils/content/stickerspage';
-
+import { IStickersState } from '../../../interfaces/IStickersState';
 import image from '../../../images/cart-dog.png';
 import { ReactComponent as WriteSvg } from '../../../images/icons/write-icon.svg';
 import styles from './CartPage.module.scss';
+
 
 const CartPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  //const cards = useSelector((state: { cards: ICardsState }) => state.cards.cards);
+  const { stickers } = useSelector((state: { stickers: IStickersState }) => state.stickers);
   const cart = useSelector((state: { cart: ICart }) => state.cart);
 
   const {
@@ -43,12 +44,6 @@ const CartPage: React.FC = () => {
     // eslint-disable-next-line
   }, []);
 
-  useEffect(() => {
-    dispatch(countTotal());
-
-    // eslint-disable-next-line
-  }, [cart.items]);
-
   const onSubmit = () => {
     setLoading(true);
     dispatch(
@@ -57,21 +52,21 @@ const CartPage: React.FC = () => {
         address: cart.address,
         number: cart.number_of_sheets,
         cropping: cart.cropping,
-        stickers: cart.items.map((item) => {
+        stickers: stickers.map((item) => {
           return {
             image: item.image,
             shape: item.shape,
             amount: item.amount,
             width: Math.round(converter.pxToCm(item.width)),
             height: Math.round(converter.pxToCm(item.height)),
+            optimal_height: Math.round(converter.pxToCm(item.optimal_height)),
+            optimal_width: Math.round(converter.pxToCm(item.optimal_width)),
           };
         }),
       }),
     )
       .unwrap()
       .then(() => {
-        // dispatch(cleanCards());
-        // dispatch(cleanCart());
         dispatch(
           openInfo({
             title: `${orderPlaced.title}`,
@@ -108,7 +103,7 @@ const CartPage: React.FC = () => {
     <main className={styles.cart}>
       <Container className={styles.cart_container}>
         <TitlePage type='main-title'>{cartpage.title}</TitlePage>
-        {cart.items.length === 0 ? (
+        {stickers.length === 0 ? (
           <div className={styles.box}>
             <div className={styles.image} />
             <span className={styles.text}>{cartpage.empty}</span>
@@ -119,8 +114,8 @@ const CartPage: React.FC = () => {
         ) : (
           <div className={styles.flex}>
             <div className={cn(styles.banner, styles.cards)}>
-              {cart.items.map((card) => (
-                <Sticker key={card.id} card={card} />
+              {stickers.slice(0, stickers.length - 1).map((sticker) => (
+                <Sticker key={sticker.id} card={sticker} />
               ))}
             </div>
             <form className={cn(styles.banner, styles.info)} onSubmit={handleSubmit(onSubmit)}>
