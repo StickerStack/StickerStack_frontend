@@ -2,6 +2,7 @@ import { FC, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { FieldValues, useForm } from 'react-hook-form';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import { updateCropping } from '../../../store/cartSlice';
 import { ICart } from '../../../interfaces/ICart';
@@ -40,13 +41,39 @@ export const AddStickersNew: FC = () => {
         <TitlePage type='main-title'>{addpage.title}</TitlePage>
         <section className={styles.cards}>
           {stickers.map((sticker) => (
-            <NewSticker
-              type='edit'
-              key={sticker.id}
-              sticker={sticker}
-              stickerActiveId={stickerActiveId}
-              handleActiveSticker={handleActiveSticker}
-            />
+            <AnimatePresence key={sticker.id}>
+              <motion.div
+                className={styles.motion}
+                initial={{
+                  opacity: 0.4,
+                  height: 0,
+                }}
+                animate={{
+                  transition: {
+                    height: { duration: 0.4 },
+                    opacity: { duration: 0.25, delay: 0.15 },
+                  },
+                  opacity: 1,
+                  height: 'auto',
+                }}
+                exit={{
+                  opacity: 0,
+                  height: 0,
+                  transition: {
+                    height: { duration: 0.4 },
+                    opacity: { duration: 0.25 },
+                  },
+                }}
+              >
+                <NewSticker
+                  type='edit'
+                  key={sticker.id}
+                  sticker={sticker}
+                  stickerActiveId={stickerActiveId}
+                  handleActiveSticker={handleActiveSticker}
+                />
+              </motion.div>
+            </AnimatePresence>
           ))}
         </section>
         {/* {stickers.length < CARDS_MAXIMUM && (
