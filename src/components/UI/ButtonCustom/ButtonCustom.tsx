@@ -15,10 +15,22 @@ interface IProps {
   buttonType?: 'button' | 'submit' | 'reset';
 }
 
-const ButtonCustom: React.FC<IProps> = ({ type, disabled, className, label, onClick, buttonType = 'button'}: IProps) => {
+const ButtonCustom: React.FC<IProps> = ({
+  type,
+  disabled,
+  className,
+  label,
+  onClick,
+  buttonType = 'button',
+}: IProps) => {
   return (
     <button
-      className={cn(styles.button, styles[`button_${type}`], className)}
+      className={cn(
+        styles.button,
+        styles[`button_${type}`],
+        disabled && styles.disabled,
+        className,
+      )}
       aria-label={label}
       disabled={disabled}
       onClick={onClick}

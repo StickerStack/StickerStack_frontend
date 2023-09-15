@@ -1,11 +1,13 @@
 import { FC, useState } from 'react';
+import { UseFormRegister, FieldValues } from 'react-hook-form';
+import cn from 'classnames';
 
 import { updateSticker } from '../../store/stickersSlice';
 import { stickertext } from '../../utils/content/stickerspage';
 import { Error } from '../UI';
 import { useAppDispatch } from '../../hooks/hooks';
 import { converter } from '../../utils/converter';
-import { SIZE_INPUT_MAX_LENGTH } from '../../utils/constants';
+import { SIZE_INPUT_MAX_LENGTH, stickerWhiteBorder } from '../../utils/constants';
 import { ISticker } from '../../interfaces/ISticker';
 import { PicOverlay } from '../PicOverlay/PicOverlay';
 import { StickerImage } from '../StickerImage/StickerImage';
@@ -14,6 +16,9 @@ import styles from './DragAndDrop.module.scss';
 
 interface IProps {
   sticker: ISticker;
+  className?: string;
+  register?: UseFormRegister<FieldValues>;
+  name?: string;
 }
 
 type TFile = {
@@ -21,7 +26,7 @@ type TFile = {
   urlFilePreview: string | ArrayBuffer | null;
 } | null;
 
-export const DragAndDrop: FC<IProps> = ({ sticker }) => {
+export const DragAndDrop: FC<IProps> = ({ sticker, className, register, name }) => {
   const [error, setError] = useState(false);
 
   const allowedTypeFile = ['image/png', 'image/jpeg', 'image/jpg'];
@@ -74,8 +79,13 @@ export const DragAndDrop: FC<IProps> = ({ sticker }) => {
           image.src = reader.result;
           image.onload = () => {
             if (typeof file.urlFilePreview === 'string') {
-              const optimalWidth = Math.round(converter.pxToOptimalCm(image.naturalWidth));
-              const optimalHeight = Math.round(converter.pxToOptimalCm(image.naturalHeight));
+              // Прибавляем к окончательной картинке в оптимальном размере ширину белых полей
+              const optimalWidth =
+                Math.round(converter.pxToOptimalCm(image.naturalWidth)) +
+                (stickerWhiteBorder * 2) / 10;
+              const optimalHeight =
+                Math.round(converter.pxToOptimalCm(image.naturalHeight)) +
+                (stickerWhiteBorder * 2) / 10;
 
               if (optimalWidth <= maxSize && optimalHeight <= maxSize) {
                 dispatch(
@@ -121,7 +131,7 @@ export const DragAndDrop: FC<IProps> = ({ sticker }) => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={cn(styles.container, className)}>
       {sticker.image ? (
         <StickerImage sticker={sticker} boxWidth={255} boxHeight={262} />
       ) : (
@@ -132,13 +142,17 @@ export const DragAndDrop: FC<IProps> = ({ sticker }) => {
           </div>
         </div>
       )}
-      <input
-        className={styles.input}
-        type='file'
-        id='stickerFile'
-        onChange={handleImageCahnge}
-        accept='.jpg, .jpeg, .png'
-      />
+      {name && (
+        <input
+          {...(register && register(name, { required: 'Загрузите изображение' }))}
+          name={name}
+          className={styles.input}
+          type='file'
+          id='stickerFile'
+          onChange={handleImageCahnge}
+          accept='.jpg, .jpeg, .png'
+        />
+      )}
       {sticker.image && <PicOverlay className={styles.overlay} label='stickerFile' />}
       {error && <Error className={styles.error}>{stickertext.errorImageSize}</Error>}
     </div>

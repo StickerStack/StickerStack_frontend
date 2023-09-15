@@ -5,13 +5,16 @@ import { ISticker } from '../interfaces/ISticker';
 import { calculateStickerOnList } from '../utils/calculateStickerOnList';
 import { pageSizePx } from '../utils/constants';
 
-export const getStickers = createAsyncThunk('sticker/getStickers', async (_, { rejectWithValue }) => {
-  try {
-    return await cartApi.getCart();
-  } catch (err) {
-    return rejectWithValue(err);
-  }
-});
+export const getStickers = createAsyncThunk(
+  'sticker/getStickers',
+  async (_, { rejectWithValue }) => {
+    try {
+      return await cartApi.getCart();
+    } catch (err) {
+      return rejectWithValue(err);
+    }
+  },
+);
 
 export const putStickerInCart = createAsyncThunk(
   'sticker/putStickerInCart',
@@ -21,7 +24,7 @@ export const putStickerInCart = createAsyncThunk(
     } catch (err) {
       return rejectWithValue(err);
     }
-  }
+  },
 );
 
 export const addStickers = createAsyncThunk(
@@ -32,7 +35,7 @@ export const addStickers = createAsyncThunk(
     } catch (err) {
       return rejectWithValue(err);
     }
-  }
+  },
 );
 
 export const deleteSticker = createAsyncThunk(
@@ -44,7 +47,7 @@ export const deleteSticker = createAsyncThunk(
     } catch (err) {
       return rejectWithValue(err);
     }
-  }
+  },
 );
 
 // Добавить pages массив для посчитаных стикеров
@@ -93,7 +96,10 @@ const stickerSlice = createSlice({
         },
       ];
 
-      state.pages = calculateStickerOnList(state.stickers.slice(0, state.stickers.length - 1), pageSizePx);
+      state.pages = calculateStickerOnList(
+        state.stickers.slice(0, state.stickers.length - 1),
+        pageSizePx,
+      );
     });
     builder.addCase(putStickerInCart.fulfilled, (state, action) => {
       state.stickers = state.stickers.map((sticker) => {
@@ -103,12 +109,18 @@ const stickerSlice = createSlice({
         return sticker;
       });
 
-      state.pages = calculateStickerOnList(state.stickers.slice(0, state.stickers.length - 1), pageSizePx);
+      state.pages = calculateStickerOnList(
+        state.stickers.slice(0, state.stickers.length - 1),
+        pageSizePx,
+      );
     });
     builder.addCase(deleteSticker.fulfilled, (state, action) => {
       state.stickers = state.stickers.filter((sticker) => sticker.id !== action.payload);
 
-      state.pages = calculateStickerOnList(state.stickers.slice(0, state.stickers.length - 1), pageSizePx);
+      state.pages = calculateStickerOnList(
+        state.stickers.slice(0, state.stickers.length - 1),
+        pageSizePx,
+      );
     });
   },
 });

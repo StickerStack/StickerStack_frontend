@@ -127,7 +127,7 @@ const Header: React.FC = () => {
         {isLogged ? (
           <div className={styles.buttons}>
             <div className={styles.cart} onClick={() => navigate(CART)}>
-              {stickers.length > 0 && <div className={styles.badge}>{stickers.length - 1}</div>}
+              {stickers.length > 1 && <div className={styles.badge}>{stickers.length - 1}</div>}
               <ButtonCustom type='cart' label='Перейти в корзину' onClick={() => navigate(CART)} />
             </div>
 

@@ -11,13 +11,15 @@ import { NewSticker } from '../../NewSticker/NewSticker';
 import { IStickersState } from '../../../interfaces/IStickersState';
 import { ButtonWithText, Container, RadioButton, TextUnderline, TitlePage } from '../../UI';
 import { addpage } from '../../../utils/content/stickerspage';
-import styles from './AddStickers.module.scss';
 import { openPreview } from '../../../store/popupSlice';
+import { CARDS_MAXIMUM } from '../../../utils/constants';
+
+import styles from './AddStickers.module.scss';
 
 export const AddStickersNew: FC = () => {
   const { stickers } = useSelector((state: { stickers: IStickersState }) => state.stickers);
   const { cropping, cost, totalAmount, number_of_sheets } = useSelector(
-    (state: { cart: ICart }) => state.cart
+    (state: { cart: ICart }) => state.cart,
   );
   const [stickerActiveId, setStickerActiveId] = useState(stickers[0].id);
 
@@ -47,12 +49,21 @@ export const AddStickersNew: FC = () => {
             />
           ))}
         </section>
+        {/* {stickers.length < CARDS_MAXIMUM && (
+          <ButtonWithText theme='transparent' onClick={handleAddCard}>
+            {addpage.addSicker}
+          </ButtonWithText>
+        )} */}
         <section className={styles.info}>
           <div className={styles.info_pages}>
             <InfoBox type='number' description={addpage.pages}>
               {number_of_sheets}
             </InfoBox>
-            <TextUnderline type='button' className={styles.preview} onClick={() => dispatch(openPreview())}>
+            <TextUnderline
+              type='button'
+              className={styles.preview}
+              onClick={() => dispatch(openPreview())}
+            >
               {addpage.preview}
             </TextUnderline>
           </div>
@@ -60,7 +71,9 @@ export const AddStickersNew: FC = () => {
             <span className={styles.text}>{addpage.price}</span>
             <div className={styles.prices}>
               <span className={styles.price}>{cost} ₽</span>
-              <span className={styles.price_small}>{totalAmount} ₽/ за стикер</span>
+              <span className={styles.price_small}>
+                {Math.round(cost / totalAmount)} ₽/ за стикер
+              </span>
             </div>
           </div>
           <form className={styles.options}>

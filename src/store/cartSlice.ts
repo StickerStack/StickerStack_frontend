@@ -5,14 +5,14 @@ import { ISticker, IStickerForOrder } from '../interfaces/ISticker';
 import { ICart } from '../interfaces/ICart';
 
 const initialState: ICart = {
-  cost: 0,
-  totalAmount: 0,
+  cost: pagePrice,
+  totalAmount: 1,
   address: '',
   number_of_sheets: 1,
   cropping: false,
 };
 
-export  const uploadOrder = createAsyncThunk(
+export const uploadOrder = createAsyncThunk(
   'add_order',
   async (
     data: {
@@ -22,7 +22,7 @@ export  const uploadOrder = createAsyncThunk(
       cropping: boolean;
       stickers: Array<IStickerForOrder>;
     },
-    { rejectWithValue }
+    { rejectWithValue },
   ) => {
     try {
       const response = await cartApi.uploadOrder(
@@ -30,13 +30,13 @@ export  const uploadOrder = createAsyncThunk(
         data.address,
         data.number,
         data.cropping,
-        data.stickers
+        data.stickers,
       );
       return { data: response.data };
     } catch (err) {
       return rejectWithValue(err);
     }
-  }
+  },
 );
 
 const cartSlice = createSlice({

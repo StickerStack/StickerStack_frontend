@@ -38,9 +38,10 @@ interface IProps {
 export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveSticker }) => {
   const {
     register,
-    formState: { errors },
+    formState: { errors, isValid },
     setValue,
     getValues,
+    watch,
   } = useForm<FieldValues>({
     mode: 'onBlur',
     defaultValues: {
@@ -55,17 +56,21 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
     },
   });
   const [customVisible, setCustomVisible] = useState<boolean>(
-    sticker.width === sticker.optimal_width && sticker.height === sticker.optimal_height ? false : true
+    sticker.width === sticker.optimal_width && sticker.height === sticker.optimal_height
+      ? false
+      : true,
   );
 
   const shapesType = {
     circle: 'круг',
     square: 'квадрат',
     rounded_square: 'закругленный квадрат',
-    contour: 'контур',
+    contour: 'по контуру',
   };
 
   const dispatch = useAppDispatch();
+
+  const [block, setBlock] = useState(false);
 
   const onAmountChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const number = Number(event.target.value);
@@ -76,6 +81,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
       number >= AMOUNT_INPUT_MIN_LENGTH
     ) {
       dispatch(updateSticker({ ...sticker, amount: number }));
+      setBlock(false);
     }
   };
 
@@ -88,6 +94,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
     }
 
     dispatch(updateSticker({ ...sticker, shape }));
+    setBlock(false);
   };
 
   const handleDelete = () => {
@@ -105,6 +112,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
 
     if (sticker.id !== 'newSticker') {
       dispatch(putStickerInCart(sticker));
+      setBlock(true);
     }
   };
 
@@ -119,15 +127,17 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
   const onWidthChange = () => {
     const value = getValues('width').slice(0, 2);
     setValue('width', value.replace(/\D/g, ''));
+
     if (sizeValidate(value)) {
       dispatch(
         updateSticker({
           ...sticker,
           width: Number(value),
           height: sticker.shape === 'circle' ? Number(value) : sticker.height,
-        })
+        }),
       );
     }
+    setBlock(false);
   };
 
   const onHeightChange = () => {
@@ -140,12 +150,28 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
           ...sticker,
           height: Number(value),
           width: sticker.shape === 'circle' ? Number(value) : sticker.width,
-        })
+        }),
       );
     }
+    setBlock(false);
   };
 
+  // Проверяем, изменились ли поля формы
+  const image = watch('image');
+  const shape = watch('shape');
+  const amount = watch('amount');
+  const width = watch('width');
+  const height = watch('height');
+
+  const fieldsUnchanged =
+    sticker.shape === shape &&
+    sticker.amount === amount &&
+    sticker.width === width &&
+    sticker.height === height;
+
   useEffect(() => {
+    // const image = new File([sticker.image], 'image.png');
+    // setValue('image', image);
     setValue('shape', sticker.shape);
     setValue('amount', sticker.amount);
     setValue('width', sticker.width);
@@ -163,11 +189,19 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
         onSubmit={handleSubmit}
       >
         <div className={styles.image}>
-          {stickerActiveId === sticker.id ? (
-            <DragAndDrop sticker={sticker} />
-          ) : (
-            <StickerImage sticker={sticker} boxWidth={144} boxHeight={144} />
-          )}
+          {/* Оставляем драгндроп с инпутом картинки, чтобы при сворачивании карточки он не размонтировался и не очищался инпут*/}
+          <DragAndDrop
+            sticker={sticker}
+            register={register}
+            name='image'
+            className={stickerActiveId !== sticker.id ? styles.hidden : ''}
+          />
+          <StickerImage
+            sticker={sticker}
+            boxWidth={144}
+            boxHeight={144}
+            className={stickerActiveId === sticker.id ? styles.hidden : ''}
+          />
         </div>
         <fieldset className={cn(styles.flex, styles.flex_shapes)}>
           <label className={styles.category} htmlFor='shape'>
@@ -203,7 +237,9 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
         <fieldset className={styles.flex}>
           <label className={styles.category} htmlFor='amount'>
             Количество стикеров
-            {sticker.id !== stickerActiveId && <span className={styles.size_hidden}>{sticker.amount}шт</span>}
+            {sticker.id !== stickerActiveId && (
+              <span className={styles.size_hidden}>{sticker.amount}шт</span>
+            )}
           </label>
           {sticker.id === stickerActiveId && (
             <InputField className='amount'>
@@ -295,12 +331,14 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
             buttonType='submit'
             type='add'
             label='Добавить'
+            disabled={!isValid}
             className={sticker.id === stickerActiveId ? styles.save : styles.hidden}
           />
         ) : (
           <ButtonCustom
             buttonType='submit'
             type='save'
+            disabled={!isValid || fieldsUnchanged || block}
             className={sticker.id === stickerActiveId ? styles.save : styles.hidden}
             label='Сохранить'
           />
