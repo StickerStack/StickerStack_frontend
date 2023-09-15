@@ -12,7 +12,6 @@ import { ADD_STICKERS, ORDERS } from '../../../utils/constants';
 import { Sticker } from '../../Sticker/Sticker';
 import { InfoBox } from '../../InfoBox/InfoBox';
 import { ICart } from '../../../interfaces/ICart';
-import { converter } from '../../../utils/converter';
 import { messages, orderPlaced } from '../../../utils/content/popups';
 import { cartpage } from '../../../utils/content/stickerspage';
 import { IStickersState } from '../../../interfaces/IStickersState';
