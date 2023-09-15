@@ -306,13 +306,14 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
           />
         )}
       </form>
-
-      <ButtonCustom
-        type='delete'
-        className={sticker.id === stickerActiveId ? styles.delete : styles.hidden}
-        label='Удалить'
-        onClick={handleDelete}
-      />
+      {sticker.id !== 'newSticker' && (
+        <ButtonCustom
+          type='delete'
+          className={sticker.id === stickerActiveId ? styles.delete : styles.hidden}
+          label='Удалить'
+          onClick={handleDelete}
+        />
+      )}
     </article>
   );
 };

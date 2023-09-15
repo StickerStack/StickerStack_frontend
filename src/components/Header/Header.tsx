@@ -7,7 +7,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useAppDispatch } from '../../hooks/hooks';
 import { IUserState } from '../../interfaces';
 import { Signin } from '../Popups/Signin/Signin';
-import { ICart } from '../../interfaces/ICart';
 import { openPopup } from '../../store/popupSlice';
 import { CART, COOKIE, PAGE_404, PRIVACY, TERMS } from '../../utils/constants';
 import { useOutsideClick } from '../../hooks/useOutsideClick';
@@ -128,7 +127,7 @@ const Header: React.FC = () => {
         {isLogged ? (
           <div className={styles.buttons}>
             <div className={styles.cart} onClick={() => navigate(CART)}>
-              {stickers.length > 0 && <div className={styles.badge}>{stickers.length}</div>}
+              {stickers.length > 0 && <div className={styles.badge}>{stickers.length - 1}</div>}
               <ButtonCustom type='cart' label='Перейти в корзину' onClick={() => navigate(CART)} />
             </div>
 
