@@ -35,7 +35,7 @@ import { useScrollToTop } from '../../hooks/useScrollToTop';
 import { OrdersPage } from '../pages/OrdersPage/OrdersPage';
 import { PolicyPage } from '../pages/PolicyPage/PolicyPage';
 import { countTotal, updateSheets } from '../../store/cartSlice';
-import { getUser, signInMockUser } from '../../store/userSlice';
+import { getUser, getUserOrders, signInMockUser } from '../../store/userSlice';
 import { IUserState } from '../../interfaces';
 import { AcceptCookies } from '../AcceptCookies/AcceptCookies';
 
@@ -69,6 +69,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     isLogged && dispatch(getStickers());
+    dispatch(getUserOrders());
     // eslint-disable-next-line
   }, [location, isLogged]);
 

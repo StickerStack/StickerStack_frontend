@@ -105,3 +105,20 @@
   top: 300px;
   z-index: 3;
 }
+
+.badge {
+  position: absolute;
+  background-color: $contrast-color;
+  top: 15px;
+  right: 15px;
+  width: fit-content;
+  border-radius: 6px;
+  font-size: 14px;
+  text-align: center;
+  font-weight: 500;
+  letter-spacing: 1.1px;
+  line-height: 128.7%;
+  padding: 5px 10px;
+  color: $contrast-text-color;
+  z-index: 2;
+}

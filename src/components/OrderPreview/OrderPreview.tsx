@@ -43,6 +43,7 @@ const OrderPreview: React.FC<IProps> = ({ order }: IProps) => {
           boxHeight={width > 455 ? 180 : 130}
           shadow={false}
         />
+        {order.status === 'ready for pickup' && <div className={styles.badge}>{getStatus()}</div>}
       </div>
 
       <div className={styles.info}>
