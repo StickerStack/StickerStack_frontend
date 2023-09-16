@@ -80,8 +80,8 @@
   .badge {
     position: absolute;
     background-color: $contrast-color;
-    bottom: 4px;
-    left: 0;
+    bottom: 3px;
+    left: 1px;
     width: 18px;
     height: 18px;
     border-radius: 50%;
@@ -91,12 +91,6 @@
     line-height: 128.7%;
     color: $contrast-text-color;
     z-index: 6;
-
-    @media screen and (max-width: 768px) {
-      width: 14px;
-      height: 14px;
-      font-size: 10px;
-    }
   }
 }
 

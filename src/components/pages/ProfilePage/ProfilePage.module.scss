@@ -4,7 +4,6 @@
   flex: 1;
 
   &_container {
-    
     padding-top: 80px;
     padding-bottom: 80px;
     background-color: $main-bg-color;
@@ -17,6 +16,11 @@
       padding-bottom: 64px;
       margin: 0 auto;
     }
+
+    @media screen and (max-width: 430px) {
+      width: 100%;
+      margin: 0;
+    }
   }
 }
 
@@ -26,13 +30,24 @@
   width: fit-content;
   @media screen and (max-width: 605px) {
     flex-direction: column;
+    width: 365px;
+  }
 
+  @media screen and (max-width: 430px) {
     width: 100%;
   }
 }
 
 .profile_data {
   width: 270px;
+
+  @media screen and (max-width: 605px) {
+    width: 365px;
+  }
+
+  @media screen and (max-width: 430px) {
+    width: 100%;
+  }
 }
 
 .remove {
@@ -66,7 +81,7 @@
 }
 
 .inputs {
-  @include flex(column, flex-start,  flex-start);
+  @include flex(column, flex-start, flex-start);
   margin-bottom: 45px;
   gap: 25px;
 

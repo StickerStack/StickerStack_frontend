@@ -61,10 +61,6 @@ const AcceptCookies: FC = () => {
         >
           <div className={styles.texts}>
             <p className={styles.text}>
-              Наш сайт использует файлы cookie, чтобы предоставлять услуги, наиболее отвечающие
-              Вашим интересам и&nbsp;потребностям.
-            </p>
-            <p className={styles.text}>
               При использовании данного сайта, вы&nbsp;подтверждаете свое согласие
               на&nbsp;использование{' '}
               <ButtonWithText theme='no-border'>

@@ -1,9 +1,10 @@
 import cn from 'classnames';
 
 import { useAppDispatch } from '../../hooks/hooks';
+import { useResize } from '../../hooks/useResize';
 import { openOrder } from '../../store/popupSlice';
 import { IOrder } from '../../interfaces';
-import { stickerWhiteBorder } from '../../utils/constants';
+import { StickerImage } from '../StickerImage/StickerImage';
 
 import styles from './OrderPreview.module.scss';
 
@@ -13,12 +14,21 @@ interface IProps {
 
 const OrderPreview: React.FC<IProps> = ({ order }: IProps) => {
   const dispatch = useAppDispatch();
+  const width = useResize();
   // const [isOpen, setIsOpen] = useState(false);
 
   const getStatus = () => {
     switch (order.status) {
       case 'placed':
         return 'Оформлен';
+      case 'cancelled':
+        return 'Отменен';
+      case 'preparing':
+        return 'В печати';
+      case 'ready for pickup':
+        return 'Готов к выдаче';
+      case 'completed':
+        return 'Завершен';
     }
   };
 
@@ -27,25 +37,12 @@ const OrderPreview: React.FC<IProps> = ({ order }: IProps) => {
   return (
     <div className={styles.order} onClick={() => dispatch(openOrder(order))}>
       <div className={styles.image_box}>
-        <div
-          className={cn(styles.border, styles[`border_${firstSticker.shape}`])}
-          style={{
-            width:
-              firstSticker.width / firstSticker.height >= 1
-                ? '215px'
-                : (firstSticker.width / firstSticker.height) * 215,
-            height:
-              firstSticker.height / firstSticker.width >= 1
-                ? '215px'
-                : (firstSticker.height / firstSticker.width) * 215,
-            padding: (stickerWhiteBorder / 10 / firstSticker.width) * 215,
-          }}
-        >
-          <img
-            className={cn(styles.image, styles[`image_${firstSticker.shape}`])}
-            src={`data:image/png;base64,${firstSticker.image}`}
-          />
-        </div>
+        <StickerImage
+          sticker={firstSticker}
+          boxWidth={width > 455 ? 180 : 130}
+          boxHeight={width > 455 ? 180 : 130}
+          shadow={false}
+        />
       </div>
 
       <div className={styles.info}>

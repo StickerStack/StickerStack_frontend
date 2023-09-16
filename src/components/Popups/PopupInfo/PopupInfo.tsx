@@ -8,14 +8,13 @@ import { closePopup } from '../../../store/popupSlice';
 import { useAppDispatch } from '../../../hooks/hooks';
 
 import styles from './PopupInfo.module.scss';
-import { useResize } from '../../../hooks/useResize';
 
 const PopupInfo: React.FC = () => {
   const dispatch = useAppDispatch();
   const { info } = useSelector((state: { popup: IPopupState }) => state.popup);
   const onClick = info.onClick;
   const onClickSecond = info.onClickSecond;
-  const width = useResize();
+
   const imageRef = useRef<HTMLImageElement>();
 
   return (
@@ -28,7 +27,7 @@ const PopupInfo: React.FC = () => {
           className={cn(
             styles.image,
             info.imageAbsolute && styles.image_absolute,
-            info.imageAbsolute && width < 768 && styles.image_absolute_small,
+            info.imageAbsolute && window.innerWidth < 768 && styles.image_absolute_small,
           )}
           src={info.src}
           alt='Декоративное изображение'
@@ -36,7 +35,8 @@ const PopupInfo: React.FC = () => {
       )}
       <TitlePopup
         style={{
-          marginTop: info.imageAbsolute && width < 768 ? imageRef?.current?.clientHeight : 0,
+          marginTop:
+            info.imageAbsolute && window.innerWidth < 768 ? imageRef?.current?.clientHeight : 0,
         }}
         className={styles.title}
       >

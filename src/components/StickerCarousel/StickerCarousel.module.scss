@@ -68,6 +68,9 @@
 .prev_arrow {
   top: 60% !important;
   left: 0px !important;
+  @media screen and (max-width: 768px) {
+    left: -12px !important;
+  }
   &::before {
     background: url(../../images/icons/arrow-small.svg) no-repeat center;
     transform: rotate(90deg);
@@ -76,6 +79,10 @@
 .next_arrow {
   top: -52% !important;
   left: 300px !important;
+
+  @media screen and (max-width: 768px) {
+    left: 268px !important;
+  }
   &::before {
     background: url(../../images/icons/arrow-small.svg) no-repeat center;
     transform: rotate(270deg);
@@ -115,6 +122,10 @@
   width: 330px;
   height: 275px;
   border-radius: 20px;
+
+  @media screen and (max-width: 768px) {
+    width: 287px;
+  }
 
   & :global(.slick-disabled::before) {
     cursor: auto;
