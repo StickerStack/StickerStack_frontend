@@ -29,12 +29,14 @@
 .button_close {
   width: 20px;
   height: 20px;
+  padding: 0;
   background-image: url(../../../images/icons/button-close.svg);
 }
 
 .button_person {
   width: 32px;
-  height: 32px;
+  height: 32px !important;
+  padding: 0;
 
   &_image {
     width: 32px;
@@ -45,6 +47,7 @@
 .button_cart {
   width: 32px;
   height: 32px;
+  padding: 0;
 
   &_image {
     width: 32px;
@@ -55,18 +58,21 @@
 .button_delete {
   width: 24px;
   height: 24px;
+  padding: 0;
   background-image: url(../../../images/icons/bin.svg);
 }
 
 .button_save {
   width: 24px;
   height: 24px;
+  padding: 0;
   background-image: url(../../../images/icons/save.png);
 }
 
 .button_add {
   width: 24px;
   height: 24px;
+  padding: 0;
   background-image: url(../../../images/icons/plus.png);
 }
 
