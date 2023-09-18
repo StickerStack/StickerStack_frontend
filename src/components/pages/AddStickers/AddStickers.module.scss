@@ -10,12 +10,23 @@
     text-align: left;
     @include flex(column, center, flex-start);
     gap: 30px;
+
+    @media screen and (max-width: 1010px) {
+      max-width: 100%;
+    }
+  }
+  @media screen and (max-width: 1010px) {
+    max-width: 100%;
   }
 }
 
 .content {
   @include flex(column, center, flex-start);
   gap: 30px;
+
+  @media screen and (max-width: 1010px) {
+    max-width: 100%;
+  }
 }
 
 .cards {

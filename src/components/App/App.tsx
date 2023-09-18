@@ -42,6 +42,7 @@ import { getStickers } from '../../store/stickersSlice';
 import { IStickersState } from '../../interfaces/IStickersState';
 
 import styles from './App.module.scss';
+import { PreviewForDownLoad } from '../PreviewForDownLoad/PreviewForDownLoad';
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -124,6 +125,14 @@ const App: React.FC = () => {
               element={
                 <ProtectedRoute redirectPath='/'>
                   <OrdersPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path={'/download'}
+              element={
+                <ProtectedRoute redirectPath='/'>
+                  <PreviewForDownLoad />
                 </ProtectedRoute>
               }
             />
