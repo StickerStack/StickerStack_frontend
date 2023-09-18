@@ -15,6 +15,7 @@ import { addpage } from '../../../utils/content/stickerspage';
 import { openPreview } from '../../../store/popupSlice';
 import { CARDS_MAXIMUM, pagePrice } from '../../../utils/constants';
 import { Dots } from '../../animations/Dots/Dots';
+import { Loader } from '../../UI/Loader/Loader';
 
 import styles from './AddStickers.module.scss';
 
@@ -43,7 +44,10 @@ export const AddStickersNew: FC = () => {
       <Container className={styles.add_container}>
         <TitlePage type='main-title'>{addpage.title}</TitlePage>
         {loading ? (
-          <Dots text='Ищем ваши загруженные стикеры' />
+          <div style={{ margin: '0 auto' }}>
+            <Loader loading={loading} background={false} />
+            <Dots text='Загружаем ваши стикеры' />
+          </div>
         ) : error ? (
           <Error>{addpage.error}</Error>
         ) : (

@@ -21,6 +21,7 @@ import { Dots } from '../../animations/Dots/Dots';
 import image from '../../../images/cart-dog.png';
 import { ReactComponent as WriteSvg } from '../../../images/icons/write-icon.svg';
 import styles from './CartPage.module.scss';
+import { Loader } from '../../UI/Loader/Loader';
 
 const CartPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -106,7 +107,10 @@ const CartPage: React.FC = () => {
       <Container className={styles.cart_container}>
         <TitlePage type='main-title'>{cartpage.title}</TitlePage>
         {loading ? (
-          <Dots text='Ваша корзина прогружается, минутку' />
+          <div style={{ margin: '0 auto' }}>
+            <Loader loading={loading} background={false} />
+            <Dots text='Ваша корзина прогружается, минутку' />
+          </div>
         ) : error ? (
           <Error>{cartpage.error}</Error>
         ) : stickers.length < 2 ? (

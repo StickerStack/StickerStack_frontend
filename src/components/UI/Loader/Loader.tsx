@@ -2,13 +2,18 @@ import styles from './Loader.module.scss';
 
 interface Props {
   loading: boolean;
+  background?: boolean;
 }
 
-const Loader: React.FC<Props> = ({ loading }: Props) => {
+const Loader: React.FC<Props> = ({ loading, background = true }: Props) => {
   return loading ? (
-    <div className={styles.loader_block}>
+    background ? (
+      <div className={styles.loader_block}>
+        <div className={styles.loader} />
+      </div>
+    ) : (
       <div className={styles.loader} />
-    </div>
+    )
   ) : null;
 };
 

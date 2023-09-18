@@ -1,11 +1,9 @@
 @import '../../../utils/_scss-variables.scss';
 
 .loader {
-  width: 54px;
-  height: 54px;
-  top: 42%;
-  left: 43%;
-  position: absolute;
+  margin: 0 auto;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   background: conic-gradient(from 86deg at 48.07% 50%, #1a3263 0deg, rgba(219, 231, 255, 0) 360deg);
   background-repeat: no-repeat;
@@ -18,10 +16,10 @@
     position: absolute;
     background-color: $other-button-text-color;
     border-radius: 50%;
-    width: 9px;
-    height: 9px;
+    width: 10px;
+    height: 10px;
     right: 0;
-    top: 18px;
+    top: 23px;
   }
 
   &::after {
@@ -31,13 +29,14 @@
     border-radius: 50%;
     top: 15%;
     bottom: 15%;
-    left: 16%;
+    left: 15%;
     right: 15%;
   }
 }
 
 .loader_block {
   position: absolute;
+  @include flex(row, center, center);
   top: 0;
   left: 0;
   width: 100%;
