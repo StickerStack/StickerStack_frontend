@@ -8,5 +8,7 @@ export interface IUserState {
   avatar: string;
   orders: Array<IOrder>;
   ordersAlert: number;
+  ordersLoading: boolean;
+  ordersError: boolean;
   isVerified: boolean;
 }

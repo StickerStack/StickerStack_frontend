@@ -38,21 +38,23 @@ import { countTotal, updateSheets } from '../../store/cartSlice';
 import { getUser, getUserOrders, signInMockUser } from '../../store/userSlice';
 import { IUserState } from '../../interfaces';
 import { AcceptCookies } from '../AcceptCookies/AcceptCookies';
-
-import styles from './App.module.scss';
 import { getStickers } from '../../store/stickersSlice';
 import { IStickersState } from '../../interfaces/IStickersState';
 
+import styles from './App.module.scss';
+
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
-  const location = useLocation();
+
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const isLogged = useSelector((state: { user: IUserState }) => state.user.isLogged);
   const { pages, stickers } = useSelector((state: { stickers: IStickersState }) => state.stickers);
 
+  // Скролл к началу страницы при смене роута
   useScrollToTop();
 
+  // Получение параметров пользователя, либо мокового пользователя
   useEffect(() => {
     if (localStorage.getItem('token')) {
       dispatch(signInMockUser({ email: 'my@super.user', firstName: 'Иван', lastName: 'Иванов' }));
@@ -67,12 +69,14 @@ const App: React.FC = () => {
     // eslint-disable-next-line
   }, []);
 
+  // Получение всех стикеров корзины и истории заказов
   useEffect(() => {
     isLogged && dispatch(getStickers());
     dispatch(getUserOrders());
     // eslint-disable-next-line
-  }, [location, isLogged]);
+  }, [isLogged]);
 
+  // Обновление и подсчет листов
   useEffect(() => {
     if (isLogged) {
       dispatch(updateSheets(pages.length));
