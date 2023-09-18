@@ -109,7 +109,7 @@ const CartPage: React.FC = () => {
         {loading ? (
           <div style={{ margin: '0 auto' }}>
             <Loader loading={loading} background={false} />
-            <Dots text='Ваша корзина прогружается, минутку' />
+            <Dots text={`${cartpage.loading}`} />
           </div>
         ) : error ? (
           <Error>{cartpage.error}</Error>

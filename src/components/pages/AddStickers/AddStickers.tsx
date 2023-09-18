@@ -46,7 +46,7 @@ export const AddStickersNew: FC = () => {
         {loading ? (
           <div style={{ margin: '0 auto' }}>
             <Loader loading={loading} background={false} />
-            <Dots text='Загружаем ваши стикеры' />
+            <Dots text={`${addpage.loading}`} />
           </div>
         ) : error ? (
           <Error>{addpage.error}</Error>

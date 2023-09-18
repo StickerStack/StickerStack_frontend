@@ -2,8 +2,8 @@
 
 .loader {
   margin: 0 auto;
-  width: 64px;
-  height: 64px;
+  width: 54px;
+  height: 54px;
   border-radius: 50%;
   background: conic-gradient(from 86deg at 48.07% 50%, #1a3263 0deg, rgba(219, 231, 255, 0) 360deg);
   background-repeat: no-repeat;
@@ -16,10 +16,10 @@
     position: absolute;
     background-color: $other-button-text-color;
     border-radius: 50%;
-    width: 10px;
-    height: 10px;
+    width: 9px;
+    height: 9px;
     right: 0;
-    top: 23px;
+    top: 20px;
   }
 
   &::after {
