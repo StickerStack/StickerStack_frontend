@@ -9,6 +9,7 @@ const initialState: IUserState = {
   lastName: '',
   avatar: `${API_URL}/user/profile-image`,
   orders: [],
+  ordersAlert: 0,
   isLogged: false,
   isVerified: false,
 };
@@ -100,6 +101,10 @@ const userSlice = createSlice({
       getUserOrders.fulfilled,
       (state, action: { payload: Array<IOrder>; type: string }) => {
         state.orders = action.payload;
+        state.ordersAlert = action.payload.reduce(
+          (acc, item) => acc + (item.status === 'placed' ? 1 : 0),
+          0,
+        );
       },
     );
     builder.addCase(getUserOrders.rejected, (state) => {

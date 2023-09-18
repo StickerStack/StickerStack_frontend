@@ -22,6 +22,17 @@
   @media screen and (max-width: 1150px) {
     flex-direction: column;
     padding: 40px 40px 30px;
+    gap: 30px;
+  }
+
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+    padding: 32px 20px 36px;
+    gap: 24px;
+  }
+
+  .text {
+    margin: 0;
   }
 
   .link {
@@ -30,14 +41,22 @@
   .buttons {
     display: flex;
     gap: 16px;
+
+    @media screen and (max-width: 430px) {
+      width: 100%;
+    }
   }
 
   .button {
-    width: 168px;
-    padding: 14px 22px;
+    min-width: 168px;
+    padding: 14px 12px;
     font-size: 18px;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
+
+    @media screen and (max-width: 430px) {
+      min-width: calc(50% - 8px);
+    }
   }
 }

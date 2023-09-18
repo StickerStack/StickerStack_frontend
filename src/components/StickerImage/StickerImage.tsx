@@ -1,8 +1,6 @@
 import { FC } from 'react';
 import cn from 'classnames';
 
-import { useAppDispatch } from '../../hooks/hooks';
-
 import { stickerWhiteBorder } from '../../utils/constants';
 import { ISticker } from '../../interfaces/ISticker';
 
@@ -13,9 +11,16 @@ interface IProps {
   boxWidth: number;
   boxHeight: number;
   className?: string;
+  shadow?: boolean;
 }
 
-export const StickerImage: FC<IProps> = ({ sticker, boxWidth, boxHeight, className }) => {
+export const StickerImage: FC<IProps> = ({
+  sticker,
+  boxWidth,
+  boxHeight,
+  className,
+  shadow = true,
+}) => {
   const styleBorderImage = {
     width:
       sticker.width / sticker.height >= 1 ? boxWidth : (sticker.width / sticker.height) * boxWidth,
@@ -26,8 +31,6 @@ export const StickerImage: FC<IProps> = ({ sticker, boxWidth, boxHeight, classNa
     padding: (stickerWhiteBorder * 10) / sticker.width,
   };
 
-  const dispatch = useAppDispatch();
-
   return (
     <div
       className={cn(
@@ -35,6 +38,7 @@ export const StickerImage: FC<IProps> = ({ sticker, boxWidth, boxHeight, classNa
         styles[`border_${sticker.shape}`],
         !sticker.image && styles.empty,
         className,
+        !shadow && styles.no_shadow,
       )}
       style={styleBorderImage}
     >

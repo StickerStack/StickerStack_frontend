@@ -31,6 +31,14 @@ const OrderDetails: React.FC<IProps> = ({ order }: IProps) => {
     switch (order.status) {
       case 'placed':
         return 'Оформлен';
+      case 'cancelled':
+        return 'Отменен';
+      case 'preparing':
+        return 'В печати';
+      case 'ready for pickup':
+        return 'Готов к выдаче';
+      case 'completed':
+        return 'Завершен';
     }
   };
 
@@ -147,10 +155,9 @@ const OrderDetails: React.FC<IProps> = ({ order }: IProps) => {
                 !order.number_of_sheets.toString().endsWith('11')
                   ? 'листе'
                   : 'листах'}
+                {order.cropping ? ' (вырезать)' : ''}
               </li>
-              <li className={styles.info_item}>
-                {order.cropping ? 'Вырезать по контуру' : 'Оставить на листе'}
-              </li>
+
               <li className={styles.info_item}>{orders.material}</li>
             </ul>
             <div className={styles.buttons}>

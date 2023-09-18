@@ -40,9 +40,10 @@ const OrdersPage: React.FC = () => {
     <main className={styles.orders}>
       <Container className={styles.orders_container}>
         <TitlePage type='main-title'>{orders.title}</TitlePage>
-        {error && <Error>{orders.error}</Error>}
         {loading ? (
           <Ufo />
+        ) : error ? (
+          <Error>{orders.error}</Error>
         ) : userOrders.length === 0 ? (
           <div className={styles.empty}>
             <div className={styles.ufo} />
