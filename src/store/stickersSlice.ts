@@ -60,6 +60,8 @@ export const deleteSticker = createAsyncThunk(
 
 // Добавить pages массив для посчитаных стикеров
 const initialState: IStickersState = {
+  loading: false,
+  error: false,
   stickers: [
     {
       id: 'newSticker',
@@ -93,6 +95,8 @@ const stickerSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getStickers.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = false;
       state.stickers = [
         ...action.payload,
         {
@@ -112,6 +116,15 @@ const stickerSlice = createSlice({
         pageSizePx,
       );
     });
+    builder.addCase(getStickers.pending, (state) => {
+      state.loading = true;
+      state.error = false;
+    });
+    builder.addCase(getStickers.rejected, (state) => {
+      state.loading = false;
+      state.error = true;
+    });
+
     builder.addCase(putStickerInCart.fulfilled, (state, action) => {
       state.stickers = state.stickers.map((sticker) => {
         if (sticker.id === action.payload.id) {

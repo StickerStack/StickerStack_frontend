@@ -1,7 +1,9 @@
-import { PageElement } from "../utils/calculateStickerOnList";
-import { ISticker } from "./ISticker";
+import { PageElement } from '../utils/calculateStickerOnList';
+import { ISticker } from './ISticker';
 
 export interface IStickersState {
-  stickers: ISticker[],
-  pages: PageElement[][],
+  loading: boolean;
+  error: boolean;
+  stickers: ISticker[];
+  pages: PageElement[][];
 }
