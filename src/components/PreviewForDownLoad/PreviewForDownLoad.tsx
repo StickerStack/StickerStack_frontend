@@ -41,6 +41,11 @@ const PreviewForDownLoad: React.FC = () => {
       elements.forEach(async (element) => {
         const canvas = await html2canvas(element);
         const dataURL = canvas.toDataURL('image/jpeg');
+
+        const cmykURL = await converter.imageRgbToCmyk(dataURL);
+        if (typeof cmykURL === 'string') {
+          downloadjs(cmykURL, 'cmyk.jpeg', 'image/jpeg');
+        }
         if (element.classList.contains('red-line')) {
           downloadjs(dataURL, 'crop.jpeg', 'image/jpeg');
         } else downloadjs(dataURL, 'stickers.jpeg', 'image/jpeg');
@@ -52,8 +57,8 @@ const PreviewForDownLoad: React.FC = () => {
           openMessage({
             text: `${messages.somethingWrong}`,
             isError: true,
-          }),
-        ),
+          })
+        )
       )
       .finally(() => setTimeout(() => setLoading(false), 2000));
   };
@@ -97,10 +102,10 @@ const PreviewForDownLoad: React.FC = () => {
                       height: converter.cmToPx(card.height) * 3.11,
                       padding: borderInPx * 3.11,
                       gridRow: `span ${Math.ceil(
-                        converter.cmToPx(card.height) * 3.11 + pageSizePxOptimal.gapY,
+                        converter.cmToPx(card.height) * 3.11 + pageSizePxOptimal.gapY
                       )}`,
                       gridColumn: `span ${Math.ceil(
-                        converter.cmToPx(card.width) * 3.11 + pageSizePxOptimal.gapX,
+                        converter.cmToPx(card.width) * 3.11 + pageSizePxOptimal.gapX
                       )}`,
                     }}
                     key={`${card.id}${index}`}
@@ -142,10 +147,10 @@ const PreviewForDownLoad: React.FC = () => {
                       height: converter.cmToPx(card.height) * 3.11,
                       padding: borderInPx * 3.11,
                       gridRow: `span ${Math.ceil(
-                        converter.cmToPx(card.height) * 3.11 + pageSizePxOptimal.gapY,
+                        converter.cmToPx(card.height) * 3.11 + pageSizePxOptimal.gapY
                       )}`,
                       gridColumn: `span ${Math.ceil(
-                        converter.cmToPx(card.width) * 3.11 + pageSizePxOptimal.gapX,
+                        converter.cmToPx(card.width) * 3.11 + pageSizePxOptimal.gapX
                       )}`,
                     }}
                     key={`${card.id}${index}`}
