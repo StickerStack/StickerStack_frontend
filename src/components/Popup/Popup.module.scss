@@ -32,6 +32,8 @@
   border-radius: 25px;
   max-height: 95vh;
   overflow-y: scroll !important;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 
   @media screen and (max-width: 768px) {
     padding: 40px 20px 40px;
