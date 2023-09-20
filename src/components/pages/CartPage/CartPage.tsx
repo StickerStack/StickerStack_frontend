@@ -7,7 +7,7 @@ import { useForm, FieldValues } from 'react-hook-form';
 
 import { updateAddress, uploadOrder } from '../../../store/cartSlice';
 import { openInfo, openMessage } from '../../../store/popupSlice';
-import { TitlePage, Container, ButtonWithText, TextUnderline, Input } from '../../UI';
+import { TitlePage, Container, ButtonWithText, TextUnderline, Input, Error } from '../../UI';
 import { ADD_STICKERS, ORDERS } from '../../../utils/constants';
 import { Sticker } from '../../Sticker/Sticker';
 import { InfoBox } from '../../InfoBox/InfoBox';
@@ -16,17 +16,21 @@ import { messages, orderPlaced } from '../../../utils/content/popups';
 import { cartpage } from '../../../utils/content/stickerspage';
 import { IStickersState } from '../../../interfaces/IStickersState';
 import { removeAllStickers } from '../../../store/stickersSlice';
+import { Dots } from '../../animations/Dots/Dots';
 
 import image from '../../../images/cart-dog.png';
 import { ReactComponent as WriteSvg } from '../../../images/icons/write-icon.svg';
 import styles from './CartPage.module.scss';
+import { Loader } from '../../UI/Loader/Loader';
 
 const CartPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  const [loadingOrder, setLoadingOrder] = useState(false);
 
-  const { stickers } = useSelector((state: { stickers: IStickersState }) => state.stickers);
+  const { stickers, loading, error } = useSelector(
+    (state: { stickers: IStickersState }) => state.stickers,
+  );
   const cart = useSelector((state: { cart: ICart }) => state.cart);
 
   const {
@@ -45,7 +49,7 @@ const CartPage: React.FC = () => {
   }, []);
 
   const onSubmit = () => {
-    setLoading(true);
+    setLoadingOrder(true);
     dispatch(
       uploadOrder({
         cost: cart.cost,
@@ -95,14 +99,21 @@ const CartPage: React.FC = () => {
           );
         }
       })
-      .finally(() => setLoading(false));
+      .finally(() => setLoadingOrder(false));
   };
 
   return (
     <main className={styles.cart}>
       <Container className={styles.cart_container}>
         <TitlePage type='main-title'>{cartpage.title}</TitlePage>
-        {stickers.length < 2 ? (
+        {loading ? (
+          <div style={{ margin: '0 auto' }}>
+            <Loader loading={loading} background={false} />
+            <Dots text={`${cartpage.loading}`} />
+          </div>
+        ) : error ? (
+          <Error>{cartpage.error}</Error>
+        ) : stickers.length < 2 ? (
           <div className={styles.box}>
             <div className={styles.image} />
             <span className={styles.text}>{cartpage.empty}</span>
@@ -166,7 +177,7 @@ const CartPage: React.FC = () => {
                 <TextUnderline theme='secondary' onClick={() => navigate(ADD_STICKERS)}>
                   {cartpage.link}
                 </TextUnderline>
-                <ButtonWithText className={styles.button} type='submit' loading={loading}>
+                <ButtonWithText className={styles.button} type='submit' loading={loadingOrder}>
                   {cartpage.button}
                 </ButtonWithText>
               </div>

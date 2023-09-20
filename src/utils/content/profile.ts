@@ -1,6 +1,6 @@
 export const profileMenu = {
   button: 'Заказать стикеры',
-  orders: 'Заказы',
+  orders: 'Мои заказы',
   signout: 'Выход',
 };
 
@@ -13,7 +13,7 @@ export const profile = {
   link: { text: 'Выслать повторно', label: 'Не пришло письмо подтверждения электронной почты? ' },
 };
 
-export const orders = {
+export const orderspage = {
   title: 'Мои заказы',
   empty: 'У вас пока нет заказов.',
   error: 'Не удалось прогрузить ваши заказы',

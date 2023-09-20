@@ -9,6 +9,9 @@ const initialState: IUserState = {
   lastName: '',
   avatar: `${API_URL}/user/profile-image`,
   orders: [],
+  ordersAlert: 0,
+  ordersLoading: false,
+  ordersError: false,
   isLogged: false,
   isVerified: false,
 };
@@ -99,11 +102,23 @@ const userSlice = createSlice({
     builder.addCase(
       getUserOrders.fulfilled,
       (state, action: { payload: Array<IOrder>; type: string }) => {
+        state.ordersLoading = false;
+        state.ordersError = false;
         state.orders = action.payload;
+        state.ordersAlert = action.payload.reduce(
+          (acc, item) => acc + (item.status === 'placed' ? 1 : 0),
+          0,
+        );
       },
     );
+    builder.addCase(getUserOrders.pending, (state) => {
+      state.ordersLoading = true;
+      state.ordersError = false;
+    });
     builder.addCase(getUserOrders.rejected, (state) => {
       state.orders = [];
+      state.ordersLoading = false;
+      state.ordersError = true;
     });
   },
 });

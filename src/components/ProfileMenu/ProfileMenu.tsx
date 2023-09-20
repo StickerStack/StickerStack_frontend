@@ -17,7 +17,7 @@ import styles from './ProfileMenu.module.scss';
 const ProfileMenu = forwardRef<HTMLHeadingElement>((props, ref) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { email, firstName, lastName, avatar } = useSelector(
+  const { email, firstName, lastName, avatar, ordersAlert } = useSelector(
     (state: { user: IUserState }) => state.user,
   );
 
@@ -48,7 +48,7 @@ const ProfileMenu = forwardRef<HTMLHeadingElement>((props, ref) => {
           />
         </div>
         <div className={styles.namebox}>
-          <span className={cn(styles.name, !lastName && !firstName && styles.name_overflow)}>
+          <span className={cn(styles.name, styles.name_overflow)}>
             {lastName || firstName ? `${firstName}` : email}
           </span>
           {(lastName || firstName) && <span className={styles.name}>{lastName}</span>}
@@ -71,6 +71,7 @@ const ProfileMenu = forwardRef<HTMLHeadingElement>((props, ref) => {
             onClick={() => navigate(ORDERS)}
           >
             {profileMenu.orders}
+            {ordersAlert > 0 && <div className={styles.badge}>{ordersAlert}</div>}
           </ButtonWithText>
         </li>
         <li>

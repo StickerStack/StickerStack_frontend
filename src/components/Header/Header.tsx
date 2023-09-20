@@ -21,6 +21,7 @@ import styles from './Header.module.scss';
 const Header: React.FC = () => {
   const isLogged = useSelector((state: { user: IUserState }) => state.user.isLogged);
   const { stickers } = useSelector((state: { stickers: IStickersState }) => state.stickers);
+  const orders = useSelector((state: { user: IUserState }) => state.user.ordersAlert);
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -112,13 +113,15 @@ const Header: React.FC = () => {
               {stickers.length > 1 && <div className={styles.badge}>{stickers.length - 1}</div>}
               <ButtonCustom type='cart' label='Перейти в корзину' onClick={() => navigate(CART)} />
             </div>
-
-            <ButtonCustom
-              className={styles.profile}
-              type='person'
-              label={!isMenuShow ? 'Показать меню' : 'Скрыть меню'}
-              onClick={() => setIsMenuShow(!isMenuShow)}
-            />
+            <div className={styles.profile}>
+              {orders > 0 && <div className={styles.badge}>{orders}</div>}
+              <ButtonCustom
+                className={styles.profile}
+                type='person'
+                label={!isMenuShow ? 'Показать меню' : 'Скрыть меню'}
+                onClick={() => setIsMenuShow(!isMenuShow)}
+              />
+            </div>
           </div>
         ) : (
           <ButtonWithText

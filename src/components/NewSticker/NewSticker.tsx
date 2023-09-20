@@ -51,7 +51,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
       shape: sticker.shape,
       amount: sticker.amount,
       size:
-        sticker.width === sticker.optimal_width && sticker.optimal_height === sticker.optimal_height
+        sticker.width === sticker.optimal_width && sticker.height === sticker.optimal_height
           ? 'optimal'
           : 'custom',
       width: sticker.optimal_width,
@@ -167,10 +167,18 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
   const image = watch('image');
   const shape = watch('shape');
   const amount = watch('amount');
+  const size = watch('size');
   const width = watch('width');
   const height = watch('height');
 
+  const initialOptimal =
+    sticker.width === sticker.optimal_width && sticker.height === sticker.optimal_height;
+  const initialCustom =
+    sticker.width !== sticker.optimal_width || sticker.height !== sticker.optimal_height;
+
   const fieldsUnchanged =
+    initialOptimal === (size === 'optimal') &&
+    initialCustom === (size === 'custom') &&
     sticker.shape === shape &&
     sticker.amount === amount &&
     sticker.width === width &&
@@ -277,7 +285,10 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
               register={register}
               name='size'
               value='optimal'
-              onClick={() => setCustomVisible(false)}
+              onClick={() => {
+                setCustomVisible(false);
+                setBlock(false);
+              }}
             >
               Оптимальный размер
               <TooltipCustom text={addpage.tooltipOptimal} />
@@ -288,7 +299,10 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
                 name='size'
                 value='custom'
                 className={styles.size}
-                onClick={() => setCustomVisible(true)}
+                onClick={() => {
+                  setCustomVisible(true);
+                  setBlock(false);
+                }}
               >
                 Свой размер
               </RadioButton>

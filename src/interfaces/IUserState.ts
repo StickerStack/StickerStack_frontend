@@ -1,4 +1,4 @@
-import { IOrder } from "./IOrder";
+import { IOrder } from './IOrder';
 
 export interface IUserState {
   email: string;
@@ -7,5 +7,8 @@ export interface IUserState {
   lastName: string;
   avatar: string;
   orders: Array<IOrder>;
+  ordersAlert: number;
+  ordersLoading: boolean;
+  ordersError: boolean;
   isVerified: boolean;
 }

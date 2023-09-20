@@ -10,6 +10,14 @@
   border-radius: 10px;
   overflow: hidden;
 
+  @media screen and (max-width: 605px) {
+    width: 365px;
+  }
+
+  @media screen and (max-width: 430px) {
+    width: 100%;
+  }
+
   &:hover .overlay {
     border-radius: 0 0 10px 10px;
     height: 74px;

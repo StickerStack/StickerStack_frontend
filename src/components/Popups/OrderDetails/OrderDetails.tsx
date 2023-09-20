@@ -5,7 +5,7 @@ import { IOrder, IStickersState } from '../../../interfaces';
 import { StickerCarousel } from '../../StickerCarousel/StickerCarousel';
 import { ButtonWithText } from '../../UI';
 import { ADD_STICKERS, CART } from '../../../utils/constants';
-import { orders } from '../../../utils/content/profile';
+import { orderspage } from '../../../utils/content/profile';
 import { closePopup, openInfo, openMessage } from '../../../store/popupSlice';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { confirmCart, messages } from '../../../utils/content/popups';
@@ -31,6 +31,14 @@ const OrderDetails: React.FC<IProps> = ({ order }: IProps) => {
     switch (order.status) {
       case 'placed':
         return 'Оформлен';
+      case 'cancelled':
+        return 'Отменен';
+      case 'preparing':
+        return 'В печати';
+      case 'ready for pickup':
+        return 'Готов к выдаче';
+      case 'completed':
+        return 'Завершен';
     }
   };
 
@@ -117,7 +125,7 @@ const OrderDetails: React.FC<IProps> = ({ order }: IProps) => {
         <div className={styles.container}>
           <div className={styles.main}>
             <span className={styles.id}>
-              {orders.orderId} {order.order_number}
+              {orderspage.orderId} {order.order_number}
             </span>
           </div>
           <div className={styles.content}>
@@ -147,11 +155,10 @@ const OrderDetails: React.FC<IProps> = ({ order }: IProps) => {
                 !order.number_of_sheets.toString().endsWith('11')
                   ? 'листе'
                   : 'листах'}
+                {order.cropping ? ' (вырезать)' : ''}
               </li>
-              <li className={styles.info_item}>
-                {order.cropping ? 'Вырезать по контуру' : 'Оставить на листе'}
-              </li>
-              <li className={styles.info_item}>{orders.material}</li>
+
+              <li className={styles.info_item}>{orderspage.material}</li>
             </ul>
             <div className={styles.buttons}>
               <ButtonWithText
@@ -160,7 +167,7 @@ const OrderDetails: React.FC<IProps> = ({ order }: IProps) => {
                 onClick={onRepeat}
                 loading={loading}
               >
-                {orders.repeat}
+                {orderspage.repeat}
               </ButtonWithText>
               {/* <ButtonWithText theme='transparent' className={styles.button} onClick={onClose}>
                   Удалить

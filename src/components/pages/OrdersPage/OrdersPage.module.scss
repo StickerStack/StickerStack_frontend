@@ -38,7 +38,13 @@
 .grid {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fill, 255px);
-  grid-template-rows: repeat(auto-fill, 332px);
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-rows: repeat(auto-fill, minmax(305px, 1fr));
   gap: 30px;
+
+  @media screen and (max-width: 455px) {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    grid-template-rows: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 22px;
+  }
 }
