@@ -62,9 +62,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
   const [loading, setLoading] = useState(false);
   const [block, setBlock] = useState(false);
   const [customVisible, setCustomVisible] = useState<boolean>(
-    sticker.width === sticker.optimal_width && sticker.height === sticker.optimal_height
-      ? false
-      : true,
+    sticker.width === sticker.optimal_width && sticker.height === sticker.optimal_height ? false : true
   );
 
   const shapesType = {
@@ -141,7 +139,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
           ...sticker,
           width: Number(value),
           height: sticker.shape === 'circle' ? Number(value) : sticker.height,
-        }),
+        })
       );
     }
     setBlock(false);
@@ -157,7 +155,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
           ...sticker,
           height: Number(value),
           width: sticker.shape === 'circle' ? Number(value) : sticker.width,
-        }),
+        })
       );
     }
     setBlock(false);
@@ -171,10 +169,8 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
   const width = watch('width');
   const height = watch('height');
 
-  const initialOptimal =
-    sticker.width === sticker.optimal_width && sticker.height === sticker.optimal_height;
-  const initialCustom =
-    sticker.width !== sticker.optimal_width || sticker.height !== sticker.optimal_height;
+  const initialOptimal = sticker.width === sticker.optimal_width && sticker.height === sticker.optimal_height;
+  const initialCustom = sticker.width !== sticker.optimal_width || sticker.height !== sticker.optimal_height;
 
   const fieldsUnchanged =
     initialOptimal === (size === 'optimal') &&
@@ -253,9 +249,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
         <fieldset className={styles.flex}>
           <label className={styles.category} htmlFor='amount'>
             Количество стикеров
-            {sticker.id !== stickerActiveId && (
-              <span className={styles.size_hidden}>{sticker.amount}шт</span>
-            )}
+            {sticker.id !== stickerActiveId && <span className={styles.size_hidden}>{sticker.amount}шт</span>}
           </label>
           {sticker.id === stickerActiveId && (
             <InputField className='amount'>
@@ -288,6 +282,11 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
               onClick={() => {
                 setCustomVisible(false);
                 setBlock(false);
+                setValue('width', sticker.optimal_width);
+                setValue('height', sticker.optimal_height);
+                dispatch(
+                  updateSticker({ ...sticker, height: sticker.optimal_height, width: sticker.optimal_width })
+                );
               }}
             >
               Оптимальный размер
