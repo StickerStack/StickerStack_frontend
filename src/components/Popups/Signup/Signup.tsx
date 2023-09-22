@@ -52,6 +52,7 @@ const Signup: React.FC = () => {
 
   useEffect(() => {
     setValue('confirmCheckbox', 'checked');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onSubmit = () => {
