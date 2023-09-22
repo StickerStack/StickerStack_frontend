@@ -3,7 +3,7 @@ import { IOptions } from '../interfaces';
 
 const REG_SPACE = '';
 // eslint-disable-next-line no-useless-escape
-const REG_EMAIL = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+const REG_EMAIL = /^[^\._-][\w-.]+@([\w-]+\.)+[\w-]{2,4}[^\._-]$/g;
 // Только цифры от 1 до 100
 const REG_STICKERS = /^([1-9][0-9]{0,2}|1000)$/;
 const REG_PASS = /(^[A-Za-z0-9!"#$% &'()*+,-./:;<=>?@[\]\\^_`{|}№~])+/g;
