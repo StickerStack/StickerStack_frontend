@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -35,6 +35,7 @@ const Signup: React.FC = () => {
     setValue,
     getValues,
     formState: { errors, dirtyFields, isValid },
+
     setError,
     watch,
     handleSubmit,
@@ -48,6 +49,10 @@ const Signup: React.FC = () => {
 
   const userEmail = getValues('email');
   const userPassword = getValues('password');
+
+  useEffect(() => {
+    setValue('confirmCheckbox', 'checked');
+  }, []);
 
   const onSubmit = () => {
     setLoading(true);
