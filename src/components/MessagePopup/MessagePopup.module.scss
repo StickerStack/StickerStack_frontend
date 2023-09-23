@@ -2,6 +2,7 @@
 
 .message_container {
   position: fixed;
+  max-width: 340px;
   z-index: 5;
   top: 114px;
   right: $desktop-padding / 2;

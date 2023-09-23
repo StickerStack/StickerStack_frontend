@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import cn from 'classnames';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { useSelector } from 'react-redux';
@@ -17,11 +17,12 @@ import { cartpage } from '../../../utils/content/stickerspage';
 import { IStickersState } from '../../../interfaces/IStickersState';
 import { removeAllStickers } from '../../../store/stickersSlice';
 import { Dots } from '../../animations/Dots/Dots';
+import { Loader } from '../../UI/Loader/Loader';
+import { IUserState } from '../../../interfaces';
 
 import image from '../../../images/cart-dog.png';
 import { ReactComponent as WriteSvg } from '../../../images/icons/write-icon.svg';
 import styles from './CartPage.module.scss';
-import { Loader } from '../../UI/Loader/Loader';
 
 const CartPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -32,6 +33,7 @@ const CartPage: React.FC = () => {
     (state: { stickers: IStickersState }) => state.stickers,
   );
   const cart = useSelector((state: { cart: ICart }) => state.cart);
+  const { isVerified } = useSelector((state: { user: IUserState }) => state.user);
 
   const {
     register,
@@ -49,57 +51,66 @@ const CartPage: React.FC = () => {
   }, []);
 
   const onSubmit = () => {
-    setLoadingOrder(true);
-    dispatch(
-      uploadOrder({
-        cost: cart.cost,
-        address: cart.address,
-        number: cart.number_of_sheets,
-        cropping: cart.cropping,
-        stickers: stickers.slice(0, stickers.length - 1).map((item) => {
-          return {
-            image: item.image,
-            shape: item.shape,
-            amount: item.amount,
-            width: item.width,
-            height: item.height,
-          };
-        }),
-      }),
-    )
-      .unwrap()
-      .then(() => {
-        dispatch(
-          openInfo({
-            title: `${orderPlaced.title}`,
-            text: `${orderPlaced.text}`,
-            buttonText: `${orderPlaced.buttonText}`,
-            buttonSecondText: `${orderPlaced.buttonSecondText}`,
-            onClick: () => navigate(ADD_STICKERS),
-            onClickSecond: () => navigate(ORDERS),
-            image: image,
+    if (isVerified) {
+      setLoadingOrder(true);
+      dispatch(
+        uploadOrder({
+          cost: cart.cost,
+          address: cart.address,
+          number: cart.number_of_sheets,
+          cropping: cart.cropping,
+          stickers: stickers.slice(0, stickers.length - 1).map((item) => {
+            return {
+              image: item.image,
+              shape: item.shape,
+              amount: item.amount,
+              width: item.width,
+              height: item.height,
+            };
           }),
-        );
-        dispatch(removeAllStickers());
-      })
-      .catch((err) => {
-        if (err.message === '413') {
+        }),
+      )
+        .unwrap()
+        .then(() => {
           dispatch(
-            openMessage({
-              text: `${messages.itemTooBig}`,
-              isError: true,
+            openInfo({
+              title: `${orderPlaced.title}`,
+              text: `${orderPlaced.text}`,
+              buttonText: `${orderPlaced.buttonText}`,
+              buttonSecondText: `${orderPlaced.buttonSecondText}`,
+              onClick: () => navigate(ADD_STICKERS),
+              onClickSecond: () => navigate(ORDERS),
+              image: image,
             }),
           );
-        } else if (err.message) {
-          dispatch(
-            openMessage({
-              text: `${messages.somethingWrong}`,
-              isError: true,
-            }),
-          );
-        }
-      })
-      .finally(() => setLoadingOrder(false));
+          dispatch(removeAllStickers());
+        })
+        .catch((err) => {
+          if (err.message === '413') {
+            dispatch(
+              openMessage({
+                text: `${messages.itemTooBig}`,
+                isError: true,
+              }),
+            );
+          } else if (err.message) {
+            dispatch(
+              openMessage({
+                text: `${messages.somethingWrong}`,
+                isError: true,
+              }),
+            );
+          }
+        })
+        .finally(() => setLoadingOrder(false));
+    } else {
+      dispatch(
+        openMessage({
+          text: `${messages.orderingDenied}`,
+          isError: true,
+        }),
+      );
+    }
   };
 
   return (
@@ -153,17 +164,15 @@ const CartPage: React.FC = () => {
               </InfoBox>
               <InfoBox type='simple' description={cartpage.address} className={styles.address_box}>
                 <div className={styles.address_box}>
-                  <Input
-                    register={register}
-                    option={{
+                  <textarea
+                    {...register('address', {
                       required: 'Введите адрес',
                       onBlur: (value: React.FocusEvent<HTMLInputElement>) => {
                         setValue('address', value.target.value.trim());
                         dispatch(updateAddress(value.target.value));
                       },
-                    }}
-                    name='address'
-                    type='textarea'
+                    })}
+                    disabled
                     className={cn(styles.address, errors.address && styles.address_error)}
                     placeholder='Выберите адрес'
                   />

@@ -7,7 +7,7 @@ import { ICart } from '../interfaces/ICart';
 const initialState: ICart = {
   cost: pagePrice,
   totalAmount: 1,
-  address: '',
+  address: 'Москва, ул. Пушкина, дом Калатушкина 25',
   number_of_sheets: 1,
   cropping: false,
 };
