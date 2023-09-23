@@ -68,10 +68,10 @@ const initialState: IStickersState = {
       image: '',
       shape: 'square',
       amount: 1,
-      width: 5,
-      height: 5,
-      optimal_width: 5,
-      optimal_height: 5,
+      width: 3,
+      height: 3,
+      optimal_width: 3,
+      optimal_height: 3,
     },
   ],
   pages: [],
@@ -92,6 +92,18 @@ const stickerSlice = createSlice({
     removeAllStickers(state) {
       state.stickers = [];
     },
+    addEmptySticker(state) {
+      state.stickers.push({
+        id: 'newSticker',
+        image: '',
+        shape: 'square',
+        amount: 1,
+        width: 3,
+        height: 3,
+        optimal_width: 3,
+        optimal_height: 3,
+      });
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getStickers.fulfilled, (state, action) => {
@@ -104,10 +116,10 @@ const stickerSlice = createSlice({
           image: '',
           shape: 'square',
           amount: 1,
-          width: 5,
-          height: 5,
-          optimal_width: 5,
-          optimal_height: 5,
+          width: 3,
+          height: 3,
+          optimal_width: 3,
+          optimal_height: 3,
         },
       ];
 
@@ -153,4 +165,4 @@ const stickerSlice = createSlice({
 });
 
 export const stickerSliceReducer = stickerSlice.reducer;
-export const { updateSticker, removeAllStickers } = stickerSlice.actions;
+export const { updateSticker, addEmptySticker, removeAllStickers } = stickerSlice.actions;
