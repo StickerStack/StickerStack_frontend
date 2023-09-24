@@ -56,6 +56,7 @@ export const messages = {
   fieldsError: 'Ошибка при заполнении полей. Попробуйте поменять значения.',
   success: 'Успешно изменено',
   somethingWrong: 'Что-то пошло не так. Попробуйте еще раз.',
+  orderingDenied: 'Ошибка: перед оформлением заказа подтвердите почту в личном кабинете.',
 };
 
 export const verifyPlease = {
@@ -79,7 +80,8 @@ export const verified = {
 export const passwordChanged = {
   title: 'Пароль изменен',
   text: 'Сделай свои вещи уникальными с помощью стикеров на виниловой пленке.',
-  buttonText: 'Перейти к заказу',
+  buttonText: 'Войти',
+  error: 'Срок действия ссылки истек. Попробуйте запросить восстановление пароля еще раз.',
 };
 
 export const orderPlaced = {

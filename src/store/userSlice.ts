@@ -106,7 +106,7 @@ const userSlice = createSlice({
         state.ordersError = false;
         state.orders = action.payload;
         state.ordersAlert = action.payload.reduce(
-          (acc, item) => acc + (item.status === 'placed' ? 1 : 0),
+          (acc, item) => acc + (item.status === 'ready for pickup' ? 1 : 0),
           0,
         );
       },
