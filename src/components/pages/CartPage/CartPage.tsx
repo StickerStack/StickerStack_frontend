@@ -15,7 +15,7 @@ import { ICart } from '../../../interfaces/ICart';
 import { messages, orderPlaced } from '../../../utils/content/popups';
 import { cartpage } from '../../../utils/content/stickerspage';
 import { IStickersState } from '../../../interfaces/IStickersState';
-import { removeAllStickers } from '../../../store/stickersSlice';
+import { addEmptySticker, removeAllStickers } from '../../../store/stickersSlice';
 import { Dots } from '../../animations/Dots/Dots';
 import { Loader } from '../../UI/Loader/Loader';
 import { IUserState } from '../../../interfaces';
