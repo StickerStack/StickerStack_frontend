@@ -15,13 +15,13 @@ import { ICart } from '../../../interfaces/ICart';
 import { messages, orderPlaced } from '../../../utils/content/popups';
 import { cartpage } from '../../../utils/content/stickerspage';
 import { IStickersState } from '../../../interfaces/IStickersState';
-import { removeAllStickers } from '../../../store/stickersSlice';
+import { addEmptySticker, removeAllStickers } from '../../../store/stickersSlice';
 import { Dots } from '../../animations/Dots/Dots';
+import { Loader } from '../../UI/Loader/Loader';
 
 import image from '../../../images/cart-dog.png';
 import { ReactComponent as WriteSvg } from '../../../images/icons/write-icon.svg';
 import styles from './CartPage.module.scss';
-import { Loader } from '../../UI/Loader/Loader';
 
 const CartPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -75,7 +75,10 @@ const CartPage: React.FC = () => {
             text: `${orderPlaced.text}`,
             buttonText: `${orderPlaced.buttonText}`,
             buttonSecondText: `${orderPlaced.buttonSecondText}`,
-            onClick: () => navigate(ADD_STICKERS),
+            onClick: () => {
+              dispatch(addEmptySticker());
+              navigate(ADD_STICKERS);
+            },
             onClickSecond: () => navigate(ORDERS),
             image: image,
           }),
