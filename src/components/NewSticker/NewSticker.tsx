@@ -50,10 +50,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
     defaultValues: {
       shape: sticker.shape,
       amount: sticker.amount,
-      size:
-        sticker.width === sticker.optimal_width && sticker.height === sticker.optimal_height
-          ? 'optimal'
-          : 'custom',
+      size: sticker.size_type,
       width: sticker.optimal_width,
       height: sticker.optimal_height,
     },
@@ -61,9 +58,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
   const [block, setBlock] = useState(false);
-  const [customVisible, setCustomVisible] = useState<boolean>(
-    sticker.width === sticker.optimal_width && sticker.height === sticker.optimal_height ? false : true
-  );
+  const [customVisible, setCustomVisible] = useState<boolean>(sticker.size_type === 'custom');
 
   const shapesType = {
     circle: 'круг',
@@ -104,6 +99,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     setLoading(true);
+    console.log(sticker.size_type);
     if (sticker.id === 'newSticker') {
       dispatch(addStickers([sticker]))
         .catch(() => dispatch(openMessage({ text: `${messages.somethingWrong}`, isError: true })))
@@ -169,12 +165,10 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
   const width = watch('width');
   const height = watch('height');
 
-  const initialOptimal = sticker.width === sticker.optimal_width && sticker.height === sticker.optimal_height;
-  const initialCustom = sticker.width !== sticker.optimal_width || sticker.height !== sticker.optimal_height;
+  const initialSize = sticker.size_type;
 
   const fieldsUnchanged =
-    initialOptimal === (size === 'optimal') &&
-    initialCustom === (size === 'custom') &&
+    initialSize === sticker.size_type &&
     sticker.shape === shape &&
     sticker.amount === amount &&
     sticker.width === width &&
@@ -187,6 +181,9 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
     setValue('amount', sticker.amount);
     setValue('width', sticker.width);
     setValue('height', sticker.height);
+    setValue('optimal_width', sticker.optimal_width);
+    setValue('optimal_height', sticker.optimal_height);
+    setValue('size', sticker.size_type);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -282,10 +279,13 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
               onClick={() => {
                 setCustomVisible(false);
                 setBlock(false);
-                setValue('width', sticker.optimal_width);
-                setValue('height', sticker.optimal_height);
                 dispatch(
-                  updateSticker({ ...sticker, height: sticker.optimal_height, width: sticker.optimal_width })
+                  updateSticker({
+                    ...sticker,
+                    height: sticker.optimal_height,
+                    width: sticker.optimal_width,
+                    size_type: 'optimal',
+                  })
                 );
               }}
             >
@@ -301,6 +301,14 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
                 onClick={() => {
                   setCustomVisible(true);
                   setBlock(false);
+                  dispatch(
+                    updateSticker({
+                      ...sticker,
+                      height: getValues('height'),
+                      width: getValues('width'),
+                      size_type: 'custom',
+                    })
+                  );
                 }}
               >
                 Свой размер
