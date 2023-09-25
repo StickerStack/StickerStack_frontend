@@ -13,7 +13,7 @@ import { IStickersState } from '../../../interfaces/IStickersState';
 import { ButtonWithText, Container, RadioButton, TextUnderline, TitlePage, Error } from '../../UI';
 import { addpage } from '../../../utils/content/stickerspage';
 import { openPreview } from '../../../store/popupSlice';
-import { CARDS_MAXIMUM, pagePrice } from '../../../utils/constants';
+import { CARDS_MAXIMUM, CART, pagePrice } from '../../../utils/constants';
 import { Dots } from '../../animations/Dots/Dots';
 import { Loader } from '../../UI/Loader/Loader';
 
@@ -141,7 +141,11 @@ export const AddStickersNew: FC = () => {
                 </RadioButton>
               </form>
             </section>
-            <ButtonWithText onClick={() => naviagate('/cart')} className={styles.button}>
+            <ButtonWithText
+              disabled={totalAmount === 0}
+              onClick={() => naviagate(CART)}
+              className={styles.button}
+            >
               Перейти в корзину
             </ButtonWithText>
           </div>

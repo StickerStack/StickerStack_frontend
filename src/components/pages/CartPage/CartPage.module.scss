@@ -74,6 +74,7 @@
   resize: none;
   overflow: hidden;
   color: $main-text-color;
+  background-color: $popup-bg-color;
 
   &:focus {
     outline: none;
