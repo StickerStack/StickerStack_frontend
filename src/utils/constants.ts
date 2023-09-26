@@ -3,9 +3,9 @@ import { IOptions } from '../interfaces';
 
 const REG_SPACE = '';
 // eslint-disable-next-line no-useless-escape
-const REG_EMAIL = /^[^\._-][\w-.]+@([\w-]+\.)+[\w-]{2,4}[^\._-]$/g;
+const REG_EMAIL = /^[^\._-][0-9а-яА-ЯёЁa-zA-Z-_.]+@[а-яА-ЯёЁa-zA-Z]+\.[а-яА-ЯёЁa-zA-Z]{1,4}[^\._-]$/g;
 // Только цифры от 1 до 100
-const REG_STICKERS = /^([1-9][0-9]{0,2}|1000)$/;
+const REG_STICKERS = /^([1-9][0-9]{0,1}|100)$/;
 const REG_PASS = /(^[A-Za-z0-9!"#$% &'()*+,-./:;<=>?@[\]\\^_`{|}№~])+/g;
 
 /* Только латинские и кириллические буквы и знак - */
@@ -65,9 +65,9 @@ const stickerWhiteBorder = 5;
 const PROFILE_INPUT_MIN_LENGTH = 2;
 const PROFILE_INPUT_MAX_LENGTH = 30;
 const AMOUNT_INPUT_MIN_LENGTH = 1;
-const AMOUNT_INPUT_MAX_LENGTH = 1000;
-const SIZE_INPUT_MIN_LENGTH = 1;
-const SIZE_INPUT_MAX_LENGTH = Math.round(pageSize.widthPage / 10);
+const AMOUNT_INPUT_MAX_LENGTH = 100;
+const SIZE_INPUT_MIN_LENGTH = 3;
+const SIZE_INPUT_MAX_LENGTH = Math.floor(pageSize.widthPage / 10);
 
 export {
   API_URL,

@@ -37,10 +37,6 @@ const registerPassword = {
     value: 32,
     message: 'Максимум 32 символа',
   },
-  pattern: {
-    value: REG_PASS,
-    message: `Только латинские буквы, цифры и символы`,
-  },
 };
 
 const registerRepeatPassword = {
@@ -74,7 +70,7 @@ const registerAmount = {
   required: 'Введите количество',
   pattern: {
     value: REG_STICKERS,
-    message: `Укажите количество от ${AMOUNT_INPUT_MIN_LENGTH} до ${AMOUNT_INPUT_MAX_LENGTH}`,
+    message: `Укажите количество от\u00A0${AMOUNT_INPUT_MIN_LENGTH}\u00A0до\u00A0${AMOUNT_INPUT_MAX_LENGTH}`,
   },
 };
 
@@ -82,11 +78,11 @@ const registerSize = {
   required: 'Введите размеры',
   min: {
     value: SIZE_INPUT_MIN_LENGTH,
-    message: `Укажите размеры от ${SIZE_INPUT_MIN_LENGTH} до ${SIZE_INPUT_MAX_LENGTH} см`,
+    message: `Укажите размеры от\u00A0${SIZE_INPUT_MIN_LENGTH}\u00A0до\u00A0${SIZE_INPUT_MAX_LENGTH} см`,
   },
   max: {
     value: SIZE_INPUT_MAX_LENGTH,
-    message: `Укажите размеры от ${SIZE_INPUT_MIN_LENGTH} до ${SIZE_INPUT_MAX_LENGTH} см`,
+    message: `Укажите размеры от\u00A0${SIZE_INPUT_MIN_LENGTH}\u00A0до\u00A0${SIZE_INPUT_MAX_LENGTH} см`,
   },
 };
 
