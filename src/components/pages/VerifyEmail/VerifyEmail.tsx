@@ -3,16 +3,21 @@ import { useEffect } from 'react';
 
 import { useAppDispatch } from '../../../hooks/hooks';
 import { verifyEmail } from '../../../store/authSlice';
-import { openInfo } from '../../../store/popupSlice';
+import { openInfo, openPopup } from '../../../store/popupSlice';
 import { ADD_STICKERS, PAGE_404 } from '../../../utils/constants';
 import { verified } from '../../../utils/content/popups';
+import { useSelector } from 'react-redux';
+import { IUserState } from '../../../interfaces';
 
 import image from '../../../images/email-confirmed.png';
+import { Signin } from '../../Popups/Signin/Signin';
 
 const VerifyEmail: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useAppDispatch();
+
+  const { isVerified } = useSelector((state: { user: IUserState }) => state.user);
 
   useEffect(() => {
     dispatch(verifyEmail({ token: location.pathname.replace('/auth/verifyemail/', '') }))
@@ -27,7 +32,13 @@ const VerifyEmail: React.FC = () => {
             buttonText: `${verified.buttonText}`,
             image: image,
             imageAbsolute: true,
-            onClick: () => navigate(ADD_STICKERS),
+            onClick: () => {
+              if (isVerified) {
+                navigate(ADD_STICKERS);
+              } else {
+                dispatch(openPopup(Signin));
+              }
+            },
           }),
         ),
       )

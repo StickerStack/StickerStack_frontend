@@ -58,9 +58,9 @@ const PopupPreview: React.FC = () => {
             title: `${orderPlaced.title}`,
             text: `${orderPlaced.text}`,
             buttonText: `${orderPlaced.buttonText}`,
-            buttonSecondText: `${orderPlaced.buttonSecondText}`,
+            //  buttonSecondText: `${orderPlaced.buttonSecondText}`,
             onClick: () => navigate(ADD_STICKERS),
-            onClickSecond: () => navigate(ORDERS),
+            //   onClickSecond: () => navigate(ORDERS),
             image: image,
           }),
         );
