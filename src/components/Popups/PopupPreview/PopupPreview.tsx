@@ -20,6 +20,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import image from '../../../images/cart-dog.png';
 import styles from './PopupPreview.module.scss';
+import { getUserOrders } from '../../../store/userSlice';
 
 const PopupPreview: React.FC = () => {
   const location = useLocation();
@@ -38,20 +39,13 @@ const PopupPreview: React.FC = () => {
         address: cart.address,
         number: cart.number_of_sheets,
         cropping: cart.cropping,
-        stickers: stickers.slice(0, stickers.length - 1).map((item) => {
-          return {
-            image: item.image,
-            shape: item.shape,
-            amount: item.amount,
-            width: item.width,
-            height: item.height,
-          };
-        }),
+        stickers: stickers.slice(0, stickers.length - 1),
       }),
     )
       .unwrap()
       .then(() => {
         dispatch(closePopup());
+        dispatch(getUserOrders());
         navigate(ORDERS);
         dispatch(
           openInfo({
@@ -91,9 +85,7 @@ const PopupPreview: React.FC = () => {
       {location.pathname === ADD_STICKERS && (
         <h2 className={styles.title}>
           Так будет выглядеть набор на{' '}
-          {pages.length.toString().endsWith('1') && !pages.length.toString().endsWith('11')
-            ? 'листе'
-            : 'листах'}
+          {pages.length.toString().endsWith('1') && !pages.length.toString().endsWith('11') ? 'листе' : 'листах'}
           <TooltipCustom text={previewShow.warning} />
         </h2>
       )}
@@ -107,11 +99,7 @@ const PopupPreview: React.FC = () => {
             <ButtonWithText className={styles.button} loading={loadingOrder} onClick={postOrder}>
               Продолжить
             </ButtonWithText>
-            <ButtonWithText
-              className={styles.button}
-              theme='transparent'
-              onClick={() => dispatch(closePopup())}
-            >
+            <ButtonWithText className={styles.button} theme='transparent' onClick={() => dispatch(closePopup())}>
               Отменить
             </ButtonWithText>
           </div>

@@ -28,9 +28,7 @@ const CartPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const { stickers, loading, error } = useSelector(
-    (state: { stickers: IStickersState }) => state.stickers,
-  );
+  const { stickers, loading, error } = useSelector((state: { stickers: IStickersState }) => state.stickers);
   const cart = useSelector((state: { cart: ICart }) => state.cart);
   const { isVerified } = useSelector((state: { user: IUserState }) => state.user);
 
@@ -50,31 +48,41 @@ const CartPage: React.FC = () => {
   }, []);
 
   const onSubmit = () => {
-    dispatch(getUser());
-    if (isVerified) {
-      dispatch(openPreview());
-    } else {
-      const randomNumber = getRandomNumber(1, 3);
-      dispatch(
-        openInfo({
-          title: `${verifyBeforeOredering.title}`,
-          text: `${verifyBeforeOredering.text}`,
-          buttonText: `${verifyBeforeOredering.buttonText}`,
-          onClick: () =>
-            dispatch(sendVerificationCode())
-              .then(() => closePopup())
-              .catch(() =>
-                dispatch(
-                  openMessage({
-                    text: `${messages.somethingWrong}`,
-                    isError: true,
-                  }),
-                ),
-              ),
-          image: require(`../../../images/check-your-mail-${randomNumber}.png`),
-        }),
+    dispatch(getUser())
+      .then(() => {
+        if (isVerified) {
+          dispatch(openPreview());
+        } else {
+          const randomNumber = getRandomNumber(1, 3);
+          dispatch(
+            openInfo({
+              title: `${verifyBeforeOredering.title}`,
+              text: `${verifyBeforeOredering.text}`,
+              buttonText: `${verifyBeforeOredering.buttonText}`,
+              onClick: () =>
+                dispatch(sendVerificationCode())
+                  .then(() => closePopup())
+                  .catch(() =>
+                    dispatch(
+                      openMessage({
+                        text: `${messages.somethingWrong}`,
+                        isError: true,
+                      }),
+                    ),
+                  ),
+              image: require(`../../../images/check-your-mail-${randomNumber}.png`),
+            }),
+          );
+        }
+      })
+      .catch(() =>
+        dispatch(
+          openMessage({
+            text: `${messages.somethingWrong}`,
+            isError: true,
+          }),
+        ),
       );
-    }
   };
 
   return (
@@ -104,26 +112,14 @@ const CartPage: React.FC = () => {
               ))}
             </div>
             <form className={cn(styles.banner, styles.info)} onSubmit={handleSubmit(onSubmit)}>
-              <InfoBox
-                type='number'
-                description={cartpage.pages}
-                descriptionClass={styles.description}
-              >
+              <InfoBox type='number' description={cartpage.pages} descriptionClass={styles.description}>
                 {cart.number_of_sheets}
               </InfoBox>
               {cart.cropping && <span>{cartpage.cropping}</span>}
-              <InfoBox
-                type='number'
-                description={cartpage.stickers}
-                descriptionClass={styles.description}
-              >
+              <InfoBox type='number' description={cartpage.stickers} descriptionClass={styles.description}>
                 {cart.totalAmount}
               </InfoBox>
-              <InfoBox
-                type='simple'
-                description={cartpage.delivery}
-                descriptionClass={styles.description}
-              >
+              <InfoBox type='simple' description={cartpage.delivery} descriptionClass={styles.description}>
                 Самовывоз
               </InfoBox>
               <InfoBox type='simple' description={cartpage.address} className={styles.address_box}>
