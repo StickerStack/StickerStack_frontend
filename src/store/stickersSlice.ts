@@ -28,7 +28,6 @@ export const putStickerInCart = createAsyncThunk(
   'sticker/putStickerInCart',
   async (sticker: ISticker, { rejectWithValue }) => {
     try {
-      console.log(sticker);
       return await cartApi.putStickerInCart(sticker);
     } catch (err) {
       return rejectWithValue(err);

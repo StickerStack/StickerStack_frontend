@@ -99,7 +99,6 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     setLoading(true);
-    console.log(sticker.size_type);
     if (sticker.id === 'newSticker') {
       dispatch(addStickers([sticker]))
         .catch(() => dispatch(openMessage({ text: `${messages.somethingWrong}`, isError: true })))
