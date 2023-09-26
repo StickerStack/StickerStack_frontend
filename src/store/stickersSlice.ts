@@ -39,6 +39,7 @@ export const addStickers = createAsyncThunk(
   'sticker/addStickers',
   async (stickers: Array<ISticker>, { rejectWithValue }) => {
     try {
+      console.log(stickers);
       return await cartApi.addStickers(stickers);
     } catch (err) {
       return rejectWithValue(err);
@@ -72,6 +73,7 @@ const initialState: IStickersState = {
       height: 3,
       optimal_width: 3,
       optimal_height: 3,
+      size_type: 'optimal',
     },
   ],
   pages: [],
@@ -102,6 +104,7 @@ const stickerSlice = createSlice({
         height: 3,
         optimal_width: 3,
         optimal_height: 3,
+        size_type: 'optimal',
       });
     },
   },
@@ -120,6 +123,7 @@ const stickerSlice = createSlice({
           height: 3,
           optimal_width: 3,
           optimal_height: 3,
+          size_type: 'optimal',
         },
       ];
 

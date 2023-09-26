@@ -60,6 +60,7 @@ const OrderDetails: React.FC<IProps> = ({ order }: IProps) => {
                 height: item.height,
                 optimal_width: item.width,
                 optimal_height: item.height,
+                size_type: item.size_type,
               };
             }),
           ),
@@ -105,6 +106,7 @@ const OrderDetails: React.FC<IProps> = ({ order }: IProps) => {
               height: item.height,
               optimal_width: item.width,
               optimal_height: item.height,
+              size_type: item.size_type,
             };
           }),
         ),
