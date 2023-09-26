@@ -15,13 +15,7 @@ import { ButtonCustom, Input, InputError, InputField, RadioButton, TooltipCustom
 import { addpage } from '../../utils/content/stickerspage';
 import { InfoBox } from '../InfoBox/InfoBox';
 import { useAppDispatch } from '../../hooks/hooks';
-import {
-  addStickers,
-  deleteSticker,
-  getStickers,
-  putStickerInCart,
-  updateSticker,
-} from '../../store/stickersSlice';
+import { addStickers, deleteSticker, getStickers, putStickerInCart, updateSticker } from '../../store/stickersSlice';
 import { Shape } from '../Shape/Shape';
 import { ISticker } from '../../interfaces/ISticker';
 import { DragAndDrop } from '../DragAndDrop/DragAndDrop';
@@ -117,11 +111,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
   };
 
   const sizeValidate = (value: string): boolean => {
-    return (
-      REG_STICKERS.test(value) &&
-      Number(value) >= SIZE_INPUT_MIN_LENGTH &&
-      Number(value) <= SIZE_INPUT_MAX_LENGTH
-    );
+    return REG_STICKERS.test(value) && Number(value) >= SIZE_INPUT_MIN_LENGTH && Number(value) <= SIZE_INPUT_MAX_LENGTH;
   };
 
   const onWidthChange = () => {
@@ -134,7 +124,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
           ...sticker,
           width: Number(value),
           height: sticker.shape === 'circle' ? Number(value) : sticker.height,
-        })
+        }),
       );
     }
     setBlock(false);
@@ -150,7 +140,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
           ...sticker,
           height: Number(value),
           width: sticker.shape === 'circle' ? Number(value) : sticker.width,
-        })
+        }),
       );
     }
     setBlock(false);
@@ -192,10 +182,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
       onClick={sticker.id === stickerActiveId ? () => null : () => handleActiveSticker(sticker.id)}
     >
       {loading && <Loader loading={loading} />}
-      <form
-        className={sticker.id === stickerActiveId ? styles.info : styles.info_unactive}
-        onSubmit={handleSubmit}
-      >
+      <form className={sticker.id === stickerActiveId ? styles.info : styles.info_unactive} onSubmit={handleSubmit}>
         <div className={styles.image}>
           {/* Оставляем драгндроп с инпутом картинки, чтобы при сворачивании карточки он не размонтировался и не очищался инпут*/}
           <DragAndDrop
@@ -219,13 +206,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
             )}
           </label>
           <div className={cn(styles.shapes, sticker.id !== stickerActiveId && styles.hidden)}>
-            <Shape
-              register={register}
-              name='shape'
-              sticker={sticker}
-              value='square'
-              onShapeChange={onShapeChange}
-            />
+            <Shape register={register} name='shape' sticker={sticker} value='square' onShapeChange={onShapeChange} />
             <Shape
               register={register}
               name='shape'
@@ -233,13 +214,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
               value='rounded_square'
               onShapeChange={onShapeChange}
             />
-            <Shape
-              register={register}
-              name='shape'
-              sticker={sticker}
-              value='circle'
-              onShapeChange={onShapeChange}
-            />
+            <Shape register={register} name='shape' sticker={sticker} value='circle' onShapeChange={onShapeChange} />
           </div>
         </fieldset>
         <fieldset className={styles.flex}>
@@ -266,7 +241,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
             Размер
             {sticker.id !== stickerActiveId && (
               <span className={styles.size_hidden}>
-                {getValues('width')}x{getValues('height')}см
+                {sticker.width}x{sticker.height}см
               </span>
             )}
           </p>
@@ -284,7 +259,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
                     height: sticker.optimal_height,
                     width: sticker.optimal_width,
                     size_type: 'optimal',
-                  })
+                  }),
                 );
               }}
             >
@@ -306,7 +281,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
                       height: getValues('height'),
                       width: getValues('width'),
                       size_type: 'custom',
-                    })
+                    }),
                   );
                 }}
               >
