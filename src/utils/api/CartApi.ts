@@ -95,6 +95,7 @@ class CartApi extends Api {
       width: sticker.width,
       optimal_width: sticker.optimal_width,
       optimal_height: sticker.optimal_height,
+      size_type: sticker.size_type,
     };
     const data = await fetch(`${this.url}/cart/update_sticker/${sticker.id}`, {
       method: 'PUT',

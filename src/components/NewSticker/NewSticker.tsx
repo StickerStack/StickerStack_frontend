@@ -15,13 +15,7 @@ import { ButtonCustom, Input, InputError, InputField, RadioButton, TooltipCustom
 import { addpage } from '../../utils/content/stickerspage';
 import { InfoBox } from '../InfoBox/InfoBox';
 import { useAppDispatch } from '../../hooks/hooks';
-import {
-  addStickers,
-  deleteSticker,
-  getStickers,
-  putStickerInCart,
-  updateSticker,
-} from '../../store/stickersSlice';
+import { addStickers, deleteSticker, getStickers, putStickerInCart, updateSticker } from '../../store/stickersSlice';
 import { Shape } from '../Shape/Shape';
 import { ISticker } from '../../interfaces/ISticker';
 import { DragAndDrop } from '../DragAndDrop/DragAndDrop';
@@ -50,10 +44,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
     defaultValues: {
       shape: sticker.shape,
       amount: sticker.amount,
-      size:
-        sticker.width === sticker.optimal_width && sticker.height === sticker.optimal_height
-          ? 'optimal'
-          : 'custom',
+      size: sticker.size_type,
       width: sticker.optimal_width,
       height: sticker.optimal_height,
     },
@@ -61,11 +52,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
   const [block, setBlock] = useState(false);
-  const [customVisible, setCustomVisible] = useState<boolean>(
-    sticker.width === sticker.optimal_width && sticker.height === sticker.optimal_height
-      ? false
-      : true,
-  );
+  const [customVisible, setCustomVisible] = useState<boolean>(sticker.size_type === 'custom');
 
   const shapesType = {
     circle: 'круг',
@@ -124,11 +111,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
   };
 
   const sizeValidate = (value: string): boolean => {
-    return (
-      REG_STICKERS.test(value) &&
-      Number(value) >= SIZE_INPUT_MIN_LENGTH &&
-      Number(value) <= SIZE_INPUT_MAX_LENGTH
-    );
+    return REG_STICKERS.test(value) && Number(value) >= SIZE_INPUT_MIN_LENGTH && Number(value) <= SIZE_INPUT_MAX_LENGTH;
   };
 
   const onWidthChange = () => {
@@ -171,14 +154,10 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
   const width = watch('width');
   const height = watch('height');
 
-  const initialOptimal =
-    sticker.width === sticker.optimal_width && sticker.height === sticker.optimal_height;
-  const initialCustom =
-    sticker.width !== sticker.optimal_width || sticker.height !== sticker.optimal_height;
+  const initialSize = sticker.size_type;
 
   const fieldsUnchanged =
-    initialOptimal === (size === 'optimal') &&
-    initialCustom === (size === 'custom') &&
+    initialSize === sticker.size_type &&
     sticker.shape === shape &&
     sticker.amount === amount &&
     sticker.width === width &&
@@ -191,6 +170,9 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
     setValue('amount', sticker.amount);
     setValue('width', sticker.width);
     setValue('height', sticker.height);
+    setValue('optimal_width', sticker.optimal_width);
+    setValue('optimal_height', sticker.optimal_height);
+    setValue('size', sticker.size_type);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -200,10 +182,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
       onClick={sticker.id === stickerActiveId ? () => null : () => handleActiveSticker(sticker.id)}
     >
       {loading && <Loader loading={loading} />}
-      <form
-        className={sticker.id === stickerActiveId ? styles.info : styles.info_unactive}
-        onSubmit={handleSubmit}
-      >
+      <form className={sticker.id === stickerActiveId ? styles.info : styles.info_unactive} onSubmit={handleSubmit}>
         <div className={styles.image}>
           {/* Оставляем драгндроп с инпутом картинки, чтобы при сворачивании карточки он не размонтировался и не очищался инпут*/}
           <DragAndDrop
@@ -227,13 +206,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
             )}
           </label>
           <div className={cn(styles.shapes, sticker.id !== stickerActiveId && styles.hidden)}>
-            <Shape
-              register={register}
-              name='shape'
-              sticker={sticker}
-              value='square'
-              onShapeChange={onShapeChange}
-            />
+            <Shape register={register} name='shape' sticker={sticker} value='square' onShapeChange={onShapeChange} />
             <Shape
               register={register}
               name='shape'
@@ -241,21 +214,13 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
               value='rounded_square'
               onShapeChange={onShapeChange}
             />
-            <Shape
-              register={register}
-              name='shape'
-              sticker={sticker}
-              value='circle'
-              onShapeChange={onShapeChange}
-            />
+            <Shape register={register} name='shape' sticker={sticker} value='circle' onShapeChange={onShapeChange} />
           </div>
         </fieldset>
         <fieldset className={styles.flex}>
           <label className={styles.category} htmlFor='amount'>
             Количество стикеров
-            {sticker.id !== stickerActiveId && (
-              <span className={styles.size_hidden}>{sticker.amount}шт</span>
-            )}
+            {sticker.id !== stickerActiveId && <span className={styles.size_hidden}>{sticker.amount}шт</span>}
           </label>
           {sticker.id === stickerActiveId && (
             <InputField className='amount'>
@@ -276,7 +241,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
             Размер
             {sticker.id !== stickerActiveId && (
               <span className={styles.size_hidden}>
-                {getValues('width')}x{getValues('height')}см
+                {sticker.width}x{sticker.height}см
               </span>
             )}
           </p>
@@ -288,6 +253,14 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
               onClick={() => {
                 setCustomVisible(false);
                 setBlock(false);
+                dispatch(
+                  updateSticker({
+                    ...sticker,
+                    height: sticker.optimal_height,
+                    width: sticker.optimal_width,
+                    size_type: 'optimal',
+                  }),
+                );
               }}
             >
               Оптимальный размер
@@ -302,6 +275,14 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
                 onClick={() => {
                   setCustomVisible(true);
                   setBlock(false);
+                  dispatch(
+                    updateSticker({
+                      ...sticker,
+                      height: getValues('height'),
+                      width: getValues('width'),
+                      size_type: 'custom',
+                    }),
+                  );
                 }}
               >
                 Свой размер

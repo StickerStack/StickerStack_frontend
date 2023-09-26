@@ -8,7 +8,8 @@ export interface ISticker {
   width: number,
   height: number,
   optimal_width: number,
-  optimal_height: number
+  optimal_height: number,
+  size_type: 'custom' | 'optimal',
 }
 
 export interface IStickerForOrder {
