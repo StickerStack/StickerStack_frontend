@@ -48,10 +48,10 @@ const PopupInfo: React.FC = () => {
           className={styles.button_wide}
           onClick={() => {
             localStorage.removeItem('email');
+            dispatch(closePopup());
             if (onClick) {
               onClick();
             }
-            dispatch(closePopup());
           }}
         >
           {info.buttonText}
@@ -62,10 +62,10 @@ const PopupInfo: React.FC = () => {
             className={styles.button}
             onClick={() => {
               localStorage.removeItem('email');
+              dispatch(closePopup());
               if (onClick) {
                 onClick();
               }
-              dispatch(closePopup());
             }}
           >
             {info.buttonText}

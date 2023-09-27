@@ -84,16 +84,26 @@ const ProfilePage: React.FC = () => {
       .then(() => {
         dispatch(openMessage({ text: `${messages.success}`, isError: false }));
         if (emailChanged) {
-          dispatch(sendVerificationCode());
-          const randomNumber = getRandomNumber(1, 3);
-          dispatch(
-            openInfo({
-              title: `${verifyChanged.title}`,
-              text: `${verifyChanged.text}`,
-              buttonText: `${verifyChanged.buttonText}`,
-              image: require(`../../../images/check-your-mail-${randomNumber}.png`),
-            }),
-          );
+          dispatch(sendVerificationCode())
+            .then(() => {
+              const randomNumber = getRandomNumber(1, 3);
+              dispatch(
+                openInfo({
+                  title: `${verifyChanged.title}`,
+                  text: `${verifyChanged.text}`,
+                  buttonText: `${verifyChanged.buttonText}`,
+                  image: require(`../../../images/check-your-mail-${randomNumber}.png`),
+                }),
+              );
+            })
+            .catch(() =>
+              dispatch(
+                openMessage({
+                  text: `${messages.somethingWrong}`,
+                  isError: true,
+                }),
+              ),
+            );
         }
       })
       .catch((err) => {
@@ -216,16 +226,26 @@ const ProfilePage: React.FC = () => {
                 <TextUnderline
                   className={styles.underline}
                   onClick={() => {
-                    dispatch(sendVerificationCode());
-                    const randomNumber = getRandomNumber(1, 3);
-                    dispatch(
-                      openInfo({
-                        title: `${verifyPlease.title}`,
-                        text: `${verifyPlease.text}`,
-                        buttonText: `${verifyPlease.buttonText}`,
-                        image: require(`../../../images/check-your-mail-${randomNumber}.png`),
-                      }),
-                    );
+                    dispatch(sendVerificationCode())
+                      .then(() => {
+                        const randomNumber = getRandomNumber(1, 3);
+                        dispatch(
+                          openInfo({
+                            title: `${verifyPlease.title}`,
+                            text: `${verifyPlease.text}`,
+                            buttonText: `${verifyPlease.buttonText}`,
+                            image: require(`../../../images/check-your-mail-${randomNumber}.png`),
+                          }),
+                        );
+                      })
+                      .catch(() =>
+                        dispatch(
+                          openMessage({
+                            text: `${messages.somethingWrong}`,
+                            isError: true,
+                          }),
+                        ),
+                      );
                   }}
                 >
                   {profile.link.text}

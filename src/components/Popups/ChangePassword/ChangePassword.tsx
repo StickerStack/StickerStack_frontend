@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 
 import {
   ButtonWithText,
@@ -11,14 +10,12 @@ import {
   InputWithButton,
   InputField,
 } from '../../UI';
-
-import { closePopup, openInfo, openMessage } from '../../../store/popupSlice';
+import { closePopup, openInfo, openMessage, openPopup } from '../../../store/popupSlice';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { resetPassword } from '../../../store/authSlice';
 import { registerPassword } from '../../../utils/registersRHF';
-import { ADD_STICKERS, getRandomNumber } from '../../../utils/constants';
 import { changePassword, messages, passwordChanged } from '../../../utils/content/popups';
-
+import { Signin } from '../Signin/Signin';
 import styles from './ChangePassword.module.scss';
 
 const ChangePassword: React.FC = () => {
@@ -31,7 +28,6 @@ const ChangePassword: React.FC = () => {
     mode: 'onBlur',
   });
 
-  const navigate = useNavigate();
   const [token, setToken] = useState<string>('');
   const dispatch = useAppDispatch();
 
@@ -52,7 +48,9 @@ const ChangePassword: React.FC = () => {
             buttonText: `${passwordChanged.buttonText}`,
             image: require(`../../../images/password-changed.png`),
             imageAbsolute: true,
-            onClick: () => navigate(ADD_STICKERS),
+            onClick: () => {
+              dispatch(openPopup(Signin));
+            },
           }),
         );
         localStorage.removeItem('change-password-token');
@@ -68,7 +66,7 @@ const ChangePassword: React.FC = () => {
         } else if (err.message === '400') {
           dispatch(
             openMessage({
-              text: `Срок действия ссылки истек. Попробуйте запросить восстановление пароля еще раз.`,
+              text: `${passwordChanged.error}`,
               isError: true,
             }),
           );

@@ -99,7 +99,7 @@ const ImagePick: React.FC<IProps> = ({ className }: IProps) => {
           }}
         />
       )}
-      <PicOverlay className={styles.overlay} onLoadImage={onLoadImage} deleteImage={deleteImage} />
+      {/* <PicOverlay className={styles.overlay} onLoadImage={onLoadImage} deleteImage={deleteImage} /> */}
     </div>
   );
 };

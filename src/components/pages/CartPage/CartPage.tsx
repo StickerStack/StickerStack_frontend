@@ -1,37 +1,36 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import cn from 'classnames';
 import { useAppDispatch } from '../../../hooks/hooks';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useForm, FieldValues } from 'react-hook-form';
 
-import { updateAddress, uploadOrder } from '../../../store/cartSlice';
-import { openInfo, openMessage } from '../../../store/popupSlice';
+import { updateAddress } from '../../../store/cartSlice';
+import { closePopup, openInfo, openMessage, openPreview } from '../../../store/popupSlice';
 import { TitlePage, Container, ButtonWithText, TextUnderline, Input, Error } from '../../UI';
-import { ADD_STICKERS, ORDERS } from '../../../utils/constants';
+import { ADD_STICKERS, ORDERS, getRandomNumber } from '../../../utils/constants';
 import { Sticker } from '../../Sticker/Sticker';
 import { InfoBox } from '../../InfoBox/InfoBox';
 import { ICart } from '../../../interfaces/ICart';
-import { messages, orderPlaced } from '../../../utils/content/popups';
+import { messages, verifyBeforeOredering } from '../../../utils/content/popups';
 import { cartpage } from '../../../utils/content/stickerspage';
 import { IStickersState } from '../../../interfaces/IStickersState';
-import { removeAllStickers } from '../../../store/stickersSlice';
 import { Dots } from '../../animations/Dots/Dots';
+import { Loader } from '../../UI/Loader/Loader';
+import { IUserState } from '../../../interfaces';
+import { sendVerificationCode } from '../../../store/authSlice';
+import { getUser } from '../../../store/userSlice';
 
-import image from '../../../images/cart-dog.png';
 import { ReactComponent as WriteSvg } from '../../../images/icons/write-icon.svg';
 import styles from './CartPage.module.scss';
-import { Loader } from '../../UI/Loader/Loader';
 
 const CartPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const [loadingOrder, setLoadingOrder] = useState(false);
 
-  const { stickers, loading, error } = useSelector(
-    (state: { stickers: IStickersState }) => state.stickers,
-  );
+  const { stickers, loading, error } = useSelector((state: { stickers: IStickersState }) => state.stickers);
   const cart = useSelector((state: { cart: ICart }) => state.cart);
+  const { isVerified } = useSelector((state: { user: IUserState }) => state.user);
 
   const {
     register,
@@ -49,57 +48,41 @@ const CartPage: React.FC = () => {
   }, []);
 
   const onSubmit = () => {
-    setLoadingOrder(true);
-    dispatch(
-      uploadOrder({
-        cost: cart.cost,
-        address: cart.address,
-        number: cart.number_of_sheets,
-        cropping: cart.cropping,
-        stickers: stickers.slice(0, stickers.length - 1).map((item) => {
-          return {
-            image: item.image,
-            shape: item.shape,
-            amount: item.amount,
-            width: item.width,
-            height: item.height,
-          };
-        }),
-      }),
-    )
-      .unwrap()
+    dispatch(getUser())
       .then(() => {
-        dispatch(
-          openInfo({
-            title: `${orderPlaced.title}`,
-            text: `${orderPlaced.text}`,
-            buttonText: `${orderPlaced.buttonText}`,
-            buttonSecondText: `${orderPlaced.buttonSecondText}`,
-            onClick: () => navigate(ADD_STICKERS),
-            onClickSecond: () => navigate(ORDERS),
-            image: image,
-          }),
-        );
-        dispatch(removeAllStickers());
-      })
-      .catch((err) => {
-        if (err.message === '413') {
+        if (isVerified) {
+          dispatch(openPreview());
+        } else {
+          const randomNumber = getRandomNumber(1, 3);
           dispatch(
-            openMessage({
-              text: `${messages.itemTooBig}`,
-              isError: true,
-            }),
-          );
-        } else if (err.message) {
-          dispatch(
-            openMessage({
-              text: `${messages.somethingWrong}`,
-              isError: true,
+            openInfo({
+              title: `${verifyBeforeOredering.title}`,
+              text: `${verifyBeforeOredering.text}`,
+              buttonText: `${verifyBeforeOredering.buttonText}`,
+              onClick: () =>
+                dispatch(sendVerificationCode())
+                  .then(() => closePopup())
+                  .catch(() =>
+                    dispatch(
+                      openMessage({
+                        text: `${messages.somethingWrong}`,
+                        isError: true,
+                      }),
+                    ),
+                  ),
+              image: require(`../../../images/check-your-mail-${randomNumber}.png`),
             }),
           );
         }
       })
-      .finally(() => setLoadingOrder(false));
+      .catch(() =>
+        dispatch(
+          openMessage({
+            text: `${messages.somethingWrong}`,
+            isError: true,
+          }),
+        ),
+      );
   };
 
   return (
@@ -129,41 +112,27 @@ const CartPage: React.FC = () => {
               ))}
             </div>
             <form className={cn(styles.banner, styles.info)} onSubmit={handleSubmit(onSubmit)}>
-              <InfoBox
-                type='number'
-                description={cartpage.pages}
-                descriptionClass={styles.description}
-              >
+              <InfoBox type='number' description={cartpage.pages} descriptionClass={styles.description}>
                 {cart.number_of_sheets}
               </InfoBox>
               {cart.cropping && <span>{cartpage.cropping}</span>}
-              <InfoBox
-                type='number'
-                description={cartpage.stickers}
-                descriptionClass={styles.description}
-              >
+              <InfoBox type='number' description={cartpage.stickers} descriptionClass={styles.description}>
                 {cart.totalAmount}
               </InfoBox>
-              <InfoBox
-                type='simple'
-                description={cartpage.delivery}
-                descriptionClass={styles.description}
-              >
+              <InfoBox type='simple' description={cartpage.delivery} descriptionClass={styles.description}>
                 Самовывоз
               </InfoBox>
               <InfoBox type='simple' description={cartpage.address} className={styles.address_box}>
                 <div className={styles.address_box}>
-                  <Input
-                    register={register}
-                    option={{
+                  <textarea
+                    {...register('address', {
                       required: 'Введите адрес',
                       onBlur: (value: React.FocusEvent<HTMLInputElement>) => {
                         setValue('address', value.target.value.trim());
                         dispatch(updateAddress(value.target.value));
                       },
-                    }}
-                    name='address'
-                    type='textarea'
+                    })}
+                    disabled
                     className={cn(styles.address, errors.address && styles.address_error)}
                     placeholder='Выберите адрес'
                   />
@@ -177,7 +146,7 @@ const CartPage: React.FC = () => {
                 <TextUnderline theme='secondary' onClick={() => navigate(ADD_STICKERS)}>
                   {cartpage.link}
                 </TextUnderline>
-                <ButtonWithText className={styles.button} type='submit' loading={loadingOrder}>
+                <ButtonWithText className={styles.button} type='submit'>
                   {cartpage.button}
                 </ButtonWithText>
               </div>

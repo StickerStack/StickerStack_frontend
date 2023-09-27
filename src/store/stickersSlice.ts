@@ -5,16 +5,13 @@ import { ISticker } from '../interfaces/ISticker';
 import { calculateStickerOnList } from '../utils/calculateStickerOnList';
 import { pageSizePx } from '../utils/constants';
 
-export const getStickers = createAsyncThunk(
-  'sticker/getStickers',
-  async (_, { rejectWithValue }) => {
-    try {
-      return await cartApi.getCart();
-    } catch (err) {
-      return rejectWithValue(err);
-    }
-  },
-);
+export const getStickers = createAsyncThunk('sticker/getStickers', async (_, { rejectWithValue }) => {
+  try {
+    return await cartApi.getCart();
+  } catch (err) {
+    return rejectWithValue(err);
+  }
+});
 
 export const clearStickers = createAsyncThunk('clear_cart', async (data, { rejectWithValue }) => {
   try {
@@ -39,6 +36,7 @@ export const addStickers = createAsyncThunk(
   'sticker/addStickers',
   async (stickers: Array<ISticker>, { rejectWithValue }) => {
     try {
+      console.log(stickers);
       return await cartApi.addStickers(stickers);
     } catch (err) {
       return rejectWithValue(err);
@@ -46,17 +44,14 @@ export const addStickers = createAsyncThunk(
   },
 );
 
-export const deleteSticker = createAsyncThunk(
-  'sticker/deleteSticker',
-  async (id: string, { rejectWithValue }) => {
-    try {
-      await cartApi.deleteSticker(id);
-      return id;
-    } catch (err) {
-      return rejectWithValue(err);
-    }
-  },
-);
+export const deleteSticker = createAsyncThunk('sticker/deleteSticker', async (id: string, { rejectWithValue }) => {
+  try {
+    await cartApi.deleteSticker(id);
+    return id;
+  } catch (err) {
+    return rejectWithValue(err);
+  }
+});
 
 // Добавить pages массив для посчитаных стикеров
 const initialState: IStickersState = {
@@ -68,10 +63,11 @@ const initialState: IStickersState = {
       image: '',
       shape: 'square',
       amount: 1,
-      width: 5,
-      height: 5,
-      optimal_width: 5,
-      optimal_height: 5,
+      width: 3,
+      height: 3,
+      optimal_width: 3,
+      optimal_height: 3,
+      size_type: 'optimal',
     },
   ],
   pages: [],
@@ -90,7 +86,32 @@ const stickerSlice = createSlice({
       });
     },
     removeAllStickers(state) {
-      state.stickers = [];
+      state.stickers = [
+        {
+          id: 'newSticker',
+          image: '',
+          shape: 'square',
+          amount: 1,
+          width: 3,
+          height: 3,
+          optimal_width: 3,
+          optimal_height: 3,
+          size_type: 'optimal',
+        },
+      ];
+    },
+    addEmptySticker(state) {
+      state.stickers.push({
+        id: 'newSticker',
+        image: '',
+        shape: 'square',
+        amount: 1,
+        width: 3,
+        height: 3,
+        optimal_width: 3,
+        optimal_height: 3,
+        size_type: 'optimal',
+      });
     },
   },
   extraReducers: (builder) => {
@@ -104,17 +125,15 @@ const stickerSlice = createSlice({
           image: '',
           shape: 'square',
           amount: 1,
-          width: 5,
-          height: 5,
-          optimal_width: 5,
-          optimal_height: 5,
+          width: 3,
+          height: 3,
+          optimal_width: 3,
+          optimal_height: 3,
+          size_type: 'optimal',
         },
       ];
 
-      state.pages = calculateStickerOnList(
-        state.stickers.slice(0, state.stickers.length - 1),
-        pageSizePx,
-      );
+      state.pages = calculateStickerOnList(state.stickers.slice(0, state.stickers.length - 1), pageSizePx);
     });
     builder.addCase(getStickers.pending, (state) => {
       state.loading = true;
@@ -133,10 +152,7 @@ const stickerSlice = createSlice({
         return sticker;
       });
 
-      state.pages = calculateStickerOnList(
-        state.stickers.slice(0, state.stickers.length - 1),
-        pageSizePx,
-      );
+      state.pages = calculateStickerOnList(state.stickers.slice(0, state.stickers.length - 1), pageSizePx);
     });
     builder.addCase(clearStickers.fulfilled, (state) => {
       state.stickers = [];
@@ -144,13 +160,10 @@ const stickerSlice = createSlice({
     builder.addCase(deleteSticker.fulfilled, (state, action) => {
       state.stickers = state.stickers.filter((sticker) => sticker.id !== action.payload);
 
-      state.pages = calculateStickerOnList(
-        state.stickers.slice(0, state.stickers.length - 1),
-        pageSizePx,
-      );
+      state.pages = calculateStickerOnList(state.stickers.slice(0, state.stickers.length - 1), pageSizePx);
     });
   },
 });
 
 export const stickerSliceReducer = stickerSlice.reducer;
-export const { updateSticker, removeAllStickers } = stickerSlice.actions;
+export const { updateSticker, addEmptySticker, removeAllStickers } = stickerSlice.actions;
