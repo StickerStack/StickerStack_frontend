@@ -11,6 +11,7 @@ import { IUserState } from '../../../interfaces';
 import { Signin } from '../../Popups/Signin/Signin';
 
 import image from '../../../images/email-confirmed.png';
+import { getUser } from '../../../store/userSlice';
 
 const VerifyEmail: React.FC = () => {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ const VerifyEmail: React.FC = () => {
   useEffect(() => {
     dispatch(verifyEmail({ token: location.pathname.replace('/auth/verifyemail/', '') }))
       .then(() => {
+        dispatch(getUser());
         navigate(PROFILE);
       })
       .then(() =>

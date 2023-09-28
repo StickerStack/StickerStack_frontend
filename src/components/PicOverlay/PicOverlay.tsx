@@ -23,7 +23,7 @@ const PicOverlay: React.FC<IProps> = ({ className, label, onLoadImage, deleteIma
     <div className={cn(styles.overlay, className)}>
       <ButtonWithText type='button' theme='no-border' className={styles.button}>
         <label htmlFor={location.pathname === PROFILE ? 'myimage' : label} className={styles.flex}>
-          <PictureSvg /> <span className={styles.label}>Загрузить изображение</span>
+          <PictureSvg /> <span className={styles.label}>Сменить изображение</span>
         </label>
       </ButtonWithText>
       {location.pathname === PROFILE && (
