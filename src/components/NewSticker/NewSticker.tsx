@@ -349,6 +349,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
             buttonType='submit'
             type='add'
             label='Добавить'
+            title='Добавить в заказ'
             disabled={!isValid || sticker.image === ''}
             className={sticker.id === stickerActiveId && !loading ? styles.save : styles.hidden}
           />
@@ -359,6 +360,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
             disabled={!isValid || fieldsUnchanged || block}
             className={sticker.id === stickerActiveId && !loading ? styles.save : styles.hidden}
             label='Сохранить'
+            title='Сохранить'
           />
         )}
       </form>
@@ -367,6 +369,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
           type='delete'
           className={sticker.id === stickerActiveId ? styles.delete : styles.hidden}
           label='Удалить'
+          title='Удалить'
           onClick={handleDelete}
         />
       )}
