@@ -37,7 +37,6 @@ export const AddStickersNew: FC = () => {
       } else setStickerActiveId(stickers[0].id);
     }
   }, [stickerActiveId, stickers]);
-  console.log();
 
   const { register } = useForm<FieldValues>({
     mode: 'onBlur',
