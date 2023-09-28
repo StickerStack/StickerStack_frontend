@@ -32,7 +32,7 @@ const getRandomNumber = (min: number, max: number) => {
 };
 
 const pagePrice = 290;
-const CARDS_MAXIMUM = 3;
+const CARDS_MAXIMUM = 15;
 
 const pageSize: IOptions = {
   widthPage: 266.49,
