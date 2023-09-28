@@ -24,6 +24,7 @@ const StickerCarousel: React.FC<IProps> = ({ order }: IProps) => {
       optimal_width: sticker.width,
       optimal_height: sticker.height,
       id: sticker.id,
+      size_type: sticker.size_type,
     };
   });
 

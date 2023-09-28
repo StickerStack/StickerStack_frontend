@@ -3,9 +3,12 @@ import { useEffect } from 'react';
 
 import { useAppDispatch } from '../../../hooks/hooks';
 import { verifyEmail } from '../../../store/authSlice';
-import { openInfo } from '../../../store/popupSlice';
-import { ADD_STICKERS, PAGE_404 } from '../../../utils/constants';
+import { openInfo, openPopup } from '../../../store/popupSlice';
+import { ADD_STICKERS, PAGE_404, PROFILE } from '../../../utils/constants';
 import { verified } from '../../../utils/content/popups';
+import { useSelector } from 'react-redux';
+import { IUserState } from '../../../interfaces';
+import { Signin } from '../../Popups/Signin/Signin';
 
 import image from '../../../images/email-confirmed.png';
 
@@ -14,10 +17,12 @@ const VerifyEmail: React.FC = () => {
   const location = useLocation();
   const dispatch = useAppDispatch();
 
+  const { isLogged, isVerified } = useSelector((state: { user: IUserState }) => state.user);
+
   useEffect(() => {
     dispatch(verifyEmail({ token: location.pathname.replace('/auth/verifyemail/', '') }))
       .then(() => {
-        navigate('/');
+        navigate(PROFILE);
       })
       .then(() =>
         dispatch(
@@ -27,7 +32,13 @@ const VerifyEmail: React.FC = () => {
             buttonText: `${verified.buttonText}`,
             image: image,
             imageAbsolute: true,
-            onClick: () => navigate(ADD_STICKERS),
+            onClick: () => {
+              if (isLogged) {
+                navigate(ADD_STICKERS);
+              } else {
+                dispatch(openPopup(Signin));
+              }
+            },
           }),
         ),
       )

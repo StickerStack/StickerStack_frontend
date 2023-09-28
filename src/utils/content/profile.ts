@@ -1,6 +1,6 @@
 export const profileMenu = {
   button: 'Заказать стикеры',
-  orders: 'Заказы',
+  orders: 'Мои заказы',
   signout: 'Выход',
 };
 

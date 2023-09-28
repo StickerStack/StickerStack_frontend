@@ -51,7 +51,7 @@ const ProfileMenu = forwardRef<HTMLHeadingElement>((props, ref) => {
           <span className={cn(styles.name, styles.name_overflow)}>
             {lastName || firstName ? `${firstName}` : email}
           </span>
-          {(lastName || firstName) && <span className={styles.name}>{lastName}</span>}
+          {(lastName || firstName) && <span className={cn(styles.name, styles.name_overflow)}>{lastName}</span>}
         </div>
       </Link>
 
