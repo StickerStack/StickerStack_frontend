@@ -3,7 +3,7 @@ import { IStickersState } from '../interfaces/IStickersState';
 import { cartApi } from '../utils/api/CartApi';
 import { ISticker } from '../interfaces/ISticker';
 import { calculateStickerOnList } from '../utils/calculateStickerOnList';
-import { pageSizePx } from '../utils/constants';
+import { CARDS_MAXIMUM, pageSizePx } from '../utils/constants';
 
 export const getStickers = createAsyncThunk('sticker/getStickers', async (_, { rejectWithValue }) => {
   try {
@@ -36,7 +36,6 @@ export const addStickers = createAsyncThunk(
   'sticker/addStickers',
   async (stickers: Array<ISticker>, { rejectWithValue }) => {
     try {
-      console.log(stickers);
       return await cartApi.addStickers(stickers);
     } catch (err) {
       return rejectWithValue(err);
@@ -101,26 +100,8 @@ const stickerSlice = createSlice({
       ];
     },
     addEmptySticker(state) {
-      state.stickers.push({
-        id: 'newSticker',
-        image: '',
-        shape: 'square',
-        amount: 1,
-        width: 3,
-        height: 3,
-        optimal_width: 3,
-        optimal_height: 3,
-        size_type: 'optimal',
-      });
-    },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(getStickers.fulfilled, (state, action) => {
-      state.loading = false;
-      state.error = false;
-      state.stickers = [
-        ...action.payload,
-        {
+      if (state.stickers.length < CARDS_MAXIMUM) {
+        state.stickers.push({
           id: 'newSticker',
           image: '',
           shape: 'square',
@@ -130,8 +111,42 @@ const stickerSlice = createSlice({
           optimal_width: 3,
           optimal_height: 3,
           size_type: 'optimal',
-        },
-      ];
+        });
+      }
+    },
+    addSticker(state, action) {
+      state.stickers = state.stickers.map((sticker) => {
+        if (sticker.id === 'newSticker') {
+          sticker = action.payload;
+        }
+        return sticker;
+      });
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(getStickers.fulfilled, (state, action) => {
+      state.loading = false;
+      state.error = false;
+
+      if (action.payload.length < CARDS_MAXIMUM) {
+        state.stickers = [
+          ...action.payload,
+
+          {
+            id: 'newSticker',
+            image: '',
+            shape: 'square',
+            amount: 1,
+            width: 3,
+            height: 3,
+            optimal_width: 3,
+            optimal_height: 3,
+            size_type: 'optimal',
+          },
+        ];
+      } else {
+        state.stickers = [...action.payload];
+      }
 
       state.pages = calculateStickerOnList(state.stickers.slice(0, state.stickers.length - 1), pageSizePx);
     });
@@ -159,6 +174,22 @@ const stickerSlice = createSlice({
     });
     builder.addCase(deleteSticker.fulfilled, (state, action) => {
       state.stickers = state.stickers.filter((sticker) => sticker.id !== action.payload);
+      if (
+        state.stickers.length === CARDS_MAXIMUM - 1 &&
+        !state.stickers.find((sticker) => sticker.id === 'newSticker')
+      ) {
+        state.stickers.push({
+          id: 'newSticker',
+          image: '',
+          shape: 'square',
+          amount: 1,
+          width: 3,
+          height: 3,
+          optimal_width: 3,
+          optimal_height: 3,
+          size_type: 'optimal',
+        });
+      }
 
       state.pages = calculateStickerOnList(state.stickers.slice(0, state.stickers.length - 1), pageSizePx);
     });
@@ -166,4 +197,4 @@ const stickerSlice = createSlice({
 });
 
 export const stickerSliceReducer = stickerSlice.reducer;
-export const { updateSticker, addEmptySticker, removeAllStickers } = stickerSlice.actions;
+export const { updateSticker, addEmptySticker, addSticker, removeAllStickers } = stickerSlice.actions;

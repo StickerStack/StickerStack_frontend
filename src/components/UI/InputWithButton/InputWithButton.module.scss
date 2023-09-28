@@ -54,6 +54,9 @@
     }
     &.profile {
       color: $main-text-color;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
       &:focus {
         border-color: $placeholder-text-color;
       }

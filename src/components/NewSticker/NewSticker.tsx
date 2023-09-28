@@ -15,7 +15,14 @@ import { ButtonCustom, Input, InputError, InputField, RadioButton, TooltipCustom
 import { addpage } from '../../utils/content/stickerspage';
 import { InfoBox } from '../InfoBox/InfoBox';
 import { useAppDispatch } from '../../hooks/hooks';
-import { addStickers, deleteSticker, getStickers, putStickerInCart, updateSticker } from '../../store/stickersSlice';
+import {
+  addEmptySticker,
+  addSticker,
+  addStickers,
+  deleteSticker,
+  putStickerInCart,
+  updateSticker,
+} from '../../store/stickersSlice';
 import { Shape } from '../Shape/Shape';
 import { ISticker } from '../../interfaces/ISticker';
 import { DragAndDrop } from '../DragAndDrop/DragAndDrop';
@@ -95,9 +102,13 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
     setLoading(true);
     if (sticker.id === 'newSticker') {
       dispatch(addStickers([sticker]))
+        .then((res) => {
+          const addedSticker = res.payload[0];
+          dispatch(addSticker({ ...addedSticker }));
+          dispatch(addEmptySticker());
+        })
         .catch(() => dispatch(openMessage({ text: `${messages.somethingWrong}`, isError: true })))
         .finally(() => {
-          dispatch(getStickers());
           setLoading(false);
         });
     }
@@ -178,7 +189,11 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
 
   return (
     <article
-      className={sticker.id === stickerActiveId ? styles.card : styles.card_unactive}
+      className={cn(
+        styles.card,
+        sticker.id !== stickerActiveId && styles.card_unactive,
+        sticker.id !== stickerActiveId && sticker.id === 'newSticker' && styles.card_unactive_new,
+      )}
       onClick={sticker.id === stickerActiveId ? () => null : () => handleActiveSticker(sticker.id)}
     >
       {loading && <Loader loading={loading} />}
@@ -334,6 +349,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
             buttonType='submit'
             type='add'
             label='Добавить'
+            title='Добавить в заказ'
             disabled={!isValid || sticker.image === ''}
             className={sticker.id === stickerActiveId && !loading ? styles.save : styles.hidden}
           />
@@ -344,6 +360,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
             disabled={!isValid || fieldsUnchanged || block}
             className={sticker.id === stickerActiveId && !loading ? styles.save : styles.hidden}
             label='Сохранить'
+            title='Сохранить'
           />
         )}
       </form>
@@ -352,6 +369,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
           type='delete'
           className={sticker.id === stickerActiveId ? styles.delete : styles.hidden}
           label='Удалить'
+          title='Удалить'
           onClick={handleDelete}
         />
       )}

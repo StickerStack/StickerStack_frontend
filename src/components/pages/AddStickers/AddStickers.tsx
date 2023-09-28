@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { FieldValues, useForm } from 'react-hook-form';
@@ -13,19 +13,15 @@ import { IStickersState } from '../../../interfaces/IStickersState';
 import { ButtonWithText, Container, RadioButton, TextUnderline, TitlePage, Error } from '../../UI';
 import { addpage } from '../../../utils/content/stickerspage';
 import { openPreview } from '../../../store/popupSlice';
-import { CARDS_MAXIMUM, CART, pagePrice } from '../../../utils/constants';
+import { CART, pagePrice } from '../../../utils/constants';
 import { Dots } from '../../animations/Dots/Dots';
 import { Loader } from '../../UI/Loader/Loader';
 
 import styles from './AddStickers.module.scss';
 
 export const AddStickersNew: FC = () => {
-  const { stickers, loading, error } = useSelector(
-    (state: { stickers: IStickersState }) => state.stickers,
-  );
-  const { cropping, cost, totalAmount, number_of_sheets } = useSelector(
-    (state: { cart: ICart }) => state.cart,
-  );
+  const { stickers, loading, error } = useSelector((state: { stickers: IStickersState }) => state.stickers);
+  const { cropping, cost, totalAmount, number_of_sheets } = useSelector((state: { cart: ICart }) => state.cart);
   const [stickerActiveId, setStickerActiveId] = useState(stickers[0].id);
 
   const dispatch = useAppDispatch();
@@ -33,6 +29,14 @@ export const AddStickersNew: FC = () => {
   const naviagate = useNavigate();
 
   const handleActiveSticker = (id: string) => setStickerActiveId(id);
+
+  useEffect(() => {
+    if (!stickers.some((sticker) => sticker.id === stickerActiveId)) {
+      if (stickers.some((sticker) => sticker.id === 'newSticker')) {
+        setStickerActiveId('newSticker');
+      } else setStickerActiveId(stickers[0].id);
+    }
+  }, [stickerActiveId, stickers]);
 
   const { register } = useForm<FieldValues>({
     mode: 'onBlur',
@@ -60,6 +64,7 @@ export const AddStickersNew: FC = () => {
                     initial={{
                       opacity: 0.4,
                       height: 0,
+                      overflow: 'hidden',
                     }}
                     animate={{
                       transition: {
@@ -68,6 +73,7 @@ export const AddStickersNew: FC = () => {
                       },
                       opacity: 1,
                       height: 'auto',
+                      overflow: 'visible',
                     }}
                     exit={{
                       opacity: 0,
@@ -131,21 +137,12 @@ export const AddStickersNew: FC = () => {
                 >
                   {addpage.options.page}
                 </RadioButton>
-                <RadioButton
-                  name='cut'
-                  value='true'
-                  register={register}
-                  onClick={() => dispatch(updateCropping(true))}
-                >
+                <RadioButton name='cut' value='true' register={register} onClick={() => dispatch(updateCropping(true))}>
                   {addpage.options.crop}
                 </RadioButton>
               </form>
             </section>
-            <ButtonWithText
-              disabled={totalAmount === 0}
-              onClick={() => naviagate(CART)}
-              className={styles.button}
-            >
+            <ButtonWithText disabled={stickers.length === 1} onClick={() => naviagate(CART)} className={styles.button}>
               Перейти в корзину
             </ButtonWithText>
           </div>
