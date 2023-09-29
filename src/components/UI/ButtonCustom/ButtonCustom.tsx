@@ -1,7 +1,7 @@
 import cn from 'classnames';
 
-import CartSvg from '../../../assets/images/icons/cart.svg?react';
-import PersonSvg from '../../../assets/images/icons/profile-icon.svg?react';
+import CartSvg from '@images/icons/cart.svg?react';
+import PersonSvg from '@images/icons/profile-icon.svg?react';
 import styles from './ButtonCustom.module.scss';
 
 type ButtonType = 'close' | 'person' | 'cart' | 'delete' | 'arrow' | 'more' | 'save' | 'add';

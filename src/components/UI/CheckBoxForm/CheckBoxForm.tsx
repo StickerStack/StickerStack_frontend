@@ -2,7 +2,7 @@ import { forwardRef } from 'react';
 import cn from 'classnames';
 import { FieldError, FieldErrorsImpl, FieldValues, Merge, RegisterOptions, UseFormRegister } from 'react-hook-form';
 
-import CheckerSvg from '../../../assets/images/icons/checker-icon.svg?react';
+import CheckerSvg from '@images/icons/checker-icon.svg?react';
 import styles from './CheckBoxForm.module.scss';
 
 interface IProps {

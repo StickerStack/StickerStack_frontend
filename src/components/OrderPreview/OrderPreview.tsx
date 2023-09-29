@@ -1,10 +1,7 @@
-import cn from 'classnames';
-
-import { useAppDispatch } from '../../shared/hooks/hooks';
-import { useResize } from '../../shared/hooks/useResize';
-import { openOrder } from '../../shared/store/popupSlice';
-import { IOrder } from '../../shared/interfaces';
-import { StickerImage } from '../StickerImage/StickerImage';
+import { useAppDispatch, useResize } from '@shared/hooks';
+import { openOrder } from '@shared/store';
+import { IOrder } from '@shared/interfaces';
+import { StickerImage } from '../';
 
 import styles from './OrderPreview.module.scss';
 

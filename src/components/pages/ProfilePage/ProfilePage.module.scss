@@ -1,4 +1,4 @@
-@import '../../../assets/styles/_scss-variables.scss';
+@import '@styles/_scss-variables.scss';
 
 .profile {
   flex: 1;
@@ -51,7 +51,7 @@
 }
 
 .remove {
-  background-image: url(../../../images/icons/clear-field.svg);
+  background-image: url(@images/icons/clear-field.svg);
   width: 18px;
   height: 18px;
   background-repeat: no-repeat;

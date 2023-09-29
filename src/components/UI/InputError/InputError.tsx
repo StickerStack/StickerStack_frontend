@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import cn from 'classnames';
 
-import { TInputForError } from '../../../shared/types/TInputError';
+import { TInputForError } from '@shared/types';
 import styles from './InputError.module.scss';
 
 const InputError: FC<TInputForError> = ({ error, className = '' }) => {

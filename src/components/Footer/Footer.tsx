@@ -1,14 +1,14 @@
 import { Link, useLocation } from 'react-router-dom';
 import cn from 'classnames';
 
-import { COOKIE, PAGE_404, PRIVACY, TERMS } from '../../utils/constants';
+import { COOKIE, PAGE_404, PRIVACY, TERMS } from '@utils/constants';
 import { Container, TextUnderline } from '../UI';
 
-import logo from '../../assets/images/logo.svg';
-import TelSvg from '../../assets/images/icons/tel.svg?react';
-import MailSvg from '../../assets/images/icons/mail.svg?react';
-import InstSvg from '../../assets/images/icons/inst.svg?react';
-import TelegaSvg from '../../assets/images/icons/telega.svg?react';
+import logo from '@images/logo.svg';
+import TelSvg from '@images/icons/tel.svg?react';
+import MailSvg from '@images/icons/mail.svg?react';
+import InstSvg from '@images/icons/inst.svg?react';
+import TelegaSvg from '@images/icons/telega.svg?react';
 import styles from './Footer.module.scss';
 
 const Footer: React.FC = () => {

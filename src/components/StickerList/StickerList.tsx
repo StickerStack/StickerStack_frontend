@@ -1,8 +1,8 @@
 import cn from 'classnames';
 
-import { converter } from '../../utils/converter';
-import { pageSizePx, stickerWhiteBorder } from '../../utils/constants';
-import { ISticker } from '../../shared/interfaces/ISticker';
+import { converter } from '@utils/converter';
+import { pageSizePx, stickerWhiteBorder } from '@utils/constants';
+import { ISticker } from '@shared/interfaces';
 import styles from './StickerList.module.scss';
 
 interface IProps {

@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import cn from 'classnames';
 
-import { stickerWhiteBorder } from '../../utils/constants';
-import { ISticker } from '../../shared/interfaces/ISticker';
+import { stickerWhiteBorder } from '@utils/constants';
+import { ISticker } from '@shared/interfaces';
 
 import styles from './StickerImage.module.scss';
 

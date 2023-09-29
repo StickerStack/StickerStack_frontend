@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 
 import { ButtonWithText, TitlePopup, EyeButton, Label, InputError, InputWithButton, InputField } from '../../UI';
-import { closePopup, openInfo, openMessage, openPopup } from '../../../shared/store/popupSlice';
-import { useAppDispatch } from '../../../shared/hooks/hooks';
-import { resetPassword } from '../../../shared/store/authSlice';
-import { registerPassword } from '../../../utils/registersRHF';
+import { closePopup, openInfo, openMessage, openPopup, resetPassword } from '@shared/store';
+import { useAppDispatch } from '@shared/hooks';
+import { registerPassword } from '@utils/registersRHF';
 import { changePassword, messages, passwordChanged } from '../../../assets/static/popups';
-import { Signin } from '../Signin/Signin';
+import { Signin } from '../';
+
 import styles from './ChangePassword.module.scss';
 
 const ChangePassword: React.FC = () => {

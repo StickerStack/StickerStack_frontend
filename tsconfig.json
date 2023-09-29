@@ -19,11 +19,11 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@istatic/*": ["src/assets/static/*"],
+      "@static/*": ["src/assets/static/*"],
       "@images/*": ["src/assets/images/*"],
       "@styles/*": ["src/assets/styles/*"],
       "@components/*": ["src/components/*"],
-      "@ui/*": ["src/components/ui/*"],
+      "@ui/*": ["src/components/UI/*"],
       "@pages/*": ["src/components/pages/*"],
       "@shared/*": ["src/shared/*"],
       "@store/*": ["src/shared/store/*"],

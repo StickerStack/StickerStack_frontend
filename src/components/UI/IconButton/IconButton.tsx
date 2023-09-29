@@ -1,11 +1,11 @@
 import cn from 'classnames';
 
-import { TIconFileNames, TIconFiles } from '../../../shared/types/TIcon';
+import { TIconFileNames, TIconFiles } from '@shared/types';
 
-import clearIcon from '../../../assets/images/icons/clear-field.svg';
-import passwordHidden from '../../../assets/images/icons/password-hidden.svg';
-import passwordShown from '../../../assets/images/icons/password-shown.svg';
-import tooltipIcon from '../../../assets/images/icons/tooltip-icon.svg';
+import clearIcon from '@images/icons/clear-field.svg';
+import passwordHidden from '@images/icons/password-hidden.svg';
+import passwordShown from '@images/icons/password-shown.svg';
+import tooltipIcon from '@images/icons/tooltip-icon.svg';
 
 import styles from './IconButton.module.scss';
 

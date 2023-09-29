@@ -16,7 +16,7 @@ export default defineConfig({
       '@images': path.resolve(__dirname, './src/assets/images'),
       '@styles': path.resolve(__dirname, './src/assets/styles'),
       '@components': path.resolve(__dirname, './src/components'),
-      '@ui': path.resolve(__dirname, './src/components/ui'),
+      '@ui': path.resolve(__dirname, './src/components/UI'),
       '@pages': path.resolve(__dirname, './src/components/pages'),
       '@shared': path.resolve(__dirname, './src/shared'),
       '@store': path.resolve(__dirname, './src/shared/store'),

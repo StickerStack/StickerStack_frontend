@@ -4,9 +4,9 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import { App } from './components';
-import { store } from './shared/store';
+import { store } from './shared/store/store';
 
-import './assets/styles/index.scss';
+import '@styles/index.scss';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 

@@ -5,7 +5,7 @@ import { settings } from './settings';
 import { Container, TitlePage } from '../UI';
 import { ourWorks, benefits } from '../../assets/static/mainpage';
 
-import Checker from '../../assets/images/icons/checker-icon.svg?react';
+import Checker from '@images/icons/checker-icon.svg?react';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import styles from './OurWorks.module.scss';

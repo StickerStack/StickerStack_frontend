@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 
-import { IPopupState } from '../../../shared/interfaces/IPopupState';
+import { IPopupState } from '@shared/interfaces';
 
 import styles from './PopupForm.module.scss';
 

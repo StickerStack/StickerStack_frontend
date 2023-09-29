@@ -1,14 +1,14 @@
-import work1 from '../../assets/images/our-works/work-1.jpg';
-import work2 from '../../assets/images/our-works/work-2.jpg';
-import work3 from '../../assets/images/our-works/work-3.jpg';
-import work4 from '../../assets/images/our-works/work-4.jpg';
-import work5 from '../../assets/images/our-works/work-5.jpg';
-import work6 from '../../assets/images/our-works/work-6.jpg';
-import work7 from '../../assets/images/our-works/work-7.jpg';
-import image1 from '../../assets/images/policy-img.png';
-import image2 from '../../assets/images/cart-dog.png';
-import image3 from '../../assets/images/empty-cart.png';
-import { pagePrice } from '../../utils/constants';
+import work1 from '@images/our-works/work-1.jpg';
+import work2 from '@images/our-works/work-2.jpg';
+import work3 from '@images/our-works/work-3.jpg';
+import work4 from '@images/our-works/work-4.jpg';
+import work5 from '@images/our-works/work-5.jpg';
+import work6 from '@images/our-works/work-6.jpg';
+import work7 from '@images/our-works/work-7.jpg';
+import image1 from '@images/policy-img.png';
+import image2 from '@images/cart-dog.png';
+import image3 from '@images/empty-cart.png';
+import { pagePrice } from '@utils/constants';
 
 export const hero = {
   title: 'StickerStack',

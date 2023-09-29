@@ -2,19 +2,19 @@ import { FC, useState, useEffect } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import cn from 'classnames';
 
-import { registerAmount, registerSize } from '../../utils/registersRHF';
+import { registerAmount, registerSize } from '@utils/registersRHF';
 import {
   AMOUNT_INPUT_MAX_LENGTH,
   AMOUNT_INPUT_MIN_LENGTH,
   REG_STICKERS,
   SIZE_INPUT_MAX_LENGTH,
   SIZE_INPUT_MIN_LENGTH,
-} from '../../utils/constants';
+} from '@utils/constants';
 import { TShape } from '../../shared/types/TShape';
 import { ButtonCustom, Input, InputError, InputField, RadioButton, TooltipCustom } from '../UI';
 import { addpage } from '../../assets/static/stickerspage';
 import { InfoBox } from '../InfoBox/InfoBox';
-import { useAppDispatch } from '../../shared/hooks/hooks';
+import { useAppDispatch } from '@shared/hooks/hooks';
 import {
   addEmptySticker,
   addSticker,
@@ -22,15 +22,16 @@ import {
   deleteSticker,
   putStickerInCart,
   updateSticker,
-} from '../../shared/store/stickersSlice';
+  openMessage,
+} from '@shared/store';
 import { Shape } from '../Shape/Shape';
-import { ISticker } from '../../shared/interfaces/ISticker';
+import { ISticker } from '@shared/interfaces';
 import { DragAndDrop } from '../DragAndDrop/DragAndDrop';
-import styles from './NewSticker.module.scss';
 import { StickerImage } from '../StickerImage/StickerImage';
-import { openMessage } from '../../shared/store/popupSlice';
 import { messages } from '../../assets/static/popups';
 import { Loader } from '../UI/Loader/Loader';
+
+import styles from './NewSticker.module.scss';
 
 interface IProps {
   sticker: ISticker;

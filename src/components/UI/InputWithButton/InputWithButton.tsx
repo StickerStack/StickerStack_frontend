@@ -1,7 +1,7 @@
 import { FC, ReactNode } from 'react';
 import cn from 'classnames';
 
-import { TInput } from '../../../shared/types/TInput';
+import { TInput } from '@shared/types';
 import styles from './InputWithButton.module.scss';
 
 interface IProps extends TInput {

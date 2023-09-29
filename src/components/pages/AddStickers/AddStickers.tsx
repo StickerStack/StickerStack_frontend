@@ -4,22 +4,20 @@ import { useNavigate } from 'react-router-dom';
 import { FieldValues, useForm } from 'react-hook-form';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import { updateCropping } from '../../../shared/store/cartSlice';
-import { ICart } from '../../../shared/interfaces/ICart';
-import { useAppDispatch } from '../../../shared/hooks/hooks';
-import { InfoBox } from '../../InfoBox/InfoBox';
-import { NewSticker } from '../../NewSticker/NewSticker';
-import { IStickersState } from '../../../shared/interfaces/IStickersState';
-import { ButtonWithText, Container, RadioButton, TextUnderline, TitlePage, Error } from '../../UI';
+import { updateCropping, openPreview } from '@shared/store';
+import { ICart, IStickersState } from '@shared/interfaces';
+import { useAppDispatch } from '@shared/hooks';
+import { InfoBox, NewSticker } from '../../';
+
+import { Loader, ButtonWithText, Container, RadioButton, TextUnderline, TitlePage, Error } from '../../UI';
 import { addpage } from '../../../assets/static/stickerspage';
-import { openPreview } from '../../../shared/store/popupSlice';
-import { CART, pagePrice } from '../../../utils/constants';
+
+import { CART, pagePrice } from '@utils/constants';
 import { Dots } from '../../animations/Dots/Dots';
-import { Loader } from '../../UI/Loader/Loader';
 
 import styles from './AddStickers.module.scss';
 
-export const AddStickersNew: FC = () => {
+export const AddStickers: FC = () => {
   const { stickers, loading, error } = useSelector((state: { stickers: IStickersState }) => state.stickers);
   const { cropping, cost, totalAmount, number_of_sheets } = useSelector((state: { cart: ICart }) => state.cart);
   const [stickerActiveId, setStickerActiveId] = useState(stickers[0].id);

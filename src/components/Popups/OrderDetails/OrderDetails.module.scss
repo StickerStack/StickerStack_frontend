@@ -1,4 +1,4 @@
-@import '../../../assets/styles/_scss-variables.scss';
+@import '@styles/_scss-variables.scss';
 
 .container {
   @include flex(column, flex-start, flex-start);

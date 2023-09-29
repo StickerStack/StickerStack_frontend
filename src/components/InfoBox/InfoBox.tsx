@@ -1,6 +1,6 @@
 import cn from 'classnames';
-import styles from './InfoBox.module.scss';
 import { TooltipCustom } from '../UI';
+import styles from './InfoBox.module.scss';
 
 type BoxType = 'simple' | 'number' | 'amount' | 'size';
 

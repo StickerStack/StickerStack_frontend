@@ -2,17 +2,12 @@ import { FieldValues, useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 
-import { Signin, Signup } from '../..';
-import { ButtonWithText, TextUnderline, TitlePopup, Input } from '../../UI';
-import { ResetPasswordInfo } from '../ResetPasswordInfo/ResetPasswordInfo';
-import { InputField } from '../../UI/InputField/InputField';
-import { Label } from '../../UI/Label';
-import { InputError } from '../../UI/InputError/InputError';
+import { Signin, Signup, ResetPasswordInfo } from '../';
+import { ButtonWithText, TextUnderline, TitlePopup, Input, InputField, Label, InputError } from '../../UI';
 
-import { useAppDispatch } from '../../../shared/hooks/hooks';
-import { forgotPassword } from '../../../shared/store/authSlice';
-import { openMessage, openPopup } from '../../../shared/store/popupSlice';
-import { registerEmail } from '../../../utils/registersRHF';
+import { useAppDispatch } from '@shared/hooks';
+import { forgotPassword, openMessage, openPopup } from '@shared/store';
+import { registerEmail } from '@utils/registersRHF';
 import { messages, reset } from '../../../assets/static/popups';
 
 import styles from './ResetPassword.module.scss';

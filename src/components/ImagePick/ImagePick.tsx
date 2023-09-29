@@ -1,17 +1,16 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import cn from 'classnames';
 
-import { PicOverlay } from '../PicOverlay/PicOverlay';
-import { useAppDispatch } from '../../shared/hooks/hooks';
-import { deleteProfileImage, updateProfileImage } from '../../shared/store/userSlice';
-import { openMessage } from '../../shared/store/popupSlice';
-import { useSelector } from 'react-redux';
-import { IUserState } from '../../shared/interfaces';
-import { messages } from '../../assets/static/popups';
+import { useAppDispatch } from '@shared/hooks/hooks';
+import { openMessage, deleteProfileImage, updateProfileImage } from '@shared/store';
 
-import EmptyAvatarImage from '../../assets/images/empty-avatar.png';
-import styles from './ImagePick.module.scss';
+import { IUserState } from '@shared/interfaces';
+import { messages } from '../../assets/static/popups';
 import { Loader } from '../UI/Loader/Loader';
+
+import EmptyAvatarImage from '@images/empty-avatar.png';
+import styles from './ImagePick.module.scss';
 
 interface IProps {
   className?: string;

@@ -1,4 +1,4 @@
-@import '../../assets/styles/_scss-variables.scss';
+@import '@styles/_scss-variables.scss';
 
 .works {
   background-color: $secondary-bg-color;
@@ -74,7 +74,7 @@
 .prev_arrow {
   width: 56px;
   height: 24px;
-  background: url(../../assets/images/icons/arrow-simple.svg) no-repeat center;
+  background: url(@images/icons/arrow-simple.svg) no-repeat center;
   background-color: transparent;
   transition: opacity 0.3s ease-in-out;
   cursor: pointer;

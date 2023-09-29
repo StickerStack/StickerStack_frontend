@@ -2,10 +2,10 @@ import { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import cn from 'classnames';
 
-import { IPopupState } from '../../../shared/interfaces/IPopupState';
+import { IPopupState } from '@shared/interfaces';
 import { ButtonWithText, TextForm, TitlePopup } from '../../UI';
-import { closePopup } from '../../../shared/store/popupSlice';
-import { useAppDispatch } from '../../../shared/hooks/hooks';
+import { closePopup } from '@shared/store';
+import { useAppDispatch } from '@shared/hooks';
 
 import styles from './PopupInfo.module.scss';
 

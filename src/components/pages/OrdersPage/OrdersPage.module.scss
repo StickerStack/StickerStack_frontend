@@ -1,4 +1,4 @@
-@import '../../../assets/styles/_scss-variables.scss';
+@import '@styles/_scss-variables.scss';
 
 .orders {
   flex: 1;
@@ -28,7 +28,7 @@
 }
 
 .ufo {
-  background: url('../../../assets/images/ufo-full.png') no-repeat;
+  background: url('@images/ufo-full.png') no-repeat;
   background-position: center;
   background-size: contain;
   height: 255px;

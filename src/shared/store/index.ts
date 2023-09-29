@@ -1,27 +1,46 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { popupSliceReducer } from './popupSlice';
-import { userSliceReducer } from './userSlice';
-import { authSliceReducer } from './authSlice';
-import { cartSliceReducer } from './cartSlice';
-import { stickerSliceReducer } from './stickersSlice';
+export {
+  authSliceReducer,
+  signIn,
+  signUp,
+  resetPassword,
+  forgotPassword,
+  verifyEmail,
+  logOut,
+  sendVerificationCode,
+} from './authSlice';
 
-const rootReducer = combineReducers({
-  popup: popupSliceReducer,
-  user: userSliceReducer,
-  auth: authSliceReducer,
-  cart: cartSliceReducer,
-  stickers: stickerSliceReducer,
-});
+export { updateCropping, updateAddress, updateSheets, countTotal, uploadOrder } from './cartSlice';
 
-const store = configureStore({
-  reducer: rootReducer,
-  /* #TODO: Разобраться serializableCheck с включенным падают ошибки!*/
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: false,
-    }),
-});
+export {
+  popupSliceReducer,
+  closePopup,
+  openPopup,
+  openOrder,
+  openPreview,
+  openInfo,
+  openMessage,
+  closeMessage,
+} from './popupSlice';
 
-const AppDispatch = store.dispatch;
+export {
+  getStickers,
+  clearStickers,
+  putStickerInCart,
+  addStickers,
+  deleteSticker,
+  updateSticker,
+  addEmptySticker,
+  addSticker,
+  removeAllStickers,
+} from './stickersSlice';
 
-export { store, AppDispatch };
+export {
+  userSliceReducer,
+  getUser,
+  updateUser,
+  signInMockUser,
+  updateStatus,
+  updateProfileImage,
+  deleteProfileImage,
+  getUserOrders,
+} from './userSlice';

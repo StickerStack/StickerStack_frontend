@@ -3,18 +3,13 @@ import { FieldValues, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import cn from 'classnames';
 
-import { useAppDispatch } from '../../../shared/hooks/hooks';
-import { IUserState } from '../../../shared/interfaces';
-import { sendVerificationCode } from '../../../shared/store/authSlice';
-import { openInfo, openMessage } from '../../../shared/store/popupSlice';
-import { updateUser } from '../../../shared/store/userSlice';
-import { profileName, registerEmail } from '../../../utils/registersRHF';
-import { ImagePick } from '../../ImagePick/ImagePick';
-import { ButtonWithText, Container, TextUnderline, TitlePage } from '../../UI';
-import { InputWithButton } from '../../UI/InputWithButton/InputWithButton';
-import { InputField } from '../../UI/InputField/InputField';
-import { InputError } from '../../UI/InputError/InputError';
-import { getRandomNumber } from '../../../utils/constants';
+import { useAppDispatch } from '@shared/hooks';
+import { IUserState } from '@shared/interfaces';
+import { sendVerificationCode, openInfo, openMessage, updateUser } from '@shared/store';
+import { profileName, registerEmail } from '@utils/registersRHF';
+import { ImagePick } from '../../';
+import { ButtonWithText, Container, InputWithButton, InputField, InputError, TextUnderline, TitlePage } from '../../UI';
+import { getRandomNumber } from '@utils/constants';
 import { profile } from '../../../assets/static/profile';
 import { messages, verifyChanged, verifyPlease } from '../../../assets/static/popups';
 

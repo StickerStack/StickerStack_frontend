@@ -15,14 +15,22 @@ import {
   InputError,
   InputWithButton,
 } from '../../UI';
-import { Signin } from '../Signin/Signin';
+import { Signin } from '../';
 
-import { useAppDispatch } from '../../../shared/hooks/hooks';
-import { openMessage, openPopup, closePopup, openInfo } from '../../../shared/store/popupSlice';
-import { getUser, updateStatus } from '../../../shared/store/userSlice';
-import { signUp, signIn, sendVerificationCode } from '../../../shared/store/authSlice';
-import { registerEmail, registerPassword } from '../../../utils/registersRHF';
-import { ADD_STICKERS, PRIVACY, TERMS, getRandomNumber } from '../../../utils/constants';
+import { useAppDispatch } from '@shared/hooks';
+import {
+  signUp,
+  signIn,
+  sendVerificationCode,
+  openMessage,
+  openPopup,
+  closePopup,
+  openInfo,
+  getUser,
+  updateStatus,
+} from '@shared/store';
+import { registerEmail, registerPassword } from '@utils/registersRHF';
+import { ADD_STICKERS, PRIVACY, TERMS, getRandomNumber } from '@utils/constants';
 import { messages, signup, verifyPlease } from '../../../assets/static/popups';
 
 import styles from './Signup.module.scss';

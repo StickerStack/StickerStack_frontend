@@ -2,15 +2,16 @@ import cn from 'classnames';
 import { forwardRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../shared/hooks/hooks';
 
-import { IUserState } from '../../shared/interfaces';
-import { logOut } from '../../shared/store/authSlice';
+import { useAppDispatch } from '@shared/hooks';
+
+import { IUserState } from '@shared/interfaces';
+import { logOut } from '@shared/store';
 import { ButtonWithText } from '../UI';
-import { ADD_STICKERS, ORDERS, PROFILE } from '../../utils/constants';
+import { ADD_STICKERS, ORDERS, PROFILE } from '@utils/constants';
 import { profileMenu } from '../../assets/static/profile';
 
-import EmptyAvatarImage from '../../assets/images/empty-avatar.png';
+import EmptyAvatarImage from '@images/empty-avatar.png';
 import styles from './ProfileMenu.module.scss';
 
 // eslint-disable-next-line react/prop-types

@@ -2,15 +2,16 @@ import { FC, useState } from 'react';
 import { UseFormRegister, FieldValues } from 'react-hook-form';
 import cn from 'classnames';
 
-import { updateSticker } from '../../shared/store/stickersSlice';
+import { updateSticker } from '@shared/store';
+import { useAppDispatch } from '@shared/hooks';
+import { ISticker } from '@shared/interfaces';
 import { stickertext } from '../../assets/static/stickerspage';
 import { Error } from '../UI';
-import { useAppDispatch } from '../../shared/hooks/hooks';
-import { converter } from '../../utils/converter';
-import { SIZE_INPUT_MAX_LENGTH, stickerWhiteBorder } from '../../utils/constants';
-import { ISticker } from '../../shared/interfaces/ISticker';
-import { PicOverlay } from '../PicOverlay/PicOverlay';
-import { StickerImage } from '../StickerImage/StickerImage';
+
+import { converter } from '@utils/converter';
+import { SIZE_INPUT_MAX_LENGTH, stickerWhiteBorder } from '@utils/constants';
+
+import { PicOverlay, StickerImage } from '../';
 
 import styles from './DragAndDrop.module.scss';
 

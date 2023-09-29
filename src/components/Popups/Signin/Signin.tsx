@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import cn from 'classnames';
 
 import {
@@ -15,15 +16,11 @@ import {
   InputError,
   InputWithButton,
 } from '../../UI';
-import { Signup, ResetPassword } from '../..';
-
-import { closePopup, openPopup, openMessage } from '../../../shared/store/popupSlice';
-import { useAppDispatch } from '../../../shared/hooks/hooks';
-import { getUser, signInMockUser, updateStatus } from '../../../shared/store/userSlice';
-import { signIn } from '../../../shared/store/authSlice';
-import { registerEmail, registerPassword } from '../../../utils/registersRHF';
-import { motion } from 'framer-motion';
-import { ADD_STICKERS } from '../../../utils/constants';
+import { Signup, ResetPassword } from '../';
+import { signIn, closePopup, openPopup, openMessage, getUser, signInMockUser, updateStatus } from '@shared/store';
+import { useAppDispatch } from '@shared/hooks';
+import { registerEmail, registerPassword } from '@utils/registersRHF';
+import { ADD_STICKERS } from '@utils/constants';
 import { messages, signin } from '../../../assets/static/popups';
 
 import styles from './Signin.module.scss';

@@ -1,4 +1,4 @@
-@import '../../../assets/styles/_scss-variables.scss';
+@import '@styles/_scss-variables.scss';
 
 .signup {
   @include flex(column, center, center);

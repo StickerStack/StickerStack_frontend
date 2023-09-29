@@ -2,10 +2,10 @@ import cn from 'classnames';
 import { useLocation } from 'react-router-dom';
 
 import { ButtonWithText } from '../UI';
-import { PROFILE } from '../../utils/constants';
+import { PROFILE } from '@utils/constants';
 
-import PictureSvg from '../../assets/images/icons/upload-image.svg?react';
-import BinSvg from '../../assets/images/icons/bin.svg?react';
+import PictureSvg from '@images/icons/upload-image.svg?react';
+import BinSvg from '@images/icons/bin.svg?react';
 
 import styles from './PicOverlay.module.scss';
 

@@ -2,19 +2,17 @@ import { FC, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import { ButtonWithText } from '../UI';
+import { Link } from 'react-router-dom';
+import { COOKIE } from '@utils/constants';
 
 import styles from './AcceptCookies.module.scss';
-import { Link } from 'react-router-dom';
-import { COOKIE } from '../../utils/constants';
 
 const AcceptCookies: FC = () => {
   const [acceptCookies, setAcceptCookies] = useState(false);
 
   const getCookie = (name: string) => {
     const matches = document.cookie.match(
-      new RegExp(
-        '(?:^|; )' + name.replace(/([\\.$?*|{}\\(\\)\\[\]\\\\/\\+^])/g, '\\$1') + '=([^;]*)',
-      ),
+      new RegExp('(?:^|; )' + name.replace(/([\\.$?*|{}\\(\\)\\[\]\\\\/\\+^])/g, '\\$1') + '=([^;]*)'),
     );
     return matches ? decodeURIComponent(matches[1]) : undefined;
   };
@@ -61,8 +59,7 @@ const AcceptCookies: FC = () => {
         >
           <div className={styles.texts}>
             <p className={styles.text}>
-              При использовании данного сайта, вы&nbsp;подтверждаете свое согласие
-              на&nbsp;использование{' '}
+              При использовании данного сайта, вы&nbsp;подтверждаете свое согласие на&nbsp;использование{' '}
               <ButtonWithText theme='no-border'>
                 <Link className={styles.link} to={COOKIE} target='_blank'>
                   файлов cookie
@@ -75,11 +72,7 @@ const AcceptCookies: FC = () => {
             <ButtonWithText className={styles.button} onClick={onAccept}>
               Принять
             </ButtonWithText>
-            <ButtonWithText
-              theme='transparent'
-              className={styles.button}
-              onClick={() => setAcceptCookies(true)}
-            >
+            <ButtonWithText theme='transparent' className={styles.button} onClick={() => setAcceptCookies(true)}>
               Отклонить
             </ButtonWithText>
           </div>

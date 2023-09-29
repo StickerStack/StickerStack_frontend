@@ -1,18 +1,18 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { IOrder, IStickersState } from '../../../shared/interfaces';
-import { StickerCarousel } from '../../StickerCarousel/StickerCarousel';
+import { IOrder, IStickersState } from '@shared/interfaces';
+import { useAppDispatch } from '@shared/hooks';
+import { StickerCarousel } from '../../';
 import { ButtonWithText } from '../../UI';
-import { ADD_STICKERS, CART } from '../../../utils/constants';
-import { orderspage } from '../../../assets/static/profile';
-import { closePopup, openInfo, openMessage } from '../../../shared/store/popupSlice';
-import { useAppDispatch } from '../../../shared/hooks/hooks';
-import { confirmCart, messages } from '../../../assets/static/popups';
-import { useSelector } from 'react-redux';
-import { addStickers, clearStickers, getStickers } from '../../../shared/store/stickersSlice';
+import { CART } from '@utils/constants';
 
-import image from '../../../assets/images/main-page/sticker-ufo.png';
+import { closePopup, openInfo, openMessage, addStickers, clearStickers, getStickers } from '@shared/store';
+import { confirmCart, messages } from '../../../assets/static/popups';
+import { orderspage } from '../../../assets/static/profile';
+
+import image from '@images/main-page/sticker-ufo.png';
 import styles from './OrderDetails.module.scss';
 
 interface IProps {

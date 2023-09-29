@@ -1,4 +1,4 @@
-@import '../../../assets/styles/_scss-variables.scss';
+@import '@styles/_scss-variables.scss';
 
 .container {
   width: 100%;
@@ -16,7 +16,7 @@
 .dog {
   width: 300px;
   height: 300px;
-  background: url('../../../images/celebrate-animation/celebrating-dog.svg') center no-repeat;
+  background: url('@images/celebrate-animation/celebrating-dog.svg') center no-repeat;
   background-size: contain;
   z-index: 2;
 }
@@ -27,16 +27,16 @@
   width: 20px;
 
   &_blue {
-    background: url('../../../images/celebrate-animation/confetti-blue.svg') center no-repeat;
+    background: url('@images/celebrate-animation/confetti-blue.svg') center no-repeat;
     background-size: contain;
   }
   &_red {
-    background: url('../../../images/celebrate-animation/confetti-red.svg') center no-repeat;
+    background: url('@images/celebrate-animation/confetti-red.svg') center no-repeat;
 
     background-size: contain;
   }
   &_yellow {
-    background: url('../../../images/celebrate-animation/confetti-yellow.svg') center no-repeat;
+    background: url('@images/celebrate-animation/confetti-yellow.svg') center no-repeat;
     background-size: contain;
   }
 

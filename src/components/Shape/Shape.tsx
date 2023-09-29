@@ -1,12 +1,12 @@
 import { UseFormRegister, FieldValues } from 'react-hook-form';
 
-import { TShape } from '../../shared/types/TShape';
-import { ISticker } from '../../shared/interfaces/ISticker';
-import RectSvg from '../../assets/images/icons/rect.svg?react';
-import RectRondedSvg from '../../assets/images/icons/rect_rounded.svg?react';
-import CircleSvg from '../../assets/images/icons/circle.svg?react';
-import ContourSvg from '../../assets/images/icons/contour.svg?react';
+import { TShape } from '@shared/types';
+import { ISticker } from '@shared/interfaces';
 
+import RectSvg from '@images/icons/rect.svg?react';
+import RectRondedSvg from '@images/icons/rect_rounded.svg?react';
+import CircleSvg from '@images/icons/circle.svg?react';
+import ContourSvg from '@images/icons/contour.svg?react';
 import styles from './Shape.module.scss';
 
 interface IProps {

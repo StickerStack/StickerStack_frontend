@@ -2,15 +2,11 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
 
-import { useBlockScroll } from '../../shared/hooks/useBlockScroll';
-import { PopupForm } from '../';
-import { PopupInfo } from '../Popups/PopupInfo/PopupInfo';
-import { PopupPreview } from '../Popups/PopupPreview/PopupPreview';
-import { OrderDetails } from '../Popups/OrderDetails/OrderDetails';
+import { PopupInfo, PopupForm, PopupPreview, OrderDetails } from '../Popups';
 import { ButtonCustom } from '../UI';
-import { IPopupState } from '../../shared/interfaces/IPopupState';
-import { useAppDispatch } from '../../shared/hooks/hooks';
-import { closePopup } from '../../shared/store/popupSlice';
+import { IPopupState } from '@shared/interfaces';
+import { useAppDispatch, useBlockScroll } from '@shared/hooks';
+import { closePopup } from '@shared/store';
 
 import styles from './Popup.module.scss';
 

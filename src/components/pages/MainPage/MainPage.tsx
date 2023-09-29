@@ -1,7 +1,4 @@
-import { OurWorks } from '../../OurWorks/OurWorks';
-import { MainHero } from '../../MainHero/MainHero';
-import { FAQ } from '../../FAQ/FAQ';
-import { Instructions } from '../../Instructions/Instructions';
+import { OurWorks, MainHero, FAQ, Instructions } from '../../';
 
 import styles from './MainPage.module.scss';
 

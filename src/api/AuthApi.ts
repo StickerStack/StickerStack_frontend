@@ -1,5 +1,5 @@
 import { Api } from './Api';
-import { API_URL } from '../utils/constants';
+import { API_URL } from '@utils/constants';
 
 class AuthApi extends Api {
   constructor(url: string, headers: HeadersInit) {

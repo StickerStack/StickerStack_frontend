@@ -2,13 +2,13 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
 
-import { IPopupState } from '../../shared/interfaces/IPopupState';
-import { useAppDispatch } from '../../shared/hooks/hooks';
-import { closeMessage } from '../../shared/store/popupSlice';
+import { IPopupState } from '@shared/interfaces';
+import { useAppDispatch } from '@shared/hooks/hooks';
+import { closeMessage } from '@shared/store';
 import { ButtonCustom } from '../UI';
 
-import CheckerSvg from '../../assets/images/icons/checker-icon.svg?react';
-import ErrorSvg from '../../assets/images/icons/button-close.svg?react';
+import CheckerSvg from '@images/icons/checker-icon.svg?react';
+import ErrorSvg from '@images/icons/button-close.svg?react';
 import styles from './MessagePopup.module.scss';
 
 const MessagePopup: React.FC = () => {

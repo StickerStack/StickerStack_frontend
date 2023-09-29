@@ -1,4 +1,4 @@
-@import '../../../assets/styles/_scss-variables.scss';
+@import '@styles/_scss-variables.scss';
 
 .cart {
   flex: 1;
@@ -28,7 +28,7 @@
 .image {
   width: 300px;
   height: 230px;
-  background: url('../../../assets/images/empty-cart.png') no-repeat;
+  background: url('@images/empty-cart.png') no-repeat;
   background-size: contain;
 }
 

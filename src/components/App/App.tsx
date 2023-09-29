@@ -2,21 +2,19 @@ import { useEffect, useState } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
+import { Header, MessagePopup, Popup, ProtectedRoute, Preloader, Footer, AcceptCookies } from '../';
+
 import {
-  Header,
-  MessagePopup,
-  Popup,
+  AddStickers,
+  CartPage,
+  OrdersPage,
+  PolicyPage,
   ChangePasswordPage,
-  MainPage,
   VerifyEmail,
-  ProtectedRoute,
   PageNotFound,
   ProfilePage,
-  Preloader,
-  Footer,
-} from '../';
-import { AddStickersNew } from '@pages/AddStickers/AddStickers';
-import { CartPage } from '@pages/CartPage/CartPage';
+  MainPage,
+} from '@pages/index';
 import {
   PROFILE,
   PRIVACY,
@@ -28,18 +26,11 @@ import {
   VERIFY_FORGOT_PASSWORD,
   ORDERS,
   COOKIE,
-} from '../../utils/constants';
+} from '@utils/constants';
 import { cookie, privacy, terms } from '../../assets/static/policy';
-import { useAppDispatch } from '../../shared/hooks/hooks';
-import { useScrollToTop } from '../../shared/hooks/useScrollToTop';
-import { OrdersPage } from '../pages/OrdersPage/OrdersPage';
-import { PolicyPage } from '../pages/PolicyPage/PolicyPage';
-import { countTotal, updateSheets } from '../../shared/store/cartSlice';
-import { getUser, getUserOrders, signInMockUser } from '../../shared/store/userSlice';
-import { IUserState } from '../../shared/interfaces';
-import { AcceptCookies } from '../AcceptCookies/AcceptCookies';
-import { getStickers } from '../../shared/store/stickersSlice';
-import { IStickersState } from '../../shared/interfaces/IStickersState';
+import { useAppDispatch, useScrollToTop } from '@shared/hooks';
+import { countTotal, updateSheets, getUser, getUserOrders, signInMockUser, getStickers } from '@shared/store';
+import { IUserState, IStickersState } from '@shared/interfaces';
 
 import styles from './App.module.scss';
 
@@ -99,7 +90,7 @@ const App: React.FC = () => {
               path={ADD_STICKERS}
               element={
                 <ProtectedRoute redirectPath='/'>
-                  <AddStickersNew />
+                  <AddStickers />
                 </ProtectedRoute>
               }
             />

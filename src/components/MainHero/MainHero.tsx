@@ -3,9 +3,9 @@ import { useSelector } from 'react-redux';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { ButtonWithText, Container } from '../UI';
-import { useAppDispatch } from '../../shared/hooks/hooks';
-import { IUserState } from '../../shared/interfaces';
-import { openPopup } from '../../shared/store/popupSlice';
+import { useAppDispatch } from '@shared/hooks';
+import { IUserState } from '@shared/interfaces';
+import { openPopup } from '@shared/store';
 import { Signin } from '../Popups/Signin/Signin';
 import { hero } from '../../assets/static/mainpage';
 
@@ -14,10 +14,10 @@ import { hero } from '../../assets/static/mainpage';
 // import no_but from '../../images/main-page/no-but-yes.png';
 // import astronaut from '../../images/main-page/astronaut.png';
 
-import spok from '../../assets/images/main-page/spok.png';
-import sticker_ufo from '../../assets/images/main-page/sticker-ufo.png';
-import starwars from '../../assets/images/main-page/starwars.png';
-import space from '../../assets/images/main-page/space-sticker.png';
+import spok from '@images/main-page/spok.png';
+import sticker_ufo from '@images/main-page/sticker-ufo.png';
+import starwars from '@images/main-page/starwars.png';
+import space from '@images/main-page/space-sticker.png';
 import styles from './MainHero.module.scss';
 
 const MainHero: React.FC = () => {

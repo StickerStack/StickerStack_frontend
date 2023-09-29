@@ -1,4 +1,4 @@
-import { pagePrice } from '../../utils/constants';
+import { pagePrice } from '@utils/constants';
 
 export const signin = {
   title: 'Вход',

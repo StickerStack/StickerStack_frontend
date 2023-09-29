@@ -2,20 +2,17 @@ import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import cn from 'classnames';
-
 import { motion, AnimatePresence } from 'framer-motion';
-import { useAppDispatch } from '../../shared/hooks/hooks';
-import { IUserState } from '../../shared/interfaces';
-import { Signin } from '../Popups/Signin/Signin';
-import { openPopup } from '../../shared/store/popupSlice';
-import { CART, COOKIE, PAGE_404, PRIVACY, TERMS } from '../../utils/constants';
-import { useOutsideClick } from '../../shared/hooks/useOutsideClick';
-import { ProfileMenu } from '../ProfileMenu/ProfileMenu';
-import { ButtonCustom, ButtonWithText, Container } from '../UI';
-import { IStickersState } from '../../shared/interfaces/IStickersState';
-import { ScrollBar } from '../ScrollBar/ScrollBar';
 
-import logo from '../../assets/images/logo.svg';
+import { useAppDispatch, useOutsideClick } from '@shared/hooks';
+import { IUserState, IStickersState } from '@shared/interfaces';
+import { Signin } from '../Popups';
+import { openPopup } from '@shared/store';
+import { CART, COOKIE, PAGE_404, PRIVACY, TERMS } from '@utils/constants';
+import { ProfileMenu, ScrollBar } from '../';
+import { ButtonCustom, ButtonWithText, Container } from '../UI';
+
+import logo from '@images/logo.svg';
 import styles from './Header.module.scss';
 
 const Header: React.FC = () => {
