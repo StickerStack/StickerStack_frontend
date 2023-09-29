@@ -1,9 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { IStickersState } from '../interfaces/IStickersState';
-import { cartApi } from '../../api/CartApi';
-import { ISticker } from '../interfaces/ISticker';
-import { calculateStickerOnList } from '../../utils/calculateStickerOnList';
-import { CARDS_MAXIMUM, pageSizePx } from '../../utils/constants';
+import { IStickersState, ISticker } from '@shared/interfaces';
+import { cartApi } from '@api/CartApi';
+import { calculateStickerOnList } from '@utils/calculateStickerOnList';
+import { CARDS_MAXIMUM, pageSizePx } from '@utils/constants';
 
 export const getStickers = createAsyncThunk('sticker/getStickers', async (_, { rejectWithValue }) => {
   try {

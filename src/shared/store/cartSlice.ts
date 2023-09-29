@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { pagePrice } from '../../utils/constants';
-import { cartApi } from '../../api/CartApi';
-import { ISticker, IStickerForOrder } from '../interfaces/ISticker';
-import { ICart } from '../interfaces/ICart';
+import { pagePrice } from '@utils/constants';
+import { cartApi } from '@api/CartApi';
+import { ISticker, IStickerForOrder, ICart } from '@shared/interfaces';
 
 const initialState: ICart = {
   cost: pagePrice,

@@ -1,5 +1,4 @@
-import { IOptions } from '../shared/interfaces';
-import { ISticker } from '../shared/interfaces/ISticker';
+import { IOptions, ISticker } from '@shared/interfaces';
 import { converter } from './converter';
 
 export interface PageElement {

@@ -23,7 +23,7 @@
       "@images/*": ["src/assets/images/*"],
       "@styles/*": ["src/assets/styles/*"],
       "@components/*": ["src/components/*"],
-      "@ui/*": ["src/components/UI/*"],
+      "@ui/*": ["src/components/ui/*"],
       "@pages/*": ["src/components/pages/*"],
       "@shared/*": ["src/shared/*"],
       "@store/*": ["src/shared/store/*"],

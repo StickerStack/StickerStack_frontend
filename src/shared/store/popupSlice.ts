@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { Signin } from '../../components/Popups/Signin/Signin';
-import { IPopupState, IOrder } from '../interfaces';
+import { Signin } from '../../components/Popups';
+import { IPopupState, IOrder } from '@shared/interfaces';
 
 const initialState: IPopupState = {
   isOpen: false,

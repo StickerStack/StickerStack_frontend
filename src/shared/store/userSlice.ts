@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { userApi } from '../../api/UserApi';
-import { IUserState, IOrder } from '../interfaces';
-import { API_URL } from '../../utils/constants';
+import { userApi } from '@api/UserApi';
+import { IUserState, IOrder } from '@shared/interfaces';
+import { API_URL } from '@utils/constants';
 
 const initialState: IUserState = {
   email: '',
