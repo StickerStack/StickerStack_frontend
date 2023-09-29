@@ -4,11 +4,11 @@ import cn from 'classnames';
 import { COOKIE, PAGE_404, PRIVACY, TERMS } from '../../utils/constants';
 import { Container, TextUnderline } from '../UI';
 
-import logo from '../../images/logo.svg';
-import { ReactComponent as TelSvg } from '../../images/icons/tel.svg';
-import { ReactComponent as MailSvg } from '../../images/icons/mail.svg';
-import { ReactComponent as InstSvg } from '../../images/icons/inst.svg';
-import { ReactComponent as TelegaSvg } from '../../images/icons/telega.svg';
+import logo from '../../assets/images/logo.svg';
+import TelSvg from '../../assets/images/icons/tel.svg?react';
+import MailSvg from '../../assets/images/icons/mail.svg?react';
+import InstSvg from '../../assets/images/icons/inst.svg?react';
+import TelegaSvg from '../../assets/images/icons/telega.svg?react';
 import styles from './Footer.module.scss';
 
 const Footer: React.FC = () => {

@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion';
 import { ResetPassword } from '../..';
 import { TextUnderline, TextForm, TitlePopup } from '../../UI';
-import { openPopup } from '../../../store/popupSlice';
+import { openPopup } from '../../../shared/store/popupSlice';
 
-import { useAppDispatch } from '../../../hooks/hooks';
-import { resetInfo } from '../../../utils/content/popups';
+import { useAppDispatch } from '../../../shared/hooks/hooks';
+import { resetInfo } from '../../../assets/static/popups';
 
 import styles from './ResetPasswordInfo.module.scss';
 
@@ -36,11 +36,7 @@ const ResetPasswordInfo: React.FC = () => {
         {email}
         {resetInfo.tectCont}
       </TextForm>
-      <TextUnderline
-        type='button'
-        className={styles.button}
-        onClick={() => dispatch(openPopup(ResetPassword))}
-      >
+      <TextUnderline type='button' className={styles.button} onClick={() => dispatch(openPopup(ResetPassword))}>
         {resetInfo.link.text}
       </TextUnderline>
     </motion.div>

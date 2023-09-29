@@ -3,24 +3,24 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Slider from 'react-slick';
 import { useSelector } from 'react-redux';
 
-import { useAppDispatch } from '../../../hooks/hooks';
+import { useAppDispatch } from '../../../shared/hooks/hooks';
 import { StickerList } from '../../StickerList/StickerList';
 import { generateRandomNumber } from '../../../utils/generateRandomNumber';
 import { ButtonWithText, TooltipCustom } from '../../UI';
-import { IStickersState } from '../../../interfaces/IStickersState';
+import { IStickersState } from '../../../shared/interfaces/IStickersState';
 import { settings } from './settings';
-import { messages, orderPlaced, previewShow } from '../../../utils/content/popups';
-import { closePopup, openInfo, openMessage } from '../../../store/popupSlice';
+import { messages, orderPlaced, previewShow } from '../../../assets/static/popups';
+import { closePopup, openInfo, openMessage } from '../../../shared/store/popupSlice';
 import { ADD_STICKERS, CART, ORDERS } from '../../../utils/constants';
-import { uploadOrder } from '../../../store/cartSlice';
-import { removeAllStickers } from '../../../store/stickersSlice';
-import { ICart } from '../../../interfaces/ICart';
+import { uploadOrder } from '../../../shared/store/cartSlice';
+import { getStickers, removeAllStickers } from '../../../shared/store/stickersSlice';
+import { ICart } from '../../../shared/interfaces/ICart';
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import image from '../../../images/cart-dog.png';
+import image from '../../../assets/images/cart-dog.png';
 import styles from './PopupPreview.module.scss';
-import { getUserOrders } from '../../../store/userSlice';
+import { getUserOrders } from '../../../shared/store/userSlice';
 
 const PopupPreview: React.FC = () => {
   const location = useLocation();
@@ -59,6 +59,7 @@ const PopupPreview: React.FC = () => {
           }),
         );
         dispatch(removeAllStickers());
+        dispatch(getStickers());
       })
       .catch((err) => {
         if (err.message === '413') {

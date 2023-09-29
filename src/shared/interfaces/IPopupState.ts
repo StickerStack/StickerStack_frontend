@@ -1,4 +1,4 @@
-import { IOrder } from './';
+import { IOrder } from '.';
 
 export interface IPopupState {
   isOpen: boolean;

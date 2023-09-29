@@ -1,4 +1,4 @@
-import { generateRandomNumber } from '../generateRandomNumber';
+import { generateRandomNumber } from '../../utils/generateRandomNumber';
 
 // Мок политики конфиденциальности
 

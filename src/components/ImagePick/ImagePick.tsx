@@ -2,14 +2,14 @@ import { useState } from 'react';
 import cn from 'classnames';
 
 import { PicOverlay } from '../PicOverlay/PicOverlay';
-import { useAppDispatch } from '../../hooks/hooks';
-import { deleteProfileImage, updateProfileImage } from '../../store/userSlice';
-import { openMessage } from '../../store/popupSlice';
+import { useAppDispatch } from '../../shared/hooks/hooks';
+import { deleteProfileImage, updateProfileImage } from '../../shared/store/userSlice';
+import { openMessage } from '../../shared/store/popupSlice';
 import { useSelector } from 'react-redux';
-import { IUserState } from '../../interfaces';
-import { messages } from '../../utils/content/popups';
+import { IUserState } from '../../shared/interfaces';
+import { messages } from '../../assets/static/popups';
 
-import EmptyAvatarImage from '../../images/empty-avatar.png';
+import EmptyAvatarImage from '../../assets/images/empty-avatar.png';
 import styles from './ImagePick.module.scss';
 import { Loader } from '../UI/Loader/Loader';
 

@@ -4,18 +4,18 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import cn from 'classnames';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { useAppDispatch } from '../../hooks/hooks';
-import { IUserState } from '../../interfaces';
+import { useAppDispatch } from '../../shared/hooks/hooks';
+import { IUserState } from '../../shared/interfaces';
 import { Signin } from '../Popups/Signin/Signin';
-import { openPopup } from '../../store/popupSlice';
+import { openPopup } from '../../shared/store/popupSlice';
 import { CART, COOKIE, PAGE_404, PRIVACY, TERMS } from '../../utils/constants';
-import { useOutsideClick } from '../../hooks/useOutsideClick';
+import { useOutsideClick } from '../../shared/hooks/useOutsideClick';
 import { ProfileMenu } from '../ProfileMenu/ProfileMenu';
 import { ButtonCustom, ButtonWithText, Container } from '../UI';
-import { IStickersState } from '../../interfaces/IStickersState';
+import { IStickersState } from '../../shared/interfaces/IStickersState';
 import { ScrollBar } from '../ScrollBar/ScrollBar';
 
-import logo from '../../images/logo.svg';
+import logo from '../../assets/images/logo.svg';
 import styles from './Header.module.scss';
 
 const Header: React.FC = () => {
@@ -71,12 +71,7 @@ const Header: React.FC = () => {
     location.pathname !== PRIVACY &&
     location.pathname !== TERMS &&
     location.pathname !== COOKIE ? (
-    <header
-      className={cn(
-        styles.header,
-        (location.pathname !== '/' || window.scrollY) && styles.header_border,
-      )}
-    >
+    <header className={cn(styles.header, (location.pathname !== '/' || window.scrollY) && styles.header_border)}>
       <ScrollBar />
       <Container className={styles.header_container}>
         <Link to='/' className={styles.logo}>

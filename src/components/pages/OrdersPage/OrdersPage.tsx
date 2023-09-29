@@ -5,17 +5,15 @@ import { OrderPreview } from '../../OrderPreview/OrderPreview';
 import { Ufo } from '../../animations/Ufo/Ufo';
 import { ButtonWithText, Container, TitlePage, Error } from '../../UI';
 import { ADD_STICKERS } from '../../../utils/constants';
-import { IUserState } from '../../../interfaces';
-import { orderspage } from '../../../utils/content/profile';
+import { IUserState } from '../../../shared/interfaces';
+import { orderspage } from '../../../assets/static/profile';
 
 import styles from './OrdersPage.module.scss';
 
 const OrdersPage: React.FC = () => {
   const navigate = useNavigate();
 
-  const { orders, ordersLoading, ordersError } = useSelector(
-    (state: { user: IUserState }) => state.user,
-  );
+  const { orders, ordersLoading, ordersError } = useSelector((state: { user: IUserState }) => state.user);
 
   return (
     <main className={styles.orders}>

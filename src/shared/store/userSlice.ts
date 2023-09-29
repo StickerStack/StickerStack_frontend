@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { userApi } from '../utils/api/UserApi';
+import { userApi } from '../../api/UserApi';
 import { IUserState, IOrder } from '../interfaces';
-import { API_URL } from '../utils/constants';
+import { API_URL } from '../../utils/constants';
 
 const initialState: IUserState = {
   email: '',
@@ -35,16 +35,13 @@ const updateUser = createAsyncThunk(
   },
 );
 
-const updateProfileImage = createAsyncThunk(
-  'user/updateProfileImage',
-  async (data: FormData, { rejectWithValue }) => {
-    try {
-      return userApi.uploadProfileImage(data);
-    } catch (err) {
-      return rejectWithValue(err);
-    }
-  },
-);
+const updateProfileImage = createAsyncThunk('user/updateProfileImage', async (data: FormData, { rejectWithValue }) => {
+  try {
+    return userApi.uploadProfileImage(data);
+  } catch (err) {
+    return rejectWithValue(err);
+  }
+});
 
 const deleteProfileImage = createAsyncThunk('user/deleteProfileImage', async () => {
   try {
@@ -99,18 +96,12 @@ const userSlice = createSlice({
       state.isLogged = true;
     });
 
-    builder.addCase(
-      getUserOrders.fulfilled,
-      (state, action: { payload: Array<IOrder>; type: string }) => {
-        state.ordersLoading = false;
-        state.ordersError = false;
-        state.orders = action.payload;
-        state.ordersAlert = action.payload.reduce(
-          (acc, item) => acc + (item.status === 'ready for pickup' ? 1 : 0),
-          0,
-        );
-      },
-    );
+    builder.addCase(getUserOrders.fulfilled, (state, action: { payload: Array<IOrder>; type: string }) => {
+      state.ordersLoading = false;
+      state.ordersError = false;
+      state.orders = action.payload;
+      state.ordersAlert = action.payload.reduce((acc, item) => acc + (item.status === 'ready for pickup' ? 1 : 0), 0);
+    });
     builder.addCase(getUserOrders.pending, (state) => {
       state.ordersLoading = true;
       state.ordersError = false;

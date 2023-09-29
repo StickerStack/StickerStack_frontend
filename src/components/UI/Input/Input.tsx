@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import cn from 'classnames';
 
-import { TInput } from '../../../types/TInput';
+import { TInput } from '../../../shared/types/TInput';
 import styles from './Input.module.scss';
 
 const Input: FC<TInput> = ({ className = '', error, register, option, name = '', ...rest }) => {

@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import { openPopup } from '../../../store/popupSlice';
+import { openPopup } from '../../../shared/store/popupSlice';
 import { ChangePassword } from '../../Popups/ChangePassword/ChangePassword';
-import { useAppDispatch } from '../../../hooks/hooks';
+import { useAppDispatch } from '../../../shared/hooks/hooks';
 
 const ChangePasswordPage: React.FC = () => {
   const location = useLocation();
@@ -12,10 +12,7 @@ const ChangePasswordPage: React.FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    localStorage.setItem(
-      'change-password-token',
-      location.pathname.replace('/auth/verify-forgot-password/', ''),
-    );
+    localStorage.setItem('change-password-token', location.pathname.replace('/auth/verify-forgot-password/', ''));
     if (localStorage.getItem('change-password-token')) {
       navigate('/');
       dispatch(openPopup(ChangePassword));

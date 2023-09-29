@@ -10,11 +10,11 @@ import {
   SIZE_INPUT_MAX_LENGTH,
   SIZE_INPUT_MIN_LENGTH,
 } from '../../utils/constants';
-import { TShape } from '../../types/TShape';
+import { TShape } from '../../shared/types/TShape';
 import { ButtonCustom, Input, InputError, InputField, RadioButton, TooltipCustom } from '../UI';
-import { addpage } from '../../utils/content/stickerspage';
+import { addpage } from '../../assets/static/stickerspage';
 import { InfoBox } from '../InfoBox/InfoBox';
-import { useAppDispatch } from '../../hooks/hooks';
+import { useAppDispatch } from '../../shared/hooks/hooks';
 import {
   addEmptySticker,
   addSticker,
@@ -22,14 +22,14 @@ import {
   deleteSticker,
   putStickerInCart,
   updateSticker,
-} from '../../store/stickersSlice';
+} from '../../shared/store/stickersSlice';
 import { Shape } from '../Shape/Shape';
-import { ISticker } from '../../interfaces/ISticker';
+import { ISticker } from '../../shared/interfaces/ISticker';
 import { DragAndDrop } from '../DragAndDrop/DragAndDrop';
 import styles from './NewSticker.module.scss';
 import { StickerImage } from '../StickerImage/StickerImage';
-import { openMessage } from '../../store/popupSlice';
-import { messages } from '../../utils/content/popups';
+import { openMessage } from '../../shared/store/popupSlice';
+import { messages } from '../../assets/static/popups';
 import { Loader } from '../UI/Loader/Loader';
 
 interface IProps {

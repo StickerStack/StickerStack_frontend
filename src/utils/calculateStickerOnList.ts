@@ -1,5 +1,5 @@
-import { IOptions } from '../interfaces';
-import { ISticker } from '../interfaces/ISticker';
+import { IOptions } from '../shared/interfaces';
+import { ISticker } from '../shared/interfaces/ISticker';
 import { converter } from './converter';
 
 export interface PageElement {
@@ -48,7 +48,7 @@ export const calculateStickerOnList = (arr: ISticker[], options: IOptions): Page
         grid-column: span ${Math.ceil(converter.cmToPx(imageObject.width) + options.gapX)};
       `;
       page.appendChild(images);
-      
+
       const hasOverflowed = page.scrollHeight > page.clientHeight;
 
       if (hasOverflowed) {
@@ -66,6 +66,6 @@ export const calculateStickerOnList = (arr: ISticker[], options: IOptions): Page
   }
 
   allPages.push(currentPage);
-  page.remove(); 
+  page.remove();
   return allPages;
 };

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { Signin } from '../components/Popups/Signin/Signin';
-import { IPopupState, IOrder} from '../interfaces';
+import { Signin } from '../../components/Popups/Signin/Signin';
+import { IPopupState, IOrder } from '../interfaces';
 
 const initialState: IPopupState = {
   isOpen: false,
@@ -120,16 +120,6 @@ const popupSlice = createSlice({
 });
 
 const popupSliceReducer = popupSlice.reducer;
-const { closePopup, openPopup, openPreview, openOrder, openInfo, openMessage, closeMessage } =
-  popupSlice.actions;
+const { closePopup, openPopup, openPreview, openOrder, openInfo, openMessage, closeMessage } = popupSlice.actions;
 
-export {
-  popupSliceReducer,
-  closePopup,
-  openPopup,
-  openOrder,
-  openPreview,
-  openInfo,
-  openMessage,
-  closeMessage,
-};
+export { popupSliceReducer, closePopup, openPopup, openOrder, openPreview, openInfo, openMessage, closeMessage };

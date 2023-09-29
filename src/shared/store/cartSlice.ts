@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { pagePrice } from '../utils/constants';
-import { cartApi } from '../utils/api/CartApi';
+import { pagePrice } from '../../utils/constants';
+import { cartApi } from '../../api/CartApi';
 import { ISticker, IStickerForOrder } from '../interfaces/ISticker';
 import { ICart } from '../interfaces/ICart';
 
@@ -25,13 +25,7 @@ export const uploadOrder = createAsyncThunk(
     { rejectWithValue },
   ) => {
     try {
-      const response = await cartApi.uploadOrder(
-        data.cost,
-        data.address,
-        data.number,
-        data.cropping,
-        data.stickers,
-      );
+      const response = await cartApi.uploadOrder(data.cost, data.address, data.number, data.cropping, data.stickers);
       return { data: response.data };
     } catch (err) {
       return rejectWithValue(err);

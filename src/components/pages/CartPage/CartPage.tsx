@@ -1,27 +1,27 @@
 import { useEffect } from 'react';
 import cn from 'classnames';
-import { useAppDispatch } from '../../../hooks/hooks';
+import { useAppDispatch } from '../../../shared/hooks/hooks';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useForm, FieldValues } from 'react-hook-form';
 
-import { updateAddress } from '../../../store/cartSlice';
-import { closePopup, openInfo, openMessage, openPreview } from '../../../store/popupSlice';
+import { updateAddress } from '../../../shared/store/cartSlice';
+import { closePopup, openInfo, openMessage, openPreview } from '../../../shared/store/popupSlice';
 import { TitlePage, Container, ButtonWithText, TextUnderline, Input, Error } from '../../UI';
 import { ADD_STICKERS, ORDERS, getRandomNumber } from '../../../utils/constants';
 import { Sticker } from '../../Sticker/Sticker';
 import { InfoBox } from '../../InfoBox/InfoBox';
-import { ICart } from '../../../interfaces/ICart';
-import { messages, verifyBeforeOredering } from '../../../utils/content/popups';
-import { cartpage } from '../../../utils/content/stickerspage';
-import { IStickersState } from '../../../interfaces/IStickersState';
+import { ICart } from '../../../shared/interfaces/ICart';
+import { messages, verifyBeforeOredering } from '../../../assets/static/popups';
+import { cartpage } from '../../../assets/static/stickerspage';
+import { IStickersState } from '../../../shared/interfaces/IStickersState';
 import { Dots } from '../../animations/Dots/Dots';
 import { Loader } from '../../UI/Loader/Loader';
-import { IUserState } from '../../../interfaces';
-import { sendVerificationCode } from '../../../store/authSlice';
-import { getUser } from '../../../store/userSlice';
+import { IUserState } from '../../../shared/interfaces';
+import { sendVerificationCode } from '../../../shared/store/authSlice';
+import { getUser } from '../../../shared/store/userSlice';
 
-import { ReactComponent as WriteSvg } from '../../../images/icons/write-icon.svg';
+import WriteSvg from '../../../assets/images/icons/write-icon.svg?react';
 import styles from './CartPage.module.scss';
 
 const CartPage: React.FC = () => {

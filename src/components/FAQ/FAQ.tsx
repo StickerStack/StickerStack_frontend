@@ -1,6 +1,6 @@
 import { Container, TitlePage } from '../UI';
 import { Dropdown } from '../Dropdown/Dropdown';
-import { questions } from '../../utils/content/mainpage';
+import { questions } from '../../assets/static/mainpage';
 
 import styles from './FAQ.module.scss';
 

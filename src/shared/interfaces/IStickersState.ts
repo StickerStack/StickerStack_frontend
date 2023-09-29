@@ -1,4 +1,4 @@
-import { PageElement } from '../utils/calculateStickerOnList';
+import { PageElement } from '../../utils/calculateStickerOnList';
 import { ISticker } from './ISticker';
 
 export interface IStickersState {

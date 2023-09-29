@@ -17,14 +17,14 @@ import {
 } from '../../UI';
 import { Signup, ResetPassword } from '../..';
 
-import { closePopup, openPopup, openMessage } from '../../../store/popupSlice';
-import { useAppDispatch } from '../../../hooks/hooks';
-import { getUser, signInMockUser, updateStatus } from '../../../store/userSlice';
-import { signIn } from '../../../store/authSlice';
+import { closePopup, openPopup, openMessage } from '../../../shared/store/popupSlice';
+import { useAppDispatch } from '../../../shared/hooks/hooks';
+import { getUser, signInMockUser, updateStatus } from '../../../shared/store/userSlice';
+import { signIn } from '../../../shared/store/authSlice';
 import { registerEmail, registerPassword } from '../../../utils/registersRHF';
 import { motion } from 'framer-motion';
 import { ADD_STICKERS } from '../../../utils/constants';
-import { messages, signin } from '../../../utils/content/popups';
+import { messages, signin } from '../../../assets/static/popups';
 
 import styles from './Signin.module.scss';
 
@@ -113,9 +113,7 @@ const Signin: React.FC = () => {
     >
       <TitlePopup>{signin.title}</TitlePopup>
       <div className={styles.inputs}>
-        {(errors.email?.type === 'custom' || errors.password?.type === 'custom') && (
-          <Error>{signin.error}</Error>
-        )}
+        {(errors.email?.type === 'custom' || errors.password?.type === 'custom') && <Error>{signin.error}</Error>}
         <InputField className='email'>
           <Label htmlFor='email'>{signin.email.emailLabel}</Label>
           <Input
@@ -136,10 +134,7 @@ const Signin: React.FC = () => {
         <InputField className='password'>
           <Label htmlFor='password'>
             {signin.password.passwordLabel}
-            <TextUnderline
-              onClick={() => dispatch(openPopup(ResetPassword))}
-              className={styles.reset}
-            >
+            <TextUnderline onClick={() => dispatch(openPopup(ResetPassword))} className={styles.reset}>
               {signin.password.forgotPassword}
             </TextUnderline>
           </Label>
@@ -148,11 +143,7 @@ const Signin: React.FC = () => {
             register={register}
             option={registerPassword}
             name='password'
-            className={
-              dirtyFields?.password && watch('password') !== '' && !statePassword
-                ? styles.password
-                : ''
-            }
+            className={dirtyFields?.password && watch('password') !== '' && !statePassword ? styles.password : ''}
             type={statePassword ? 'text' : 'password'}
             autoComplete='current-password'
             error={errors.password}

@@ -2,13 +2,13 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
 
-import { IPopupState } from '../../interfaces/IPopupState';
-import { useAppDispatch } from '../../hooks/hooks';
-import { closeMessage } from '../../store/popupSlice';
+import { IPopupState } from '../../shared/interfaces/IPopupState';
+import { useAppDispatch } from '../../shared/hooks/hooks';
+import { closeMessage } from '../../shared/store/popupSlice';
 import { ButtonCustom } from '../UI';
 
-import { ReactComponent as CheckerSvg } from '../../images/icons/checker-icon.svg';
-import { ReactComponent as ErrorSvg } from '../../images/icons/button-close.svg';
+import CheckerSvg from '../../assets/images/icons/checker-icon.svg?react';
+import ErrorSvg from '../../assets/images/icons/button-close.svg?react';
 import styles from './MessagePopup.module.scss';
 
 const MessagePopup: React.FC = () => {
@@ -69,12 +69,7 @@ const MessagePopup: React.FC = () => {
               </div>
             </div>
             {message.text}
-            <ButtonCustom
-              className={styles.button}
-              type='close'
-              label='Закрыть'
-              onClick={() => handleCloseMessage()}
-            />
+            <ButtonCustom className={styles.button} type='close' label='Закрыть' onClick={() => handleCloseMessage()} />
           </motion.div>
         </motion.div>
       )}

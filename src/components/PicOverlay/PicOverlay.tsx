@@ -4,8 +4,8 @@ import { useLocation } from 'react-router-dom';
 import { ButtonWithText } from '../UI';
 import { PROFILE } from '../../utils/constants';
 
-import { ReactComponent as PictureSvg } from '../../images/icons/upload-image.svg';
-import { ReactComponent as BinSvg } from '../../images/icons/bin.svg';
+import PictureSvg from '../../assets/images/icons/upload-image.svg?react';
+import BinSvg from '../../assets/images/icons/bin.svg?react';
 
 import styles from './PicOverlay.module.scss';
 

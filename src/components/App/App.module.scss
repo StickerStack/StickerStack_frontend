@@ -1,6 +1,5 @@
-@import '../../utils/_scss-variables.scss';
-
 .app {
   min-height: 100vh;
-  @include flex(column, _, _);
+  display: flex;
+  flex-direction: column;
 }

@@ -15,7 +15,7 @@ import {
   Preloader,
   Footer,
 } from '../';
-import { AddStickersNew } from '../pages/AddStickers/AddStickers';
+import { AddStickersNew } from '@pages/AddStickers/AddStickers';
 import { CartPage } from '../pages/CartPage/CartPage';
 import {
   PROFILE,
@@ -29,17 +29,17 @@ import {
   ORDERS,
   COOKIE,
 } from '../../utils/constants';
-import { cookie, privacy, terms } from '../../utils/content/policy';
-import { useAppDispatch } from '../../hooks/hooks';
-import { useScrollToTop } from '../../hooks/useScrollToTop';
+import { cookie, privacy, terms } from '../../assets/static/policy';
+import { useAppDispatch } from '../../shared/hooks/hooks';
+import { useScrollToTop } from '../../shared/hooks/useScrollToTop';
 import { OrdersPage } from '../pages/OrdersPage/OrdersPage';
 import { PolicyPage } from '../pages/PolicyPage/PolicyPage';
-import { countTotal, updateSheets } from '../../store/cartSlice';
-import { getUser, getUserOrders, signInMockUser } from '../../store/userSlice';
-import { IUserState } from '../../interfaces';
+import { countTotal, updateSheets } from '../../shared/store/cartSlice';
+import { getUser, getUserOrders, signInMockUser } from '../../shared/store/userSlice';
+import { IUserState } from '../../shared/interfaces';
 import { AcceptCookies } from '../AcceptCookies/AcceptCookies';
-import { getStickers } from '../../store/stickersSlice';
-import { IStickersState } from '../../interfaces/IStickersState';
+import { getStickers } from '../../shared/store/stickersSlice';
+import { IStickersState } from '../../shared/interfaces/IStickersState';
 
 import styles from './App.module.scss';
 

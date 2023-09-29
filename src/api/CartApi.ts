@@ -1,6 +1,6 @@
 import { Api } from './Api';
-import { API_URL } from '../constants';
-import { ISticker, IStickerForOrder } from '../../interfaces/ISticker';
+import { API_URL } from '../utils/constants';
+import { ISticker, IStickerForOrder } from '../shared/interfaces/ISticker';
 
 class CartApi extends Api {
   constructor(url: string, headers: HeadersInit) {

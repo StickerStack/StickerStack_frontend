@@ -2,13 +2,13 @@ import { FC, useState } from 'react';
 import { UseFormRegister, FieldValues } from 'react-hook-form';
 import cn from 'classnames';
 
-import { updateSticker } from '../../store/stickersSlice';
-import { stickertext } from '../../utils/content/stickerspage';
+import { updateSticker } from '../../shared/store/stickersSlice';
+import { stickertext } from '../../assets/static/stickerspage';
 import { Error } from '../UI';
-import { useAppDispatch } from '../../hooks/hooks';
+import { useAppDispatch } from '../../shared/hooks/hooks';
 import { converter } from '../../utils/converter';
 import { SIZE_INPUT_MAX_LENGTH, stickerWhiteBorder } from '../../utils/constants';
-import { ISticker } from '../../interfaces/ISticker';
+import { ISticker } from '../../shared/interfaces/ISticker';
 import { PicOverlay } from '../PicOverlay/PicOverlay';
 import { StickerImage } from '../StickerImage/StickerImage';
 
@@ -81,11 +81,9 @@ export const DragAndDrop: FC<IProps> = ({ sticker, className, register, name }) 
             if (typeof file.urlFilePreview === 'string') {
               // Прибавляем к окончательной картинке в оптимальном размере ширину белых полей
               const optimalWidth =
-                Math.round(converter.pxToOptimalCm(image.naturalWidth)) +
-                (stickerWhiteBorder * 2) / 10;
+                Math.round(converter.pxToOptimalCm(image.naturalWidth)) + (stickerWhiteBorder * 2) / 10;
               const optimalHeight =
-                Math.round(converter.pxToOptimalCm(image.naturalHeight)) +
-                (stickerWhiteBorder * 2) / 10;
+                Math.round(converter.pxToOptimalCm(image.naturalHeight)) + (stickerWhiteBorder * 2) / 10;
 
               if (optimalWidth <= maxSize && optimalHeight <= maxSize) {
                 dispatch(

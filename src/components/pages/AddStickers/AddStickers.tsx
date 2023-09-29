@@ -4,15 +4,15 @@ import { useNavigate } from 'react-router-dom';
 import { FieldValues, useForm } from 'react-hook-form';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import { updateCropping } from '../../../store/cartSlice';
-import { ICart } from '../../../interfaces/ICart';
-import { useAppDispatch } from '../../../hooks/hooks';
+import { updateCropping } from '../../../shared/store/cartSlice';
+import { ICart } from '../../../shared/interfaces/ICart';
+import { useAppDispatch } from '../../../shared/hooks/hooks';
 import { InfoBox } from '../../InfoBox/InfoBox';
 import { NewSticker } from '../../NewSticker/NewSticker';
-import { IStickersState } from '../../../interfaces/IStickersState';
+import { IStickersState } from '../../../shared/interfaces/IStickersState';
 import { ButtonWithText, Container, RadioButton, TextUnderline, TitlePage, Error } from '../../UI';
-import { addpage } from '../../../utils/content/stickerspage';
-import { openPreview } from '../../../store/popupSlice';
+import { addpage } from '../../../assets/static/stickerspage';
+import { openPreview } from '../../../shared/store/popupSlice';
 import { CART, pagePrice } from '../../../utils/constants';
 import { Dots } from '../../animations/Dots/Dots';
 import { Loader } from '../../UI/Loader/Loader';
@@ -95,11 +95,6 @@ export const AddStickersNew: FC = () => {
                 </AnimatePresence>
               ))}
             </section>
-            {/* {stickers.length < CARDS_MAXIMUM && (
-          <ButtonWithText theme='transparent' onClick={handleAddCard}>
-            {addpage.addSicker}
-          </ButtonWithText>
-        )} */}
             <section className={styles.info}>
               <div className={styles.info_pages}>
                 <InfoBox

@@ -1,18 +1,18 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { IOrder, IStickersState } from '../../../interfaces';
+import { IOrder, IStickersState } from '../../../shared/interfaces';
 import { StickerCarousel } from '../../StickerCarousel/StickerCarousel';
 import { ButtonWithText } from '../../UI';
 import { ADD_STICKERS, CART } from '../../../utils/constants';
-import { orderspage } from '../../../utils/content/profile';
-import { closePopup, openInfo, openMessage } from '../../../store/popupSlice';
-import { useAppDispatch } from '../../../hooks/hooks';
-import { confirmCart, messages } from '../../../utils/content/popups';
+import { orderspage } from '../../../assets/static/profile';
+import { closePopup, openInfo, openMessage } from '../../../shared/store/popupSlice';
+import { useAppDispatch } from '../../../shared/hooks/hooks';
+import { confirmCart, messages } from '../../../assets/static/popups';
 import { useSelector } from 'react-redux';
-import { addStickers, clearStickers, getStickers } from '../../../store/stickersSlice';
+import { addStickers, clearStickers, getStickers } from '../../../shared/store/stickersSlice';
 
-import image from '../../../images/main-page/sticker-ufo.png';
+import image from '../../../assets/images/main-page/sticker-ufo.png';
 import styles from './OrderDetails.module.scss';
 
 interface IProps {
@@ -69,9 +69,7 @@ const OrderDetails: React.FC<IProps> = ({ order }: IProps) => {
             dispatch(closePopup());
             dispatch(getStickers());
           })
-          .catch(() =>
-            dispatch(openMessage({ text: `${messages.somethingWrong}`, isError: true })),
-          );
+          .catch(() => dispatch(openMessage({ text: `${messages.somethingWrong}`, isError: true })));
       })
       .catch(() => dispatch(openMessage({ text: `${messages.somethingWrong}`, isError: true })))
       .finally(() => setLoading(false));
@@ -151,10 +149,8 @@ const OrderDetails: React.FC<IProps> = ({ order }: IProps) => {
             </div>
             <ul className={styles.info}>
               <li className={styles.info_item}>
-                {order.stickers.reduce((acc, item) => acc + item.amount, 0)} шт на{' '}
-                {order.number_of_sheets}{' '}
-                {order.number_of_sheets.toString().endsWith('1') &&
-                !order.number_of_sheets.toString().endsWith('11')
+                {order.stickers.reduce((acc, item) => acc + item.amount, 0)} шт на {order.number_of_sheets}{' '}
+                {order.number_of_sheets.toString().endsWith('1') && !order.number_of_sheets.toString().endsWith('11')
                   ? 'листе'
                   : 'листах'}
                 {order.cropping ? ' (вырезать)' : ''}
@@ -163,12 +159,7 @@ const OrderDetails: React.FC<IProps> = ({ order }: IProps) => {
               <li className={styles.info_item}>{orderspage.material}</li>
             </ul>
             <div className={styles.buttons}>
-              <ButtonWithText
-                theme='transparent'
-                className={styles.button}
-                onClick={onRepeat}
-                loading={loading}
-              >
+              <ButtonWithText theme='transparent' className={styles.button} onClick={onRepeat} loading={loading}>
                 {orderspage.repeat}
               </ButtonWithText>
               {/* <ButtonWithText theme='transparent' className={styles.button} onClick={onClose}>

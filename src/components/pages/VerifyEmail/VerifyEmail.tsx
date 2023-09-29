@@ -1,17 +1,17 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 
-import { useAppDispatch } from '../../../hooks/hooks';
-import { verifyEmail } from '../../../store/authSlice';
-import { openInfo, openPopup } from '../../../store/popupSlice';
+import { useAppDispatch } from '../../../shared/hooks/hooks';
+import { verifyEmail } from '../../../shared/store/authSlice';
+import { openInfo, openPopup } from '../../../shared/store/popupSlice';
 import { ADD_STICKERS, PAGE_404, PROFILE } from '../../../utils/constants';
-import { verified } from '../../../utils/content/popups';
+import { verified } from '../../../assets/static/popups';
 import { useSelector } from 'react-redux';
-import { IUserState } from '../../../interfaces';
+import { IUserState } from '../../../shared/interfaces';
 import { Signin } from '../../Popups/Signin/Signin';
 
-import image from '../../../images/email-confirmed.png';
-import { getUser } from '../../../store/userSlice';
+import image from '../../../assets/images/email-confirmed.png';
+import { getUser } from '../../../shared/store/userSlice';
 
 const VerifyEmail: React.FC = () => {
   const navigate = useNavigate();

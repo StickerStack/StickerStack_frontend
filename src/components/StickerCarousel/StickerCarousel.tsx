@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import { IOrder } from '../../interfaces';
+import { IOrder } from '../../shared/interfaces';
 import Slider from 'react-slick';
 
 import { settings } from './settings';

@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
-import { IUserState } from '../../interfaces';
+import { IUserState } from '../../shared/interfaces';
 
 interface IProps {
   redirectPath?: string;

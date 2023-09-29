@@ -3,11 +3,11 @@ import { FieldValues, useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import cn from 'classnames';
 
-import { useAppDispatch } from '../../../hooks/hooks';
-import { IUserState } from '../../../interfaces';
-import { sendVerificationCode } from '../../../store/authSlice';
-import { openInfo, openMessage } from '../../../store/popupSlice';
-import { updateUser } from '../../../store/userSlice';
+import { useAppDispatch } from '../../../shared/hooks/hooks';
+import { IUserState } from '../../../shared/interfaces';
+import { sendVerificationCode } from '../../../shared/store/authSlice';
+import { openInfo, openMessage } from '../../../shared/store/popupSlice';
+import { updateUser } from '../../../shared/store/userSlice';
 import { profileName, registerEmail } from '../../../utils/registersRHF';
 import { ImagePick } from '../../ImagePick/ImagePick';
 import { ButtonWithText, Container, TextUnderline, TitlePage } from '../../UI';
@@ -15,8 +15,8 @@ import { InputWithButton } from '../../UI/InputWithButton/InputWithButton';
 import { InputField } from '../../UI/InputField/InputField';
 import { InputError } from '../../UI/InputError/InputError';
 import { getRandomNumber } from '../../../utils/constants';
-import { profile } from '../../../utils/content/profile';
-import { messages, verifyChanged, verifyPlease } from '../../../utils/content/popups';
+import { profile } from '../../../assets/static/profile';
+import { messages, verifyChanged, verifyPlease } from '../../../assets/static/popups';
 
 import styles from './ProfilePage.module.scss';
 
@@ -66,8 +66,7 @@ const ProfilePage: React.FC = () => {
   const lastname = watch(LASTNAME_INPUT_LABEL);
   const email = watch(EMAIL_INPUT_LABEL);
 
-  const fieldsUnchanged =
-    user.firstName === firstname && user.lastName === lastname && user.email === email;
+  const fieldsUnchanged = user.firstName === firstname && user.lastName === lastname && user.email === email;
   const validOrInvalid = isValid || !isValid;
 
   const onSubmit = () => {
@@ -141,10 +140,7 @@ const ProfilePage: React.FC = () => {
                     ...profileName,
                     onBlur: (value: React.FocusEvent<HTMLInputElement>) => {
                       setValue('firstName', value.target.value.trim());
-                      setValue(
-                        'firstName',
-                        value.target.value[0].toUpperCase() + value.target.value.slice(1),
-                      );
+                      setValue('firstName', value.target.value[0].toUpperCase() + value.target.value.slice(1));
                     },
                   }}
                   name={FIRSTNAME_INPUT_LABEL}
@@ -168,10 +164,7 @@ const ProfilePage: React.FC = () => {
                     ...profileName,
                     onBlur: (value: React.FocusEvent<HTMLInputElement>) => {
                       setValue('lastName', value.target.value.trim());
-                      setValue(
-                        'lastName',
-                        value.target.value[0].toUpperCase() + value.target.value.slice(1),
-                      );
+                      setValue('lastName', value.target.value[0].toUpperCase() + value.target.value.slice(1));
                     },
                   }}
                   name={LASTNAME_INPUT_LABEL}
