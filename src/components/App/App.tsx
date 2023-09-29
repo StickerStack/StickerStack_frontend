@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Route, Routes, Navigate, useLocation } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import {
@@ -16,7 +16,7 @@ import {
   Footer,
 } from '../';
 import { AddStickersNew } from '@pages/AddStickers/AddStickers';
-import { CartPage } from '../pages/CartPage/CartPage';
+import { CartPage } from '@pages/CartPage/CartPage';
 import {
   PROFILE,
   PRIVACY,
