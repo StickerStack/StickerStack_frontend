@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
 
-import { PopupInfo, PopupForm, PopupPreview, OrderDetails } from '../Popups';
-import { ButtonCustom } from '../UI';
+import { PopupInfo, PopupForm, PopupPreview, OrderDetails } from '@components/Popups';
+import { ButtonCustom } from '@components/UI';
 import { IPopupState } from '@shared/interfaces';
 import { useAppDispatch, useBlockScroll } from '@shared/hooks';
 import { closePopup } from '@shared/store';

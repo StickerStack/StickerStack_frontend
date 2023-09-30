@@ -7,11 +7,19 @@ import { useAppDispatch } from '@shared/hooks';
 import { IUserState } from '@shared/interfaces';
 import { sendVerificationCode, openInfo, openMessage, updateUser } from '@shared/store';
 import { profileName, registerEmail } from '@utils/registersRHF';
-import { ImagePick } from '../../';
-import { ButtonWithText, Container, InputWithButton, InputField, InputError, TextUnderline, TitlePage } from '../../UI';
+import { ImagePick } from '@components/index';
+import {
+  ButtonWithText,
+  Container,
+  InputWithButton,
+  InputField,
+  InputError,
+  TextUnderline,
+  TitlePage,
+} from '@components/UI';
 import { getRandomNumber } from '@utils/constants';
-import { profile } from '../../../assets/static/profile';
-import { messages, verifyChanged, verifyPlease } from '../../../assets/static/popups';
+import { profile } from '@static/profile';
+import { messages, verifyChanged, verifyPlease } from '@static/popups';
 
 import styles from './ProfilePage.module.scss';
 

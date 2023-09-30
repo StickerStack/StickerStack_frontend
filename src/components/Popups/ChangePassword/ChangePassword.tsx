@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 
-import { ButtonWithText, TitlePopup, EyeButton, Label, InputError, InputWithButton, InputField } from '../../UI';
+import { ButtonWithText, TitlePopup, EyeButton, Label, InputError, InputWithButton, InputField } from '@components/UI';
 import { closePopup, openInfo, openMessage, openPopup, resetPassword } from '@shared/store';
 import { useAppDispatch } from '@shared/hooks';
 import { registerPassword } from '@utils/registersRHF';
-import { changePassword, messages, passwordChanged } from '../../../assets/static/popups';
-import { Signin } from '../';
+import { changePassword, messages, passwordChanged } from '@static/popups';
+import { Signin } from '@components/Popups';
 
 import styles from './ChangePassword.module.scss';
 

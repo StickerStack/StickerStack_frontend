@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { IPopupState } from '@shared/interfaces';
 import { useAppDispatch } from '@shared/hooks/hooks';
 import { closeMessage } from '@shared/store';
-import { ButtonCustom } from '../UI';
+import { ButtonCustom } from '@components/UI';
 
 import CheckerSvg from '@images/icons/checker-icon.svg?react';
 import ErrorSvg from '@images/icons/button-close.svg?react';

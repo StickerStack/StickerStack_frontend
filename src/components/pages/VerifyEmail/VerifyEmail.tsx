@@ -6,8 +6,8 @@ import { useAppDispatch } from '@shared/hooks';
 import { verifyEmail, openInfo, openPopup, getUser } from '@shared/store';
 import { ADD_STICKERS, PAGE_404, PROFILE } from '@utils/constants';
 import { IUserState } from '@shared/interfaces';
-import { Signin } from '../../Popups';
-import { verified } from '../../../assets/static/popups';
+import { verified } from '@static/popups';
+import { Signin } from '@/components/Popups';
 
 import image from '@images/email-confirmed.png';
 

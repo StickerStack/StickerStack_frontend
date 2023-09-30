@@ -14,13 +14,13 @@ import {
   openMessage,
   openPreview,
 } from '@shared/store';
-import { TitlePage, Container, ButtonWithText, TextUnderline, Error, Loader } from '../../UI';
-import { ADD_STICKERS, getRandomNumber } from '@utils/constants';
-import { Sticker, InfoBox } from '../../';
 import { ICart, IUserState, IStickersState } from '@shared/interfaces';
-import { messages, verifyBeforeOredering } from '../../../assets/static/popups';
-import { cartpage } from '../../../assets/static/stickerspage';
-import { Dots } from '../../animations/Dots/Dots';
+import { ADD_STICKERS, getRandomNumber } from '@utils/constants';
+import { TitlePage, Container, ButtonWithText, TextUnderline, Error, Loader } from '@components/UI';
+import { Dots } from '@components/animations/Dots/Dots';
+import { Sticker, InfoBox } from '@components/index';
+import { messages, verifyBeforeOredering } from '@static/popups';
+import { cartpage } from '@static/stickerspage';
 
 import WriteSvg from '@images/icons/write-icon.svg?react';
 import styles from './CartPage.module.scss';

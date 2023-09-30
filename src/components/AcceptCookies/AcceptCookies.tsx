@@ -1,8 +1,8 @@
 import { FC, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-
-import { ButtonWithText } from '../UI';
 import { Link } from 'react-router-dom';
+
+import { ButtonWithText } from '@/components/UI';
 import { COOKIE } from '@utils/constants';
 
 import styles from './AcceptCookies.module.scss';

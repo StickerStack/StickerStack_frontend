@@ -27,7 +27,7 @@ import {
   ORDERS,
   COOKIE,
 } from '@utils/constants';
-import { cookie, privacy, terms } from '../../assets/static/policy';
+import { cookie, privacy, terms } from '@static/policy';
 import { useAppDispatch, useScrollToTop } from '@shared/hooks';
 import { countTotal, updateSheets, getUser, getUserOrders, signInMockUser, getStickers } from '@shared/store';
 import { IUserState, IStickersState } from '@shared/interfaces';

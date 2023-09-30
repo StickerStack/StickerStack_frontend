@@ -3,7 +3,7 @@ import cn from 'classnames';
 import Slider from 'react-slick';
 
 import { settings } from './settings';
-import { StickerImage } from '../';
+import { StickerImage } from '@components/index';
 import { IOrder } from '@shared/interfaces';
 
 import 'slick-carousel/slick/slick.css';

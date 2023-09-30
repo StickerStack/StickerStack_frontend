@@ -2,8 +2,8 @@ import { useRef } from 'react';
 import Slider from 'react-slick';
 
 import { settings } from './settings';
-import { Container, TitlePage } from '../UI';
-import { ourWorks, benefits } from '../../assets/static/mainpage';
+import { Container, TitlePage } from '@components/UI';
+import { ourWorks, benefits } from '@static/mainpage';
 
 import Checker from '@images/icons/checker-icon.svg?react';
 import 'slick-carousel/slick/slick.css';

@@ -1,5 +1,5 @@
-import { Container, TitlePage } from '../UI';
-import { instructions } from '../../assets/static/mainpage';
+import { Container, TitlePage } from '@components/UI';
+import { instructions } from '@static/mainpage';
 
 import styles from './Instructions.module.scss';
 

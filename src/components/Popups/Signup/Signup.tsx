@@ -14,9 +14,8 @@ import {
   InputField,
   InputError,
   InputWithButton,
-} from '../../UI';
-import { Signin } from '../';
-
+} from '@components/UI';
+import { Signin } from '@components/Popups';
 import { useAppDispatch } from '@shared/hooks';
 import {
   signUp,
@@ -31,7 +30,7 @@ import {
 } from '@shared/store';
 import { registerEmail, registerPassword } from '@utils/registersRHF';
 import { ADD_STICKERS, PRIVACY, TERMS, getRandomNumber } from '@utils/constants';
-import { messages, signup, verifyPlease } from '../../../assets/static/popups';
+import { messages, signup, verifyPlease } from '@static/popups';
 
 import styles from './Signup.module.scss';
 

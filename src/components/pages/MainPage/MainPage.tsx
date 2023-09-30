@@ -1,4 +1,4 @@
-import { OurWorks, MainHero, FAQ, Instructions } from '../../';
+import { OurWorks, MainHero, FAQ, Instructions } from '@components/index';
 
 import styles from './MainPage.module.scss';
 

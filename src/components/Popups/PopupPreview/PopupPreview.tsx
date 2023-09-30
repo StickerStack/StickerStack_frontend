@@ -14,12 +14,12 @@ import {
   openInfo,
   openMessage,
 } from '@shared/store';
-import { StickerList } from '../../';
 import { ADD_STICKERS, CART, ORDERS } from '@utils/constants';
 import { generateRandomNumber } from '@utils/generateRandomNumber';
-import { ButtonWithText, TooltipCustom } from '../../UI';
+import { StickerList } from '@components/index';
+import { ButtonWithText, TooltipCustom } from '@components/UI';
 import { settings } from './settings';
-import { messages, orderPlaced, previewShow } from '../../../assets/static/popups';
+import { messages, orderPlaced, previewShow } from '@static/popups';
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';

@@ -4,12 +4,11 @@ import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { useAppDispatch } from '@shared/hooks';
-
 import { IUserState } from '@shared/interfaces';
 import { logOut } from '@shared/store';
-import { ButtonWithText } from '../UI';
+import { ButtonWithText } from '@components/UI';
 import { ADD_STICKERS, ORDERS, PROFILE } from '@utils/constants';
-import { profileMenu } from '../../assets/static/profile';
+import { profileMenu } from '@static/profile';
 
 import EmptyAvatarImage from '@images/empty-avatar.png';
 import styles from './ProfileMenu.module.scss';

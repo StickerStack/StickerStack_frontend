@@ -1,12 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import { OrderPreview } from '../../';
-import { Ufo } from '../../animations/Ufo/Ufo';
-import { ButtonWithText, Container, TitlePage, Error } from '../../UI';
+import { OrderPreview } from '@components/index';
+import { Ufo } from '@components/animations/Ufo/Ufo';
+import { ButtonWithText, Container, TitlePage, Error } from '@components/UI';
 import { ADD_STICKERS } from '@utils/constants';
 import { IUserState } from '@shared/interfaces';
-import { orderspage } from '../../../assets/static/profile';
+import { orderspage } from '@static/profile';
 
 import styles from './OrdersPage.module.scss';
 

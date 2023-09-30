@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import cn from 'classnames';
 
 import { IPopupState } from '@shared/interfaces';
-import { ButtonWithText, TextForm, TitlePopup } from '../../UI';
+import { ButtonWithText, TextForm, TitlePopup } from '@components/UI';
 import { closePopup } from '@shared/store';
 import { useAppDispatch } from '@shared/hooks';
 

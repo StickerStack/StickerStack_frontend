@@ -15,13 +15,13 @@ import {
   InputField,
   InputError,
   InputWithButton,
-} from '../../UI';
-import { Signup, ResetPassword } from '../';
+} from '@components/UI';
+import { Signup, ResetPassword } from '@components/Popups';
 import { signIn, closePopup, openPopup, openMessage, getUser, signInMockUser, updateStatus } from '@shared/store';
 import { useAppDispatch } from '@shared/hooks';
 import { registerEmail, registerPassword } from '@utils/registersRHF';
 import { ADD_STICKERS } from '@utils/constants';
-import { messages, signin } from '../../../assets/static/popups';
+import { messages, signin } from '@static/popups';
 
 import styles from './Signin.module.scss';
 

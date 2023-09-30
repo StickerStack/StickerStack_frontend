@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { openPopup } from '@shared/store';
-import { ChangePassword } from '../../Popups';
+import { ChangePassword } from '@components/Popups';
 import { useAppDispatch } from '@shared/hooks';
 
 const ChangePasswordPage: React.FC = () => {

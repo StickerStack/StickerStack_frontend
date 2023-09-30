@@ -2,13 +2,13 @@ import { FieldValues, useForm } from 'react-hook-form';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 
-import { Signin, Signup, ResetPasswordInfo } from '../';
-import { ButtonWithText, TextUnderline, TitlePopup, Input, InputField, Label, InputError } from '../../UI';
+import { Signin, Signup, ResetPasswordInfo } from '@components/Popups';
+import { ButtonWithText, TextUnderline, TitlePopup, Input, InputField, Label, InputError } from '@components/UI';
 
 import { useAppDispatch } from '@shared/hooks';
 import { forgotPassword, openMessage, openPopup } from '@shared/store';
 import { registerEmail } from '@utils/registersRHF';
-import { messages, reset } from '../../../assets/static/popups';
+import { messages, reset } from '@static/popups';
 
 import styles from './ResetPassword.module.scss';
 

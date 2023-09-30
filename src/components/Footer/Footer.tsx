@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import cn from 'classnames';
 
 import { COOKIE, PAGE_404, PRIVACY, TERMS } from '@utils/constants';
-import { Container, TextUnderline } from '../UI';
+import { Container, TextUnderline } from '@components/UI';
 
 import logo from '@images/logo.svg';
 import TelSvg from '@images/icons/tel.svg?react';

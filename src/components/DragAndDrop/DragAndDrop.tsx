@@ -5,8 +5,8 @@ import cn from 'classnames';
 import { updateSticker } from '@shared/store';
 import { useAppDispatch } from '@shared/hooks';
 import { ISticker } from '@shared/interfaces';
-import { stickertext } from '../../assets/static/stickerspage';
-import { Error } from '../UI';
+import { stickertext } from '@static/stickerspage';
+import { Error } from '@components/UI';
 
 import { converter } from '@utils/converter';
 import { SIZE_INPUT_MAX_LENGTH, stickerWhiteBorder } from '@utils/constants';

@@ -7,13 +7,11 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { updateCropping, openPreview } from '@shared/store';
 import { ICart, IStickersState } from '@shared/interfaces';
 import { useAppDispatch } from '@shared/hooks';
-import { InfoBox, NewSticker } from '../../';
-
-import { Loader, ButtonWithText, Container, RadioButton, TextUnderline, TitlePage, Error } from '../../UI';
-import { addpage } from '../../../assets/static/stickerspage';
-
 import { CART, pagePrice } from '@utils/constants';
-import { Dots } from '../../animations/Dots/Dots';
+import { InfoBox, NewSticker } from '@components/index';
+import { Loader, ButtonWithText, Container, RadioButton, TextUnderline, TitlePage, Error } from '@components/UI';
+import { addpage } from '@static/stickerspage';
+import { Dots } from '@components/animations/Dots/Dots';
 
 import styles from './AddStickers.module.scss';
 

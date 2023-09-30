@@ -10,11 +10,9 @@ import {
   SIZE_INPUT_MAX_LENGTH,
   SIZE_INPUT_MIN_LENGTH,
 } from '@utils/constants';
-import { TShape } from '../../shared/types/TShape';
-import { ButtonCustom, Input, InputError, InputField, RadioButton, TooltipCustom } from '../UI';
-import { addpage } from '../../assets/static/stickerspage';
-import { InfoBox } from '../InfoBox/InfoBox';
+import { TShape } from '@shared/types';
 import { useAppDispatch } from '@shared/hooks/hooks';
+import { ISticker } from '@shared/interfaces';
 import {
   addEmptySticker,
   addSticker,
@@ -24,12 +22,11 @@ import {
   updateSticker,
   openMessage,
 } from '@shared/store';
-import { Shape } from '../Shape/Shape';
-import { ISticker } from '@shared/interfaces';
-import { DragAndDrop } from '../DragAndDrop/DragAndDrop';
-import { StickerImage } from '../StickerImage/StickerImage';
-import { messages } from '../../assets/static/popups';
-import { Loader } from '../UI/Loader/Loader';
+import { ButtonCustom, Input, InputError, InputField, RadioButton, TooltipCustom, Loader } from '@components/UI';
+import { InfoBox, Shape, StickerImage, DragAndDrop } from '@components/index';
+
+import { messages } from '@static/popups';
+import { addpage } from '@static/stickerspage';
 
 import styles from './NewSticker.module.scss';
 

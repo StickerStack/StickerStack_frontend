@@ -2,12 +2,12 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import { ButtonWithText, Container } from '../UI';
+import { ButtonWithText, Container } from '@components/UI';
 import { useAppDispatch } from '@shared/hooks';
 import { IUserState } from '@shared/interfaces';
 import { openPopup } from '@shared/store';
-import { Signin } from '../Popups/Signin/Signin';
-import { hero } from '../../assets/static/mainpage';
+import { Signin } from '@components/Popups';
+import { hero } from '@static/mainpage';
 
 // import cocktail from '../../images/main-page/cocktail.png';
 // import ufo from '../../images/main-page/ufo.png';

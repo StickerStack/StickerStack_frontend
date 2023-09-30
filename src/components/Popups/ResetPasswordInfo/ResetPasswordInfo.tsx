@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion';
-import { ResetPassword } from '../';
-import { TextUnderline, TextForm, TitlePopup } from '../../UI';
-import { openPopup } from '@shared/store';
 
+import { ResetPassword } from '@components/Popups';
+import { TextUnderline, TextForm, TitlePopup } from '@components/UI';
+import { openPopup } from '@shared/store';
 import { useAppDispatch } from '@shared/hooks';
-import { resetInfo } from '../../../assets/static/popups';
+import { resetInfo } from '@static/popups';
 
 import styles from './ResetPasswordInfo.module.scss';
 

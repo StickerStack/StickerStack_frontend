@@ -6,11 +6,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 import { useAppDispatch, useOutsideClick } from '@shared/hooks';
 import { IUserState, IStickersState } from '@shared/interfaces';
-import { Signin } from '../Popups';
 import { openPopup } from '@shared/store';
 import { CART, COOKIE, PAGE_404, PRIVACY, TERMS } from '@utils/constants';
-import { ProfileMenu, ScrollBar } from '../';
-import { ButtonCustom, ButtonWithText, Container } from '../UI';
+import { Signin } from '@components/Popups';
+import { ButtonCustom, ButtonWithText, Container } from '@components/UI';
+import { ProfileMenu, ScrollBar } from '@components/index';
 
 import logo from '@images/logo.svg';
 import styles from './Header.module.scss';

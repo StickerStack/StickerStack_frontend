@@ -4,10 +4,9 @@ import cn from 'classnames';
 
 import { useAppDispatch } from '@shared/hooks/hooks';
 import { openMessage, deleteProfileImage, updateProfileImage } from '@shared/store';
-
 import { IUserState } from '@shared/interfaces';
-import { messages } from '../../assets/static/popups';
-import { Loader } from '../UI/Loader/Loader';
+import { messages } from '@static/popups';
+import { Loader } from '@components/UI';
 
 import EmptyAvatarImage from '@images/empty-avatar.png';
 import styles from './ImagePick.module.scss';

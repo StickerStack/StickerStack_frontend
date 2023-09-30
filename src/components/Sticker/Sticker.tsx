@@ -2,15 +2,14 @@ import { useState } from 'react';
 import cn from 'classnames';
 import { useLocation } from 'react-router-dom';
 
-import { ButtonCustom } from '../UI';
+import { ButtonCustom, Loader } from '@components/UI';
+import { InfoBox } from '@components/index';
 import { useAppDispatch } from '@shared/hooks';
 import { ISticker } from '@shared/interfaces';
 import { deleteSticker, openMessage } from '@shared/store';
 import { ADD_STICKERS, CART, stickerWhiteBorder } from '@utils/constants';
-import { InfoBox } from '../';
 import { converter } from '@utils/converter';
-import { messages } from '../../assets/static/popups';
-import { Loader } from '../UI/Loader/Loader';
+import { messages } from '@static/popups';
 
 import styles from './Sticker.module.scss';
 

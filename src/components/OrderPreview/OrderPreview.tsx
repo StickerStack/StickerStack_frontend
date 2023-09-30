@@ -1,7 +1,7 @@
 import { useAppDispatch, useResize } from '@shared/hooks';
 import { openOrder } from '@shared/store';
 import { IOrder } from '@shared/interfaces';
-import { StickerImage } from '../';
+import { StickerImage } from '@components/index';
 
 import styles from './OrderPreview.module.scss';
 

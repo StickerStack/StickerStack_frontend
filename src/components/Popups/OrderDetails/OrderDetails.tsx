@@ -4,13 +4,12 @@ import { useNavigate } from 'react-router-dom';
 
 import { IOrder, IStickersState } from '@shared/interfaces';
 import { useAppDispatch } from '@shared/hooks';
-import { StickerCarousel } from '../../';
-import { ButtonWithText } from '../../UI';
+import { StickerCarousel } from '@components/index';
+import { ButtonWithText } from '@components/UI';
 import { CART } from '@utils/constants';
-
 import { closePopup, openInfo, openMessage, addStickers, clearStickers, getStickers } from '@shared/store';
-import { confirmCart, messages } from '../../../assets/static/popups';
-import { orderspage } from '../../../assets/static/profile';
+import { confirmCart, messages } from '@static/popups';
+import { orderspage } from '@static/profile';
 
 import image from '@images/main-page/sticker-ufo.png';
 import styles from './OrderDetails.module.scss';

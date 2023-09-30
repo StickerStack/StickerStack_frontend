@@ -1,5 +1,5 @@
 //import preloader from '../../images/preloader.gif'
-import { Rocket } from '../animations/Rocket/Rocket';
+import { Rocket } from '@components/animations/Rocket/Rocket';
 import styles from './Preloader.module.scss';
 
 const Preloader: React.FC = () => {
