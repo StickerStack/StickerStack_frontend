@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { ButtonWithText } from '../../UI';
+import { ButtonWithText } from '@components/UI';
 
 import styles from './PageNotFound.module.scss';
 

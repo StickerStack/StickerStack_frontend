@@ -1,4 +1,4 @@
-import { Dots } from '../Dots/Dots';
+import { Dots } from '@/components/animations/Dots/Dots';
 
 import styles from './Ufo.module.scss';
 

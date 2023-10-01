@@ -1,8 +1,8 @@
 import cn from 'classnames';
 
-import { converter } from '../../utils/converter';
-import { pageSizePx, stickerWhiteBorder } from '../../utils/constants';
-import { ISticker } from '../../interfaces/ISticker';
+import { converter } from '@utils/converter';
+import { pageSizePx, stickerWhiteBorder } from '@utils/constants';
+import { ISticker } from '@shared/interfaces';
 import styles from './StickerList.module.scss';
 
 interface IProps {
@@ -46,22 +46,14 @@ const StickerList: React.FC<IProps> = ({ cards }: IProps) => {
               width: converter.cmToPx(card.width) / 2,
               height: converter.cmToPx(card.height) / 2,
               padding: borderInPx / 2,
-              gridRow: `span ${Math.ceil(
-                converter.cmToPx(card.height) / 2 + pageSizePxSmall.gapY,
-              )}`,
-              gridColumn: `span ${Math.ceil(
-                converter.cmToPx(card.width) / 2 + pageSizePxSmall.gapX,
-              )}`,
+              gridRow: `span ${Math.ceil(converter.cmToPx(card.height) / 2 + pageSizePxSmall.gapY)}`,
+              gridColumn: `span ${Math.ceil(converter.cmToPx(card.width) / 2 + pageSizePxSmall.gapX)}`,
             }}
             key={`${card.id}${index}`}
           >
             <img
               className={cn(styles.image, styles[`image_${card.shape}`])}
-              src={
-                card.image.startsWith('data:image/png;base64,')
-                  ? card.image
-                  : `data:image/png;base64,${card.image}`
-              }
+              src={card.image.startsWith('data:image/png;base64,') ? card.image : `data:image/png;base64,${card.image}`}
             />
           </div>
         );

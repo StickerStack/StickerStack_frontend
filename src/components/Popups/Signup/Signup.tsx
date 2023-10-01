@@ -14,16 +14,23 @@ import {
   InputField,
   InputError,
   InputWithButton,
-} from '../../UI';
-import { Signin } from '../Signin/Signin';
-
-import { useAppDispatch } from '../../../hooks/hooks';
-import { openMessage, openPopup, closePopup, openInfo } from '../../../store/popupSlice';
-import { getUser, updateStatus } from '../../../store/userSlice';
-import { signUp, signIn, sendVerificationCode } from '../../../store/authSlice';
-import { registerEmail, registerPassword } from '../../../utils/registersRHF';
-import { ADD_STICKERS, PRIVACY, TERMS, getRandomNumber } from '../../../utils/constants';
-import { messages, signup, verifyPlease } from '../../../utils/content/popups';
+} from '@components/UI';
+import { Signin } from '@components/Popups';
+import { useAppDispatch } from '@shared/hooks';
+import {
+  signUp,
+  signIn,
+  sendVerificationCode,
+  openMessage,
+  openPopup,
+  closePopup,
+  openInfo,
+  getUser,
+  updateStatus,
+} from '@shared/store';
+import { registerEmail, registerPassword } from '@utils/registersRHF';
+import { ADD_STICKERS, PRIVACY, TERMS, getRandomNumber } from '@utils/constants';
+import { messages, signup, verifyPlease } from '@static/popups';
 
 import styles from './Signup.module.scss';
 
@@ -168,11 +175,7 @@ const Signup: React.FC = () => {
             register={register}
             option={registerPassword}
             name='password'
-            className={
-              dirtyFields?.password && watch('password') !== '' && !statePassword
-                ? styles.password
-                : ''
-            }
+            className={dirtyFields?.password && watch('password') !== '' && !statePassword ? styles.password : ''}
             placeholder={signup.password.passwordPlaceholder}
             type={statePassword ? 'text' : 'password'}
             autoComplete='current-password'
@@ -201,9 +204,7 @@ const Signup: React.FC = () => {
             placeholder={signup.passwordRepeat.passwordRepeatPlaceholder}
             name='repeat-password'
             className={
-              dirtyFields['repeat-password'] &&
-              watch('repeat-password') !== '' &&
-              !stateRepeatPassword
+              dirtyFields['repeat-password'] && watch('repeat-password') !== '' && !stateRepeatPassword
                 ? styles.password
                 : ''
             }

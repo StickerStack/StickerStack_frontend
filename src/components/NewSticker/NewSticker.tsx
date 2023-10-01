@@ -2,19 +2,17 @@ import { FC, useState, useEffect } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 import cn from 'classnames';
 
-import { registerAmount, registerSize } from '../../utils/registersRHF';
+import { registerAmount, registerSize } from '@utils/registersRHF';
 import {
   AMOUNT_INPUT_MAX_LENGTH,
   AMOUNT_INPUT_MIN_LENGTH,
   REG_STICKERS,
   SIZE_INPUT_MAX_LENGTH,
   SIZE_INPUT_MIN_LENGTH,
-} from '../../utils/constants';
-import { TShape } from '../../types/TShape';
-import { ButtonCustom, Input, InputError, InputField, RadioButton, TooltipCustom } from '../UI';
-import { addpage } from '../../utils/content/stickerspage';
-import { InfoBox } from '../InfoBox/InfoBox';
-import { useAppDispatch } from '../../hooks/hooks';
+} from '@utils/constants';
+import { TShape } from '@shared/types';
+import { useAppDispatch } from '@shared/hooks/hooks';
+import { ISticker } from '@shared/interfaces';
 import {
   addEmptySticker,
   addSticker,
@@ -22,15 +20,15 @@ import {
   deleteSticker,
   putStickerInCart,
   updateSticker,
-} from '../../store/stickersSlice';
-import { Shape } from '../Shape/Shape';
-import { ISticker } from '../../interfaces/ISticker';
-import { DragAndDrop } from '../DragAndDrop/DragAndDrop';
+  openMessage,
+} from '@shared/store';
+import { ButtonCustom, Input, InputError, InputField, RadioButton, TooltipCustom, Loader } from '@components/UI';
+import { InfoBox, Shape, StickerImage, DragAndDrop } from '@components/index';
+
+import { messages } from '@static/popups';
+import { addpage } from '@static/stickerspage';
+
 import styles from './NewSticker.module.scss';
-import { StickerImage } from '../StickerImage/StickerImage';
-import { openMessage } from '../../store/popupSlice';
-import { messages } from '../../utils/content/popups';
-import { Loader } from '../UI/Loader/Loader';
 
 interface IProps {
   sticker: ISticker;

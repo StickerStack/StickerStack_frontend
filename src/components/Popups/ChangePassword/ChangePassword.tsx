@@ -1,21 +1,13 @@
 import { useEffect, useState } from 'react';
 import { FieldValues, useForm } from 'react-hook-form';
 
-import {
-  ButtonWithText,
-  TitlePopup,
-  EyeButton,
-  Label,
-  InputError,
-  InputWithButton,
-  InputField,
-} from '../../UI';
-import { closePopup, openInfo, openMessage, openPopup } from '../../../store/popupSlice';
-import { useAppDispatch } from '../../../hooks/hooks';
-import { resetPassword } from '../../../store/authSlice';
-import { registerPassword } from '../../../utils/registersRHF';
-import { changePassword, messages, passwordChanged } from '../../../utils/content/popups';
-import { Signin } from '../Signin/Signin';
+import { ButtonWithText, TitlePopup, EyeButton, Label, InputError, InputWithButton, InputField } from '@components/UI';
+import { closePopup, openInfo, openMessage, openPopup, resetPassword } from '@shared/store';
+import { useAppDispatch } from '@shared/hooks';
+import { registerPassword } from '@utils/registersRHF';
+import { changePassword, messages, passwordChanged } from '@static/popups';
+import { Signin } from '@components/Popups';
+
 import styles from './ChangePassword.module.scss';
 
 const ChangePassword: React.FC = () => {
@@ -103,11 +95,7 @@ const ChangePassword: React.FC = () => {
             option={registerPassword}
             name='password'
             type={statePassword ? 'text' : 'password'}
-            className={
-              dirtyFields?.password && watch('password') !== '' && !statePassword
-                ? styles.password
-                : ''
-            }
+            className={dirtyFields?.password && watch('password') !== '' && !statePassword ? styles.password : ''}
             autoComplete='current-password'
             error={errors.password}
             button={
@@ -121,9 +109,7 @@ const ChangePassword: React.FC = () => {
           <InputError error={errors.password} />
         </InputField>
         <InputField className='password'>
-          <Label htmlFor='repeat-password'>
-            {changePassword.passwordRepeat.passwordRepeatLabel}
-          </Label>
+          <Label htmlFor='repeat-password'>{changePassword.passwordRepeat.passwordRepeatLabel}</Label>
           <InputWithButton
             register={register}
             placeholder={changePassword.passwordRepeat.passwordRepeatPlaceholder}
@@ -137,9 +123,7 @@ const ChangePassword: React.FC = () => {
             name='repeat-password'
             type={stateRepeatPassword ? 'text' : 'password'}
             className={
-              dirtyFields['repeat-password'] &&
-              watch('repeat-password') !== '' &&
-              !stateRepeatPassword
+              dirtyFields['repeat-password'] && watch('repeat-password') !== '' && !stateRepeatPassword
                 ? styles.password
                 : ''
             }

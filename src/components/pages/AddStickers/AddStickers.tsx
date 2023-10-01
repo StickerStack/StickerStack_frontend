@@ -4,22 +4,18 @@ import { useNavigate } from 'react-router-dom';
 import { FieldValues, useForm } from 'react-hook-form';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import { updateCropping } from '../../../store/cartSlice';
-import { ICart } from '../../../interfaces/ICart';
-import { useAppDispatch } from '../../../hooks/hooks';
-import { InfoBox } from '../../InfoBox/InfoBox';
-import { NewSticker } from '../../NewSticker/NewSticker';
-import { IStickersState } from '../../../interfaces/IStickersState';
-import { ButtonWithText, Container, RadioButton, TextUnderline, TitlePage, Error } from '../../UI';
-import { addpage } from '../../../utils/content/stickerspage';
-import { openPreview } from '../../../store/popupSlice';
-import { CART, pagePrice } from '../../../utils/constants';
-import { Dots } from '../../animations/Dots/Dots';
-import { Loader } from '../../UI/Loader/Loader';
+import { updateCropping, openPreview } from '@shared/store';
+import { ICart, IStickersState } from '@shared/interfaces';
+import { useAppDispatch } from '@shared/hooks';
+import { CART, pagePrice } from '@utils/constants';
+import { InfoBox, NewSticker } from '@components/index';
+import { Loader, ButtonWithText, Container, RadioButton, TextUnderline, TitlePage, Error } from '@components/UI';
+import { addpage } from '@static/stickerspage';
+import { Dots } from '@components/animations/Dots/Dots';
 
 import styles from './AddStickers.module.scss';
 
-export const AddStickersNew: FC = () => {
+export const AddStickers: FC = () => {
   const { stickers, loading, error } = useSelector((state: { stickers: IStickersState }) => state.stickers);
   const { cropping, cost, totalAmount, number_of_sheets } = useSelector((state: { cart: ICart }) => state.cart);
   const [stickerActiveId, setStickerActiveId] = useState(stickers[0].id);
@@ -95,11 +91,6 @@ export const AddStickersNew: FC = () => {
                 </AnimatePresence>
               ))}
             </section>
-            {/* {stickers.length < CARDS_MAXIMUM && (
-          <ButtonWithText theme='transparent' onClick={handleAddCard}>
-            {addpage.addSicker}
-          </ButtonWithText>
-        )} */}
             <section className={styles.info}>
               <div className={styles.info_pages}>
                 <InfoBox

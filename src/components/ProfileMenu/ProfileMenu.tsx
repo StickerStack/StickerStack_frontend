@@ -2,24 +2,22 @@ import cn from 'classnames';
 import { forwardRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks/hooks';
 
-import { IUserState } from '../../interfaces';
-import { logOut } from '../../store/authSlice';
-import { ButtonWithText } from '../UI';
-import { ADD_STICKERS, ORDERS, PROFILE } from '../../utils/constants';
-import { profileMenu } from '../../utils/content/profile';
+import { useAppDispatch } from '@shared/hooks';
+import { IUserState } from '@shared/interfaces';
+import { logOut } from '@shared/store';
+import { ButtonWithText } from '@components/UI';
+import { ADD_STICKERS, ORDERS, PROFILE } from '@utils/constants';
+import { profileMenu } from '@static/profile';
 
-import EmptyAvatarImage from '../../images/empty-avatar.png';
+import EmptyAvatarImage from '@images/empty-avatar.png';
 import styles from './ProfileMenu.module.scss';
 
 // eslint-disable-next-line react/prop-types
 const ProfileMenu = forwardRef<HTMLHeadingElement>((props, ref) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { email, firstName, lastName, avatar, ordersAlert } = useSelector(
-    (state: { user: IUserState }) => state.user,
-  );
+  const { email, firstName, lastName, avatar, ordersAlert } = useSelector((state: { user: IUserState }) => state.user);
 
   const onLogOut = () => {
     if (localStorage.getItem('token')) {
@@ -55,21 +53,13 @@ const ProfileMenu = forwardRef<HTMLHeadingElement>((props, ref) => {
         </div>
       </Link>
 
-      <ButtonWithText
-        className={styles.button}
-        color='contrast'
-        onClick={() => navigate(ADD_STICKERS)}
-      >
+      <ButtonWithText className={styles.button} color='contrast' onClick={() => navigate(ADD_STICKERS)}>
         {profileMenu.button}
       </ButtonWithText>
 
       <ul className={styles.list}>
         <li>
-          <ButtonWithText
-            theme='no-border'
-            className={styles.link}
-            onClick={() => navigate(ORDERS)}
-          >
+          <ButtonWithText theme='no-border' className={styles.link} onClick={() => navigate(ORDERS)}>
             {profileMenu.orders}
             {ordersAlert > 0 && <div className={styles.badge}>{ordersAlert}</div>}
           </ButtonWithText>

@@ -1,21 +1,19 @@
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-import { OrderPreview } from '../../OrderPreview/OrderPreview';
-import { Ufo } from '../../animations/Ufo/Ufo';
-import { ButtonWithText, Container, TitlePage, Error } from '../../UI';
-import { ADD_STICKERS } from '../../../utils/constants';
-import { IUserState } from '../../../interfaces';
-import { orderspage } from '../../../utils/content/profile';
+import { OrderPreview } from '@components/index';
+import { Ufo } from '@components/animations/Ufo/Ufo';
+import { ButtonWithText, Container, TitlePage, Error } from '@components/UI';
+import { ADD_STICKERS } from '@utils/constants';
+import { IUserState } from '@shared/interfaces';
+import { orderspage } from '@static/profile';
 
 import styles from './OrdersPage.module.scss';
 
 const OrdersPage: React.FC = () => {
   const navigate = useNavigate();
 
-  const { orders, ordersLoading, ordersError } = useSelector(
-    (state: { user: IUserState }) => state.user,
-  );
+  const { orders, ordersLoading, ordersError } = useSelector((state: { user: IUserState }) => state.user);
 
   return (
     <main className={styles.orders}>

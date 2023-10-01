@@ -2,7 +2,7 @@ import { useState } from 'react';
 import cn from 'classnames';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import { ButtonCustom } from '../UI';
+import { ButtonCustom } from '@components/UI';
 
 import styles from './Dropdown.module.scss';
 

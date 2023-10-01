@@ -1,16 +1,15 @@
 import { useState } from 'react';
 import cn from 'classnames';
 import { useLocation } from 'react-router-dom';
-import { ButtonCustom } from '../UI';
-import { useAppDispatch } from '../../hooks/hooks';
-import { ISticker } from '../../interfaces';
-import { ADD_STICKERS, CART, stickerWhiteBorder } from '../../utils/constants';
-import { InfoBox } from '../InfoBox/InfoBox';
-import { converter } from '../../utils/converter';
-import { deleteSticker } from '../../store/stickersSlice';
-import { openMessage } from '../../store/popupSlice';
-import { messages } from '../../utils/content/popups';
-import { Loader } from '../UI/Loader/Loader';
+
+import { ButtonCustom, Loader } from '@components/UI';
+import { InfoBox } from '@components/index';
+import { useAppDispatch } from '@shared/hooks';
+import { ISticker } from '@shared/interfaces';
+import { deleteSticker, openMessage } from '@shared/store';
+import { ADD_STICKERS, CART, stickerWhiteBorder } from '@utils/constants';
+import { converter } from '@utils/converter';
+import { messages } from '@static/popups';
 
 import styles from './Sticker.module.scss';
 
@@ -126,12 +125,7 @@ const Sticker: React.FC<IProps> = ({ card, onClick }: IProps) => {
         </ul>
       )}
       {location.pathname === CART ? (
-        <ButtonCustom
-          type='delete'
-          className={cn(styles.delete)}
-          label='Удалить'
-          onClick={handleDelete}
-        />
+        <ButtonCustom type='delete' className={cn(styles.delete)} label='Удалить' onClick={handleDelete} />
       ) : null}
     </article>
   );

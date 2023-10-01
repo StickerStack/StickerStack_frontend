@@ -1,15 +1,8 @@
 import { forwardRef } from 'react';
 import cn from 'classnames';
-import {
-  FieldError,
-  FieldErrorsImpl,
-  FieldValues,
-  Merge,
-  RegisterOptions,
-  UseFormRegister,
-} from 'react-hook-form';
+import { FieldError, FieldErrorsImpl, FieldValues, Merge, RegisterOptions, UseFormRegister } from 'react-hook-form';
 
-import { ReactComponent as CheckerSvg } from '../../../images/icons/checker-icon.svg';
+import CheckerSvg from '@images/icons/checker-icon.svg?react';
 import styles from './CheckBoxForm.module.scss';
 
 interface IProps {

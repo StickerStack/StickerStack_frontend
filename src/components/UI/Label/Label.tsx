@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import cn from 'classnames';
 
-import { TLabel } from '../../../types/TLabel';
+import { TLabel } from '@shared/types';
 import styles from './Label.module.scss';
 
 const Label: FC<TLabel> = ({ className = '', children, ...rest }) => {

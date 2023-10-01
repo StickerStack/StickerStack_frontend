@@ -1,0 +1,45 @@
+$nunito-path: '/src/assets/styles/fonts/Nunito';
+$montserrat-path: '/src/assets/styles/fonts/Montserrat';
+$sen-path: '/src/assets/styles/fonts/Sen';
+
+@font-face {
+  font-family: 'Nunito';
+  font-weight: 400;
+  src: url('#{$nunito-path}/Nunito-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-weight: 700;
+  src: url('#{$nunito-path}/Nunito-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-weight: 400;
+  src: url('#{$montserrat-path}/Montserrat-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-weight: 500;
+  src: url('#{$montserrat-path}/Montserrat-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-weight: 600;
+  src: url('#{$montserrat-path}/Montserrat-SemiBold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  font-weight: 700;
+  src: url('#{$montserrat-path}/Montserrat-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Sen';
+  font-weight: 700;
+  src: url('#{$sen-path}/Sen-Bold.ttf') format('truetype');
+}

@@ -2,15 +2,11 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
 
-import { useBlockScroll } from '../../hooks/useBlockScroll';
-import { PopupForm } from '../';
-import { PopupInfo } from '../Popups/PopupInfo/PopupInfo';
-import { PopupPreview } from '../Popups/PopupPreview/PopupPreview';
-import { OrderDetails } from '../Popups/OrderDetails/OrderDetails';
-import { ButtonCustom } from '../UI';
-import { IPopupState } from '../../interfaces/IPopupState';
-import { useAppDispatch } from '../../hooks/hooks';
-import { closePopup } from '../../store/popupSlice';
+import { PopupInfo, PopupForm, PopupPreview, OrderDetails } from '@components/Popups';
+import { ButtonCustom } from '@components/UI';
+import { IPopupState } from '@shared/interfaces';
+import { useAppDispatch, useBlockScroll } from '@shared/hooks';
+import { closePopup } from '@shared/store';
 
 import styles from './Popup.module.scss';
 
@@ -18,9 +14,7 @@ const Popup: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const { blockScroll, unblockScroll } = useBlockScroll();
-  const { form, preview, info, order, isOpen } = useSelector(
-    (state: { popup: IPopupState }) => state.popup,
-  );
+  const { form, preview, info, order, isOpen } = useSelector((state: { popup: IPopupState }) => state.popup);
 
   useEffect(() => {
     isOpen ? blockScroll() : unblockScroll();

@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import { TitlePage } from '../../UI';
+import { TitlePage } from '@/components/UI';
 
 import styles from './Dots.module.scss';
 

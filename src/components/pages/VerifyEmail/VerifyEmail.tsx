@@ -1,24 +1,22 @@
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
-
-import { useAppDispatch } from '../../../hooks/hooks';
-import { verifyEmail } from '../../../store/authSlice';
-import { openInfo, openPopup } from '../../../store/popupSlice';
-import { ADD_STICKERS, PAGE_404, PROFILE } from '../../../utils/constants';
-import { verified } from '../../../utils/content/popups';
 import { useSelector } from 'react-redux';
-import { IUserState } from '../../../interfaces';
-import { Signin } from '../../Popups/Signin/Signin';
 
-import image from '../../../images/email-confirmed.png';
-import { getUser } from '../../../store/userSlice';
+import { useAppDispatch } from '@shared/hooks';
+import { verifyEmail, openInfo, openPopup, getUser } from '@shared/store';
+import { ADD_STICKERS, PAGE_404, PROFILE } from '@utils/constants';
+import { IUserState } from '@shared/interfaces';
+import { verified } from '@static/popups';
+import { Signin } from '@/components/Popups';
+
+import image from '@images/email-confirmed.png';
 
 const VerifyEmail: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useAppDispatch();
 
-  const { isLogged, isVerified } = useSelector((state: { user: IUserState }) => state.user);
+  const { isLogged } = useSelector((state: { user: IUserState }) => state.user);
 
   useEffect(() => {
     dispatch(verifyEmail({ token: location.pathname.replace('/auth/verifyemail/', '') }))

@@ -1,10 +1,7 @@
-import cn from 'classnames';
-
-import { useAppDispatch } from '../../hooks/hooks';
-import { useResize } from '../../hooks/useResize';
-import { openOrder } from '../../store/popupSlice';
-import { IOrder } from '../../interfaces';
-import { StickerImage } from '../StickerImage/StickerImage';
+import { useAppDispatch, useResize } from '@shared/hooks';
+import { openOrder } from '@shared/store';
+import { IOrder } from '@shared/interfaces';
+import { StickerImage } from '@components/index';
 
 import styles from './OrderPreview.module.scss';
 
@@ -48,9 +45,7 @@ const OrderPreview: React.FC<IProps> = ({ order }: IProps) => {
 
       <div className={styles.info}>
         <span className={styles.cost}>{order.cost} ₽</span>
-        <span className={styles.amount}>
-          {order.stickers.reduce((acc, item) => acc + item.amount, 0)} шт
-        </span>
+        <span className={styles.amount}>{order.stickers.reduce((acc, item) => acc + item.amount, 0)} шт</span>
 
         {/* <ButtonCustom
           type='more'

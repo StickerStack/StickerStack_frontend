@@ -1,4 +1,4 @@
-@import '../../../utils/_scss-variables.scss';
+@import '@styles/_scss-variables.scss';
 
 .button {
   background-color: transparent;
@@ -30,7 +30,7 @@
   width: 20px;
   height: 20px;
   padding: 0;
-  background-image: url(../../../images/icons/button-close.svg);
+  background-image: url(@images/icons/button-close.svg);
 }
 
 .button_person {
@@ -59,21 +59,21 @@
   width: 24px;
   height: 24px;
   padding: 0;
-  background-image: url(../../../images/icons/bin.svg);
+  background-image: url(@images/icons/bin.svg);
 }
 
 .button_save {
   width: 24px;
   height: 24px;
   padding: 0;
-  background-image: url(../../../images/icons/save.png);
+  background-image: url(@images/icons/save.png);
 }
 
 .button_add {
   width: 24px;
   height: 24px;
   padding: 0;
-  background-image: url(../../../images/icons/plus.png);
+  background-image: url(@images/icons/plus.png);
 }
 
 .button_arrow {
@@ -81,7 +81,7 @@
   height: 32px;
   background-color: $element-secondary-active-color;
   border-radius: 50%;
-  background-image: url(../../../images/icons/arrow-small.svg);
+  background-image: url(@images/icons/arrow-small.svg);
   background-size: auto;
   transform: rotate(1deg);
 }
@@ -89,5 +89,5 @@
 .button_more {
   width: 19px;
   height: 19px;
-  background-image: url(../../../images/icons/vertical-dots.svg);
+  background-image: url(@images/icons/vertical-dots.svg);
 }

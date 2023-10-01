@@ -2,10 +2,10 @@ import { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import cn from 'classnames';
 
-import { IPopupState } from '../../../interfaces/IPopupState';
-import { ButtonWithText, TextForm, TitlePopup } from '../../UI';
-import { closePopup } from '../../../store/popupSlice';
-import { useAppDispatch } from '../../../hooks/hooks';
+import { IPopupState } from '@shared/interfaces';
+import { ButtonWithText, TextForm, TitlePopup } from '@components/UI';
+import { closePopup } from '@shared/store';
+import { useAppDispatch } from '@shared/hooks';
 
 import styles from './PopupInfo.module.scss';
 
@@ -35,8 +35,7 @@ const PopupInfo: React.FC = () => {
       )}
       <TitlePopup
         style={{
-          marginTop:
-            info.imageAbsolute && window.innerWidth < 768 ? imageRef?.current?.clientHeight : 0,
+          marginTop: info.imageAbsolute && window.innerWidth < 768 ? imageRef?.current?.clientHeight : 0,
         }}
         className={styles.title}
       >

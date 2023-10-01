@@ -2,10 +2,10 @@ import { useRef } from 'react';
 import Slider from 'react-slick';
 
 import { settings } from './settings';
-import { Container, TitlePage } from '../UI';
-import { ourWorks, benefits } from '../../utils/content/mainpage';
+import { Container, TitlePage } from '@components/UI';
+import { ourWorks, benefits } from '@static/mainpage';
 
-import { ReactComponent as Checker } from '../../images/icons/checker-icon.svg';
+import Checker from '@images/icons/checker-icon.svg?react';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import styles from './OurWorks.module.scss';
