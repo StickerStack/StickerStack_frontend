@@ -82,8 +82,6 @@ const stickerSlice = createSlice({
         }
         return sticker;
       });
-
-      state.pages = calculateStickerOnList(state.stickers.slice(0, state.stickers.length - 1), pageSizePx);
     },
     removeAllStickers(state) {
       state.stickers = [
@@ -114,6 +112,8 @@ const stickerSlice = createSlice({
           size_type: 'optimal',
         });
       }
+
+      state.pages = calculateStickerOnList(state.stickers.slice(0, state.stickers.length - 1), pageSizePx);
     },
     addSticker(state, action) {
       state.stickers = state.stickers.map((sticker) => {
