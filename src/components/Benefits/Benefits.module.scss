@@ -1,0 +1,53 @@
+@import '@styles/_scss-variables.scss';
+
+.benefits {
+  background-color: $main-bg-color;
+}
+
+.container {
+  padding-top: 80px;
+  padding-bottom: 80px;
+  box-sizing: border-box;
+  @include flex(column, center, center);
+  gap: 25px;
+  background-color: $main-bg-color;
+
+  @media screen and (max-width: 768px) {
+    font-size: 16px;
+    padding-top: 50px;
+    padding-bottom: 70px;
+  }
+}
+
+.title,
+.point,
+.text {
+  color: $main-text-color;
+  max-width: 754px;
+}
+
+.point,
+.text {
+  width: 100%;
+  margin: 0;
+  line-height: 22px;
+}
+
+.point {
+  @include flex(row, flex-start, flex-start);
+  gap: 25px;
+  text-align: left;
+
+    &:before {
+    content: '';
+    border-radius: 50%;
+    min-width: 7px;
+    height: 7px;
+    background-color: $element-active-color;
+    margin-top: 8px;
+  }
+
+  @media screen and (max-width: 768px) {
+    gap: 10px;
+  }
+}

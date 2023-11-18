@@ -13,6 +13,7 @@ export { MessagePopup } from './MessagePopup/MessagePopup';
 export { NewSticker } from './NewSticker/NewSticker';
 export { OrderPreview } from './OrderPreview/OrderPreview';
 export { OurWorks } from './OurWorks/OurWorks';
+export { Benefits } from './Benefits/Benefits';
 export { PicOverlay } from './PicOverlay/PicOverlay';
 export { PolicyNavigation } from './PolicyNavigation/PolicyNavigation';
 export { Popup } from './Popup/Popup';

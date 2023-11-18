@@ -10,7 +10,7 @@ import { ButtonWithText } from '@components/UI';
 import { ADD_STICKERS, ORDERS, PROFILE } from '@utils/constants';
 import { profileMenu } from '@static/profile';
 
-import EmptyAvatarImage from '@images/empty-avatar.png';
+import EmptyAvatarImage from '@images/empty-avatar.svg';
 import styles from './ProfileMenu.module.scss';
 
 // eslint-disable-next-line react/prop-types
