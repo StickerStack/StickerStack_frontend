@@ -1,6 +1,13 @@
 @import '@styles/_scss-variables.scss';
 
+
+.instructions {
+  background-color: $secondary-bg-color;
+}
+
 .container {
+  background-color: $secondary-bg-color;
+  color: $contrast-text-color;
   padding-top: 80px;
   padding-bottom: 80px;
   box-sizing: border-box;
@@ -16,6 +23,7 @@
 
 .list {
   width: 100%;
+  max-width: 754px;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -51,6 +59,7 @@
 }
 
 .title {
+  color: $contrast-text-color;
   font-weight: 500;
   margin: 0;
 }

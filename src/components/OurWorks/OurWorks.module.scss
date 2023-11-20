@@ -32,18 +32,8 @@
   line-height: 22px;
 }
 
-.point {
-  @include flex(row, flex-start, flex-start);
-  gap: 25px;
-  text-align: left;
-
-  @media screen and (max-width: 768px) {
-    gap: 10px;
-  }
-}
-
 .text {
-  text-align: center;
+  max-width: 754px;
 }
 
 .icon {

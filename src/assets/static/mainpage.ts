@@ -5,9 +5,9 @@ import work4 from '@images/our-works/work-4.jpg';
 import work5 from '@images/our-works/work-5.jpg';
 import work6 from '@images/our-works/work-6.jpg';
 import work7 from '@images/our-works/work-7.jpg';
-import image1 from '@images/policy-img.png';
-import image2 from '@images/cart-dog.png';
-import image3 from '@images/empty-cart.png';
+import image1 from '@images/steps-instructions/step-1.png';
+import image2 from '@images/steps-instructions/step-2.png';
+import image3 from '@images/steps-instructions/step-3.png';
 import { pagePrice } from '@utils/constants';
 
 export const hero = {
@@ -19,7 +19,7 @@ export const hero = {
 
 export const ourWorks = {
   title: 'Наши работы',
-  text: 'Все, что вам нужно,\u00A0— загрузить любимую картинку и\u00A0дать нам возможность превратить ее\u00A0в\u00A0стикер.',
+  text: 'Все, что вам нужно,\u00A0— загрузить любимую картинку и\u00A0дать нам возможность превратить\u00A0ее\u00A0в\u00A0стикер.',
   images: [
     {
       image: work1,

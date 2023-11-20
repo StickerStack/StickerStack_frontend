@@ -3,9 +3,8 @@ import Slider from 'react-slick';
 
 import { settings } from './settings';
 import { Container, TitlePage } from '@components/UI';
-import { ourWorks, benefits } from '@static/mainpage';
+import { ourWorks } from '@static/mainpage';
 
-import Checker from '@images/icons/checker-icon.svg?react';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import styles from './OurWorks.module.scss';
@@ -36,15 +35,6 @@ const OurWorks: React.FC = () => {
           <div className={styles.prev_arrow} onClick={() => prevSlide()} />
           <div className={styles.next_arrow} onClick={() => nextSlide()} />
         </div>
-        <TitlePage type='section-title' className={styles.title}>
-          {benefits.title}
-        </TitlePage>
-        {benefits.items.map((benefit) => (
-          <div className={styles.point} key={benefit.id}>
-            <Checker className={styles.icon} />
-            <p className={styles.point}>{benefit.item}</p>
-          </div>
-        ))}
       </Container>
     </section>
   );
