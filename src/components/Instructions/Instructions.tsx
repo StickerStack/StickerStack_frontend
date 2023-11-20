@@ -5,6 +5,7 @@ import styles from './Instructions.module.scss';
 
 const Instructions: React.FC = () => {
   return (
+    <section className={styles.instructions}>
     <Container className={styles.container}>
       <TitlePage type='section-title' className={styles.title}>{instructions.title}</TitlePage>
       <ul className={styles.list}>
@@ -18,7 +19,8 @@ const Instructions: React.FC = () => {
           </li>
         ))}
       </ul>
-    </Container>
+      </Container>
+    </section>
   );
 };
 
