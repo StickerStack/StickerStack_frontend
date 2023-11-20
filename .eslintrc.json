@@ -26,9 +26,9 @@
   "settings": {
     "import/resolver": {
       "typescript": {
-        "node": {
-          // В этой папке, разрешены импорты 
-          "paths": ["src"]
+        "alias": {
+          "extensions": [".ts", ".tsx"],
+          "map": [["@", "."]]
         }
       }
     },

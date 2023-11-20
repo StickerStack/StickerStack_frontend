@@ -1,11 +1,11 @@
 import cn from 'classnames';
 import { useLocation } from 'react-router-dom';
 
-import { ButtonWithText } from '../UI';
-import { PROFILE } from '../../utils/constants';
+import { ButtonWithText } from '@components/UI';
+import { PROFILE } from '@utils/constants';
 
-import { ReactComponent as PictureSvg } from '../../images/icons/upload-image.svg';
-import { ReactComponent as BinSvg } from '../../images/icons/bin.svg';
+import PictureSvg from '@images/icons/upload-image.svg?react';
+import BinSvg from '@images/icons/bin.svg?react';
 
 import styles from './PicOverlay.module.scss';
 

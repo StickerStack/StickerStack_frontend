@@ -1,13 +1,14 @@
 import cn from 'classnames';
-import { IOrder } from '../../interfaces';
+
 import Slider from 'react-slick';
 
 import { settings } from './settings';
+import { StickerImage } from '@components/index';
+import { IOrder } from '@shared/interfaces';
+
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-
 import styles from './StickerCarousel.module.scss';
-import { StickerImage } from '../StickerImage/StickerImage';
 
 interface IProps {
   order: IOrder;

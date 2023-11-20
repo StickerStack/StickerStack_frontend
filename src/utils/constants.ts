@@ -1,5 +1,5 @@
-import { converter } from '../utils/converter';
-import { IOptions } from '../interfaces';
+import { converter } from '@utils/converter';
+import { IOptions } from '@shared/interfaces';
 
 const REG_SPACE = '';
 // eslint-disable-next-line no-useless-escape

@@ -1,4 +1,4 @@
-@import '../../../utils/_scss-variables.scss';
+@import '@styles/_scss-variables.scss';
 
 .button {
   border: none;
@@ -16,7 +16,7 @@
 
     width: 24px;
     height: 24px;
-    background-image: url(../../../images/icons/password-shown.svg);
+    background-image: url(@images/icons/password-shown.svg);
   }
 
   &_hidden {
@@ -24,6 +24,6 @@
 
     width: 24px;
     height: 24px;
-    background-image: url(../../../images/icons/password-hidden.svg);
+    background-image: url(@images/icons/password-hidden.svg);
   }
 }

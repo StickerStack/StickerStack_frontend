@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import cn from 'classnames';
 
-import { stickerWhiteBorder } from '../../utils/constants';
-import { ISticker } from '../../interfaces/ISticker';
+import { stickerWhiteBorder } from '@utils/constants';
+import { ISticker } from '@shared/interfaces';
 
 import styles from './StickerImage.module.scss';
 
@@ -14,20 +14,10 @@ interface IProps {
   shadow?: boolean;
 }
 
-export const StickerImage: FC<IProps> = ({
-  sticker,
-  boxWidth,
-  boxHeight,
-  className,
-  shadow = true,
-}) => {
+export const StickerImage: FC<IProps> = ({ sticker, boxWidth, boxHeight, className, shadow = true }) => {
   const styleBorderImage = {
-    width:
-      sticker.width / sticker.height >= 1 ? boxWidth : (sticker.width / sticker.height) * boxWidth,
-    height:
-      sticker.height / sticker.width >= 1
-        ? boxHeight
-        : (sticker.height / sticker.width) * boxHeight,
+    width: sticker.width / sticker.height >= 1 ? boxWidth : (sticker.width / sticker.height) * boxWidth,
+    height: sticker.height / sticker.width >= 1 ? boxHeight : (sticker.height / sticker.width) * boxHeight,
     padding: (stickerWhiteBorder * 10) / sticker.width,
   };
 

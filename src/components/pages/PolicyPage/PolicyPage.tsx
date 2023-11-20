@@ -1,14 +1,13 @@
 import { useRef, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
 import cn from 'classnames';
 
-import { PolicyNavigation } from '../../PolicyNavigation/PolicyNavigation';
-import { ButtonCustom, ButtonWithText, Container, TitlePage } from '../../UI';
-import { COOKIE } from '../../../utils/constants';
+import { PolicyNavigation, ScrollBar } from '@components/index';
+import { ButtonCustom, ButtonWithText, Container, TitlePage } from '@components/UI';
+import { COOKIE } from '@utils/constants';
 
 import styles from './PolicyPage.module.scss';
-import { AnimatePresence, motion } from 'framer-motion';
-import { ScrollBar } from '../../ScrollBar/ScrollBar';
 
 interface Props {
   policy: {
@@ -141,10 +140,7 @@ const PolicyPage: React.FC<Props> = ({ policy }: Props) => {
             ))}
           </section>
         </div>
-        <section
-          className={styles.menu}
-          style={{ top: navRef.current && navRef.current.clientHeight }}
-        >
+        <section className={styles.menu} style={{ top: navRef.current && navRef.current.clientHeight }}>
           {policy.sections.length > 1 &&
             policy.sections.map((section, i) => (
               <ButtonWithText

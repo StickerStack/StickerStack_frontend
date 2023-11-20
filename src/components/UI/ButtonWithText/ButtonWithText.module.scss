@@ -1,4 +1,4 @@
-@import '../../../utils/scss-variables.scss';
+@import '@styles/_scss-variables.scss';
 
 .button {
   padding: 14px 70.5px;
@@ -127,19 +127,11 @@
   }
 
   &_filled {
-    background: conic-gradient(
-      from 86deg at 48.07% 50%,
-      #dbe7ff 0deg,
-      rgba(219, 231, 255, 0) 360deg
-    );
+    background: conic-gradient(from 86deg at 48.07% 50%, #dbe7ff 0deg, rgba(219, 231, 255, 0) 360deg);
   }
 
   &_transparent {
-    background: conic-gradient(
-      from 86deg at 48.07% 50%,
-      #1a3263 0deg,
-      rgba(219, 231, 255, 0) 360deg
-    );
+    background: conic-gradient(from 86deg at 48.07% 50%, #1a3263 0deg, rgba(219, 231, 255, 0) 360deg);
 
     &::before {
       background-color: $other-button-text-color;

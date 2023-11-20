@@ -2,20 +2,17 @@ import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import cn from 'classnames';
-
 import { motion, AnimatePresence } from 'framer-motion';
-import { useAppDispatch } from '../../hooks/hooks';
-import { IUserState } from '../../interfaces';
-import { Signin } from '../Popups/Signin/Signin';
-import { openPopup } from '../../store/popupSlice';
-import { CART, COOKIE, PAGE_404, PRIVACY, TERMS } from '../../utils/constants';
-import { useOutsideClick } from '../../hooks/useOutsideClick';
-import { ProfileMenu } from '../ProfileMenu/ProfileMenu';
-import { ButtonCustom, ButtonWithText, Container } from '../UI';
-import { IStickersState } from '../../interfaces/IStickersState';
-import { ScrollBar } from '../ScrollBar/ScrollBar';
 
-import logo from '../../images/logo.svg';
+import { useAppDispatch, useOutsideClick } from '@shared/hooks';
+import { IUserState, IStickersState } from '@shared/interfaces';
+import { openPopup } from '@shared/store';
+import { CART, COOKIE, PAGE_404, PRIVACY, TERMS } from '@utils/constants';
+import { Signin } from '@components/Popups';
+import { ButtonCustom, ButtonWithText, Container } from '@components/UI';
+import { ProfileMenu, ScrollBar } from '@components/index';
+
+import logo from '@images/logo.svg';
 import styles from './Header.module.scss';
 
 const Header: React.FC = () => {
@@ -71,12 +68,7 @@ const Header: React.FC = () => {
     location.pathname !== PRIVACY &&
     location.pathname !== TERMS &&
     location.pathname !== COOKIE ? (
-    <header
-      className={cn(
-        styles.header,
-        (location.pathname !== '/' || window.scrollY) && styles.header_border,
-      )}
-    >
+    <header className={cn(styles.header, (location.pathname !== '/' || window.scrollY) && styles.header_border)}>
       <ScrollBar />
       <Container className={styles.header_container}>
         <Link to='/' className={styles.logo}>

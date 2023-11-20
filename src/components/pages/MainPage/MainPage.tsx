@@ -1,7 +1,4 @@
-import { OurWorks } from '../../OurWorks/OurWorks';
-import { MainHero } from '../../MainHero/MainHero';
-import { FAQ } from '../../FAQ/FAQ';
-import { Instructions } from '../../Instructions/Instructions';
+import { OurWorks, Benefits, MainHero, FAQ, Instructions } from '@components/index';
 
 import styles from './MainPage.module.scss';
 
@@ -10,6 +7,7 @@ const MainPage: React.FC = () => {
     <main className={styles.mainPage}>
       <MainHero />
       <OurWorks />
+      <Benefits/>
       <Instructions />
       <FAQ />
     </main>

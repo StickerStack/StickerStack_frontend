@@ -1,4 +1,4 @@
-@import '../../../utils/_scss-variables.scss';
+@import '@styles/_scss-variables.scss';
 
 .container {
   padding: 0 80px 30px;
@@ -49,13 +49,13 @@
 .prev_arrow {
   transform: translate(-50%, -50%);
   &::before {
-    background: url(../../../images/icons/arrow-round.svg) no-repeat center;
+    background: url(@images/icons/arrow-round.svg) no-repeat center;
   }
 }
 .next_arrow {
   transform: translate(50%, -50%);
   &::before {
-    background: url(../../../images/icons/arrow-round.svg) no-repeat center;
+    background: url(@images/icons/arrow-round.svg) no-repeat center;
     transform: rotate(180deg);
   }
 }

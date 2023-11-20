@@ -1,5 +1,5 @@
 import cn from 'classnames';
-import { Dots } from '../Dots/Dots';
+import { Dots } from '@/components/animations/Dots/Dots';
 
 import styles from './CelebratingDog.module.scss';
 

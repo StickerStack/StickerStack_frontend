@@ -1,10 +1,9 @@
 import { useCallback } from 'react';
 
-import { TextUnderline } from '../UI';
-import { useAppDispatch } from '../../hooks/hooks';
-import { useOutsideClick } from '../../hooks/useOutsideClick';
-import { openOrder } from '../../store/popupSlice';
-import { IOrder } from '../../interfaces';
+import { TextUnderline } from '@components/UI';
+import { useAppDispatch, useOutsideClick } from '@shared/hooks';
+import { openOrder } from '@shared/store';
+import { IOrder } from '@shared/interfaces';
 
 import styles from './OrderOptions.module.scss';
 

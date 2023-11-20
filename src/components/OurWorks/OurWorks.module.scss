@@ -1,4 +1,4 @@
-@import '../../utils/_scss-variables.scss';
+@import '@styles/_scss-variables.scss';
 
 .works {
   background-color: $secondary-bg-color;
@@ -32,18 +32,8 @@
   line-height: 22px;
 }
 
-.point {
-  @include flex(row, flex-start, flex-start);
-  gap: 25px;
-  text-align: left;
-
-  @media screen and (max-width: 768px) {
-    gap: 10px;
-  }
-}
-
 .text {
-  text-align: center;
+  max-width: 754px;
 }
 
 .icon {
@@ -74,7 +64,7 @@
 .prev_arrow {
   width: 56px;
   height: 24px;
-  background: url(../../images/icons/arrow-simple.svg) no-repeat center;
+  background: url(@images/icons/arrow-simple.svg) no-repeat center;
   background-color: transparent;
   transition: opacity 0.3s ease-in-out;
   cursor: pointer;
