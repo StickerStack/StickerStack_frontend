@@ -22,7 +22,15 @@ import {
   updateSticker,
   openMessage,
 } from '@shared/store';
-import { ButtonCustom, Input, InputError, InputField, RadioButton, TooltipCustom, Loader } from '@components/UI';
+import {
+  ButtonCustom,
+  Input,
+  InputError,
+  InputField,
+  RadioButton,
+  TooltipCustom,
+  Loader,
+} from '@components/UI';
 import { InfoBox, Shape, StickerImage, DragAndDrop } from '@components/index';
 
 import { messages } from '@static/popups';
@@ -108,6 +116,28 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
         .catch(() => dispatch(openMessage({ text: `${messages.somethingWrong}`, isError: true })))
         .finally(() => {
           setLoading(false);
+          setCustomVisible(false);
+          dispatch(
+            updateSticker({
+              ...sticker,
+              id: 'newSticker',
+              image: '',
+              size_type: 'optimal',
+              shape: 'square',
+              amount: 1,
+              width: 3,
+              height: 3,
+              optimal_width: 3,
+              optimal_height: 3,
+            })
+          );
+          setValue('shape', 'square');
+          setValue('amount', 1);
+          setValue('width', 3);
+          setValue('height', 3);
+          setValue('optimal_width', 3);
+          setValue('optimal_height', 3);
+          setValue('size', 'optimal');
         });
     }
 
@@ -120,7 +150,11 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
   };
 
   const sizeValidate = (value: string): boolean => {
-    return REG_STICKERS.test(value) && Number(value) >= SIZE_INPUT_MIN_LENGTH && Number(value) <= SIZE_INPUT_MAX_LENGTH;
+    return (
+      REG_STICKERS.test(value) &&
+      Number(value) >= SIZE_INPUT_MIN_LENGTH &&
+      Number(value) <= SIZE_INPUT_MAX_LENGTH
+    );
   };
 
   const onWidthChange = () => {
@@ -133,7 +167,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
           ...sticker,
           width: Number(value),
           height: sticker.shape === 'circle' ? Number(value) : sticker.height,
-        }),
+        })
       );
     }
     setBlock(false);
@@ -149,7 +183,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
           ...sticker,
           height: Number(value),
           width: sticker.shape === 'circle' ? Number(value) : sticker.width,
-        }),
+        })
       );
     }
     setBlock(false);
@@ -164,7 +198,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
   const height = watch('height');
 
   const initialSize = sticker.size_type;
-
+  
   const fieldsUnchanged =
     initialSize === sticker.size_type &&
     sticker.shape === shape &&
@@ -172,30 +206,20 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
     sticker.width === width &&
     sticker.height === height;
 
-  useEffect(() => {
-    // const image = new File([sticker.image], 'image.png');
-    // setValue('image', image);
-    setValue('shape', sticker.shape);
-    setValue('amount', sticker.amount);
-    setValue('width', sticker.width);
-    setValue('height', sticker.height);
-    setValue('optimal_width', sticker.optimal_width);
-    setValue('optimal_height', sticker.optimal_height);
-    setValue('size', sticker.size_type);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return (
     <article
       className={cn(
         styles.card,
         sticker.id !== stickerActiveId && styles.card_unactive,
-        sticker.id !== stickerActiveId && sticker.id === 'newSticker' && styles.card_unactive_new,
+        sticker.id !== stickerActiveId && sticker.id === 'newSticker' && styles.card_unactive_new
       )}
       onClick={sticker.id === stickerActiveId ? () => null : () => handleActiveSticker(sticker.id)}
     >
       {loading && <Loader loading={loading} />}
-      <form className={sticker.id === stickerActiveId ? styles.info : styles.info_unactive} onSubmit={handleSubmit}>
+      <form
+        className={sticker.id === stickerActiveId ? styles.info : styles.info_unactive}
+        onSubmit={handleSubmit}
+      >
         <div className={styles.image}>
           {/* Оставляем драгндроп с инпутом картинки, чтобы при сворачивании карточки он не размонтировался и не очищался инпут*/}
           <DragAndDrop
@@ -219,7 +243,13 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
             )}
           </label>
           <div className={cn(styles.shapes, sticker.id !== stickerActiveId && styles.hidden)}>
-            <Shape register={register} name='shape' sticker={sticker} value='square' onShapeChange={onShapeChange} />
+            <Shape
+              register={register}
+              name='shape'
+              sticker={sticker}
+              value='square'
+              onShapeChange={onShapeChange}
+            />
             <Shape
               register={register}
               name='shape'
@@ -227,7 +257,13 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
               value='rounded_square'
               onShapeChange={onShapeChange}
             />
-            <Shape register={register} name='shape' sticker={sticker} value='circle' onShapeChange={onShapeChange} />
+            <Shape
+              register={register}
+              name='shape'
+              sticker={sticker}
+              value='circle'
+              onShapeChange={onShapeChange}
+            />
           </div>
         </fieldset>
         <fieldset className={styles.flex}>
@@ -272,7 +308,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
                     height: sticker.optimal_height,
                     width: sticker.optimal_width,
                     size_type: 'optimal',
-                  }),
+                  })
                 );
               }}
             >
@@ -294,7 +330,7 @@ export const NewSticker: FC<IProps> = ({ sticker, stickerActiveId, handleActiveS
                       height: getValues('height'),
                       width: getValues('width'),
                       size_type: 'custom',
-                    }),
+                    })
                   );
                 }}
               >
